@@ -59,6 +59,7 @@ extern "C" {
 #include "OpenMMCWrapper.h"
 #include "AmoebaOpenMMCWrapper.h"
 #include "OpenMM.h"
+#include "/users/mh43854/newmerger3/openmm/serialization/include/openmm/serialization/XmlSerializer.h"
 using namespace OpenMM;
 
 typedef struct OpenMMData_s OpenMMData;
@@ -451,10 +452,12 @@ struct {
    int* class1;
    double lambda;
    double vlambda;
-   double elambda;
+   double elambda1;
+   double elambda2;
    double scexp;
    double scalpha;
-   int* mut;
+   int* mut1;
+   int* mut2;
 } mutant__;
 
 struct {
@@ -1275,8 +1278,8 @@ void set_mpole_data_ (int* maxpole, int* npole, int* ipole, int* polsiz,
 
 void set_mutant_data_ (int* nmut, int* imut, int* type0, int* class0,
                        int* type1, int* class1, double* lambda,
-                       double* vlambda, double* elambda, double* scexp,
-                       double* scalpha, int* mut) {
+                       double* vlambda, double* elambda1,double* elambda2, double* scexp,
+                       double* scalpha, int* mut1, int* mut2) {
 
    mutant__.nmut = *nmut;
    mutant__.imut = imut;
@@ -1286,10 +1289,12 @@ void set_mutant_data_ (int* nmut, int* imut, int* type0, int* class0,
    mutant__.class1 = class1;
    mutant__.lambda = *lambda;
    mutant__.vlambda = *vlambda;
-   mutant__.elambda = *elambda;
+   mutant__.elambda1 = *elambda1;
+   mutant__.elambda2 = *elambda2;
    mutant__.scexp = *scexp;
    mutant__.scalpha = *scalpha;
-   mutant__.mut = mut;
+   mutant__.mut1 = mut1;
+   mutant__.mut2 = mut2;
 }
 
 void set_nonpol_data_ (double* epso, double* epsh, double* rmino,
@@ -2569,19 +2574,26 @@ static void setupAmoebaVdwForce (OpenMM_System* system, FILE* log) {
 
    for (ii = 0; ii < atoms__.n; ii++) {
       i = vdw__.jvdw[ii];
-      if (mutant__.mut[ii] == 0) {
-         OpenMM_AmoebaVdwForce_addParticle (amoebaVdwForce,
+      if (mutant__.mut1[ii]==1) {
+	OpenMM_AmoebaVdwForce_addParticle (amoebaVdwForce,
                               vdw__.ired[ii]-1, atomid__.classs[ii],
                               OpenMM_NmPerAngstrom*(kvdws__.rad[i-1]),
                               OpenMM_KJPerKcal*(kvdws__.eps[i-1]),
-                              vdw__.kred[ii], 1.0);
-      } else {
-         OpenMM_AmoebaVdwForce_addParticle (amoebaVdwForce,
+                              vdw__.kred[ii], mutant__.vlambda,1);
+	(void) fprintf(log, "mut1 on atom %d\n",ii);
+      } else if(mutant__.mut2[ii]==1){         OpenMM_AmoebaVdwForce_addParticle (amoebaVdwForce,
                               vdw__.ired[ii]-1, atomid__.classs[ii],
                               OpenMM_NmPerAngstrom*(kvdws__.rad[i-1]),
                               OpenMM_KJPerKcal*(kvdws__.eps[i-1]),
-                              vdw__.kred[ii], mutant__.vlambda);
-      }
+                              vdw__.kred[ii], 1.0-mutant__.vlambda,2);
+	        (void) fprintf(log, "mut2 on atom %d\n",ii);	 
+     }else{
+	 OpenMM_AmoebaVdwForce_addParticle (amoebaVdwForce,
+                              vdw__.ired[ii]-1, atomid__.classs[ii],
+                              OpenMM_NmPerAngstrom*(kvdws__.rad[i-1]),
+                              OpenMM_KJPerKcal*(kvdws__.eps[i-1]),
+                              vdw__.kred[ii], 1.0,0);
+     }
    }
 
    setNullTerminator (vdwpot__.radrule, 10, buffer);
@@ -2766,15 +2778,15 @@ static void setupAmoebaMultipoleForce (OpenMM_System* system, FILE* log) {
 
    if (limits__.use_ewald) {
 
-      double ewaldTolerance = 1.0e-04;
+      double ewaldTolerance = 1.0e-05;
       OpenMM_AmoebaMultipoleForce_setNonbondedMethod (amoebaMultipoleForce,
                                    OpenMM_AmoebaMultipoleForce_PME);
       OpenMM_AmoebaMultipoleForce_setCutoffDistance (amoebaMultipoleForce,
                                    limits__.ewaldcut*OpenMM_NmPerAngstrom);
       OpenMM_AmoebaMultipoleForce_setAEwald (amoebaMultipoleForce,
                                    ewald__.aewald/OpenMM_NmPerAngstrom);
-      // OpenMM_AmoebaMultipoleForce_setPmeBSplineOrder (amoebaMultipoleForce,
-      //                           pme__.bsorder);
+       //OpenMM_AmoebaMultipoleForce_setPmeBSplineOrder (amoebaMultipoleForce,
+       //                         pme__.bsorder);
     
       gridDimensions = OpenMM_IntArray_create (3);
     
@@ -2871,7 +2883,6 @@ static void setupAmoebaMultipoleForce (OpenMM_System* system, FILE* log) {
                          OpenMM_AmoebaMultipoleForce_PolarizationCovalent14,
                          covalentMap);
    }
-
    OpenMM_DoubleArray_destroy (dipoles);
    OpenMM_DoubleArray_destroy (quadrupoles);
 
@@ -3261,10 +3272,16 @@ static void setupCentroidRestraints (OpenMM_System* system, FILE* log) {
    convert = OpenMM_KJPerKcal / (OpenMM_NmPerAngstrom*OpenMM_NmPerAngstrom);
 
    // In the expression below, u and l are the upper and lower threshold
+              OpenMM_CustomCentroidBondForce* force=OpenMM_CustomCentroidBondForce_create (2,
+               	"step(distance(g1,g2)-u)*k*(distance(g1,g2)-u)^2+step(l-distance(g1,g2))*k*(distance(g1,g2)-l)^2" );
 
-   OpenMM_CustomCentroidBondForce* force =
-      OpenMM_CustomCentroidBondForce_create (2,
-                 "step(distance(g1,g2)-u)*k*(distance(g1,g2)-u)^2+step(l-distance(g1,g2))*k*(distance(g1,g2)-l)^2");
+     if (boxes__.orthogonal || boxes__.monoclinic || boxes__.triclinic){
+	OpenMM_CustomCentroidBondForce_setUsesPeriodicBoundaryConditions(force,(OpenMM_Boolean) true); 
+        (void) fprintf(log,"using periodic");
+     }else{
+	OpenMM_CustomCentroidBondForce_setUsesPeriodicBoundaryConditions(force,(OpenMM_Boolean) false);
+	(void) fprintf(log, "not using periodic");     
+    }
    OpenMM_CustomCentroidBondForce_addPerBondParameter (force, "k");
    OpenMM_CustomCentroidBondForce_addPerBondParameter (force, "l");
    OpenMM_CustomCentroidBondForce_addPerBondParameter (force, "u");
@@ -3281,11 +3298,11 @@ static void setupCentroidRestraints (OpenMM_System* system, FILE* log) {
       OpenMM_IntArray_append (bondGroups, restrn__.igfix[2*i + 1] - 1);
 
       OpenMM_DoubleArray* bondParameters = OpenMM_DoubleArray_create (0);
-      OpenMM_DoubleArray_append (bondParameters, restrn__.gfix[2*i]
+      OpenMM_DoubleArray_append (bondParameters, restrn__.gfix[3*i]
                                     *convert);
-      OpenMM_DoubleArray_append (bondParameters, restrn__.gfix[2*i + 1]
+      OpenMM_DoubleArray_append (bondParameters, restrn__.gfix[3*i + 1]
                                     *OpenMM_NmPerAngstrom);
-      OpenMM_DoubleArray_append (bondParameters, restrn__.gfix[2*i + 2]
+      OpenMM_DoubleArray_append (bondParameters, restrn__.gfix[3*i + 2]
                                     *OpenMM_NmPerAngstrom);
 
       OpenMM_CustomCentroidBondForce_addBond (force, bondGroups,
@@ -3334,7 +3351,7 @@ static void setupMonteCarloBarostat (OpenMM_System* system, FILE* log) {
    if (log) {
       (void) fprintf (log, "\n MonteCarlo Barostat:\n");
       (void) fprintf (log, "\n Target Temperature   %15.2f K",
-                      OpenMM_MonteCarloBarostat_getTemperature
+                      OpenMM_MonteCarloBarostat_getDefaultTemperature
                       (monteCarloBarostat));
       (void) fprintf (log, "\n Target Pressure      %15.4f atm",
                       OpenMM_MonteCarloBarostat_getDefaultPressure
@@ -4972,11 +4989,16 @@ int openmm_test_ (void) {
    infoMask += OpenMM_State_Energy;
 
    state = OpenMM_Context_getState (context, infoMask, 0);
+   ofstream statexml;
+   statexml.open("/users/mh43854/state.xml");
+   statexml<<OpenMM_XmlSerializer_serializeState(state);
+     ofstream systemxml;            
+   systemxml.open("/users/mh43854/system.xml");
+   systemxml<<OpenMM_XmlSerializer_serializeSystem(system);
 
    openMMForces = OpenMM_State_getForces (state);
    openMMPotentialEnergy = OpenMM_State_getPotentialEnergy(state)
                               / OpenMM_KJPerKcal;
-
    conversion = -OpenMM_NmPerAngstrom / OpenMM_KJPerKcal;
 
    setDefaultPeriodicBoxVectors (system, log);
