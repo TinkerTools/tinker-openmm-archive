@@ -1,0 +1,489 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>AmoebaVdwForce &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="amoebavdwforce">
+<h1>AmoebaVdwForce<a class="headerlink" href="#amoebavdwforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForceE">
+<span id="OpenMM::AmoebaVdwForce"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">AmoebaVdwForce</code><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForceE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements a buffered 14-7 potential used to model van der Waals forces.</p>
+<p>To use it, create an <a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce14AmoebaVdwForceEv" title="OpenMM::AmoebaVdwForce::AmoebaVdwForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaVdwForce</span></code></a> object then call <a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce11addParticleEiddd" title="OpenMM::AmoebaVdwForce::addParticle"><code class="xref cpp cpp-any docutils literal"><span class="pre">addParticle()</span></code></a> once for each particle. After a particle has been added, you can modify its force field parameters by calling <a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce21setParticleParametersEiiddd" title="OpenMM::AmoebaVdwForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters()</span></code></a>. This will have no effect on Contexts that already exist unless you call <a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce25updateParametersInContextER7Context" title="OpenMM::AmoebaVdwForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a>.</p>
+<p>A unique feature of this class is that the interaction site for a particle does not need to be exactly at the particle&#8217;s location. Instead, it can be placed a fraction of the distance from that particle to another one. This is typically done for hydrogens to place the interaction site slightly closer to the parent atom. The fraction is known as the &#8220;reduction factor&#8221;, since it reduces the distance from the parent atom to the interaction site.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce14AmoebaVdwForceEv" title="OpenMM::AmoebaVdwForce::AmoebaVdwForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaVdwForce</span></code></a></td>
+<td>Create an Amoeba VdwForce.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce15getNumParticlesEv" title="OpenMM::AmoebaVdwForce::getNumParticles"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumParticles</span></code></a></td>
+<td>Get the number of particles</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce21setParticleParametersEiiddd" title="OpenMM::AmoebaVdwForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters</span></code></a></td>
+<td>Set the force field parameters for a vdw particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce21getParticleParametersEiRiRdRdRd" title="OpenMM::AmoebaVdwForce::getParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getParticleParameters</span></code></a></td>
+<td>Get the force field parameters for a vdw particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce11addParticleEiddd" title="OpenMM::AmoebaVdwForce::addParticle"><code class="xref cpp cpp-any docutils literal"><span class="pre">addParticle</span></code></a></td>
+<td>Add the force field parameters for a vdw particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce21setSigmaCombiningRuleERKNSt6stringE" title="OpenMM::AmoebaVdwForce::setSigmaCombiningRule"><code class="xref cpp cpp-any docutils literal"><span class="pre">setSigmaCombiningRule</span></code></a></td>
+<td>Set sigma combining rule</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce21getSigmaCombiningRuleEv" title="OpenMM::AmoebaVdwForce::getSigmaCombiningRule"><code class="xref cpp cpp-any docutils literal"><span class="pre">getSigmaCombiningRule</span></code></a></td>
+<td>Get sigma combining rule</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce23setEpsilonCombiningRuleERKNSt6stringE" title="OpenMM::AmoebaVdwForce::setEpsilonCombiningRule"><code class="xref cpp cpp-any docutils literal"><span class="pre">setEpsilonCombiningRule</span></code></a></td>
+<td>Set epsilon combining rule</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce23getEpsilonCombiningRuleEv" title="OpenMM::AmoebaVdwForce::getEpsilonCombiningRule"><code class="xref cpp cpp-any docutils literal"><span class="pre">getEpsilonCombiningRule</span></code></a></td>
+<td>Get epsilon combining rule</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce26getUseDispersionCorrectionEv" title="OpenMM::AmoebaVdwForce::getUseDispersionCorrection"><code class="xref cpp cpp-any docutils literal"><span class="pre">getUseDispersionCorrection</span></code></a></td>
+<td>Get whether to add a contribution to the energy that approximately represents the effect of VdW interactions beyond the cutoff distance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce26setUseDispersionCorrectionEb" title="OpenMM::AmoebaVdwForce::setUseDispersionCorrection"><code class="xref cpp cpp-any docutils literal"><span class="pre">setUseDispersionCorrection</span></code></a></td>
+<td>Set whether to add a contribution to the energy that approximately represents the effect of VdW interactions beyond the cutoff distance.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce21setParticleExclusionsEiRKNSt6vectorIiEE" title="OpenMM::AmoebaVdwForce::setParticleExclusions"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleExclusions</span></code></a></td>
+<td>Set exclusions for specified particle</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce21getParticleExclusionsEiRNSt6vectorIiEE" title="OpenMM::AmoebaVdwForce::getParticleExclusions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getParticleExclusions</span></code></a></td>
+<td>Get exclusions for specified particle</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce17getCutoffDistanceEv" title="OpenMM::AmoebaVdwForce::getCutoffDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">getCutoffDistance</span></code></a></td>
+<td>Get the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce17setCutoffDistanceEd" title="OpenMM::AmoebaVdwForce::setCutoffDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">setCutoffDistance</span></code></a></td>
+<td>Set the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce9setCutoffEd" title="OpenMM::AmoebaVdwForce::setCutoff"><code class="xref cpp cpp-any docutils literal"><span class="pre">setCutoff</span></code></a></td>
+<td>Set the cutoff distance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce9getCutoffEv" title="OpenMM::AmoebaVdwForce::getCutoff"><code class="xref cpp cpp-any docutils literal"><span class="pre">getCutoff</span></code></a></td>
+<td>Get the cutoff distance.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce18getNonbondedMethodEv" title="OpenMM::AmoebaVdwForce::getNonbondedMethod"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNonbondedMethod</span></code></a></td>
+<td>Get the method used for handling long range nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce18setNonbondedMethodE15NonbondedMethod" title="OpenMM::AmoebaVdwForce::setNonbondedMethod"><code class="xref cpp cpp-any docutils literal"><span class="pre">setNonbondedMethod</span></code></a></td>
+<td>Set the method used for handling long range nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce25updateParametersInContextER7Context" title="OpenMM::AmoebaVdwForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext</span></code></a></td>
+<td>Update the per-particle parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce30usesPeriodicBoundaryConditionsEv" title="OpenMM::AmoebaVdwForce::usesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a></td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Enum: NonbondedMethod</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>NoCutoff</strong></td>
+<td>No cutoff is applied to nonbonded interactions. The full set of N^2 interactions is computed exactly. This necessarily means that periodic boundary conditions cannot be used. This is the default.</td>
+</tr>
+<tr class="row-even"><td><strong>CutoffPeriodic</strong></td>
+<td>Periodic boundary conditions are used, so that each particle interacts only with the nearest periodic copy of each other particle. Interactions beyond the cutoff distance are ignored.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce14AmoebaVdwForceEv">
+<span id="OpenMM::AmoebaVdwForce::AmoebaVdwForce"></span><code class="descclassname"></code><code class="descname">AmoebaVdwForce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce14AmoebaVdwForceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an Amoeba VdwForce.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14AmoebaVdwForce15getNumParticlesEv">
+<span id="OpenMM::AmoebaVdwForce::getNumParticlesC"></span>int <code class="descclassname"></code><code class="descname">getNumParticles</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14AmoebaVdwForce15getNumParticlesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce21setParticleParametersEiiddd">
+<span id="OpenMM::AmoebaVdwForce::setParticleParameters__i.i.double.double.double"></span>void <code class="descclassname"></code><code class="descname">setParticleParameters</code><span class="sig-paren">(</span>int <em>particleIndex</em>, int <em>parentIndex</em>, double <em>sigma</em>, double <em>epsilon</em>, double <em>reductionFactor</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce21setParticleParametersEiiddd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force field parameters for a vdw particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particleIndex</strong> &#8211; the particle index</li>
+<li><strong>parentIndex</strong> &#8211; the index of the parent particle</li>
+<li><strong>sigma</strong> &#8211; vdw sigma</li>
+<li><strong>epsilon</strong> &#8211; vdw epsilon</li>
+<li><strong>reductionFactor</strong> &#8211; the fraction of the distance along the line from the parent particle to this particle at which the interaction site should be placed</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14AmoebaVdwForce21getParticleParametersEiRiRdRdRd">
+<span id="OpenMM::AmoebaVdwForce::getParticleParameters__i.iR.doubleR.doubleR.doubleRC"></span>void <code class="descclassname"></code><code class="descname">getParticleParameters</code><span class="sig-paren">(</span>int <em>particleIndex</em>, int &amp;<em>parentIndex</em>, double &amp;<em>sigma</em>, double &amp;<em>epsilon</em>, double &amp;<em>reductionFactor</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14AmoebaVdwForce21getParticleParametersEiRiRdRdRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force field parameters for a vdw particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particleIndex</strong> &#8211; the particle index</li>
+<li><strong>parentIndex</strong> &#8211; [out] the index of the parent particle</li>
+<li><strong>sigma</strong> &#8211; [out] vdw sigma</li>
+<li><strong>epsilon</strong> &#8211; [out] vdw epsilon</li>
+<li><strong>reductionFactor</strong> &#8211; [out] the fraction of the distance along the line from the parent particle to this particle at which the interaction site should be placed</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce11addParticleEiddd">
+<span id="OpenMM::AmoebaVdwForce::addParticle__i.double.double.double"></span>int <code class="descclassname"></code><code class="descname">addParticle</code><span class="sig-paren">(</span>int <em>parentIndex</em>, double <em>sigma</em>, double <em>epsilon</em>, double <em>reductionFactor</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce11addParticleEiddd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the force field parameters for a vdw particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>parentIndex</strong> &#8211; the index of the parent particle</li>
+<li><strong>sigma</strong> &#8211; vdw sigma</li>
+<li><strong>epsilon</strong> &#8211; vdw epsilon</li>
+<li><strong>reductionFactor</strong> &#8211; the fraction of the distance along the line from the parent particle to this particle at which the interaction site should be placed</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">index of added particle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce21setSigmaCombiningRuleERKNSt6stringE">
+<span id="OpenMM::AmoebaVdwForce::setSigmaCombiningRule__ssCR"></span>void <code class="descclassname"></code><code class="descname">setSigmaCombiningRule</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>sigmaCombiningRule</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce21setSigmaCombiningRuleERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set sigma combining rule</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>sigmaCombiningRule</strong> &#8211; sigma combining rule: &#8216;ARITHMETIC&#8217;, &#8216;GEOMETRIC&#8217;. &#8216;CUBIC-MEAN&#8217;</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14AmoebaVdwForce21getSigmaCombiningRuleEv">
+<span id="OpenMM::AmoebaVdwForce::getSigmaCombiningRule__voidC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getSigmaCombiningRule</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14AmoebaVdwForce21getSigmaCombiningRuleEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sigma combining rule</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">sigmaCombiningRule sigma combining rule: &#8216;ARITHMETIC&#8217;, &#8216;GEOMETRIC&#8217;. &#8216;CUBIC-MEAN&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce23setEpsilonCombiningRuleERKNSt6stringE">
+<span id="OpenMM::AmoebaVdwForce::setEpsilonCombiningRule__ssCR"></span>void <code class="descclassname"></code><code class="descname">setEpsilonCombiningRule</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>epsilonCombiningRule</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce23setEpsilonCombiningRuleERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set epsilon combining rule</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>epsilonCombiningRule</strong> &#8211; epsilon combining rule: &#8216;ARITHMETIC&#8217;, &#8216;GEOMETRIC&#8217;. &#8216;HARMONIC&#8217;, &#8216;HHG&#8217;</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14AmoebaVdwForce23getEpsilonCombiningRuleEv">
+<span id="OpenMM::AmoebaVdwForce::getEpsilonCombiningRule__voidC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getEpsilonCombiningRule</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14AmoebaVdwForce23getEpsilonCombiningRuleEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get epsilon combining rule</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">epsilonCombiningRule epsilon combining rule: &#8216;ARITHMETIC&#8217;, &#8216;GEOMETRIC&#8217;. &#8216;HARMONIC&#8217;, &#8216;HHG&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14AmoebaVdwForce26getUseDispersionCorrectionEv">
+<span id="OpenMM::AmoebaVdwForce::getUseDispersionCorrectionC"></span>bool <code class="descclassname"></code><code class="descname">getUseDispersionCorrection</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14AmoebaVdwForce26getUseDispersionCorrectionEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether to add a contribution to the energy that approximately represents the effect of VdW interactions beyond the cutoff distance. The energy depends on the volume of the periodic box, and is only applicable when periodic boundary conditions are used. When running simulations at constant pressure, adding this contribution can improve the quality of results.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce26setUseDispersionCorrectionEb">
+<span id="OpenMM::AmoebaVdwForce::setUseDispersionCorrection__b"></span>void <code class="descclassname"></code><code class="descname">setUseDispersionCorrection</code><span class="sig-paren">(</span>bool <em>useCorrection</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce26setUseDispersionCorrectionEb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether to add a contribution to the energy that approximately represents the effect of VdW interactions beyond the cutoff distance. The energy depends on the volume of the periodic box, and is only applicable when periodic boundary conditions are used. When running simulations at constant pressure, adding this contribution can improve the quality of results.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce21setParticleExclusionsEiRKNSt6vectorIiEE">
+<span id="OpenMM::AmoebaVdwForce::setParticleExclusions__i.std::vector:i:CR"></span>void <code class="descclassname"></code><code class="descname">setParticleExclusions</code><span class="sig-paren">(</span>int <em>particleIndex</em>, <em class="property">const</em> std::vector&lt;int&gt; &amp;<em>exclusions</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce21setParticleExclusionsEiRKNSt6vectorIiEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set exclusions for specified particle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particleIndex</strong> &#8211; particle index</li>
+<li><strong>exclusions</strong> &#8211; vector of exclusions</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14AmoebaVdwForce21getParticleExclusionsEiRNSt6vectorIiEE">
+<span id="OpenMM::AmoebaVdwForce::getParticleExclusions__i.std::vector:i:RC"></span>void <code class="descclassname"></code><code class="descname">getParticleExclusions</code><span class="sig-paren">(</span>int <em>particleIndex</em>, std::vector&lt;int&gt; &amp;<em>exclusions</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14AmoebaVdwForce21getParticleExclusionsEiRNSt6vectorIiEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get exclusions for specified particle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particleIndex</strong> &#8211; particle index</li>
+<li><strong>exclusions</strong> &#8211; [out] vector of exclusions</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14AmoebaVdwForce17getCutoffDistanceEv">
+<span id="OpenMM::AmoebaVdwForce::getCutoffDistanceC"></span>double <code class="descclassname"></code><code class="descname">getCutoffDistance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14AmoebaVdwForce17getCutoffDistanceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the cutoff distance, measured in nm</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce17setCutoffDistanceEd">
+<span id="OpenMM::AmoebaVdwForce::setCutoffDistance__double"></span>void <code class="descclassname"></code><code class="descname">setCutoffDistance</code><span class="sig-paren">(</span>double <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce17setCutoffDistanceEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>distance</strong> &#8211; the cutoff distance, measured in nm</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce9setCutoffEd">
+<span id="OpenMM::AmoebaVdwForce::setCutoff__double"></span>void <code class="descclassname"></code><code class="descname">setCutoff</code><span class="sig-paren">(</span>double <em>cutoff</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce9setCutoffEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cutoff distance.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use <a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce17setCutoffDistanceEd" title="OpenMM::AmoebaVdwForce::setCutoffDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">setCutoffDistance()</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14AmoebaVdwForce9getCutoffEv">
+<span id="OpenMM::AmoebaVdwForce::getCutoffC"></span>double <code class="descclassname"></code><code class="descname">getCutoff</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14AmoebaVdwForce9getCutoffEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cutoff distance.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use <a class="reference internal" href="#_CPPv2NK6OpenMM14AmoebaVdwForce17getCutoffDistanceEv" title="OpenMM::AmoebaVdwForce::getCutoffDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">getCutoffDistance()</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14AmoebaVdwForce18getNonbondedMethodEv">
+<span id="OpenMM::AmoebaVdwForce::getNonbondedMethodC"></span>NonbondedMethod <code class="descclassname"></code><code class="descname">getNonbondedMethod</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14AmoebaVdwForce18getNonbondedMethodEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the method used for handling long range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce18setNonbondedMethodE15NonbondedMethod">
+<span id="OpenMM::AmoebaVdwForce::setNonbondedMethod__NonbondedMethod"></span>void <code class="descclassname"></code><code class="descname">setNonbondedMethod</code><span class="sig-paren">(</span>NonbondedMethod <em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce18setNonbondedMethodE15NonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the method used for handling long range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14AmoebaVdwForce25updateParametersInContextER7Context">
+<span id="OpenMM::AmoebaVdwForce::updateParametersInContext__ContextR"></span>void <code class="descclassname"></code><code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14AmoebaVdwForce25updateParametersInContextER7Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the per-particle parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object. This method provides an efficient method to update certain parameters in an existing <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> without needing to reinitialize it. Simply call <a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce21setParticleParametersEiiddd" title="OpenMM::AmoebaVdwForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters()</span></code></a> to modify this object&#8217;s parameters, then call <a class="reference internal" href="#_CPPv2N6OpenMM14AmoebaVdwForce25updateParametersInContextER7Context" title="OpenMM::AmoebaVdwForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a> to copy them over to the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<p>The only information this method updates is the values of per-particle parameters. All other aspects of the <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> (the nonbonded method, the cutoff distance, etc.) are unaffected and can only be changed by reinitializing the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14AmoebaVdwForce30usesPeriodicBoundaryConditionsEv">
+<span id="OpenMM::AmoebaVdwForce::usesPeriodicBoundaryConditionsC"></span>bool <code class="descclassname"></code><code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14AmoebaVdwForce30usesPeriodicBoundaryConditionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if nonbondedMethod uses PBC and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.AmoebaVdwForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

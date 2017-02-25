@@ -1,0 +1,18 @@
+Discrete2DFunction
+==========================
+
+.. autodoxyclass:: OpenMM::Discrete2DFunction
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::Discrete2DFunction::Discrete2DFunction
+      ~OpenMM::Discrete2DFunction::getFunctionParameters
+      ~OpenMM::Discrete2DFunction::setFunctionParameters
+      ~OpenMM::Discrete2DFunction::Copy
+   
+
+   

@@ -1,0 +1,17 @@
+VirtualSite
+===================
+
+.. autodoxyclass:: OpenMM::VirtualSite
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::VirtualSite::~VirtualSite
+      ~OpenMM::VirtualSite::getNumParticles
+      ~OpenMM::VirtualSite::getParticle
+   
+
+   

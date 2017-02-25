@@ -1,0 +1,79 @@
+DualAMDIntegrator
+==================================
+
+.. currentmodule:: simtk.openmm.amd
+
+.. autoclass:: DualAMDIntegrator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DualAMDIntegrator.__init__
+      ~DualAMDIntegrator.addComputeGlobal
+      ~DualAMDIntegrator.addComputePerDof
+      ~DualAMDIntegrator.addComputeSum
+      ~DualAMDIntegrator.addConstrainPositions
+      ~DualAMDIntegrator.addConstrainVelocities
+      ~DualAMDIntegrator.addGlobalVariable
+      ~DualAMDIntegrator.addPerDofVariable
+      ~DualAMDIntegrator.addUpdateContextState
+      ~DualAMDIntegrator.beginIfBlock
+      ~DualAMDIntegrator.beginWhileBlock
+      ~DualAMDIntegrator.endBlock
+      ~DualAMDIntegrator.getAlphaGroup
+      ~DualAMDIntegrator.getAlphaTotal
+      ~DualAMDIntegrator.getComputationStep
+      ~DualAMDIntegrator.getConstraintTolerance
+      ~DualAMDIntegrator.getEGroup
+      ~DualAMDIntegrator.getETotal
+      ~DualAMDIntegrator.getEffectiveEnergy
+      ~DualAMDIntegrator.getGlobalVariable
+      ~DualAMDIntegrator.getGlobalVariableByName
+      ~DualAMDIntegrator.getGlobalVariableName
+      ~DualAMDIntegrator.getKineticEnergyExpression
+      ~DualAMDIntegrator.getNumComputations
+      ~DualAMDIntegrator.getNumGlobalVariables
+      ~DualAMDIntegrator.getNumPerDofVariables
+      ~DualAMDIntegrator.getPerDofVariable
+      ~DualAMDIntegrator.getPerDofVariableByName
+      ~DualAMDIntegrator.getPerDofVariableName
+      ~DualAMDIntegrator.getRandomNumberSeed
+      ~DualAMDIntegrator.getStepSize
+      ~DualAMDIntegrator.setAlphaGroup
+      ~DualAMDIntegrator.setAlphaTotal
+      ~DualAMDIntegrator.setConstraintTolerance
+      ~DualAMDIntegrator.setEGroup
+      ~DualAMDIntegrator.setETotal
+      ~DualAMDIntegrator.setGlobalVariable
+      ~DualAMDIntegrator.setGlobalVariableByName
+      ~DualAMDIntegrator.setKineticEnergyExpression
+      ~DualAMDIntegrator.setPerDofVariable
+      ~DualAMDIntegrator.setPerDofVariableByName
+      ~DualAMDIntegrator.setRandomNumberSeed
+      ~DualAMDIntegrator.setStepSize
+      ~DualAMDIntegrator.step
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~DualAMDIntegrator.BlockEnd
+      ~DualAMDIntegrator.ComputeGlobal
+      ~DualAMDIntegrator.ComputePerDof
+      ~DualAMDIntegrator.ComputeSum
+      ~DualAMDIntegrator.ConstrainPositions
+      ~DualAMDIntegrator.ConstrainVelocities
+      ~DualAMDIntegrator.IfBlockStart
+      ~DualAMDIntegrator.UpdateContextState
+      ~DualAMDIntegrator.WhileBlockStart
+   
+   

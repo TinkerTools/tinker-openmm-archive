@@ -1,0 +1,26 @@
+Residue
+=================================
+
+.. currentmodule:: simtk.openmm.app.topology
+
+.. autoclass:: Residue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Residue.__init__
+      ~Residue.atoms
+      ~Residue.bonds
+      ~Residue.external_bonds
+      ~Residue.internal_bonds
+   
+   
+
+   
+   
+   

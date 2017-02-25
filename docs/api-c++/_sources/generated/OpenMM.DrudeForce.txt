@@ -1,0 +1,25 @@
+DrudeForce
+==================
+
+.. autodoxyclass:: OpenMM::DrudeForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::DrudeForce::DrudeForce
+      ~OpenMM::DrudeForce::getNumParticles
+      ~OpenMM::DrudeForce::getNumScreenedPairs
+      ~OpenMM::DrudeForce::addParticle
+      ~OpenMM::DrudeForce::getParticleParameters
+      ~OpenMM::DrudeForce::setParticleParameters
+      ~OpenMM::DrudeForce::addScreenedPair
+      ~OpenMM::DrudeForce::getScreenedPairParameters
+      ~OpenMM::DrudeForce::setScreenedPairParameters
+      ~OpenMM::DrudeForce::updateParametersInContext
+      ~OpenMM::DrudeForce::usesPeriodicBoundaryConditions
+   
+
+   

@@ -1,0 +1,24 @@
+MonteCarloBarostat
+==========================
+
+.. autodoxyclass:: OpenMM::MonteCarloBarostat
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::MonteCarloBarostat::MonteCarloBarostat
+      ~OpenMM::MonteCarloBarostat::getDefaultPressure
+      ~OpenMM::MonteCarloBarostat::setDefaultPressure
+      ~OpenMM::MonteCarloBarostat::getFrequency
+      ~OpenMM::MonteCarloBarostat::setFrequency
+      ~OpenMM::MonteCarloBarostat::getDefaultTemperature
+      ~OpenMM::MonteCarloBarostat::setDefaultTemperature
+      ~OpenMM::MonteCarloBarostat::getRandomNumberSeed
+      ~OpenMM::MonteCarloBarostat::setRandomNumberSeed
+      ~OpenMM::MonteCarloBarostat::usesPeriodicBoundaryConditions
+   
+
+   

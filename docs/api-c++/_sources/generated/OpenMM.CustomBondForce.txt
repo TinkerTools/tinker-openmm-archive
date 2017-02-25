@@ -1,0 +1,37 @@
+CustomBondForce
+=======================
+
+.. autodoxyclass:: OpenMM::CustomBondForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CustomBondForce::CustomBondForce
+      ~OpenMM::CustomBondForce::getNumBonds
+      ~OpenMM::CustomBondForce::getNumPerBondParameters
+      ~OpenMM::CustomBondForce::getNumGlobalParameters
+      ~OpenMM::CustomBondForce::getNumEnergyParameterDerivatives
+      ~OpenMM::CustomBondForce::getEnergyFunction
+      ~OpenMM::CustomBondForce::setEnergyFunction
+      ~OpenMM::CustomBondForce::addPerBondParameter
+      ~OpenMM::CustomBondForce::getPerBondParameterName
+      ~OpenMM::CustomBondForce::setPerBondParameterName
+      ~OpenMM::CustomBondForce::addGlobalParameter
+      ~OpenMM::CustomBondForce::getGlobalParameterName
+      ~OpenMM::CustomBondForce::setGlobalParameterName
+      ~OpenMM::CustomBondForce::getGlobalParameterDefaultValue
+      ~OpenMM::CustomBondForce::setGlobalParameterDefaultValue
+      ~OpenMM::CustomBondForce::addEnergyParameterDerivative
+      ~OpenMM::CustomBondForce::getEnergyParameterDerivativeName
+      ~OpenMM::CustomBondForce::addBond
+      ~OpenMM::CustomBondForce::getBondParameters
+      ~OpenMM::CustomBondForce::setBondParameters
+      ~OpenMM::CustomBondForce::updateParametersInContext
+      ~OpenMM::CustomBondForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::CustomBondForce::usesPeriodicBoundaryConditions
+   
+
+   

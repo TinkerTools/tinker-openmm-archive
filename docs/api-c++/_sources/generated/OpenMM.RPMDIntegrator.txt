@@ -1,0 +1,31 @@
+RPMDIntegrator
+======================
+
+.. autodoxyclass:: OpenMM::RPMDIntegrator
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::RPMDIntegrator::RPMDIntegrator
+      ~OpenMM::RPMDIntegrator::RPMDIntegrator
+      ~OpenMM::RPMDIntegrator::getNumCopies
+      ~OpenMM::RPMDIntegrator::getTemperature
+      ~OpenMM::RPMDIntegrator::setTemperature
+      ~OpenMM::RPMDIntegrator::getFriction
+      ~OpenMM::RPMDIntegrator::setFriction
+      ~OpenMM::RPMDIntegrator::getApplyThermostat
+      ~OpenMM::RPMDIntegrator::setApplyThermostat
+      ~OpenMM::RPMDIntegrator::getRandomNumberSeed
+      ~OpenMM::RPMDIntegrator::setRandomNumberSeed
+      ~OpenMM::RPMDIntegrator::getContractions
+      ~OpenMM::RPMDIntegrator::setPositions
+      ~OpenMM::RPMDIntegrator::setVelocities
+      ~OpenMM::RPMDIntegrator::getState
+      ~OpenMM::RPMDIntegrator::getTotalEnergy
+      ~OpenMM::RPMDIntegrator::step
+   
+
+   

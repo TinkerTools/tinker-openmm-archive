@@ -1,0 +1,39 @@
+AmoebaOutOfPlaneBendForce
+=============================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: AmoebaOutOfPlaneBendForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AmoebaOutOfPlaneBendForce.__init__
+      ~AmoebaOutOfPlaneBendForce.addOutOfPlaneBend
+      ~AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendCubic
+      ~AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendPentic
+      ~AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendQuartic
+      ~AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendSextic
+      ~AmoebaOutOfPlaneBendForce.getForceGroup
+      ~AmoebaOutOfPlaneBendForce.getNumOutOfPlaneBends
+      ~AmoebaOutOfPlaneBendForce.getOutOfPlaneBendParameters
+      ~AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendCubic
+      ~AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendPentic
+      ~AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendQuartic
+      ~AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendSextic
+      ~AmoebaOutOfPlaneBendForce.setForceGroup
+      ~AmoebaOutOfPlaneBendForce.setOutOfPlaneBendParameters
+      ~AmoebaOutOfPlaneBendForce.setUsesPeriodicBoundaryConditions
+      ~AmoebaOutOfPlaneBendForce.updateParametersInContext
+      ~AmoebaOutOfPlaneBendForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

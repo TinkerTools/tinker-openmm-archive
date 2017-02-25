@@ -1,0 +1,29 @@
+PDBFile
+================================
+
+.. currentmodule:: simtk.openmm.app.pdbfile
+
+.. autoclass:: PDBFile
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PDBFile.__init__
+      ~PDBFile.getNumFrames
+      ~PDBFile.getPositions
+      ~PDBFile.getTopology
+      ~PDBFile.writeFile
+      ~PDBFile.writeFooter
+      ~PDBFile.writeHeader
+      ~PDBFile.writeModel
+   
+   
+
+   
+   
+   

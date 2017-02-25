@@ -1,0 +1,23 @@
+CharmmRstFile
+=============================================
+
+.. currentmodule:: simtk.openmm.app.charmmcrdfiles
+
+.. autoclass:: CharmmRstFile
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CharmmRstFile.__init__
+      ~CharmmRstFile.printcoords
+   
+   
+
+   
+   
+   

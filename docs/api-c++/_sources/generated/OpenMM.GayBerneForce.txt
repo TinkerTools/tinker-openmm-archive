@@ -1,0 +1,37 @@
+GayBerneForce
+=====================
+
+.. autodoxyclass:: OpenMM::GayBerneForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::GayBerneForce::GayBerneForce
+      ~OpenMM::GayBerneForce::getNumParticles
+      ~OpenMM::GayBerneForce::getNumExceptions
+      ~OpenMM::GayBerneForce::getNonbondedMethod
+      ~OpenMM::GayBerneForce::setNonbondedMethod
+      ~OpenMM::GayBerneForce::getCutoffDistance
+      ~OpenMM::GayBerneForce::setCutoffDistance
+      ~OpenMM::GayBerneForce::getUseSwitchingFunction
+      ~OpenMM::GayBerneForce::setUseSwitchingFunction
+      ~OpenMM::GayBerneForce::getSwitchingDistance
+      ~OpenMM::GayBerneForce::setSwitchingDistance
+      ~OpenMM::GayBerneForce::addParticle
+      ~OpenMM::GayBerneForce::getParticleParameters
+      ~OpenMM::GayBerneForce::setParticleParameters
+      ~OpenMM::GayBerneForce::addException
+      ~OpenMM::GayBerneForce::getExceptionParameters
+      ~OpenMM::GayBerneForce::setExceptionParameters
+      ~OpenMM::GayBerneForce::updateParametersInContext
+      ~OpenMM::GayBerneForce::usesPeriodicBoundaryConditions
+   
+
+   
+   
+   .. autodoxyenum:: NonbondedMethod
+   
+   

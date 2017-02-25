@@ -1,0 +1,31 @@
+AmoebaStretchBendForce
+==========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: AmoebaStretchBendForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AmoebaStretchBendForce.__init__
+      ~AmoebaStretchBendForce.addStretchBend
+      ~AmoebaStretchBendForce.getForceGroup
+      ~AmoebaStretchBendForce.getNumStretchBends
+      ~AmoebaStretchBendForce.getStretchBendParameters
+      ~AmoebaStretchBendForce.setForceGroup
+      ~AmoebaStretchBendForce.setStretchBendParameters
+      ~AmoebaStretchBendForce.setUsesPeriodicBoundaryConditions
+      ~AmoebaStretchBendForce.updateParametersInContext
+      ~AmoebaStretchBendForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

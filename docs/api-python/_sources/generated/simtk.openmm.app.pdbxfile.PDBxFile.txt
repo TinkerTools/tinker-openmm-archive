@@ -1,0 +1,28 @@
+PDBxFile
+==================================
+
+.. currentmodule:: simtk.openmm.app.pdbxfile
+
+.. autoclass:: PDBxFile
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PDBxFile.__init__
+      ~PDBxFile.getNumFrames
+      ~PDBxFile.getPositions
+      ~PDBxFile.getTopology
+      ~PDBxFile.writeFile
+      ~PDBxFile.writeHeader
+      ~PDBxFile.writeModel
+   
+   
+
+   
+   
+   

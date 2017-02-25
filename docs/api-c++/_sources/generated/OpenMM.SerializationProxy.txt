@@ -1,0 +1,19 @@
+SerializationProxy
+==========================
+
+.. autodoxyclass:: OpenMM::SerializationProxy
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::SerializationProxy::SerializationProxy
+      ~OpenMM::SerializationProxy::~SerializationProxy
+      ~OpenMM::SerializationProxy::getTypeName
+      ~OpenMM::SerializationProxy::serialize
+      ~OpenMM::SerializationProxy::deserialize
+   
+
+   

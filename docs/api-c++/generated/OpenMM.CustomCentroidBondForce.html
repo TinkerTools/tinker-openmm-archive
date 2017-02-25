@@ -1,0 +1,834 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CustomCentroidBondForce &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="customcentroidbondforce">
+<h1>CustomCentroidBondForce<a class="headerlink" href="#customcentroidbondforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForceE">
+<span id="OpenMM::CustomCentroidBondForce"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">CustomCentroidBondForce</code><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForceE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is similar to <a class="reference internal" href="OpenMM.CustomCompoundBondForce.html#_CPPv2N6OpenMM23CustomCompoundBondForceE" title="OpenMM::CustomCompoundBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCompoundBondForce</span></code></a>, but instead of applying forces between individual particles, it applies them between the centers of groups of particles. This is useful for a variety of purposes, such as restraints to keep two molecules from moving too far apart.</p>
+<p>When using this class, you define groups of particles, and the center of each group is calculated as a weighted average of the particle positions. By default, the particle masses are used as weights, so the center position is the center of mass. You can optionally specify different weights to use. You then add bonds just as with <a class="reference internal" href="OpenMM.CustomCompoundBondForce.html#_CPPv2N6OpenMM23CustomCompoundBondForceE" title="OpenMM::CustomCompoundBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCompoundBondForce</span></code></a>, but instead of specifying the particles that make up a bond, you specify the groups.</p>
+<p>When creating a <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce23CustomCentroidBondForceEiRKNSt6stringE" title="OpenMM::CustomCentroidBondForce::CustomCentroidBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCentroidBondForce</span></code></a>, you specify the number of groups involved in a bond, and an expression for the energy of each bond. It may depend on the center positions of individual groups, the distances between the centers of pairs of groups, the angles formed by sets of three groups, and the dihedral angles formed by sets of four groups.</p>
+<p>We refer to the groups in a bond as g1, g2, g3, etc. For each bond, <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce23CustomCentroidBondForceEiRKNSt6stringE" title="OpenMM::CustomCentroidBondForce::CustomCentroidBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCentroidBondForce</span></code></a> evaluates a user supplied algebraic expression to determine the interaction energy. The expression may depend on the following variables and functions:</p>
+<blockquote>
+<div><ul class="simple">
+<li>x1, y1, z1, x2, y2, z2, etc.: The x, y, and z coordinates of the centers of the groups. For example, x1 is the x coordinate of the center of group g1, and y3 is the y coordinate of the center of group g3.</li>
+<li>distance(g1, g2): the distance between the centers of groups g1 and g2 (where &#8220;g1&#8221; and &#8220;g2&#8221; may be replaced by the names of whichever groups you want to calculate the distance between).</li>
+<li>angle(g1, g2, g3): the angle formed by the centers of the three specified groups.</li>
+<li>dihedral(g1, g2, g3, g4): the dihedral angle formed by the centers of the four specified groups.</li>
+</ul>
+</div></blockquote>
+<p>The expression also may involve tabulated functions, and may depend on arbitrary global and per-bond parameters.</p>
+<p>To use this class, create a <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce23CustomCentroidBondForceEiRKNSt6stringE" title="OpenMM::CustomCentroidBondForce::CustomCentroidBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCentroidBondForce</span></code></a> object, passing an algebraic expression to the constructor that defines the interaction energy of each bond. Then call <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce19addPerBondParameterERKNSt6stringE" title="OpenMM::CustomCentroidBondForce::addPerBondParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">addPerBondParameter()</span></code></a> to define per-bond parameters and <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce18addGlobalParameterERKNSt6stringEd" title="OpenMM::CustomCentroidBondForce::addGlobalParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">addGlobalParameter()</span></code></a> to define global parameters. The values of per-bond parameters are specified as part of the system definition, while values of global parameters may be modified during a simulation by calling <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7Context12setParameterERKNSt6stringEd" title="OpenMM::Context::setParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context::setParameter()</span></code></a>.</p>
+<p>Next call <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce8addGroupERKNSt6vectorIiEERKNSt6vectorIdEE" title="OpenMM::CustomCentroidBondForce::addGroup"><code class="xref cpp cpp-any docutils literal"><span class="pre">addGroup()</span></code></a> to define the particle groups. Each group is specified by the particles it contains, and the weights to use when computing the center position.</p>
+<p>Then call <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce7addBondERKNSt6vectorIiEERKNSt6vectorIdEE" title="OpenMM::CustomCentroidBondForce::addBond"><code class="xref cpp cpp-any docutils literal"><span class="pre">addBond()</span></code></a> to define bonds and specify their parameter values. After a bond has been added, you can modify its parameters by calling <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce17setBondParametersEiRKNSt6vectorIiEERKNSt6vectorIdEE" title="OpenMM::CustomCentroidBondForce::setBondParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setBondParameters()</span></code></a>. This will have no effect on Contexts that already exist unless you call <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce25updateParametersInContextER7Context" title="OpenMM::CustomCentroidBondForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a>.</p>
+<p>As an example, the following code creates a <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce23CustomCentroidBondForceEiRKNSt6stringE" title="OpenMM::CustomCentroidBondForce::CustomCentroidBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCentroidBondForce</span></code></a> that implements a harmonic force between the centers of mass of two groups of particles.</p>
+<div class="highlight-C++"><div class="highlight"><pre><span></span><span class="n">CustomCentroidBondForce</span><span class="o">*</span> <span class="n">force</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomCentroidBondForce</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;0.5*k*distance(g1,g2)^2&quot;</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">addPerBondParameter</span><span class="p">(</span><span class="s">&quot;k&quot;</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">addGroup</span><span class="p">(</span><span class="n">particles1</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">addGroup</span><span class="p">(</span><span class="n">particles2</span><span class="p">);</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">bondGroups</span><span class="p">;</span>
+<span class="n">bondGroups</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">bondGroups</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">bondParameters</span><span class="p">;</span>
+<span class="n">bondParameters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">addBond</span><span class="p">(</span><span class="n">bondGroups</span><span class="p">,</span> <span class="n">bondParameters</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This class also has the ability to compute derivatives of the potential energy with respect to global parameters. Call <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce28addEnergyParameterDerivativeERKNSt6stringE" title="OpenMM::CustomCentroidBondForce::addEnergyParameterDerivative"><code class="xref cpp cpp-any docutils literal"><span class="pre">addEnergyParameterDerivative()</span></code></a> to request that the derivative with respect to a particular parameter be computed. You can then query its value in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> by calling getState() on it.</p>
+<p>Expressions may involve the operators + (add), - (subtract), * (multiply), / (divide), and ^ (power), and the following functions: sqrt, exp, log, sin, cos, sec, csc, tan, cot, asin, acos, atan, sinh, cosh, tanh, erf, erfc, min, max, abs, floor, ceil, step, delta, select. All trigonometric functions are defined in radians, and log is the natural logarithm. step(x) = 0 if x is less than 0, 1 otherwise. delta(x) = 1 if x is 0, 0 otherwise. select(x,y,z) = z if x = 0, y otherwise.</p>
+<p>In addition, you can call <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce20addTabulatedFunctionERKNSt6stringEP17TabulatedFunction" title="OpenMM::CustomCentroidBondForce::addTabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">addTabulatedFunction()</span></code></a> to define a new function based on tabulated values. You specify the function by creating a <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a> object. That function can then appear in the expression.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce23CustomCentroidBondForceEiRKNSt6stringE" title="OpenMM::CustomCentroidBondForce::CustomCentroidBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCentroidBondForce</span></code></a></td>
+<td>Create a <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce23CustomCentroidBondForceEiRKNSt6stringE" title="OpenMM::CustomCentroidBondForce::CustomCentroidBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCentroidBondForce</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForceD0Ev" title="OpenMM::CustomCentroidBondForce::~CustomCentroidBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">~CustomCentroidBondForce</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce19getNumGroupsPerBondEv" title="OpenMM::CustomCentroidBondForce::getNumGroupsPerBond"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumGroupsPerBond</span></code></a></td>
+<td>Get the number of groups used to define each bond.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce12getNumGroupsEv" title="OpenMM::CustomCentroidBondForce::getNumGroups"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumGroups</span></code></a></td>
+<td>Get the number of particle groups that have been defined.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce11getNumBondsEv" title="OpenMM::CustomCentroidBondForce::getNumBonds"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumBonds</span></code></a></td>
+<td>Get the number of bonds for which force field parameters have been defined.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce23getNumPerBondParametersEv" title="OpenMM::CustomCentroidBondForce::getNumPerBondParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumPerBondParameters</span></code></a></td>
+<td>Get the number of per-bond parameters that the interaction depends on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce22getNumGlobalParametersEv" title="OpenMM::CustomCentroidBondForce::getNumGlobalParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumGlobalParameters</span></code></a></td>
+<td>Get the number of global parameters that the interaction depends on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce32getNumEnergyParameterDerivativesEv" title="OpenMM::CustomCentroidBondForce::getNumEnergyParameterDerivatives"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumEnergyParameterDerivatives</span></code></a></td>
+<td>Get the number of global parameters with respect to which the derivative of the energy should be computed.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce24getNumTabulatedFunctionsEv" title="OpenMM::CustomCentroidBondForce::getNumTabulatedFunctions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumTabulatedFunctions</span></code></a></td>
+<td>Get the number of tabulated functions that have been defined.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce15getNumFunctionsEv" title="OpenMM::CustomCentroidBondForce::getNumFunctions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumFunctions</span></code></a></td>
+<td>Get the number of tabulated functions that have been defined.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce17getEnergyFunctionEv" title="OpenMM::CustomCentroidBondForce::getEnergyFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">getEnergyFunction</span></code></a></td>
+<td>Get the algebraic expression that gives the interaction energy of each bond</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce17setEnergyFunctionERKNSt6stringE" title="OpenMM::CustomCentroidBondForce::setEnergyFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">setEnergyFunction</span></code></a></td>
+<td>Set the algebraic expression that gives the interaction energy of each bond</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce19addPerBondParameterERKNSt6stringE" title="OpenMM::CustomCentroidBondForce::addPerBondParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">addPerBondParameter</span></code></a></td>
+<td>Add a new per-bond parameter that the interaction may depend on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce23getPerBondParameterNameEi" title="OpenMM::CustomCentroidBondForce::getPerBondParameterName"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPerBondParameterName</span></code></a></td>
+<td>Get the name of a per-bond parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce23setPerBondParameterNameEiRKNSt6stringE" title="OpenMM::CustomCentroidBondForce::setPerBondParameterName"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPerBondParameterName</span></code></a></td>
+<td>Set the name of a per-bond parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce18addGlobalParameterERKNSt6stringEd" title="OpenMM::CustomCentroidBondForce::addGlobalParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">addGlobalParameter</span></code></a></td>
+<td>Add a new global parameter that the interaction may depend on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce22getGlobalParameterNameEi" title="OpenMM::CustomCentroidBondForce::getGlobalParameterName"><code class="xref cpp cpp-any docutils literal"><span class="pre">getGlobalParameterName</span></code></a></td>
+<td>Get the name of a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce22setGlobalParameterNameEiRKNSt6stringE" title="OpenMM::CustomCentroidBondForce::setGlobalParameterName"><code class="xref cpp cpp-any docutils literal"><span class="pre">setGlobalParameterName</span></code></a></td>
+<td>Set the name of a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce30getGlobalParameterDefaultValueEi" title="OpenMM::CustomCentroidBondForce::getGlobalParameterDefaultValue"><code class="xref cpp cpp-any docutils literal"><span class="pre">getGlobalParameterDefaultValue</span></code></a></td>
+<td>Get the default value of a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce30setGlobalParameterDefaultValueEid" title="OpenMM::CustomCentroidBondForce::setGlobalParameterDefaultValue"><code class="xref cpp cpp-any docutils literal"><span class="pre">setGlobalParameterDefaultValue</span></code></a></td>
+<td>Set the default value of a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce28addEnergyParameterDerivativeERKNSt6stringE" title="OpenMM::CustomCentroidBondForce::addEnergyParameterDerivative"><code class="xref cpp cpp-any docutils literal"><span class="pre">addEnergyParameterDerivative</span></code></a></td>
+<td>Request that this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> compute the derivative of its energy with respect to a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce32getEnergyParameterDerivativeNameEi" title="OpenMM::CustomCentroidBondForce::getEnergyParameterDerivativeName"><code class="xref cpp cpp-any docutils literal"><span class="pre">getEnergyParameterDerivativeName</span></code></a></td>
+<td>Get the name of a global parameter with respect to which this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> should compute the derivative of the energy.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce8addGroupERKNSt6vectorIiEERKNSt6vectorIdEE" title="OpenMM::CustomCentroidBondForce::addGroup"><code class="xref cpp cpp-any docutils literal"><span class="pre">addGroup</span></code></a></td>
+<td>Add a particle group.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce18getGroupParametersEiRNSt6vectorIiEERNSt6vectorIdEE" title="OpenMM::CustomCentroidBondForce::getGroupParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getGroupParameters</span></code></a></td>
+<td>Get the properties of a group.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce18setGroupParametersEiRKNSt6vectorIiEERKNSt6vectorIdEE" title="OpenMM::CustomCentroidBondForce::setGroupParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setGroupParameters</span></code></a></td>
+<td>Set the properties of a group.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce7addBondERKNSt6vectorIiEERKNSt6vectorIdEE" title="OpenMM::CustomCentroidBondForce::addBond"><code class="xref cpp cpp-any docutils literal"><span class="pre">addBond</span></code></a></td>
+<td>Add a bond to the force</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce17getBondParametersEiRNSt6vectorIiEERNSt6vectorIdEE" title="OpenMM::CustomCentroidBondForce::getBondParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getBondParameters</span></code></a></td>
+<td>Get the properties of a bond.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce17setBondParametersEiRKNSt6vectorIiEERKNSt6vectorIdEE" title="OpenMM::CustomCentroidBondForce::setBondParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setBondParameters</span></code></a></td>
+<td>Set the properties of a bond.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce20addTabulatedFunctionERKNSt6stringEP17TabulatedFunction" title="OpenMM::CustomCentroidBondForce::addTabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">addTabulatedFunction</span></code></a></td>
+<td>Add a tabulated function that may appear in the energy expression.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce20getTabulatedFunctionEi" title="OpenMM::CustomCentroidBondForce::getTabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">getTabulatedFunction</span></code></a></td>
+<td>Get a const reference to a tabulated function that may appear in the energy expression.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce20getTabulatedFunctionEi" title="OpenMM::CustomCentroidBondForce::getTabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">getTabulatedFunction</span></code></a></td>
+<td>Get a reference to a tabulated function that may appear in the energy expression.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce24getTabulatedFunctionNameEi" title="OpenMM::CustomCentroidBondForce::getTabulatedFunctionName"><code class="xref cpp cpp-any docutils literal"><span class="pre">getTabulatedFunctionName</span></code></a></td>
+<td>Get the name of a tabulated function that may appear in the energy expression.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce25updateParametersInContextER7Context" title="OpenMM::CustomCentroidBondForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext</span></code></a></td>
+<td>Update the per-bond parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce33setUsesPeriodicBoundaryConditionsEb" title="OpenMM::CustomCentroidBondForce::setUsesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">setUsesPeriodicBoundaryConditions</span></code></a></td>
+<td>Set whether this force should apply periodic boundary conditions when calculating displacements.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce30usesPeriodicBoundaryConditionsEv" title="OpenMM::CustomCentroidBondForce::usesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a></td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce23CustomCentroidBondForceEiRKNSt6stringE">
+<span id="OpenMM::CustomCentroidBondForce::CustomCentroidBondForce__i.ssCR"></span><code class="descclassname"></code><code class="descname">CustomCentroidBondForce</code><span class="sig-paren">(</span>int <em>numGroups</em>, <em class="property">const</em> std::string &amp;<em>energy</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce23CustomCentroidBondForceEiRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce23CustomCentroidBondForceEiRKNSt6stringE" title="OpenMM::CustomCentroidBondForce::CustomCentroidBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCentroidBondForce</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>numGroups</strong> &#8211; the number of groups used to define each bond</li>
+<li><strong>energy</strong> &#8211; an algebraic expression giving the interaction energy of each bond as a function of particle positions, inter-particle distances, angles, and dihedrals, and any global and per-bond parameters</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForceD0Ev">
+<span id="OpenMM::CustomCentroidBondForce::~CustomCentroidBondForce"></span><code class="descclassname"></code><code class="descname">~CustomCentroidBondForce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForceD0Ev" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce19getNumGroupsPerBondEv">
+<span id="OpenMM::CustomCentroidBondForce::getNumGroupsPerBondC"></span>int <code class="descclassname"></code><code class="descname">getNumGroupsPerBond</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce19getNumGroupsPerBondEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of groups used to define each bond.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce12getNumGroupsEv">
+<span id="OpenMM::CustomCentroidBondForce::getNumGroupsC"></span>int <code class="descclassname"></code><code class="descname">getNumGroups</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce12getNumGroupsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particle groups that have been defined.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce11getNumBondsEv">
+<span id="OpenMM::CustomCentroidBondForce::getNumBondsC"></span>int <code class="descclassname"></code><code class="descname">getNumBonds</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce11getNumBondsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of bonds for which force field parameters have been defined.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce23getNumPerBondParametersEv">
+<span id="OpenMM::CustomCentroidBondForce::getNumPerBondParametersC"></span>int <code class="descclassname"></code><code class="descname">getNumPerBondParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce23getNumPerBondParametersEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of per-bond parameters that the interaction depends on.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce22getNumGlobalParametersEv">
+<span id="OpenMM::CustomCentroidBondForce::getNumGlobalParametersC"></span>int <code class="descclassname"></code><code class="descname">getNumGlobalParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce22getNumGlobalParametersEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of global parameters that the interaction depends on.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce32getNumEnergyParameterDerivativesEv">
+<span id="OpenMM::CustomCentroidBondForce::getNumEnergyParameterDerivativesC"></span>int <code class="descclassname"></code><code class="descname">getNumEnergyParameterDerivatives</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce32getNumEnergyParameterDerivativesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of global parameters with respect to which the derivative of the energy should be computed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce24getNumTabulatedFunctionsEv">
+<span id="OpenMM::CustomCentroidBondForce::getNumTabulatedFunctionsC"></span>int <code class="descclassname"></code><code class="descname">getNumTabulatedFunctions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce24getNumTabulatedFunctionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of tabulated functions that have been defined.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce15getNumFunctionsEv">
+<span id="OpenMM::CustomCentroidBondForce::getNumFunctionsC"></span>int <code class="descclassname"></code><code class="descname">getNumFunctions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce15getNumFunctionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of tabulated functions that have been defined.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use <a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce24getNumTabulatedFunctionsEv" title="OpenMM::CustomCentroidBondForce::getNumTabulatedFunctions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumTabulatedFunctions()</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce17getEnergyFunctionEv">
+<span id="OpenMM::CustomCentroidBondForce::getEnergyFunctionC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getEnergyFunction</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce17getEnergyFunctionEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the algebraic expression that gives the interaction energy of each bond</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce17setEnergyFunctionERKNSt6stringE">
+<span id="OpenMM::CustomCentroidBondForce::setEnergyFunction__ssCR"></span>void <code class="descclassname"></code><code class="descname">setEnergyFunction</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>energy</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce17setEnergyFunctionERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the algebraic expression that gives the interaction energy of each bond</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce19addPerBondParameterERKNSt6stringE">
+<span id="OpenMM::CustomCentroidBondForce::addPerBondParameter__ssCR"></span>int <code class="descclassname"></code><code class="descname">addPerBondParameter</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce19addPerBondParameterERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new per-bond parameter that the interaction may depend on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the parameter</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the parameter that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce23getPerBondParameterNameEi">
+<span id="OpenMM::CustomCentroidBondForce::getPerBondParameterName__iC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getPerBondParameterName</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce23getPerBondParameterNameEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a per-bond parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to get the name</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce23setPerBondParameterNameEiRKNSt6stringE">
+<span id="OpenMM::CustomCentroidBondForce::setPerBondParameterName__i.ssCR"></span>void <code class="descclassname"></code><code class="descname">setPerBondParameterName</code><span class="sig-paren">(</span>int <em>index</em>, <em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce23setPerBondParameterNameEiRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of a per-bond parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to set the name</li>
+<li><strong>name</strong> &#8211; the name of the parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce18addGlobalParameterERKNSt6stringEd">
+<span id="OpenMM::CustomCentroidBondForce::addGlobalParameter__ssCR.double"></span>int <code class="descclassname"></code><code class="descname">addGlobalParameter</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, double <em>defaultValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce18addGlobalParameterERKNSt6stringEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new global parameter that the interaction may depend on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the parameter</li>
+<li><strong>defaultValue</strong> &#8211; the default value of the parameter</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the parameter that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce22getGlobalParameterNameEi">
+<span id="OpenMM::CustomCentroidBondForce::getGlobalParameterName__iC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getGlobalParameterName</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce22getGlobalParameterNameEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to get the name</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce22setGlobalParameterNameEiRKNSt6stringE">
+<span id="OpenMM::CustomCentroidBondForce::setGlobalParameterName__i.ssCR"></span>void <code class="descclassname"></code><code class="descname">setGlobalParameterName</code><span class="sig-paren">(</span>int <em>index</em>, <em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce22setGlobalParameterNameEiRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to set the name</li>
+<li><strong>name</strong> &#8211; the name of the parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce30getGlobalParameterDefaultValueEi">
+<span id="OpenMM::CustomCentroidBondForce::getGlobalParameterDefaultValue__iC"></span>double <code class="descclassname"></code><code class="descname">getGlobalParameterDefaultValue</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce30getGlobalParameterDefaultValueEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default value of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to get the default value</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the parameter default value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce30setGlobalParameterDefaultValueEid">
+<span id="OpenMM::CustomCentroidBondForce::setGlobalParameterDefaultValue__i.double"></span>void <code class="descclassname"></code><code class="descname">setGlobalParameterDefaultValue</code><span class="sig-paren">(</span>int <em>index</em>, double <em>defaultValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce30setGlobalParameterDefaultValueEid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default value of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to set the default value</li>
+<li><strong>defaultValue</strong> &#8211; the default value of the parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce28addEnergyParameterDerivativeERKNSt6stringE">
+<span id="OpenMM::CustomCentroidBondForce::addEnergyParameterDerivative__ssCR"></span>void <code class="descclassname"></code><code class="descname">addEnergyParameterDerivative</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce28addEnergyParameterDerivativeERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request that this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> compute the derivative of its energy with respect to a global parameter. The parameter must have already been added with <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce18addGlobalParameterERKNSt6stringEd" title="OpenMM::CustomCentroidBondForce::addGlobalParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">addGlobalParameter()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce32getEnergyParameterDerivativeNameEi">
+<span id="OpenMM::CustomCentroidBondForce::getEnergyParameterDerivativeName__iC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getEnergyParameterDerivativeName</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce32getEnergyParameterDerivativeNameEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a global parameter with respect to which this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> should compute the derivative of the energy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter derivative, between 0 and <a class="reference internal" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce32getNumEnergyParameterDerivativesEv" title="OpenMM::CustomCentroidBondForce::getNumEnergyParameterDerivatives"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumEnergyParameterDerivatives()</span></code></a></li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce8addGroupERKNSt6vectorIiEERKNSt6vectorIdEE">
+<span id="OpenMM::CustomCentroidBondForce::addGroup__std::vector:i:CR.std::vector:double:CR"></span>int <code class="descclassname"></code><code class="descname">addGroup</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;int&gt; &amp;<em>particles</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>weights</em> = std::vector&lt; double &gt;()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce8addGroupERKNSt6vectorIiEERKNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a particle group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particles</strong> &#8211; the indices of the particles to include in the group</li>
+<li><strong>weights</strong> &#8211; the weight to use for each particle when computing the center position. If this is omitted, then particle masses will be used as weights.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the group that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce18getGroupParametersEiRNSt6vectorIiEERNSt6vectorIdEE">
+<span id="OpenMM::CustomCentroidBondForce::getGroupParameters__i.std::vector:i:R.std::vector:double:RC"></span>void <code class="descclassname"></code><code class="descname">getGroupParameters</code><span class="sig-paren">(</span>int <em>index</em>, std::vector&lt;int&gt; &amp;<em>particles</em>, std::vector&lt;double&gt; &amp;<em>weights</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce18getGroupParametersEiRNSt6vectorIiEERNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the properties of a group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the group to get</li>
+<li><strong>particles</strong> &#8211; [out] the indices of the particles in the group</li>
+<li><strong>weights</strong> &#8211; [out] the weight used for each particle when computing the center position. If no weights were specified, this vector will be empty indicating that particle masses should be used as weights.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce18setGroupParametersEiRKNSt6vectorIiEERKNSt6vectorIdEE">
+<span id="OpenMM::CustomCentroidBondForce::setGroupParameters__i.std::vector:i:CR.std::vector:double:CR"></span>void <code class="descclassname"></code><code class="descname">setGroupParameters</code><span class="sig-paren">(</span>int <em>index</em>, <em class="property">const</em> std::vector&lt;int&gt; &amp;<em>particles</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>weights</em> = std::vector&lt; double &gt;()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce18setGroupParametersEiRKNSt6vectorIiEERKNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the properties of a group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the group to set</li>
+<li><strong>particles</strong> &#8211; the indices of the particles in the group</li>
+<li><strong>weights</strong> &#8211; the weight to use for each particle when computing the center position. If this is omitted, then particle masses will be used as weights.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce7addBondERKNSt6vectorIiEERKNSt6vectorIdEE">
+<span id="OpenMM::CustomCentroidBondForce::addBond__std::vector:i:CR.std::vector:double:CR"></span>int <code class="descclassname"></code><code class="descname">addBond</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;int&gt; &amp;<em>groups</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>parameters</em> = std::vector&lt; double &gt;()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce7addBondERKNSt6vectorIiEERKNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a bond to the force</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>groups</strong> &#8211; the indices of the groups the bond depends on</li>
+<li><strong>parameters</strong> &#8211; the list of per-bond parameter values for the new bond</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the bond that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce17getBondParametersEiRNSt6vectorIiEERNSt6vectorIdEE">
+<span id="OpenMM::CustomCentroidBondForce::getBondParameters__i.std::vector:i:R.std::vector:double:RC"></span>void <code class="descclassname"></code><code class="descname">getBondParameters</code><span class="sig-paren">(</span>int <em>index</em>, std::vector&lt;int&gt; &amp;<em>groups</em>, std::vector&lt;double&gt; &amp;<em>parameters</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce17getBondParametersEiRNSt6vectorIiEERNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the properties of a bond.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the bond to get</li>
+<li><strong>groups</strong> &#8211; [out] the indices of the groups in the bond</li>
+<li><strong>parameters</strong> &#8211; [out] the list of per-bond parameter values for the bond</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce17setBondParametersEiRKNSt6vectorIiEERKNSt6vectorIdEE">
+<span id="OpenMM::CustomCentroidBondForce::setBondParameters__i.std::vector:i:CR.std::vector:double:CR"></span>void <code class="descclassname"></code><code class="descname">setBondParameters</code><span class="sig-paren">(</span>int <em>index</em>, <em class="property">const</em> std::vector&lt;int&gt; &amp;<em>groups</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>parameters</em> = std::vector&lt; double &gt;()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce17setBondParametersEiRKNSt6vectorIiEERKNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the properties of a bond.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the bond to set</li>
+<li><strong>groups</strong> &#8211; the indices of the groups in the bond</li>
+<li><strong>parameters</strong> &#8211; the list of per-bond parameter values for the bond</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce20addTabulatedFunctionERKNSt6stringEP17TabulatedFunction">
+<span id="OpenMM::CustomCentroidBondForce::addTabulatedFunction__ssCR.TabulatedFunctionP"></span>int <code class="descclassname"></code><code class="descname">addTabulatedFunction</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction">TabulatedFunction</a> *<em>function</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce20addTabulatedFunctionERKNSt6stringEP17TabulatedFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a tabulated function that may appear in the energy expression.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the function as it appears in expressions</li>
+<li><strong>function</strong> &#8211; a <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a> object defining the function. The <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a> should have been created on the heap with the &#8220;new&#8221; operator. The <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> takes over ownership of it, and deletes it when the <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> itself is deleted.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the function that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce20getTabulatedFunctionEi">
+<span id="OpenMM::CustomCentroidBondForce::getTabulatedFunction__iC"></span><em class="property">const</em> <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction">TabulatedFunction</a> &amp;<code class="descclassname"></code><code class="descname">getTabulatedFunction</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce20getTabulatedFunctionEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a const reference to a tabulated function that may appear in the energy expression.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the function to get</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a> object defining the function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce20getTabulatedFunctionEi">
+<span id="OpenMM::CustomCentroidBondForce::getTabulatedFunction__i"></span><a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction">TabulatedFunction</a> &amp;<code class="descclassname"></code><code class="descname">getTabulatedFunction</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce20getTabulatedFunctionEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a reference to a tabulated function that may appear in the energy expression.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the function to get</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a> object defining the function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce24getTabulatedFunctionNameEi">
+<span id="OpenMM::CustomCentroidBondForce::getTabulatedFunctionName__iC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getTabulatedFunctionName</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce24getTabulatedFunctionNameEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a tabulated function that may appear in the energy expression.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the function to get</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the name of the function as it appears in expressions</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce25updateParametersInContextER7Context">
+<span id="OpenMM::CustomCentroidBondForce::updateParametersInContext__ContextR"></span>void <code class="descclassname"></code><code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce25updateParametersInContextER7Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the per-bond parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object. This method provides an efficient method to update certain parameters in an existing <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> without needing to reinitialize it. Simply call <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce17setBondParametersEiRKNSt6vectorIiEERKNSt6vectorIdEE" title="OpenMM::CustomCentroidBondForce::setBondParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setBondParameters()</span></code></a> to modify this object&#8217;s parameters, then call <a class="reference internal" href="#_CPPv2N6OpenMM23CustomCentroidBondForce25updateParametersInContextER7Context" title="OpenMM::CustomCentroidBondForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a> to copy them over to the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<p>This method has several limitations. The only information it updates is the values of per-bond parameters. All other aspects of the <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> (such as the energy function) are unaffected and can only be changed by reinitializing the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>. Neither the definitions of groups nor the set of groups involved in a bond can be changed, nor can new bonds be added.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM23CustomCentroidBondForce33setUsesPeriodicBoundaryConditionsEb">
+<span id="OpenMM::CustomCentroidBondForce::setUsesPeriodicBoundaryConditions__b"></span>void <code class="descclassname"></code><code class="descname">setUsesPeriodicBoundaryConditions</code><span class="sig-paren">(</span>bool <em>periodic</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM23CustomCentroidBondForce33setUsesPeriodicBoundaryConditionsEb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether this force should apply periodic boundary conditions when calculating displacements. Usually this is not appropriate for bonded forces, but there are situations when it can be useful.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM23CustomCentroidBondForce30usesPeriodicBoundaryConditionsEv">
+<span id="OpenMM::CustomCentroidBondForce::usesPeriodicBoundaryConditionsC"></span>bool <code class="descclassname"></code><code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM23CustomCentroidBondForce30usesPeriodicBoundaryConditionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if force uses PBC and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.CustomCentroidBondForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

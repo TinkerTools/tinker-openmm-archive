@@ -1,0 +1,43 @@
+CharmmPsfFile
+============================================
+
+.. currentmodule:: simtk.openmm.app.charmmpsffile
+
+.. autoclass:: CharmmPsfFile
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CharmmPsfFile.__init__
+      ~CharmmPsfFile.createSystem
+      ~CharmmPsfFile.deleteCmap
+      ~CharmmPsfFile.loadParameters
+      ~CharmmPsfFile.setBox
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CharmmPsfFile.ANGLE_FORCE_GROUP
+      ~CharmmPsfFile.BOND_FORCE_GROUP
+      ~CharmmPsfFile.CMAP_FORCE_GROUP
+      ~CharmmPsfFile.DIHEDRAL_FORCE_GROUP
+      ~CharmmPsfFile.GB_FORCE_GROUP
+      ~CharmmPsfFile.IMPROPER_FORCE_GROUP
+      ~CharmmPsfFile.NONBONDED_FORCE_GROUP
+      ~CharmmPsfFile.UREY_BRADLEY_FORCE_GROUP
+      ~CharmmPsfFile.boxLengths
+      ~CharmmPsfFile.boxVectors
+      ~CharmmPsfFile.system
+      ~CharmmPsfFile.topology
+   
+   

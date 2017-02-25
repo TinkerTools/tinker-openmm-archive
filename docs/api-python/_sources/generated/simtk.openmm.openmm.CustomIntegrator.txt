@@ -1,0 +1,70 @@
+CustomIntegrator
+====================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CustomIntegrator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CustomIntegrator.__init__
+      ~CustomIntegrator.addComputeGlobal
+      ~CustomIntegrator.addComputePerDof
+      ~CustomIntegrator.addComputeSum
+      ~CustomIntegrator.addConstrainPositions
+      ~CustomIntegrator.addConstrainVelocities
+      ~CustomIntegrator.addGlobalVariable
+      ~CustomIntegrator.addPerDofVariable
+      ~CustomIntegrator.addUpdateContextState
+      ~CustomIntegrator.beginIfBlock
+      ~CustomIntegrator.beginWhileBlock
+      ~CustomIntegrator.endBlock
+      ~CustomIntegrator.getComputationStep
+      ~CustomIntegrator.getConstraintTolerance
+      ~CustomIntegrator.getGlobalVariable
+      ~CustomIntegrator.getGlobalVariableByName
+      ~CustomIntegrator.getGlobalVariableName
+      ~CustomIntegrator.getKineticEnergyExpression
+      ~CustomIntegrator.getNumComputations
+      ~CustomIntegrator.getNumGlobalVariables
+      ~CustomIntegrator.getNumPerDofVariables
+      ~CustomIntegrator.getPerDofVariable
+      ~CustomIntegrator.getPerDofVariableByName
+      ~CustomIntegrator.getPerDofVariableName
+      ~CustomIntegrator.getRandomNumberSeed
+      ~CustomIntegrator.getStepSize
+      ~CustomIntegrator.setConstraintTolerance
+      ~CustomIntegrator.setGlobalVariable
+      ~CustomIntegrator.setGlobalVariableByName
+      ~CustomIntegrator.setKineticEnergyExpression
+      ~CustomIntegrator.setPerDofVariable
+      ~CustomIntegrator.setPerDofVariableByName
+      ~CustomIntegrator.setRandomNumberSeed
+      ~CustomIntegrator.setStepSize
+      ~CustomIntegrator.step
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CustomIntegrator.BlockEnd
+      ~CustomIntegrator.ComputeGlobal
+      ~CustomIntegrator.ComputePerDof
+      ~CustomIntegrator.ComputeSum
+      ~CustomIntegrator.ConstrainPositions
+      ~CustomIntegrator.ConstrainVelocities
+      ~CustomIntegrator.IfBlockStart
+      ~CustomIntegrator.UpdateContextState
+      ~CustomIntegrator.WhileBlockStart
+   
+   

@@ -1,0 +1,31 @@
+HarmonicBondForce
+=====================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: HarmonicBondForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~HarmonicBondForce.__init__
+      ~HarmonicBondForce.addBond
+      ~HarmonicBondForce.getBondParameters
+      ~HarmonicBondForce.getForceGroup
+      ~HarmonicBondForce.getNumBonds
+      ~HarmonicBondForce.setBondParameters
+      ~HarmonicBondForce.setForceGroup
+      ~HarmonicBondForce.setUsesPeriodicBoundaryConditions
+      ~HarmonicBondForce.updateParametersInContext
+      ~HarmonicBondForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

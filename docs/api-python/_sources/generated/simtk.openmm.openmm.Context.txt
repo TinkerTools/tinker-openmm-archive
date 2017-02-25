@@ -1,0 +1,42 @@
+Context
+===========================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: Context
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Context.__init__
+      ~Context.applyConstraints
+      ~Context.applyVelocityConstraints
+      ~Context.computeVirtualSites
+      ~Context.createCheckpoint
+      ~Context.getIntegrator
+      ~Context.getMolecules
+      ~Context.getParameter
+      ~Context.getParameters
+      ~Context.getPlatform
+      ~Context.getState
+      ~Context.getSystem
+      ~Context.loadCheckpoint
+      ~Context.reinitialize
+      ~Context.setParameter
+      ~Context.setPeriodicBoxVectors
+      ~Context.setPositions
+      ~Context.setState
+      ~Context.setTime
+      ~Context.setVelocities
+      ~Context.setVelocitiesToTemperature
+   
+   
+
+   
+   
+   

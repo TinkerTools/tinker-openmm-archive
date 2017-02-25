@@ -1,0 +1,30 @@
+AmoebaOutOfPlaneBendForce
+=================================
+
+.. autodoxyclass:: OpenMM::AmoebaOutOfPlaneBendForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaOutOfPlaneBendForce::AmoebaOutOfPlaneBendForce
+      ~OpenMM::AmoebaOutOfPlaneBendForce::getNumOutOfPlaneBends
+      ~OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendCubic
+      ~OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendCubic
+      ~OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendQuartic
+      ~OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendQuartic
+      ~OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendPentic
+      ~OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendPentic
+      ~OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendSextic
+      ~OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendSextic
+      ~OpenMM::AmoebaOutOfPlaneBendForce::addOutOfPlaneBend
+      ~OpenMM::AmoebaOutOfPlaneBendForce::getOutOfPlaneBendParameters
+      ~OpenMM::AmoebaOutOfPlaneBendForce::setOutOfPlaneBendParameters
+      ~OpenMM::AmoebaOutOfPlaneBendForce::updateParametersInContext
+      ~OpenMM::AmoebaOutOfPlaneBendForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::AmoebaOutOfPlaneBendForce::usesPeriodicBoundaryConditions
+   
+
+   

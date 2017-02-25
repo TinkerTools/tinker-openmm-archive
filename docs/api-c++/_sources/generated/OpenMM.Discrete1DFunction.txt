@@ -1,0 +1,18 @@
+Discrete1DFunction
+==========================
+
+.. autodoxyclass:: OpenMM::Discrete1DFunction
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::Discrete1DFunction::Discrete1DFunction
+      ~OpenMM::Discrete1DFunction::getFunctionParameters
+      ~OpenMM::Discrete1DFunction::setFunctionParameters
+      ~OpenMM::Discrete1DFunction::Copy
+   
+
+   

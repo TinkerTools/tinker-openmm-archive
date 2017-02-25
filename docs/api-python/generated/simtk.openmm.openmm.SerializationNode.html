@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SerializationNode &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Library Layer" href="../library.html" />
+    <link rel="next" title="SerializationProxy" href="simtk.openmm.openmm.SerializationProxy.html" />
+    <link rel="prev" title="OutOfPlaneSite" href="simtk.openmm.openmm.OutOfPlaneSite.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="serializationnode">
+<h1>SerializationNode<a class="headerlink" href="#serializationnode" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.openmm.SerializationNode">
+<em class="property">class </em><code class="descclassname">simtk.openmm.openmm.</code><code class="descname">SerializationNode</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.SerializationNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A SerializationNode stores information about an object during serialization or deserialization.</p>
+<p>When an object is serialized, its SerializationProxy is first called to copy information about the object into a SerializationNode. That information can then be written to the output stream in the desired format.</p>
+<p>When an object is deserialized, the input stream is read and the information is stored into a SerializationNode. The appropriate SerializationProxy is then called to reconstruct the object.</p>
+<p>SerializationNodes are arranged in a tree. There will often be a one-to-one correspondence between objects and SerializationNodes, but that need not always be true. A proxy is free to create whatever child nodes it wants and store information in them using whatever organization is most convenient.</p>
+<p>Each SerializationNode can store an arbitrary set of &#8220;properties&#8221;, represented as key-value pairs. The key is always a string, while the value may be a string, an int, or a double. If a value is specified using one data type and then accessed as a different data type, the node will attempt to convert the value in an appropriate way. For example, it is always reasonable to call getStringProperty() to access a property as a string. Similarly, you can use setStringProperty() to specify a property and then access it using getIntProperty(). This will produce the expected result if the original value was, in fact, the string representation of an int, but if the original string was non-numeric, the result is undefined.</p>
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.__init__" title="simtk.openmm.openmm.SerializationNode.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>(*args,&nbsp;**kwargs)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.createChildNode" title="simtk.openmm.openmm.SerializationNode.createChildNode"><code class="xref py py-obj docutils literal"><span class="pre">createChildNode</span></code></a>((self,&nbsp;...)</td>
+<td>Create a new child node by serializing an object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.getBoolProperty" title="simtk.openmm.openmm.SerializationNode.getBoolProperty"><code class="xref py py-obj docutils literal"><span class="pre">getBoolProperty</span></code></a>((self,&nbsp;name)&nbsp;-&gt;&nbsp;bool)</td>
+<td>getBoolProperty(self, name, defaultValue) -&gt; bool</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.getChildNode" title="simtk.openmm.openmm.SerializationNode.getChildNode"><code class="xref py py-obj docutils literal"><span class="pre">getChildNode</span></code></a>((self,&nbsp;name)&nbsp;-&gt;&nbsp;SerializationNode)</td>
+<td>getChildNode(self, name) -&gt; SerializationNode</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.getChildren" title="simtk.openmm.openmm.SerializationNode.getChildren"><code class="xref py py-obj docutils literal"><span class="pre">getChildren</span></code></a>(...)</td>
+<td>getChildren(self) -&gt; std::vector&lt; OpenMM::SerializationNode,std::allocator&lt; OpenMM::SerializationNode &gt; &gt; &amp;</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.getDoubleProperty" title="simtk.openmm.openmm.SerializationNode.getDoubleProperty"><code class="xref py py-obj docutils literal"><span class="pre">getDoubleProperty</span></code></a>((self,&nbsp;name)&nbsp;-&gt;&nbsp;double)</td>
+<td>getDoubleProperty(self, name, defaultValue) -&gt; double</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.getIntProperty" title="simtk.openmm.openmm.SerializationNode.getIntProperty"><code class="xref py py-obj docutils literal"><span class="pre">getIntProperty</span></code></a>((self,&nbsp;name)&nbsp;-&gt;&nbsp;int)</td>
+<td>getIntProperty(self, name, defaultValue) -&gt; int</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.getName" title="simtk.openmm.openmm.SerializationNode.getName"><code class="xref py py-obj docutils literal"><span class="pre">getName</span></code></a>((self)&nbsp;-&gt;&nbsp;std::string&nbsp;const&nbsp;&amp;)</td>
+<td>Get the name of this SerializationNode.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.getProperties" title="simtk.openmm.openmm.SerializationNode.getProperties"><code class="xref py py-obj docutils literal"><span class="pre">getProperties</span></code></a>((self)&nbsp;-&gt;&nbsp;mapstringstring)</td>
+<td>Get a map containing all of this node&#8217;s properties.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.getStringProperty" title="simtk.openmm.openmm.SerializationNode.getStringProperty"><code class="xref py py-obj docutils literal"><span class="pre">getStringProperty</span></code></a>((self,&nbsp;...)</td>
+<td>getStringProperty(self, name, defaultValue) -&gt; std::string const &amp;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.hasProperty" title="simtk.openmm.openmm.SerializationNode.hasProperty"><code class="xref py py-obj docutils literal"><span class="pre">hasProperty</span></code></a>((self,&nbsp;name)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Determine whether this node has a property with a particular node.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.setBoolProperty" title="simtk.openmm.openmm.SerializationNode.setBoolProperty"><code class="xref py py-obj docutils literal"><span class="pre">setBoolProperty</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Set the value of a property, specified as a bool.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.setDoubleProperty" title="simtk.openmm.openmm.SerializationNode.setDoubleProperty"><code class="xref py py-obj docutils literal"><span class="pre">setDoubleProperty</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Set the value of a property, specified as a double.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.setIntProperty" title="simtk.openmm.openmm.SerializationNode.setIntProperty"><code class="xref py py-obj docutils literal"><span class="pre">setIntProperty</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Set the value of a property, specified as an int.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.setName" title="simtk.openmm.openmm.SerializationNode.setName"><code class="xref py py-obj docutils literal"><span class="pre">setName</span></code></a>(self,&nbsp;name)</td>
+<td>Set the name of this SerializationNode.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode.setStringProperty" title="simtk.openmm.openmm.SerializationNode.setStringProperty"><code class="xref py py-obj docutils literal"><span class="pre">setStringProperty</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Set the value of a property, specified as a string.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.getName">
+<code class="descname">getName</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.getName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of this SerializationNode.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.setName">
+<code class="descname">setName</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.setName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of this SerializationNode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; the new name of the SerializationNode</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.getChildren">
+<code class="descname">getChildren</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; std::vector&lt; OpenMM::SerializationNode,std::allocator&lt; OpenMM::SerializationNode &gt; &gt; const<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.getChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>getChildren(self) -&gt; std::vector&lt; OpenMM::SerializationNode,std::allocator&lt; OpenMM::SerializationNode &gt; &gt; &amp;</p>
+<p>Get a reference to this node&#8217;s child nodes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.getChildNode">
+<code class="descname">getChildNode</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; SerializationNode<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.getChildNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>getChildNode(self, name) -&gt; SerializationNode</p>
+<p>Get a reference to the child node with a particular name. If there is no child with the specified name, this throws an exception.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>the</strong> (<em>string</em>) &#8211; name of the child node to get</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.getProperties">
+<code class="descname">getProperties</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; mapstringstring<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.getProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a map containing all of this node&#8217;s properties.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.hasProperty">
+<code class="descname">hasProperty</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.hasProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine whether this node has a property with a particular node.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; the name of the property to check for</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.getStringProperty">
+<code class="descname">getStringProperty</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; std::string const<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.getStringProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>getStringProperty(self, name, defaultValue) -&gt; std::string const &amp;</p>
+<p>Get the property with a particular name, specified as a string. If there is no property with the specified name, a default value is returned instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the property to get</li>
+<li><strong>defaultValue</strong> (<em>string</em>) &#8211; the value to return if the specified property does not exist</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.setStringProperty">
+<code class="descname">setStringProperty</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span> &rarr; SerializationNode<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.setStringProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a property, specified as a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the property to set</li>
+<li><strong>value</strong> (<em>string</em>) &#8211; the value to set for the property</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.getIntProperty">
+<code class="descname">getIntProperty</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.getIntProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>getIntProperty(self, name, defaultValue) -&gt; int</p>
+<p>Get the property with a particular name, specified as an int. If there is no property with the specified name, a default value is returned instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the property to get</li>
+<li><strong>defaultValue</strong> (<em>int</em>) &#8211; the value to return if the specified property does not exist</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.setIntProperty">
+<code class="descname">setIntProperty</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span> &rarr; SerializationNode<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.setIntProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a property, specified as an int.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the property to set</li>
+<li><strong>value</strong> (<em>int</em>) &#8211; the value to set for the property</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.getBoolProperty">
+<code class="descname">getBoolProperty</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.getBoolProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>getBoolProperty(self, name, defaultValue) -&gt; bool</p>
+<p>Get the property with a particular name, specified as a bool. If there is no property with the specified name, a default value is returned instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the property to get</li>
+<li><strong>defaultValue</strong> (<em>bool</em>) &#8211; the value to return if the specified property does not exist</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.setBoolProperty">
+<code class="descname">setBoolProperty</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span> &rarr; SerializationNode<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.setBoolProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a property, specified as a bool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the property to set</li>
+<li><strong>value</strong> (<em>bool</em>) &#8211; the value to set for the property</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.getDoubleProperty">
+<code class="descname">getDoubleProperty</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.getDoubleProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>getDoubleProperty(self, name, defaultValue) -&gt; double</p>
+<p>Get the property with a particular name, specified as a double. If there is no property with the specified name, a default value is returned instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the property to get</li>
+<li><strong>defaultValue</strong> (<em>double</em>) &#8211; the value to return if the specified property does not exist</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.setDoubleProperty">
+<code class="descname">setDoubleProperty</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span> &rarr; SerializationNode<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.setDoubleProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a property, specified as a double.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the property to set</li>
+<li><strong>value</strong> (<em>double</em>) &#8211; the value to set for the property</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.SerializationNode.createChildNode">
+<code class="descname">createChildNode</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; SerializationNode<a class="headerlink" href="#simtk.openmm.openmm.SerializationNode.createChildNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new child node by serializing an object. A SerializationProxy is automatically selected based on the object&#8217;s type, then invoked to populate the newly created node.</p>
+<p>Note that, while this method is templatized based on the type of object being serialized, the typeid() operator is used to select the proxy. This means the template argument may be a base class, and the correct proxies will still be selected for objects of different subclasses.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the new node to create</li>
+<li><strong>object</strong> (<em>T *</em>) &#8211; a pointer to the object to serialize</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a reference to the newly created node</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#simtk.openmm.openmm.SerializationNode" title="simtk.openmm.openmm.SerializationNode">SerializationNode</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Application Layer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../library.html">Library Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../library.html#core-objects">Core Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#forces">Forces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#integrators">Integrators</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../library.html#extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.openmm.SerializationNode.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

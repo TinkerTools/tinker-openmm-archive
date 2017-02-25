@@ -1,0 +1,19 @@
+Force
+=============
+
+.. autodoxyclass:: OpenMM::Force
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::Force::Force
+      ~OpenMM::Force::~Force
+      ~OpenMM::Force::getForceGroup
+      ~OpenMM::Force::setForceGroup
+      ~OpenMM::Force::usesPeriodicBoundaryConditions
+   
+
+   

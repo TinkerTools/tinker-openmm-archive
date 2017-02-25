@@ -1,0 +1,35 @@
+CMAPTorsionForce
+====================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CMAPTorsionForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CMAPTorsionForce.__init__
+      ~CMAPTorsionForce.addMap
+      ~CMAPTorsionForce.addTorsion
+      ~CMAPTorsionForce.getForceGroup
+      ~CMAPTorsionForce.getMapParameters
+      ~CMAPTorsionForce.getNumMaps
+      ~CMAPTorsionForce.getNumTorsions
+      ~CMAPTorsionForce.getTorsionParameters
+      ~CMAPTorsionForce.setForceGroup
+      ~CMAPTorsionForce.setMapParameters
+      ~CMAPTorsionForce.setTorsionParameters
+      ~CMAPTorsionForce.setUsesPeriodicBoundaryConditions
+      ~CMAPTorsionForce.updateParametersInContext
+      ~CMAPTorsionForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

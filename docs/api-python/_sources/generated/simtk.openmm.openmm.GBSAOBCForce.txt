@@ -1,0 +1,48 @@
+GBSAOBCForce
+================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: GBSAOBCForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GBSAOBCForce.__init__
+      ~GBSAOBCForce.addParticle
+      ~GBSAOBCForce.getCutoffDistance
+      ~GBSAOBCForce.getForceGroup
+      ~GBSAOBCForce.getNonbondedMethod
+      ~GBSAOBCForce.getNumParticles
+      ~GBSAOBCForce.getParticleParameters
+      ~GBSAOBCForce.getSoluteDielectric
+      ~GBSAOBCForce.getSolventDielectric
+      ~GBSAOBCForce.getSurfaceAreaEnergy
+      ~GBSAOBCForce.setCutoffDistance
+      ~GBSAOBCForce.setForceGroup
+      ~GBSAOBCForce.setNonbondedMethod
+      ~GBSAOBCForce.setParticleParameters
+      ~GBSAOBCForce.setSoluteDielectric
+      ~GBSAOBCForce.setSolventDielectric
+      ~GBSAOBCForce.setSurfaceAreaEnergy
+      ~GBSAOBCForce.updateParametersInContext
+      ~GBSAOBCForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~GBSAOBCForce.CutoffNonPeriodic
+      ~GBSAOBCForce.CutoffPeriodic
+      ~GBSAOBCForce.NoCutoff
+   
+   

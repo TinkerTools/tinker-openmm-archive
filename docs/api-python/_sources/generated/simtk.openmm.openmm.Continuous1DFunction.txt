@@ -1,0 +1,25 @@
+Continuous1DFunction
+========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: Continuous1DFunction
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Continuous1DFunction.Copy
+      ~Continuous1DFunction.__init__
+      ~Continuous1DFunction.getFunctionParameters
+      ~Continuous1DFunction.setFunctionParameters
+   
+   
+
+   
+   
+   

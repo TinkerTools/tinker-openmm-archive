@@ -1,0 +1,70 @@
+CustomManyParticleForce
+===========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CustomManyParticleForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CustomManyParticleForce.__init__
+      ~CustomManyParticleForce.addExclusion
+      ~CustomManyParticleForce.addGlobalParameter
+      ~CustomManyParticleForce.addParticle
+      ~CustomManyParticleForce.addPerParticleParameter
+      ~CustomManyParticleForce.addTabulatedFunction
+      ~CustomManyParticleForce.createExclusionsFromBonds
+      ~CustomManyParticleForce.getCutoffDistance
+      ~CustomManyParticleForce.getEnergyFunction
+      ~CustomManyParticleForce.getExclusionParticles
+      ~CustomManyParticleForce.getForceGroup
+      ~CustomManyParticleForce.getGlobalParameterDefaultValue
+      ~CustomManyParticleForce.getGlobalParameterName
+      ~CustomManyParticleForce.getNonbondedMethod
+      ~CustomManyParticleForce.getNumExclusions
+      ~CustomManyParticleForce.getNumGlobalParameters
+      ~CustomManyParticleForce.getNumParticles
+      ~CustomManyParticleForce.getNumParticlesPerSet
+      ~CustomManyParticleForce.getNumPerParticleParameters
+      ~CustomManyParticleForce.getNumTabulatedFunctions
+      ~CustomManyParticleForce.getParticleParameters
+      ~CustomManyParticleForce.getPerParticleParameterName
+      ~CustomManyParticleForce.getPermutationMode
+      ~CustomManyParticleForce.getTabulatedFunction
+      ~CustomManyParticleForce.getTabulatedFunctionName
+      ~CustomManyParticleForce.getTypeFilter
+      ~CustomManyParticleForce.setCutoffDistance
+      ~CustomManyParticleForce.setEnergyFunction
+      ~CustomManyParticleForce.setExclusionParticles
+      ~CustomManyParticleForce.setForceGroup
+      ~CustomManyParticleForce.setGlobalParameterDefaultValue
+      ~CustomManyParticleForce.setGlobalParameterName
+      ~CustomManyParticleForce.setNonbondedMethod
+      ~CustomManyParticleForce.setParticleParameters
+      ~CustomManyParticleForce.setPerParticleParameterName
+      ~CustomManyParticleForce.setPermutationMode
+      ~CustomManyParticleForce.setTypeFilter
+      ~CustomManyParticleForce.updateParametersInContext
+      ~CustomManyParticleForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CustomManyParticleForce.CutoffNonPeriodic
+      ~CustomManyParticleForce.CutoffPeriodic
+      ~CustomManyParticleForce.NoCutoff
+      ~CustomManyParticleForce.SinglePermutation
+      ~CustomManyParticleForce.UniqueCentralParticle
+   
+   

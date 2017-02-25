@@ -1,0 +1,59 @@
+CustomManyParticleForce
+===============================
+
+.. autodoxyclass:: OpenMM::CustomManyParticleForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CustomManyParticleForce::CustomManyParticleForce
+      ~OpenMM::CustomManyParticleForce::~CustomManyParticleForce
+      ~OpenMM::CustomManyParticleForce::getNumParticlesPerSet
+      ~OpenMM::CustomManyParticleForce::getNumParticles
+      ~OpenMM::CustomManyParticleForce::getNumExclusions
+      ~OpenMM::CustomManyParticleForce::getNumPerParticleParameters
+      ~OpenMM::CustomManyParticleForce::getNumGlobalParameters
+      ~OpenMM::CustomManyParticleForce::getNumTabulatedFunctions
+      ~OpenMM::CustomManyParticleForce::getEnergyFunction
+      ~OpenMM::CustomManyParticleForce::setEnergyFunction
+      ~OpenMM::CustomManyParticleForce::getNonbondedMethod
+      ~OpenMM::CustomManyParticleForce::setNonbondedMethod
+      ~OpenMM::CustomManyParticleForce::getPermutationMode
+      ~OpenMM::CustomManyParticleForce::setPermutationMode
+      ~OpenMM::CustomManyParticleForce::getCutoffDistance
+      ~OpenMM::CustomManyParticleForce::setCutoffDistance
+      ~OpenMM::CustomManyParticleForce::addPerParticleParameter
+      ~OpenMM::CustomManyParticleForce::getPerParticleParameterName
+      ~OpenMM::CustomManyParticleForce::setPerParticleParameterName
+      ~OpenMM::CustomManyParticleForce::addGlobalParameter
+      ~OpenMM::CustomManyParticleForce::getGlobalParameterName
+      ~OpenMM::CustomManyParticleForce::setGlobalParameterName
+      ~OpenMM::CustomManyParticleForce::getGlobalParameterDefaultValue
+      ~OpenMM::CustomManyParticleForce::setGlobalParameterDefaultValue
+      ~OpenMM::CustomManyParticleForce::addParticle
+      ~OpenMM::CustomManyParticleForce::getParticleParameters
+      ~OpenMM::CustomManyParticleForce::setParticleParameters
+      ~OpenMM::CustomManyParticleForce::addExclusion
+      ~OpenMM::CustomManyParticleForce::getExclusionParticles
+      ~OpenMM::CustomManyParticleForce::setExclusionParticles
+      ~OpenMM::CustomManyParticleForce::createExclusionsFromBonds
+      ~OpenMM::CustomManyParticleForce::getTypeFilter
+      ~OpenMM::CustomManyParticleForce::setTypeFilter
+      ~OpenMM::CustomManyParticleForce::addTabulatedFunction
+      ~OpenMM::CustomManyParticleForce::getTabulatedFunction
+      ~OpenMM::CustomManyParticleForce::getTabulatedFunction
+      ~OpenMM::CustomManyParticleForce::getTabulatedFunctionName
+      ~OpenMM::CustomManyParticleForce::updateParametersInContext
+      ~OpenMM::CustomManyParticleForce::usesPeriodicBoundaryConditions
+   
+
+   
+   
+   .. autodoxyenum:: NonbondedMethod
+   
+   .. autodoxyenum:: PermutationMode
+   
+   

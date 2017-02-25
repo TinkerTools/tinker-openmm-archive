@@ -1,0 +1,22 @@
+BaseDimension
+======================================
+
+.. currentmodule:: simtk.unit.basedimension
+
+.. autoclass:: BaseDimension
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BaseDimension.__init__
+   
+   
+
+   
+   
+   

@@ -1,0 +1,39 @@
+AmoebaInPlaneAngleForce
+===========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: AmoebaInPlaneAngleForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AmoebaInPlaneAngleForce.__init__
+      ~AmoebaInPlaneAngleForce.addAngle
+      ~AmoebaInPlaneAngleForce.getAmoebaGlobalInPlaneAngleCubic
+      ~AmoebaInPlaneAngleForce.getAmoebaGlobalInPlaneAnglePentic
+      ~AmoebaInPlaneAngleForce.getAmoebaGlobalInPlaneAngleQuartic
+      ~AmoebaInPlaneAngleForce.getAmoebaGlobalInPlaneAngleSextic
+      ~AmoebaInPlaneAngleForce.getAngleParameters
+      ~AmoebaInPlaneAngleForce.getForceGroup
+      ~AmoebaInPlaneAngleForce.getNumAngles
+      ~AmoebaInPlaneAngleForce.setAmoebaGlobalInPlaneAngleCubic
+      ~AmoebaInPlaneAngleForce.setAmoebaGlobalInPlaneAnglePentic
+      ~AmoebaInPlaneAngleForce.setAmoebaGlobalInPlaneAngleQuartic
+      ~AmoebaInPlaneAngleForce.setAmoebaGlobalInPlaneAngleSextic
+      ~AmoebaInPlaneAngleForce.setAngleParameters
+      ~AmoebaInPlaneAngleForce.setForceGroup
+      ~AmoebaInPlaneAngleForce.setUsesPeriodicBoundaryConditions
+      ~AmoebaInPlaneAngleForce.updateParametersInContext
+      ~AmoebaInPlaneAngleForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

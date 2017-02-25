@@ -1,0 +1,418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>AmoebaOutOfPlaneBendForce &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="amoebaoutofplanebendforce">
+<h1>AmoebaOutOfPlaneBendForce<a class="headerlink" href="#amoebaoutofplanebendforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForceE">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">AmoebaOutOfPlaneBendForce</code><a class="headerlink" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForceE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements the Amoeba out-of-plane bend interaction.</p>
+<p>To use it, create an OutOfPlaneBendForce object then call <a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce17addOutOfPlaneBendEiiiid" title="OpenMM::AmoebaOutOfPlaneBendForce::addOutOfPlaneBend"><code class="xref cpp cpp-any docutils literal"><span class="pre">addOutOfPlaneBend()</span></code></a> once for each outOfPlaneBend. After an out-of-plane bend has been added, you can modify its force field parameters by calling <a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce27setOutOfPlaneBendParametersEiiiiid" title="OpenMM::AmoebaOutOfPlaneBendForce::setOutOfPlaneBendParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setOutOfPlaneBendParameters()</span></code></a>. This will have no effect on Contexts that already exist unless you call <a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce25updateParametersInContextER7Context" title="OpenMM::AmoebaOutOfPlaneBendForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a>.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce25AmoebaOutOfPlaneBendForceEv" title="OpenMM::AmoebaOutOfPlaneBendForce::AmoebaOutOfPlaneBendForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaOutOfPlaneBendForce</span></code></a></td>
+<td>Create an <a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce25AmoebaOutOfPlaneBendForceEv" title="OpenMM::AmoebaOutOfPlaneBendForce::AmoebaOutOfPlaneBendForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaOutOfPlaneBendForce</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce21getNumOutOfPlaneBendsEv" title="OpenMM::AmoebaOutOfPlaneBendForce::getNumOutOfPlaneBends"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumOutOfPlaneBends</span></code></a></td>
+<td>Get the number of out-of-plane bend terms in the potential function</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce34setAmoebaGlobalOutOfPlaneBendCubicEd" title="OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendCubic"><code class="xref cpp cpp-any docutils literal"><span class="pre">setAmoebaGlobalOutOfPlaneBendCubic</span></code></a></td>
+<td>Set the global cubic term</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce34getAmoebaGlobalOutOfPlaneBendCubicEv" title="OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendCubic"><code class="xref cpp cpp-any docutils literal"><span class="pre">getAmoebaGlobalOutOfPlaneBendCubic</span></code></a></td>
+<td>Get the global cubic term</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce36setAmoebaGlobalOutOfPlaneBendQuarticEd" title="OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendQuartic"><code class="xref cpp cpp-any docutils literal"><span class="pre">setAmoebaGlobalOutOfPlaneBendQuartic</span></code></a></td>
+<td>Set the global cubic term</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce36getAmoebaGlobalOutOfPlaneBendQuarticEv" title="OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendQuartic"><code class="xref cpp cpp-any docutils literal"><span class="pre">getAmoebaGlobalOutOfPlaneBendQuartic</span></code></a></td>
+<td>Get the global quartic term</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce35setAmoebaGlobalOutOfPlaneBendPenticEd" title="OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendPentic"><code class="xref cpp cpp-any docutils literal"><span class="pre">setAmoebaGlobalOutOfPlaneBendPentic</span></code></a></td>
+<td>Set the global pentic term</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce35getAmoebaGlobalOutOfPlaneBendPenticEv" title="OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendPentic"><code class="xref cpp cpp-any docutils literal"><span class="pre">getAmoebaGlobalOutOfPlaneBendPentic</span></code></a></td>
+<td>Get the global pentic term</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce35setAmoebaGlobalOutOfPlaneBendSexticEd" title="OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendSextic"><code class="xref cpp cpp-any docutils literal"><span class="pre">setAmoebaGlobalOutOfPlaneBendSextic</span></code></a></td>
+<td>Set the global sextic term</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce35getAmoebaGlobalOutOfPlaneBendSexticEv" title="OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendSextic"><code class="xref cpp cpp-any docutils literal"><span class="pre">getAmoebaGlobalOutOfPlaneBendSextic</span></code></a></td>
+<td>Get the global sextic term</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce17addOutOfPlaneBendEiiiid" title="OpenMM::AmoebaOutOfPlaneBendForce::addOutOfPlaneBend"><code class="xref cpp cpp-any docutils literal"><span class="pre">addOutOfPlaneBend</span></code></a></td>
+<td>Add an out-of-plane bend term to the force field.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce27getOutOfPlaneBendParametersEiRiRiRiRiRd" title="OpenMM::AmoebaOutOfPlaneBendForce::getOutOfPlaneBendParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getOutOfPlaneBendParameters</span></code></a></td>
+<td>Get the force field parameters for an out-of-plane bend term.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce27setOutOfPlaneBendParametersEiiiiid" title="OpenMM::AmoebaOutOfPlaneBendForce::setOutOfPlaneBendParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setOutOfPlaneBendParameters</span></code></a></td>
+<td>Set the force field parameters for an out-of-plane bend term.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce25updateParametersInContextER7Context" title="OpenMM::AmoebaOutOfPlaneBendForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext</span></code></a></td>
+<td>Update the per-bend term parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce33setUsesPeriodicBoundaryConditionsEb" title="OpenMM::AmoebaOutOfPlaneBendForce::setUsesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">setUsesPeriodicBoundaryConditions</span></code></a></td>
+<td>Set whether this force should apply periodic boundary conditions when calculating displacements.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce30usesPeriodicBoundaryConditionsEv" title="OpenMM::AmoebaOutOfPlaneBendForce::usesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a></td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce25AmoebaOutOfPlaneBendForceEv">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::AmoebaOutOfPlaneBendForce"></span><code class="descclassname"></code><code class="descname">AmoebaOutOfPlaneBendForce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce25AmoebaOutOfPlaneBendForceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an <a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce25AmoebaOutOfPlaneBendForceEv" title="OpenMM::AmoebaOutOfPlaneBendForce::AmoebaOutOfPlaneBendForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaOutOfPlaneBendForce</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce21getNumOutOfPlaneBendsEv">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::getNumOutOfPlaneBendsC"></span>int <code class="descclassname"></code><code class="descname">getNumOutOfPlaneBends</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce21getNumOutOfPlaneBendsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of out-of-plane bend terms in the potential function</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce34setAmoebaGlobalOutOfPlaneBendCubicEd">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendCubic__double"></span>void <code class="descclassname"></code><code class="descname">setAmoebaGlobalOutOfPlaneBendCubic</code><span class="sig-paren">(</span>double <em>cubicK</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce34setAmoebaGlobalOutOfPlaneBendCubicEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global cubic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>cubicK</strong> &#8211; the cubic force constant for the angle</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce34getAmoebaGlobalOutOfPlaneBendCubicEv">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendCubicC"></span>double <code class="descclassname"></code><code class="descname">getAmoebaGlobalOutOfPlaneBendCubic</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce34getAmoebaGlobalOutOfPlaneBendCubicEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global cubic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">global cubicK term</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce36setAmoebaGlobalOutOfPlaneBendQuarticEd">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendQuartic__double"></span>void <code class="descclassname"></code><code class="descname">setAmoebaGlobalOutOfPlaneBendQuartic</code><span class="sig-paren">(</span>double <em>quarticK</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce36setAmoebaGlobalOutOfPlaneBendQuarticEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global cubic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>quarticK</strong> &#8211; the quartic force constant for the angle</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce36getAmoebaGlobalOutOfPlaneBendQuarticEv">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendQuarticC"></span>double <code class="descclassname"></code><code class="descname">getAmoebaGlobalOutOfPlaneBendQuartic</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce36getAmoebaGlobalOutOfPlaneBendQuarticEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global quartic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">global quartic term</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce35setAmoebaGlobalOutOfPlaneBendPenticEd">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendPentic__double"></span>void <code class="descclassname"></code><code class="descname">setAmoebaGlobalOutOfPlaneBendPentic</code><span class="sig-paren">(</span>double <em>penticK</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce35setAmoebaGlobalOutOfPlaneBendPenticEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global pentic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>penticK</strong> &#8211; the pentic force constant for the angle</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce35getAmoebaGlobalOutOfPlaneBendPenticEv">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendPenticC"></span>double <code class="descclassname"></code><code class="descname">getAmoebaGlobalOutOfPlaneBendPentic</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce35getAmoebaGlobalOutOfPlaneBendPenticEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global pentic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">global penticK term</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce35setAmoebaGlobalOutOfPlaneBendSexticEd">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::setAmoebaGlobalOutOfPlaneBendSextic__double"></span>void <code class="descclassname"></code><code class="descname">setAmoebaGlobalOutOfPlaneBendSextic</code><span class="sig-paren">(</span>double <em>sexticK</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce35setAmoebaGlobalOutOfPlaneBendSexticEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global sextic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>sexticK</strong> &#8211; the sextic force constant for the angle</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce35getAmoebaGlobalOutOfPlaneBendSexticEv">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::getAmoebaGlobalOutOfPlaneBendSexticC"></span>double <code class="descclassname"></code><code class="descname">getAmoebaGlobalOutOfPlaneBendSextic</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce35getAmoebaGlobalOutOfPlaneBendSexticEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global sextic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">global sexticK term</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce17addOutOfPlaneBendEiiiid">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::addOutOfPlaneBend__i.i.i.i.double"></span>int <code class="descclassname"></code><code class="descname">addOutOfPlaneBend</code><span class="sig-paren">(</span>int <em>particle1</em>, int <em>particle2</em>, int <em>particle3</em>, int <em>particle4</em>, double <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce17addOutOfPlaneBendEiiiid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an out-of-plane bend term to the force field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particle1</strong> &#8211; the index of the first particle connected by the outOfPlaneBend</li>
+<li><strong>particle2</strong> &#8211; the index of the second particle connected by the outOfPlaneBend</li>
+<li><strong>particle3</strong> &#8211; the index of the third particle connected by the outOfPlaneBend</li>
+<li><strong>particle4</strong> &#8211; the index of the fourth particle connected by the outOfPlaneBend</li>
+<li><strong>k</strong> &#8211; the force constant for the out-of-plane bend</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the out-of-plane bend that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce27getOutOfPlaneBendParametersEiRiRiRiRiRd">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::getOutOfPlaneBendParameters__i.iR.iR.iR.iR.doubleRC"></span>void <code class="descclassname"></code><code class="descname">getOutOfPlaneBendParameters</code><span class="sig-paren">(</span>int <em>index</em>, int &amp;<em>particle1</em>, int &amp;<em>particle2</em>, int &amp;<em>particle3</em>, int &amp;<em>particle4</em>, double &amp;<em>k</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce27getOutOfPlaneBendParametersEiRiRiRiRiRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force field parameters for an out-of-plane bend term.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the outOfPlaneBend for which to get parameters</li>
+<li><strong>particle1</strong> &#8211; [out] the index of the first particle connected by the outOfPlaneBend</li>
+<li><strong>particle2</strong> &#8211; [out] the index of the second particle connected by the outOfPlaneBend</li>
+<li><strong>particle3</strong> &#8211; [out] the index of the third particle connected by the outOfPlaneBend</li>
+<li><strong>particle4</strong> &#8211; [out] the index of the fourth particle connected by the outOfPlaneBend</li>
+<li><strong>k</strong> &#8211; [out] the force constant for the out-of-plane bend</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce27setOutOfPlaneBendParametersEiiiiid">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::setOutOfPlaneBendParameters__i.i.i.i.i.double"></span>void <code class="descclassname"></code><code class="descname">setOutOfPlaneBendParameters</code><span class="sig-paren">(</span>int <em>index</em>, int <em>particle1</em>, int <em>particle2</em>, int <em>particle3</em>, int <em>particle4</em>, double <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce27setOutOfPlaneBendParametersEiiiiid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force field parameters for an out-of-plane bend term.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the outOfPlaneBend for which to set parameters</li>
+<li><strong>particle1</strong> &#8211; the index of the first particle connected by the outOfPlaneBend</li>
+<li><strong>particle2</strong> &#8211; the index of the second particle connected by the outOfPlaneBend</li>
+<li><strong>particle3</strong> &#8211; the index of the third particle connected by the outOfPlaneBend</li>
+<li><strong>particle4</strong> &#8211; the index of the fourth particle connected by the outOfPlaneBend</li>
+<li><strong>k</strong> &#8211; the force constant for the out-of-plane bend</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce25updateParametersInContextER7Context">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::updateParametersInContext__ContextR"></span>void <code class="descclassname"></code><code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce25updateParametersInContextER7Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the per-bend term parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object. This method provides an efficient method to update certain parameters in an existing <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> without needing to reinitialize it. Simply call <a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce27setOutOfPlaneBendParametersEiiiiid" title="OpenMM::AmoebaOutOfPlaneBendForce::setOutOfPlaneBendParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setOutOfPlaneBendParameters()</span></code></a> to modify this object&#8217;s parameters, then call <a class="reference internal" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce25updateParametersInContextER7Context" title="OpenMM::AmoebaOutOfPlaneBendForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a> to copy them over to the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<p>The only information this method updates is the values of per-bend term parameters. The set of particles involved in a term cannot be changed, nor can new terms be added.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce33setUsesPeriodicBoundaryConditionsEb">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::setUsesPeriodicBoundaryConditions__b"></span>void <code class="descclassname"></code><code class="descname">setUsesPeriodicBoundaryConditions</code><span class="sig-paren">(</span>bool <em>periodic</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForce33setUsesPeriodicBoundaryConditionsEb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether this force should apply periodic boundary conditions when calculating displacements. Usually this is not appropriate for bonded forces, but there are situations when it can be useful.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce30usesPeriodicBoundaryConditionsEv">
+<span id="OpenMM::AmoebaOutOfPlaneBendForce::usesPeriodicBoundaryConditionsC"></span>bool <code class="descclassname"></code><code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM25AmoebaOutOfPlaneBendForce30usesPeriodicBoundaryConditionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if force uses PBC and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.AmoebaOutOfPlaneBendForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

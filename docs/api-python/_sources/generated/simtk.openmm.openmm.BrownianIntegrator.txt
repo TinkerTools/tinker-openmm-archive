@@ -1,0 +1,33 @@
+BrownianIntegrator
+======================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: BrownianIntegrator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BrownianIntegrator.__init__
+      ~BrownianIntegrator.getConstraintTolerance
+      ~BrownianIntegrator.getFriction
+      ~BrownianIntegrator.getRandomNumberSeed
+      ~BrownianIntegrator.getStepSize
+      ~BrownianIntegrator.getTemperature
+      ~BrownianIntegrator.setConstraintTolerance
+      ~BrownianIntegrator.setFriction
+      ~BrownianIntegrator.setRandomNumberSeed
+      ~BrownianIntegrator.setStepSize
+      ~BrownianIntegrator.setTemperature
+      ~BrownianIntegrator.step
+   
+   
+
+   
+   
+   

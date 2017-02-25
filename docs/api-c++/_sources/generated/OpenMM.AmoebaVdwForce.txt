@@ -1,0 +1,39 @@
+AmoebaVdwForce
+======================
+
+.. autodoxyclass:: OpenMM::AmoebaVdwForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaVdwForce::AmoebaVdwForce
+      ~OpenMM::AmoebaVdwForce::getNumParticles
+      ~OpenMM::AmoebaVdwForce::setParticleParameters
+      ~OpenMM::AmoebaVdwForce::getParticleParameters
+      ~OpenMM::AmoebaVdwForce::addParticle
+      ~OpenMM::AmoebaVdwForce::setSigmaCombiningRule
+      ~OpenMM::AmoebaVdwForce::getSigmaCombiningRule
+      ~OpenMM::AmoebaVdwForce::setEpsilonCombiningRule
+      ~OpenMM::AmoebaVdwForce::getEpsilonCombiningRule
+      ~OpenMM::AmoebaVdwForce::getUseDispersionCorrection
+      ~OpenMM::AmoebaVdwForce::setUseDispersionCorrection
+      ~OpenMM::AmoebaVdwForce::setParticleExclusions
+      ~OpenMM::AmoebaVdwForce::getParticleExclusions
+      ~OpenMM::AmoebaVdwForce::getCutoffDistance
+      ~OpenMM::AmoebaVdwForce::setCutoffDistance
+      ~OpenMM::AmoebaVdwForce::setCutoff
+      ~OpenMM::AmoebaVdwForce::getCutoff
+      ~OpenMM::AmoebaVdwForce::getNonbondedMethod
+      ~OpenMM::AmoebaVdwForce::setNonbondedMethod
+      ~OpenMM::AmoebaVdwForce::updateParametersInContext
+      ~OpenMM::AmoebaVdwForce::usesPeriodicBoundaryConditions
+   
+
+   
+   
+   .. autodoxyenum:: NonbondedMethod
+   
+   

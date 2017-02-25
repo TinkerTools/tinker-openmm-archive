@@ -1,0 +1,75 @@
+AMDForceGroupIntegrator
+========================================
+
+.. currentmodule:: simtk.openmm.amd
+
+.. autoclass:: AMDForceGroupIntegrator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AMDForceGroupIntegrator.__init__
+      ~AMDForceGroupIntegrator.addComputeGlobal
+      ~AMDForceGroupIntegrator.addComputePerDof
+      ~AMDForceGroupIntegrator.addComputeSum
+      ~AMDForceGroupIntegrator.addConstrainPositions
+      ~AMDForceGroupIntegrator.addConstrainVelocities
+      ~AMDForceGroupIntegrator.addGlobalVariable
+      ~AMDForceGroupIntegrator.addPerDofVariable
+      ~AMDForceGroupIntegrator.addUpdateContextState
+      ~AMDForceGroupIntegrator.beginIfBlock
+      ~AMDForceGroupIntegrator.beginWhileBlock
+      ~AMDForceGroupIntegrator.endBlock
+      ~AMDForceGroupIntegrator.getAlphaGroup
+      ~AMDForceGroupIntegrator.getComputationStep
+      ~AMDForceGroupIntegrator.getConstraintTolerance
+      ~AMDForceGroupIntegrator.getEGroup
+      ~AMDForceGroupIntegrator.getEffectiveEnergy
+      ~AMDForceGroupIntegrator.getGlobalVariable
+      ~AMDForceGroupIntegrator.getGlobalVariableByName
+      ~AMDForceGroupIntegrator.getGlobalVariableName
+      ~AMDForceGroupIntegrator.getKineticEnergyExpression
+      ~AMDForceGroupIntegrator.getNumComputations
+      ~AMDForceGroupIntegrator.getNumGlobalVariables
+      ~AMDForceGroupIntegrator.getNumPerDofVariables
+      ~AMDForceGroupIntegrator.getPerDofVariable
+      ~AMDForceGroupIntegrator.getPerDofVariableByName
+      ~AMDForceGroupIntegrator.getPerDofVariableName
+      ~AMDForceGroupIntegrator.getRandomNumberSeed
+      ~AMDForceGroupIntegrator.getStepSize
+      ~AMDForceGroupIntegrator.setAlphaGroup
+      ~AMDForceGroupIntegrator.setConstraintTolerance
+      ~AMDForceGroupIntegrator.setEGroup
+      ~AMDForceGroupIntegrator.setGlobalVariable
+      ~AMDForceGroupIntegrator.setGlobalVariableByName
+      ~AMDForceGroupIntegrator.setKineticEnergyExpression
+      ~AMDForceGroupIntegrator.setPerDofVariable
+      ~AMDForceGroupIntegrator.setPerDofVariableByName
+      ~AMDForceGroupIntegrator.setRandomNumberSeed
+      ~AMDForceGroupIntegrator.setStepSize
+      ~AMDForceGroupIntegrator.step
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AMDForceGroupIntegrator.BlockEnd
+      ~AMDForceGroupIntegrator.ComputeGlobal
+      ~AMDForceGroupIntegrator.ComputePerDof
+      ~AMDForceGroupIntegrator.ComputeSum
+      ~AMDForceGroupIntegrator.ConstrainPositions
+      ~AMDForceGroupIntegrator.ConstrainVelocities
+      ~AMDForceGroupIntegrator.IfBlockStart
+      ~AMDForceGroupIntegrator.UpdateContextState
+      ~AMDForceGroupIntegrator.WhileBlockStart
+   
+   

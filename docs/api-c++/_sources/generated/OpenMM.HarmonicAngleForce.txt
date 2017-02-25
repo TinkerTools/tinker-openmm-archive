@@ -1,0 +1,22 @@
+HarmonicAngleForce
+==========================
+
+.. autodoxyclass:: OpenMM::HarmonicAngleForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::HarmonicAngleForce::HarmonicAngleForce
+      ~OpenMM::HarmonicAngleForce::getNumAngles
+      ~OpenMM::HarmonicAngleForce::addAngle
+      ~OpenMM::HarmonicAngleForce::getAngleParameters
+      ~OpenMM::HarmonicAngleForce::setAngleParameters
+      ~OpenMM::HarmonicAngleForce::updateParametersInContext
+      ~OpenMM::HarmonicAngleForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::HarmonicAngleForce::usesPeriodicBoundaryConditions
+   
+
+   

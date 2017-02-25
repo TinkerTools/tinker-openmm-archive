@@ -1,0 +1,61 @@
+AmoebaMultipoleForce
+============================
+
+.. autodoxyclass:: OpenMM::AmoebaMultipoleForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaMultipoleForce::AmoebaMultipoleForce
+      ~OpenMM::AmoebaMultipoleForce::getNumMultipoles
+      ~OpenMM::AmoebaMultipoleForce::getNonbondedMethod
+      ~OpenMM::AmoebaMultipoleForce::setNonbondedMethod
+      ~OpenMM::AmoebaMultipoleForce::getPolarizationType
+      ~OpenMM::AmoebaMultipoleForce::setPolarizationType
+      ~OpenMM::AmoebaMultipoleForce::getCutoffDistance
+      ~OpenMM::AmoebaMultipoleForce::setCutoffDistance
+      ~OpenMM::AmoebaMultipoleForce::getPMEParameters
+      ~OpenMM::AmoebaMultipoleForce::setPMEParameters
+      ~OpenMM::AmoebaMultipoleForce::getAEwald
+      ~OpenMM::AmoebaMultipoleForce::setAEwald
+      ~OpenMM::AmoebaMultipoleForce::getPmeBSplineOrder
+      ~OpenMM::AmoebaMultipoleForce::getPmeGridDimensions
+      ~OpenMM::AmoebaMultipoleForce::setPmeGridDimensions
+      ~OpenMM::AmoebaMultipoleForce::getPMEParametersInContext
+      ~OpenMM::AmoebaMultipoleForce::addMultipole
+      ~OpenMM::AmoebaMultipoleForce::getMultipoleParameters
+      ~OpenMM::AmoebaMultipoleForce::setMultipoleParameters
+      ~OpenMM::AmoebaMultipoleForce::setCovalentMap
+      ~OpenMM::AmoebaMultipoleForce::getCovalentMap
+      ~OpenMM::AmoebaMultipoleForce::getCovalentMaps
+      ~OpenMM::AmoebaMultipoleForce::getMutualInducedMaxIterations
+      ~OpenMM::AmoebaMultipoleForce::setMutualInducedMaxIterations
+      ~OpenMM::AmoebaMultipoleForce::getMutualInducedTargetEpsilon
+      ~OpenMM::AmoebaMultipoleForce::setMutualInducedTargetEpsilon
+      ~OpenMM::AmoebaMultipoleForce::setExtrapolationCoefficients
+      ~OpenMM::AmoebaMultipoleForce::getExtrapolationCoefficients
+      ~OpenMM::AmoebaMultipoleForce::getEwaldErrorTolerance
+      ~OpenMM::AmoebaMultipoleForce::setEwaldErrorTolerance
+      ~OpenMM::AmoebaMultipoleForce::getLabFramePermanentDipoles
+      ~OpenMM::AmoebaMultipoleForce::getInducedDipoles
+      ~OpenMM::AmoebaMultipoleForce::getTotalDipoles
+      ~OpenMM::AmoebaMultipoleForce::getElectrostaticPotential
+      ~OpenMM::AmoebaMultipoleForce::getSystemMultipoleMoments
+      ~OpenMM::AmoebaMultipoleForce::updateParametersInContext
+      ~OpenMM::AmoebaMultipoleForce::usesPeriodicBoundaryConditions
+   
+
+   
+   
+   .. autodoxyenum:: NonbondedMethod
+   
+   .. autodoxyenum:: PolarizationType
+   
+   .. autodoxyenum:: MultipoleAxisTypes
+   
+   .. autodoxyenum:: CovalentType
+   
+   

@@ -1,0 +1,18 @@
+Continuous2DFunction
+============================
+
+.. autodoxyclass:: OpenMM::Continuous2DFunction
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::Continuous2DFunction::Continuous2DFunction
+      ~OpenMM::Continuous2DFunction::getFunctionParameters
+      ~OpenMM::Continuous2DFunction::setFunctionParameters
+      ~OpenMM::Continuous2DFunction::Copy
+   
+
+   

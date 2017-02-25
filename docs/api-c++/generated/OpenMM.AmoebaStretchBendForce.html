@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>AmoebaStretchBendForce &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="amoebastretchbendforce">
+<h1>AmoebaStretchBendForce<a class="headerlink" href="#amoebastretchbendforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM22AmoebaStretchBendForceE">
+<span id="OpenMM::AmoebaStretchBendForce"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">AmoebaStretchBendForce</code><a class="headerlink" href="#_CPPv2N6OpenMM22AmoebaStretchBendForceE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements the Amoeba stretch-bend interaction.</p>
+<p>To use it, create a StretchBendForce object then call <a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce14addStretchBendEiiiddddd" title="OpenMM::AmoebaStretchBendForce::addStretchBend"><code class="xref cpp cpp-any docutils literal"><span class="pre">addStretchBend()</span></code></a> once for each stretch-bend. After a stretch-bend has been added, you can modify its force field parameters by calling <a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce24setStretchBendParametersEiiiiddddd" title="OpenMM::AmoebaStretchBendForce::setStretchBendParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setStretchBendParameters()</span></code></a>. This will have no effect on Contexts that already exist unless you call <a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce25updateParametersInContextER7Context" title="OpenMM::AmoebaStretchBendForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a>.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce22AmoebaStretchBendForceEv" title="OpenMM::AmoebaStretchBendForce::AmoebaStretchBendForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaStretchBendForce</span></code></a></td>
+<td>Create an <a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce22AmoebaStretchBendForceEv" title="OpenMM::AmoebaStretchBendForce::AmoebaStretchBendForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaStretchBendForce</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM22AmoebaStretchBendForce18getNumStretchBendsEv" title="OpenMM::AmoebaStretchBendForce::getNumStretchBends"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumStretchBends</span></code></a></td>
+<td>Get the number of stretch-bend terms in the potential function</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce14addStretchBendEiiiddddd" title="OpenMM::AmoebaStretchBendForce::addStretchBend"><code class="xref cpp cpp-any docutils literal"><span class="pre">addStretchBend</span></code></a></td>
+<td>Add a stretch-bend term to the force field.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM22AmoebaStretchBendForce24getStretchBendParametersEiRiRiRiRdRdRdRdRd" title="OpenMM::AmoebaStretchBendForce::getStretchBendParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getStretchBendParameters</span></code></a></td>
+<td>Get the force field parameters for a stretch-bend term.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce24setStretchBendParametersEiiiiddddd" title="OpenMM::AmoebaStretchBendForce::setStretchBendParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setStretchBendParameters</span></code></a></td>
+<td>Set the force field parameters for a stretch-bend term.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce25updateParametersInContextER7Context" title="OpenMM::AmoebaStretchBendForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext</span></code></a></td>
+<td>Update the per-stretch-bend term parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce33setUsesPeriodicBoundaryConditionsEb" title="OpenMM::AmoebaStretchBendForce::setUsesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">setUsesPeriodicBoundaryConditions</span></code></a></td>
+<td>Set whether this force should apply periodic boundary conditions when calculating displacements.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM22AmoebaStretchBendForce30usesPeriodicBoundaryConditionsEv" title="OpenMM::AmoebaStretchBendForce::usesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a></td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM22AmoebaStretchBendForce22AmoebaStretchBendForceEv">
+<span id="OpenMM::AmoebaStretchBendForce::AmoebaStretchBendForce"></span><code class="descclassname"></code><code class="descname">AmoebaStretchBendForce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce22AmoebaStretchBendForceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an <a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce22AmoebaStretchBendForceEv" title="OpenMM::AmoebaStretchBendForce::AmoebaStretchBendForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaStretchBendForce</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM22AmoebaStretchBendForce18getNumStretchBendsEv">
+<span id="OpenMM::AmoebaStretchBendForce::getNumStretchBendsC"></span>int <code class="descclassname"></code><code class="descname">getNumStretchBends</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM22AmoebaStretchBendForce18getNumStretchBendsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of stretch-bend terms in the potential function</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM22AmoebaStretchBendForce14addStretchBendEiiiddddd">
+<span id="OpenMM::AmoebaStretchBendForce::addStretchBend__i.i.i.double.double.double.double.double"></span>int <code class="descclassname"></code><code class="descname">addStretchBend</code><span class="sig-paren">(</span>int <em>particle1</em>, int <em>particle2</em>, int <em>particle3</em>, double <em>lengthAB</em>, double <em>lengthCB</em>, double <em>angle</em>, double <em>k1</em>, double <em>k2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce14addStretchBendEiiiddddd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a stretch-bend term to the force field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particle1</strong> &#8211; the index of the first particle connected by the stretch-bend</li>
+<li><strong>particle2</strong> &#8211; the index of the second particle connected by the stretch-bend</li>
+<li><strong>particle3</strong> &#8211; the index of the third particle connected by the stretch-bend</li>
+<li><strong>lengthAB</strong> &#8211; the equilibrium length of the stretch-bend in bond ab [particle1, particle2], measured in nm</li>
+<li><strong>lengthCB</strong> &#8211; the equilibrium length of the stretch-bend in bond cb [particle3, particle2], measured in nm</li>
+<li><strong>angle</strong> &#8211; the equilibrium angle in radians</li>
+<li><strong>k1</strong> &#8211; the force constant of the product of bond ab and angle a-b-c</li>
+<li><strong>k2</strong> &#8211; the force constant of the product of bond bc and angle a-b-c (optional, default is the same as k1)</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the stretch-bend that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM22AmoebaStretchBendForce24getStretchBendParametersEiRiRiRiRdRdRdRdRd">
+<span id="OpenMM::AmoebaStretchBendForce::getStretchBendParameters__i.iR.iR.iR.doubleR.doubleR.doubleR.doubleR.doubleRC"></span>void <code class="descclassname"></code><code class="descname">getStretchBendParameters</code><span class="sig-paren">(</span>int <em>index</em>, int &amp;<em>particle1</em>, int &amp;<em>particle2</em>, int &amp;<em>particle3</em>, double &amp;<em>lengthAB</em>, double &amp;<em>lengthCB</em>, double &amp;<em>angle</em>, double &amp;<em>k1</em>, double &amp;<em>k2</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM22AmoebaStretchBendForce24getStretchBendParametersEiRiRiRiRdRdRdRdRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force field parameters for a stretch-bend term.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the stretch-bend for which to get parameters</li>
+<li><strong>particle1</strong> &#8211; [out] the index of the first particle connected by the stretch-bend</li>
+<li><strong>particle2</strong> &#8211; [out] the index of the second particle connected by the stretch-bend</li>
+<li><strong>particle3</strong> &#8211; [out] the index of the third particle connected by the stretch-bend</li>
+<li><strong>lengthAB</strong> &#8211; [out] the equilibrium length of the stretch-bend in bond ab [particle1, particle2], measured in nm</li>
+<li><strong>lengthCB</strong> &#8211; [out] the equilibrium length of the stretch-bend in bond cb [particle3, particle2], measured in nm</li>
+<li><strong>angle</strong> &#8211; [out] the equilibrium angle in radians</li>
+<li><strong>k1</strong> &#8211; [out] the force constant of the product of bond ab and angle a-b-c</li>
+<li><strong>k2</strong> &#8211; [out] the force constant of the product of bond bc and angle a-b-c</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM22AmoebaStretchBendForce24setStretchBendParametersEiiiiddddd">
+<span id="OpenMM::AmoebaStretchBendForce::setStretchBendParameters__i.i.i.i.double.double.double.double.double"></span>void <code class="descclassname"></code><code class="descname">setStretchBendParameters</code><span class="sig-paren">(</span>int <em>index</em>, int <em>particle1</em>, int <em>particle2</em>, int <em>particle3</em>, double <em>lengthAB</em>, double <em>lengthCB</em>, double <em>angle</em>, double <em>k1</em>, double <em>k2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce24setStretchBendParametersEiiiiddddd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force field parameters for a stretch-bend term.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the stretch-bend for which to set parameters</li>
+<li><strong>particle1</strong> &#8211; the index of the first particle connected by the stretch-bend</li>
+<li><strong>particle2</strong> &#8211; the index of the second particle connected by the stretch-bend</li>
+<li><strong>particle3</strong> &#8211; the index of the third particle connected by the stretch-bend</li>
+<li><strong>lengthAB</strong> &#8211; the equilibrium length of the stretch-bend in bond ab [particle1, particle2], measured in nm</li>
+<li><strong>lengthCB</strong> &#8211; the equilibrium length of the stretch-bend in bond cb [particle3, particle2], measured in nm</li>
+<li><strong>angle</strong> &#8211; the equilibrium angle in radians</li>
+<li><strong>k1</strong> &#8211; the force constant of the product of bond ab and angle a-b-c</li>
+<li><strong>k2</strong> &#8211; the force constant of the product of bond bc and angle a-b-c (optional, default is the same as k1)</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM22AmoebaStretchBendForce25updateParametersInContextER7Context">
+<span id="OpenMM::AmoebaStretchBendForce::updateParametersInContext__ContextR"></span>void <code class="descclassname"></code><code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce25updateParametersInContextER7Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the per-stretch-bend term parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object. This method provides an efficient method to update certain parameters in an existing <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> without needing to reinitialize it. Simply call <a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce24setStretchBendParametersEiiiiddddd" title="OpenMM::AmoebaStretchBendForce::setStretchBendParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setStretchBendParameters()</span></code></a> to modify this object&#8217;s parameters, then call <a class="reference internal" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce25updateParametersInContextER7Context" title="OpenMM::AmoebaStretchBendForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a> to copy them over to the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<p>The only information this method updates is the values of per-stretch-bend term parameters. The set of particles involved in a term cannot be changed, nor can new terms be added.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM22AmoebaStretchBendForce33setUsesPeriodicBoundaryConditionsEb">
+<span id="OpenMM::AmoebaStretchBendForce::setUsesPeriodicBoundaryConditions__b"></span>void <code class="descclassname"></code><code class="descname">setUsesPeriodicBoundaryConditions</code><span class="sig-paren">(</span>bool <em>periodic</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM22AmoebaStretchBendForce33setUsesPeriodicBoundaryConditionsEb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether this force should apply periodic boundary conditions when calculating displacements. Usually this is not appropriate for bonded forces, but there are situations when it can be useful.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM22AmoebaStretchBendForce30usesPeriodicBoundaryConditionsEv">
+<span id="OpenMM::AmoebaStretchBendForce::usesPeriodicBoundaryConditionsC"></span>bool <code class="descclassname"></code><code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM22AmoebaStretchBendForce30usesPeriodicBoundaryConditionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if force uses PBC and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.AmoebaStretchBendForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

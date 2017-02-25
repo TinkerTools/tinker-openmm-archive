@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>XmlSerializer &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="xmlserializer">
+<h1>XmlSerializer<a class="headerlink" href="#xmlserializer" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM13XmlSerializerE">
+<span id="OpenMM::XmlSerializer"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">XmlSerializer</code><a class="headerlink" href="#_CPPv2N6OpenMM13XmlSerializerE" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#_CPPv2N6OpenMM13XmlSerializerE" title="OpenMM::XmlSerializer"><code class="xref cpp cpp-any docutils literal"><span class="pre">XmlSerializer</span></code></a> is used for serializing objects as XML, and for reconstructing them again.</p>
+<dl class="function">
+<dt>
+<code class="descname">template &lt;class T&gt;</code></dt>
+<dt id="_CPPv2N6OpenMM13XmlSerializer9serializeEPK1TRKNSt6stringERNSt7ostreamE">
+<span id="OpenMM::XmlSerializer::serialize__TCP.ssCR.osR"></span>void <code class="descclassname"></code><code class="descname">serialize</code><span class="sig-paren">(</span><em class="property">const</em> T *<em>object</em>, <em class="property">const</em> std::string &amp;<em>rootName</em>, std::ostream &amp;<em>stream</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13XmlSerializer9serializeEPK1TRKNSt6stringERNSt7ostreamE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize an object as XML.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>object</strong> &#8211; the object to serialize</li>
+<li><strong>rootName</strong> &#8211; the name to use for the root node of the XML document</li>
+<li><strong>stream</strong> &#8211; an output stream to write the XML to</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descname">template &lt;class T&gt;</code></dt>
+<dt id="_CPPv2N6OpenMM13XmlSerializer11deserializeERNSt7istreamE">
+<span id="OpenMM::XmlSerializer::deserialize__isR"></span>T *<code class="descclassname"></code><code class="descname">deserialize</code><span class="sig-paren">(</span>std::istream &amp;<em>stream</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13XmlSerializer11deserializeERNSt7istreamE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reconstruct an object that has been serialized as XML.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>stream</strong> &#8211; an input stream to read the XML from</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a pointer to the newly created object. The caller assumes ownership of the object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descname">template &lt;class T&gt;</code></dt>
+<dt id="_CPPv2N6OpenMM13XmlSerializer5cloneERK1T">
+<span id="OpenMM::XmlSerializer::clone__TCR"></span>T *<code class="descclassname"></code><code class="descname">clone</code><span class="sig-paren">(</span><em class="property">const</em> T &amp;<em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13XmlSerializer5cloneERK1T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clone an object by first serializing it, then deserializing it again. This method constructs the new object directly from the SerializationNodes without first converting them to XML. This means it is faster and uses less memory than making separate calls to <a class="reference internal" href="#_CPPv2N6OpenMM13XmlSerializer9serializeEPK1TRKNSt6stringERNSt7ostreamE" title="OpenMM::XmlSerializer::serialize"><code class="xref cpp cpp-any docutils literal"><span class="pre">serialize()</span></code></a> and <a class="reference internal" href="#_CPPv2N6OpenMM13XmlSerializer11deserializeERNSt7istreamE" title="OpenMM::XmlSerializer::deserialize"><code class="xref cpp cpp-any docutils literal"><span class="pre">deserialize()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.XmlSerializer.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

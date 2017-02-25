@@ -1,0 +1,27 @@
+Integrator
+==============================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: Integrator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Integrator.__init__
+      ~Integrator.getConstraintTolerance
+      ~Integrator.getStepSize
+      ~Integrator.setConstraintTolerance
+      ~Integrator.setStepSize
+      ~Integrator.step
+   
+   
+
+   
+   
+   

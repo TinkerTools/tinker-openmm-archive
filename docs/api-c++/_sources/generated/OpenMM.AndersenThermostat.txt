@@ -1,0 +1,22 @@
+AndersenThermostat
+==========================
+
+.. autodoxyclass:: OpenMM::AndersenThermostat
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AndersenThermostat::AndersenThermostat
+      ~OpenMM::AndersenThermostat::getDefaultTemperature
+      ~OpenMM::AndersenThermostat::setDefaultTemperature
+      ~OpenMM::AndersenThermostat::getDefaultCollisionFrequency
+      ~OpenMM::AndersenThermostat::setDefaultCollisionFrequency
+      ~OpenMM::AndersenThermostat::getRandomNumberSeed
+      ~OpenMM::AndersenThermostat::setRandomNumberSeed
+      ~OpenMM::AndersenThermostat::usesPeriodicBoundaryConditions
+   
+
+   

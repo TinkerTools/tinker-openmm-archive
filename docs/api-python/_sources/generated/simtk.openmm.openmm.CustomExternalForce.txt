@@ -1,0 +1,42 @@
+CustomExternalForce
+=======================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CustomExternalForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CustomExternalForce.__init__
+      ~CustomExternalForce.addGlobalParameter
+      ~CustomExternalForce.addParticle
+      ~CustomExternalForce.addPerParticleParameter
+      ~CustomExternalForce.getEnergyFunction
+      ~CustomExternalForce.getForceGroup
+      ~CustomExternalForce.getGlobalParameterDefaultValue
+      ~CustomExternalForce.getGlobalParameterName
+      ~CustomExternalForce.getNumGlobalParameters
+      ~CustomExternalForce.getNumParticles
+      ~CustomExternalForce.getNumPerParticleParameters
+      ~CustomExternalForce.getParticleParameters
+      ~CustomExternalForce.getPerParticleParameterName
+      ~CustomExternalForce.setEnergyFunction
+      ~CustomExternalForce.setForceGroup
+      ~CustomExternalForce.setGlobalParameterDefaultValue
+      ~CustomExternalForce.setGlobalParameterName
+      ~CustomExternalForce.setParticleParameters
+      ~CustomExternalForce.setPerParticleParameterName
+      ~CustomExternalForce.updateParametersInContext
+      ~CustomExternalForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

@@ -1,0 +1,46 @@
+CustomBondForce
+===================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CustomBondForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CustomBondForce.__init__
+      ~CustomBondForce.addBond
+      ~CustomBondForce.addEnergyParameterDerivative
+      ~CustomBondForce.addGlobalParameter
+      ~CustomBondForce.addPerBondParameter
+      ~CustomBondForce.getBondParameters
+      ~CustomBondForce.getEnergyFunction
+      ~CustomBondForce.getEnergyParameterDerivativeName
+      ~CustomBondForce.getForceGroup
+      ~CustomBondForce.getGlobalParameterDefaultValue
+      ~CustomBondForce.getGlobalParameterName
+      ~CustomBondForce.getNumBonds
+      ~CustomBondForce.getNumEnergyParameterDerivatives
+      ~CustomBondForce.getNumGlobalParameters
+      ~CustomBondForce.getNumPerBondParameters
+      ~CustomBondForce.getPerBondParameterName
+      ~CustomBondForce.setBondParameters
+      ~CustomBondForce.setEnergyFunction
+      ~CustomBondForce.setForceGroup
+      ~CustomBondForce.setGlobalParameterDefaultValue
+      ~CustomBondForce.setGlobalParameterName
+      ~CustomBondForce.setPerBondParameterName
+      ~CustomBondForce.setUsesPeriodicBoundaryConditions
+      ~CustomBondForce.updateParametersInContext
+      ~CustomBondForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

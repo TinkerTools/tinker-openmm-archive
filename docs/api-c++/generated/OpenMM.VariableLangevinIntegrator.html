@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>VariableLangevinIntegrator &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="variablelangevinintegrator">
+<h1>VariableLangevinIntegrator<a class="headerlink" href="#variablelangevinintegrator" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM26VariableLangevinIntegratorE">
+<span id="OpenMM::VariableLangevinIntegrator"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">VariableLangevinIntegrator</code><a class="headerlink" href="#_CPPv2N6OpenMM26VariableLangevinIntegratorE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is an error contolled, variable time step <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code></a> that simulates a <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> using Langevin dynamics. It compares the result of the Langevin integrator to that of an explicit Euler integrator, takes the difference between the two as a measure of the integration error in each time step, and continuously adjusts the step size to keep the error below a specified tolerance. This both improves the stability of the integrator and allows it to take larger steps on average, while still maintaining comparable accuracy to a fixed step size integrator.</p>
+<p>It is best not to think of the error tolerance as having any absolute meaning. It is just an adjustable parameter that affects the step size and integration accuracy. You should try different values to find the largest one that produces a trajectory sufficiently accurate for your purposes. 0.001 is often a good starting point.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator26VariableLangevinIntegratorEddd" title="OpenMM::VariableLangevinIntegrator::VariableLangevinIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">VariableLangevinIntegrator</span></code></a></td>
+<td>Create a <a class="reference internal" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator26VariableLangevinIntegratorEddd" title="OpenMM::VariableLangevinIntegrator::VariableLangevinIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">VariableLangevinIntegrator</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM26VariableLangevinIntegrator14getTemperatureEv" title="OpenMM::VariableLangevinIntegrator::getTemperature"><code class="xref cpp cpp-any docutils literal"><span class="pre">getTemperature</span></code></a></td>
+<td>Get the temperature of the heat bath (in Kelvin).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator14setTemperatureEd" title="OpenMM::VariableLangevinIntegrator::setTemperature"><code class="xref cpp cpp-any docutils literal"><span class="pre">setTemperature</span></code></a></td>
+<td>Set the temperature of the heat bath (in Kelvin).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM26VariableLangevinIntegrator11getFrictionEv" title="OpenMM::VariableLangevinIntegrator::getFriction"><code class="xref cpp cpp-any docutils literal"><span class="pre">getFriction</span></code></a></td>
+<td>Get the friction coefficient which determines how strongly the system is coupled to the heat bath (in inverse ps).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator11setFrictionEd" title="OpenMM::VariableLangevinIntegrator::setFriction"><code class="xref cpp cpp-any docutils literal"><span class="pre">setFriction</span></code></a></td>
+<td>Set the friction coefficient which determines how strongly the system is coupled to the heat bath (in inverse ps).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM26VariableLangevinIntegrator17getErrorToleranceEv" title="OpenMM::VariableLangevinIntegrator::getErrorTolerance"><code class="xref cpp cpp-any docutils literal"><span class="pre">getErrorTolerance</span></code></a></td>
+<td>Get the error tolerance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator17setErrorToleranceEd" title="OpenMM::VariableLangevinIntegrator::setErrorTolerance"><code class="xref cpp cpp-any docutils literal"><span class="pre">setErrorTolerance</span></code></a></td>
+<td>Set the error tolerance.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM26VariableLangevinIntegrator19getRandomNumberSeedEv" title="OpenMM::VariableLangevinIntegrator::getRandomNumberSeed"><code class="xref cpp cpp-any docutils literal"><span class="pre">getRandomNumberSeed</span></code></a></td>
+<td>Get the random number seed.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator19setRandomNumberSeedEi" title="OpenMM::VariableLangevinIntegrator::setRandomNumberSeed"><code class="xref cpp cpp-any docutils literal"><span class="pre">setRandomNumberSeed</span></code></a></td>
+<td>Set the random number seed.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator4stepEi" title="OpenMM::VariableLangevinIntegrator::step"><code class="xref cpp cpp-any docutils literal"><span class="pre">step</span></code></a></td>
+<td>Advance a simulation through time by taking a series of time steps.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator6stepToEd" title="OpenMM::VariableLangevinIntegrator::stepTo"><code class="xref cpp cpp-any docutils literal"><span class="pre">stepTo</span></code></a></td>
+<td>Advance a simulation through time by taking a series of steps until a specified time is reached.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM26VariableLangevinIntegrator26VariableLangevinIntegratorEddd">
+<span id="OpenMM::VariableLangevinIntegrator::VariableLangevinIntegrator__double.double.double"></span><code class="descclassname"></code><code class="descname">VariableLangevinIntegrator</code><span class="sig-paren">(</span>double <em>temperature</em>, double <em>frictionCoeff</em>, double <em>errorTol</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator26VariableLangevinIntegratorEddd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator26VariableLangevinIntegratorEddd" title="OpenMM::VariableLangevinIntegrator::VariableLangevinIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">VariableLangevinIntegrator</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>temperature</strong> &#8211; the temperature of the heat bath (in Kelvin)</li>
+<li><strong>frictionCoeff</strong> &#8211; the friction coefficient which couples the system to the heat bath (in inverse picoseconds)</li>
+<li><strong>errorTol</strong> &#8211; the error tolerance</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM26VariableLangevinIntegrator14getTemperatureEv">
+<span id="OpenMM::VariableLangevinIntegrator::getTemperatureC"></span>double <code class="descclassname"></code><code class="descname">getTemperature</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM26VariableLangevinIntegrator14getTemperatureEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the temperature of the heat bath (in Kelvin).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the temperature of the heat bath, measured in Kelvin</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM26VariableLangevinIntegrator14setTemperatureEd">
+<span id="OpenMM::VariableLangevinIntegrator::setTemperature__double"></span>void <code class="descclassname"></code><code class="descname">setTemperature</code><span class="sig-paren">(</span>double <em>temp</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator14setTemperatureEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the temperature of the heat bath (in Kelvin).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>temp</strong> &#8211; the temperature of the heat bath, measured in Kelvin</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM26VariableLangevinIntegrator11getFrictionEv">
+<span id="OpenMM::VariableLangevinIntegrator::getFrictionC"></span>double <code class="descclassname"></code><code class="descname">getFriction</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM26VariableLangevinIntegrator11getFrictionEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the friction coefficient which determines how strongly the system is coupled to the heat bath (in inverse ps).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the friction coefficient, measured in 1/ps</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM26VariableLangevinIntegrator11setFrictionEd">
+<span id="OpenMM::VariableLangevinIntegrator::setFriction__double"></span>void <code class="descclassname"></code><code class="descname">setFriction</code><span class="sig-paren">(</span>double <em>coeff</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator11setFrictionEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the friction coefficient which determines how strongly the system is coupled to the heat bath (in inverse ps).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>coeff</strong> &#8211; the friction coefficient, measured in 1/ps</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM26VariableLangevinIntegrator17getErrorToleranceEv">
+<span id="OpenMM::VariableLangevinIntegrator::getErrorToleranceC"></span>double <code class="descclassname"></code><code class="descname">getErrorTolerance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM26VariableLangevinIntegrator17getErrorToleranceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error tolerance.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM26VariableLangevinIntegrator17setErrorToleranceEd">
+<span id="OpenMM::VariableLangevinIntegrator::setErrorTolerance__double"></span>void <code class="descclassname"></code><code class="descname">setErrorTolerance</code><span class="sig-paren">(</span>double <em>tol</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator17setErrorToleranceEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the error tolerance.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM26VariableLangevinIntegrator19getRandomNumberSeedEv">
+<span id="OpenMM::VariableLangevinIntegrator::getRandomNumberSeedC"></span>int <code class="descclassname"></code><code class="descname">getRandomNumberSeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM26VariableLangevinIntegrator19getRandomNumberSeedEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the random number seed. See <a class="reference internal" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator19setRandomNumberSeedEi" title="OpenMM::VariableLangevinIntegrator::setRandomNumberSeed"><code class="xref cpp cpp-any docutils literal"><span class="pre">setRandomNumberSeed()</span></code></a> for details.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM26VariableLangevinIntegrator19setRandomNumberSeedEi">
+<span id="OpenMM::VariableLangevinIntegrator::setRandomNumberSeed__i"></span>void <code class="descclassname"></code><code class="descname">setRandomNumberSeed</code><span class="sig-paren">(</span>int <em>seed</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator19setRandomNumberSeedEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the random number seed. The precise meaning of this parameter is undefined, and is left up to each <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> to interpret in an appropriate way. It is guaranteed that if two simulations are run with different random number seeds, the sequence of random forces will be different. On the other hand, no guarantees are made about the behavior of simulations that use the same seed. In particular, Platforms are permitted to use non-deterministic algorithms which produce different results on successive runs, even if those runs were initialized identically.</p>
+<p>If seed is set to 0 (which is the default value assigned), a unique seed is chosen when a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> is created from this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a>. This is done to ensure that each <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> receives unique random seeds without you needing to set them explicitly.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM26VariableLangevinIntegrator4stepEi">
+<span id="OpenMM::VariableLangevinIntegrator::step__i"></span>void <code class="descclassname"></code><code class="descname">step</code><span class="sig-paren">(</span>int <em>steps</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator4stepEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Advance a simulation through time by taking a series of time steps.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>steps</strong> &#8211; the number of time steps to take</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM26VariableLangevinIntegrator6stepToEd">
+<span id="OpenMM::VariableLangevinIntegrator::stepTo__double"></span>void <code class="descclassname"></code><code class="descname">stepTo</code><span class="sig-paren">(</span>double <em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM26VariableLangevinIntegrator6stepToEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Advance a simulation through time by taking a series of steps until a specified time is reached. When this method returns, the simulation time will exactly equal the time which was specified. If you call this method and specify a time that is earlier than the current time, it will return without doing anything.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>time</strong> &#8211; the time to which the simulation should be advanced</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.VariableLangevinIntegrator.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

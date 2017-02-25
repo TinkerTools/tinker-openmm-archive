@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PDBFile &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Application Layer" href="../app.html" />
+    <link rel="next" title="PDBxFile" href="simtk.openmm.app.pdbxfile.PDBxFile.html" />
+    <link rel="prev" title="GromacsTopFile" href="simtk.openmm.app.gromacstopfile.GromacsTopFile.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pdbfile">
+<h1>PDBFile<a class="headerlink" href="#pdbfile" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.app.pdbfile.PDBFile">
+<em class="property">class </em><code class="descclassname">simtk.openmm.app.pdbfile.</code><code class="descname">PDBFile</code><span class="sig-paren">(</span><em>file</em>, <em>extraParticleIdentifier='EP'</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbfile.PDBFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>PDBFile parses a Protein Data Bank (PDB) file and constructs a Topology and a set of atom positions from it.</p>
+<p>This class also provides methods for creating PDB files.  To write a file containing a single model, call
+writeFile().  You also can create files that contain multiple models.  To do this, first call writeHeader(),
+then writeModel() once for each model in the file, and finally writeFooter() to complete the file.</p>
+<dl class="method">
+<dt id="simtk.openmm.app.pdbfile.PDBFile.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>file</em>, <em>extraParticleIdentifier='EP'</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbfile.PDBFile.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a PDB file.</p>
+<p>The atom positions and Topology can be retrieved by calling getPositions() and getTopology().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> (<em>string</em>) &#8211; the name of the file to load</li>
+<li><strong>extraParticleIdentifier</strong> (<em>string=&#8217;EP&#8217;</em>) &#8211; if this value appears in the element column for an ATOM record, the Atom&#8217;s element will be set to None to mark it as an extra particle</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.pdbfile.PDBFile.__init__" title="simtk.openmm.app.pdbfile.PDBFile.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>(file[,&nbsp;extraParticleIdentifier])</td>
+<td>Load a PDB file.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.pdbfile.PDBFile.getNumFrames" title="simtk.openmm.app.pdbfile.PDBFile.getNumFrames"><code class="xref py py-obj docutils literal"><span class="pre">getNumFrames</span></code></a>()</td>
+<td>Get the number of frames stored in the file.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.pdbfile.PDBFile.getPositions" title="simtk.openmm.app.pdbfile.PDBFile.getPositions"><code class="xref py py-obj docutils literal"><span class="pre">getPositions</span></code></a>([asNumpy,&nbsp;frame])</td>
+<td>Get the atomic positions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.pdbfile.PDBFile.getTopology" title="simtk.openmm.app.pdbfile.PDBFile.getTopology"><code class="xref py py-obj docutils literal"><span class="pre">getTopology</span></code></a>()</td>
+<td>Get the Topology of the model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.pdbfile.PDBFile.writeFile" title="simtk.openmm.app.pdbfile.PDBFile.writeFile"><code class="xref py py-obj docutils literal"><span class="pre">writeFile</span></code></a>(topology,&nbsp;positions[,&nbsp;file,&nbsp;...])</td>
+<td>Write a PDB file containing a single model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.pdbfile.PDBFile.writeFooter" title="simtk.openmm.app.pdbfile.PDBFile.writeFooter"><code class="xref py py-obj docutils literal"><span class="pre">writeFooter</span></code></a>(topology[,&nbsp;file])</td>
+<td>Write out the footer for a PDB file.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.pdbfile.PDBFile.writeHeader" title="simtk.openmm.app.pdbfile.PDBFile.writeHeader"><code class="xref py py-obj docutils literal"><span class="pre">writeHeader</span></code></a>(topology[,&nbsp;file])</td>
+<td>Write out the header for a PDB file.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.pdbfile.PDBFile.writeModel" title="simtk.openmm.app.pdbfile.PDBFile.writeModel"><code class="xref py py-obj docutils literal"><span class="pre">writeModel</span></code></a>(topology,&nbsp;positions[,&nbsp;file,&nbsp;...])</td>
+<td>Write out a model to a PDB file.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.app.pdbfile.PDBFile.getTopology">
+<code class="descname">getTopology</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbfile.PDBFile.getTopology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Topology of the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.pdbfile.PDBFile.getNumFrames">
+<code class="descname">getNumFrames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbfile.PDBFile.getNumFrames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of frames stored in the file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.pdbfile.PDBFile.getPositions">
+<code class="descname">getPositions</code><span class="sig-paren">(</span><em>asNumpy=False</em>, <em>frame=0</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbfile.PDBFile.getPositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the atomic positions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>asNumpy</strong> (<em>boolean=False</em>) &#8211; if true, the values are returned as a numpy array instead of a list
+of Vec3s</li>
+<li><strong>frame</strong> (<em>int=0</em>) &#8211; the index of the frame for which to get positions</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="simtk.openmm.app.pdbfile.PDBFile.writeFile">
+<em class="property">static </em><code class="descname">writeFile</code><span class="sig-paren">(</span><em>topology</em>, <em>positions</em>, <em>file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='UTF-8'&gt;</em>, <em>keepIds=False</em>, <em>extraParticleIdentifier=' '</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbfile.PDBFile.writeFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a PDB file containing a single model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology defining the model to write</li>
+<li><strong>positions</strong> (<em>list</em>) &#8211; The list of atomic positions to write</li>
+<li><strong>file</strong> (<em>file=stdout</em>) &#8211; A file to write to</li>
+<li><strong>keepIds</strong> (<em>bool=False</em>) &#8211; If True, keep the residue and chain IDs specified in the Topology
+rather than generating new ones.  Warning: It is up to the caller to
+make sure these are valid IDs that satisfy the requirements of the
+PDB format.  Otherwise, the output file will be invalid.</li>
+<li><strong>extraParticleIdentifier</strong> (<em>string=&#8217; &#8216;</em>) &#8211; String to write in the element column of the ATOM records for atoms whose element is None (extra particles)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="simtk.openmm.app.pdbfile.PDBFile.writeHeader">
+<em class="property">static </em><code class="descname">writeHeader</code><span class="sig-paren">(</span><em>topology</em>, <em>file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='UTF-8'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbfile.PDBFile.writeHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out the header for a PDB file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology defining the molecular system being written</li>
+<li><strong>file</strong> (<em>file=stdout</em>) &#8211; A file to write the file to</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="simtk.openmm.app.pdbfile.PDBFile.writeModel">
+<em class="property">static </em><code class="descname">writeModel</code><span class="sig-paren">(</span><em>topology</em>, <em>positions</em>, <em>file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='UTF-8'&gt;</em>, <em>modelIndex=None</em>, <em>keepIds=False</em>, <em>extraParticleIdentifier=' '</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbfile.PDBFile.writeModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out a model to a PDB file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology defining the model to write</li>
+<li><strong>positions</strong> (<em>list</em>) &#8211; The list of atomic positions to write</li>
+<li><strong>file</strong> (<em>file=stdout</em>) &#8211; A file to write the model to</li>
+<li><strong>modelIndex</strong> (<em>int=None</em>) &#8211; If not None, the model will be surrounded by MODEL/ENDMDL records
+with this index</li>
+<li><strong>keepIds</strong> (<em>bool=False</em>) &#8211; If True, keep the residue and chain IDs specified in the Topology
+rather than generating new ones.  Warning: It is up to the caller to
+make sure these are valid IDs that satisfy the requirements of the
+PDB format.  Otherwise, the output file will be invalid.</li>
+<li><strong>extraParticleIdentifier</strong> (<em>string=&#8217; &#8216;</em>) &#8211; String to write in the element column of the ATOM records for atoms whose element is None (extra particles)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="simtk.openmm.app.pdbfile.PDBFile.writeFooter">
+<em class="property">static </em><code class="descname">writeFooter</code><span class="sig-paren">(</span><em>topology</em>, <em>file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='UTF-8'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbfile.PDBFile.writeFooter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out the footer for a PDB file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology defining the molecular system being written</li>
+<li><strong>file</strong> (<em>file=stdout</em>) &#8211; A file to write the file to</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../app.html">Application Layer</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../app.html#loaders-and-setup">Loaders and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#representation-and-manipulation">Representation and Manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#reporting-output">Reporting Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#extras">Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#units">Units</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library Layer</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.app.pdbfile.PDBFile.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

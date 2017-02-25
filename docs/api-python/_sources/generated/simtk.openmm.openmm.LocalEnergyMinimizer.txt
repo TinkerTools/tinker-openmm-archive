@@ -1,0 +1,23 @@
+LocalEnergyMinimizer
+========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: LocalEnergyMinimizer
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LocalEnergyMinimizer.__init__
+      ~LocalEnergyMinimizer.minimize
+   
+   
+
+   
+   
+   

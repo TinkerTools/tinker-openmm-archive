@@ -1,0 +1,28 @@
+DrudeLangevinIntegrator
+===============================
+
+.. autodoxyclass:: OpenMM::DrudeLangevinIntegrator
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::DrudeLangevinIntegrator::DrudeLangevinIntegrator
+      ~OpenMM::DrudeLangevinIntegrator::getTemperature
+      ~OpenMM::DrudeLangevinIntegrator::setTemperature
+      ~OpenMM::DrudeLangevinIntegrator::getFriction
+      ~OpenMM::DrudeLangevinIntegrator::setFriction
+      ~OpenMM::DrudeLangevinIntegrator::getDrudeTemperature
+      ~OpenMM::DrudeLangevinIntegrator::setDrudeTemperature
+      ~OpenMM::DrudeLangevinIntegrator::getDrudeFriction
+      ~OpenMM::DrudeLangevinIntegrator::setDrudeFriction
+      ~OpenMM::DrudeLangevinIntegrator::getMaxDrudeDistance
+      ~OpenMM::DrudeLangevinIntegrator::setMaxDrudeDistance
+      ~OpenMM::DrudeLangevinIntegrator::getRandomNumberSeed
+      ~OpenMM::DrudeLangevinIntegrator::setRandomNumberSeed
+      ~OpenMM::DrudeLangevinIntegrator::step
+   
+
+   

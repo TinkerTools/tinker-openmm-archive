@@ -1,0 +1,30 @@
+AmoebaInPlaneAngleForce
+===============================
+
+.. autodoxyclass:: OpenMM::AmoebaInPlaneAngleForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaInPlaneAngleForce::AmoebaInPlaneAngleForce
+      ~OpenMM::AmoebaInPlaneAngleForce::getNumAngles
+      ~OpenMM::AmoebaInPlaneAngleForce::setAmoebaGlobalInPlaneAngleCubic
+      ~OpenMM::AmoebaInPlaneAngleForce::getAmoebaGlobalInPlaneAngleCubic
+      ~OpenMM::AmoebaInPlaneAngleForce::setAmoebaGlobalInPlaneAngleQuartic
+      ~OpenMM::AmoebaInPlaneAngleForce::getAmoebaGlobalInPlaneAngleQuartic
+      ~OpenMM::AmoebaInPlaneAngleForce::setAmoebaGlobalInPlaneAnglePentic
+      ~OpenMM::AmoebaInPlaneAngleForce::getAmoebaGlobalInPlaneAnglePentic
+      ~OpenMM::AmoebaInPlaneAngleForce::setAmoebaGlobalInPlaneAngleSextic
+      ~OpenMM::AmoebaInPlaneAngleForce::getAmoebaGlobalInPlaneAngleSextic
+      ~OpenMM::AmoebaInPlaneAngleForce::addAngle
+      ~OpenMM::AmoebaInPlaneAngleForce::getAngleParameters
+      ~OpenMM::AmoebaInPlaneAngleForce::setAngleParameters
+      ~OpenMM::AmoebaInPlaneAngleForce::updateParametersInContext
+      ~OpenMM::AmoebaInPlaneAngleForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::AmoebaInPlaneAngleForce::usesPeriodicBoundaryConditions
+   
+
+   

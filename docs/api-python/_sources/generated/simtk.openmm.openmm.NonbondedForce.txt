@@ -1,0 +1,66 @@
+NonbondedForce
+==================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: NonbondedForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NonbondedForce.__init__
+      ~NonbondedForce.addException
+      ~NonbondedForce.addException_usingRMin
+      ~NonbondedForce.addParticle
+      ~NonbondedForce.addParticle_usingRVdw
+      ~NonbondedForce.createExceptionsFromBonds
+      ~NonbondedForce.getCutoffDistance
+      ~NonbondedForce.getEwaldErrorTolerance
+      ~NonbondedForce.getExceptionParameters
+      ~NonbondedForce.getForceGroup
+      ~NonbondedForce.getNonbondedMethod
+      ~NonbondedForce.getNumExceptions
+      ~NonbondedForce.getNumParticles
+      ~NonbondedForce.getPMEParameters
+      ~NonbondedForce.getPMEParametersInContext
+      ~NonbondedForce.getParticleParameters
+      ~NonbondedForce.getReactionFieldDielectric
+      ~NonbondedForce.getReciprocalSpaceForceGroup
+      ~NonbondedForce.getSwitchingDistance
+      ~NonbondedForce.getUseDispersionCorrection
+      ~NonbondedForce.getUseSwitchingFunction
+      ~NonbondedForce.setCutoffDistance
+      ~NonbondedForce.setEwaldErrorTolerance
+      ~NonbondedForce.setExceptionParameters
+      ~NonbondedForce.setForceGroup
+      ~NonbondedForce.setNonbondedMethod
+      ~NonbondedForce.setPMEParameters
+      ~NonbondedForce.setParticleParameters
+      ~NonbondedForce.setReactionFieldDielectric
+      ~NonbondedForce.setReciprocalSpaceForceGroup
+      ~NonbondedForce.setSwitchingDistance
+      ~NonbondedForce.setUseDispersionCorrection
+      ~NonbondedForce.setUseSwitchingFunction
+      ~NonbondedForce.updateParametersInContext
+      ~NonbondedForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~NonbondedForce.CutoffNonPeriodic
+      ~NonbondedForce.CutoffPeriodic
+      ~NonbondedForce.Ewald
+      ~NonbondedForce.NoCutoff
+      ~NonbondedForce.PME
+   
+   

@@ -1,0 +1,36 @@
+MonteCarloMembraneBarostat
+==================================
+
+.. autodoxyclass:: OpenMM::MonteCarloMembraneBarostat
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::MonteCarloMembraneBarostat::MonteCarloMembraneBarostat
+      ~OpenMM::MonteCarloMembraneBarostat::getDefaultPressure
+      ~OpenMM::MonteCarloMembraneBarostat::setDefaultPressure
+      ~OpenMM::MonteCarloMembraneBarostat::getDefaultSurfaceTension
+      ~OpenMM::MonteCarloMembraneBarostat::setDefaultSurfaceTension
+      ~OpenMM::MonteCarloMembraneBarostat::getFrequency
+      ~OpenMM::MonteCarloMembraneBarostat::setFrequency
+      ~OpenMM::MonteCarloMembraneBarostat::getDefaultTemperature
+      ~OpenMM::MonteCarloMembraneBarostat::setDefaultTemperature
+      ~OpenMM::MonteCarloMembraneBarostat::getXYMode
+      ~OpenMM::MonteCarloMembraneBarostat::setXYMode
+      ~OpenMM::MonteCarloMembraneBarostat::getZMode
+      ~OpenMM::MonteCarloMembraneBarostat::setZMode
+      ~OpenMM::MonteCarloMembraneBarostat::getRandomNumberSeed
+      ~OpenMM::MonteCarloMembraneBarostat::setRandomNumberSeed
+      ~OpenMM::MonteCarloMembraneBarostat::usesPeriodicBoundaryConditions
+   
+
+   
+   
+   .. autodoxyenum:: XYMode
+   
+   .. autodoxyenum:: ZMode
+   
+   

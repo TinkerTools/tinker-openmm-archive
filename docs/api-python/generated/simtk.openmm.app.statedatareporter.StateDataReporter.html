@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>StateDataReporter &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Application Layer" href="../app.html" />
+    <link rel="next" title="CharmmPSFWarning" href="simtk.openmm.app.internal.charmm.exceptions.CharmmPSFWarning.html" />
+    <link rel="prev" title="PDBxReporter" href="simtk.openmm.app.pdbreporter.PDBxReporter.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="statedatareporter">
+<h1>StateDataReporter<a class="headerlink" href="#statedatareporter" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.app.statedatareporter.StateDataReporter">
+<em class="property">class </em><code class="descclassname">simtk.openmm.app.statedatareporter.</code><code class="descname">StateDataReporter</code><span class="sig-paren">(</span><em>file</em>, <em>reportInterval</em>, <em>step=False</em>, <em>time=False</em>, <em>potentialEnergy=False</em>, <em>kineticEnergy=False</em>, <em>totalEnergy=False</em>, <em>temperature=False</em>, <em>volume=False</em>, <em>density=False</em>, <em>progress=False</em>, <em>remainingTime=False</em>, <em>speed=False</em>, <em>elapsedTime=False</em>, <em>separator='</em>, <em>'</em>, <em>systemMass=None</em>, <em>totalSteps=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.statedatareporter.StateDataReporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>StateDataReporter outputs information about a simulation, such as energy and temperature, to a file.</p>
+<p>To use it, create a StateDataReporter, then add it to the Simulation&#8217;s list of reporters.  The set of
+data to write is configurable using boolean flags passed to the constructor.  By default the data is
+written in comma-separated-value (CSV) format, but you can specify a different separator to use.</p>
+<dl class="method">
+<dt id="simtk.openmm.app.statedatareporter.StateDataReporter.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>file</em>, <em>reportInterval</em>, <em>step=False</em>, <em>time=False</em>, <em>potentialEnergy=False</em>, <em>kineticEnergy=False</em>, <em>totalEnergy=False</em>, <em>temperature=False</em>, <em>volume=False</em>, <em>density=False</em>, <em>progress=False</em>, <em>remainingTime=False</em>, <em>speed=False</em>, <em>elapsedTime=False</em>, <em>separator='</em>, <em>'</em>, <em>systemMass=None</em>, <em>totalSteps=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.statedatareporter.StateDataReporter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a StateDataReporter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> (<em>string or file</em>) &#8211; The file to write to, specified as a file name or file object</li>
+<li><strong>reportInterval</strong> (<em>int</em>) &#8211; The interval (in time steps) at which to write frames</li>
+<li><strong>step</strong> (<em>bool=False</em>) &#8211; Whether to write the current step index to the file</li>
+<li><strong>time</strong> (<em>bool=False</em>) &#8211; Whether to write the current time to the file</li>
+<li><strong>potentialEnergy</strong> (<em>bool=False</em>) &#8211; Whether to write the potential energy to the file</li>
+<li><strong>kineticEnergy</strong> (<em>bool=False</em>) &#8211; Whether to write the kinetic energy to the file</li>
+<li><strong>totalEnergy</strong> (<em>bool=False</em>) &#8211; Whether to write the total energy to the file</li>
+<li><strong>temperature</strong> (<em>bool=False</em>) &#8211; Whether to write the instantaneous temperature to the file</li>
+<li><strong>volume</strong> (<em>bool=False</em>) &#8211; Whether to write the periodic box volume to the file</li>
+<li><strong>density</strong> (<em>bool=False</em>) &#8211; Whether to write the system density to the file</li>
+<li><strong>progress</strong> (<em>bool=False</em>) &#8211; Whether to write current progress (percent completion) to the file.
+If this is True, you must also specify totalSteps.</li>
+<li><strong>remainingTime</strong> (<em>bool=False</em>) &#8211; Whether to write an estimate of the remaining clock time until
+completion to the file.  If this is True, you must also specify
+totalSteps.</li>
+<li><strong>speed</strong> (<em>bool=False</em>) &#8211; Whether to write an estimate of the simulation speed in ns/day to
+the file</li>
+<li><strong>elapsedTime</strong> (<em>bool=False</em>) &#8211; Whether to write the elapsed time of the simulation in seconds to
+the file.</li>
+<li><strong>separator</strong> (<em>string=&#8217;,&#8217;</em>) &#8211; The separator to use between columns in the file</li>
+<li><strong>systemMass</strong> (<em>mass=None</em>) &#8211; The total mass to use for the system when reporting density.  If
+this is None (the default), the system mass is computed by summing
+the masses of all particles.  This parameter is useful when the
+particle masses do not reflect their actual physical mass, such as
+when some particles have had their masses set to 0 to immobilize
+them.</li>
+<li><strong>totalSteps</strong> (<em>int=None</em>) &#8211; The total number of steps that will be included in the simulation.
+This is required if either progress or remainingTime is set to True,
+and defines how many steps will indicate 100% completion.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.statedatareporter.StateDataReporter.__init__" title="simtk.openmm.app.statedatareporter.StateDataReporter.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>(file,&nbsp;reportInterval[,&nbsp;step,&nbsp;time,&nbsp;...])</td>
+<td>Create a StateDataReporter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.statedatareporter.StateDataReporter.describeNextReport" title="simtk.openmm.app.statedatareporter.StateDataReporter.describeNextReport"><code class="xref py py-obj docutils literal"><span class="pre">describeNextReport</span></code></a>(simulation)</td>
+<td>Get information about the next report this object will generate.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.statedatareporter.StateDataReporter.report" title="simtk.openmm.app.statedatareporter.StateDataReporter.report"><code class="xref py py-obj docutils literal"><span class="pre">report</span></code></a>(simulation,&nbsp;state)</td>
+<td>Generate a report.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.app.statedatareporter.StateDataReporter.describeNextReport">
+<code class="descname">describeNextReport</code><span class="sig-paren">(</span><em>simulation</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.statedatareporter.StateDataReporter.describeNextReport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about the next report this object will generate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>simulation</strong> (<a class="reference internal" href="simtk.openmm.app.simulation.Simulation.html#simtk.openmm.app.simulation.Simulation" title="simtk.openmm.app.simulation.Simulation"><em>Simulation</em></a>) &#8211; The Simulation to generate a report for</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A five element tuple. The first element is the number of steps
+until the next report. The remaining elements specify whether
+that report will require positions, velocities, forces, and
+energies respectively.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.statedatareporter.StateDataReporter.report">
+<code class="descname">report</code><span class="sig-paren">(</span><em>simulation</em>, <em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.statedatareporter.StateDataReporter.report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a report.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>simulation</strong> (<a class="reference internal" href="simtk.openmm.app.simulation.Simulation.html#simtk.openmm.app.simulation.Simulation" title="simtk.openmm.app.simulation.Simulation"><em>Simulation</em></a>) &#8211; The Simulation to generate a report for</li>
+<li><strong>state</strong> (<a class="reference internal" href="simtk.openmm.openmm.State.html#simtk.openmm.openmm.State" title="simtk.openmm.openmm.State"><em>State</em></a>) &#8211; The current state of the simulation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../app.html">Application Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../app.html#loaders-and-setup">Loaders and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#representation-and-manipulation">Representation and Manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#simulation">Simulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../app.html#reporting-output">Reporting Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#extras">Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#units">Units</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library Layer</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.app.statedatareporter.StateDataReporter.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

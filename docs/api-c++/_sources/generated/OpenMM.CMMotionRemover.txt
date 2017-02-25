@@ -1,0 +1,18 @@
+CMMotionRemover
+=======================
+
+.. autodoxyclass:: OpenMM::CMMotionRemover
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CMMotionRemover::CMMotionRemover
+      ~OpenMM::CMMotionRemover::getFrequency
+      ~OpenMM::CMMotionRemover::setFrequency
+      ~OpenMM::CMMotionRemover::usesPeriodicBoundaryConditions
+   
+
+   

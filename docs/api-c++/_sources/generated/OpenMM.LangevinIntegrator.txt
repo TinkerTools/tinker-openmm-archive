@@ -1,0 +1,22 @@
+LangevinIntegrator
+==========================
+
+.. autodoxyclass:: OpenMM::LangevinIntegrator
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::LangevinIntegrator::LangevinIntegrator
+      ~OpenMM::LangevinIntegrator::getTemperature
+      ~OpenMM::LangevinIntegrator::setTemperature
+      ~OpenMM::LangevinIntegrator::getFriction
+      ~OpenMM::LangevinIntegrator::setFriction
+      ~OpenMM::LangevinIntegrator::getRandomNumberSeed
+      ~OpenMM::LangevinIntegrator::setRandomNumberSeed
+      ~OpenMM::LangevinIntegrator::step
+   
+
+   

@@ -1,0 +1,74 @@
+CustomHbondForce
+====================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CustomHbondForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CustomHbondForce.__init__
+      ~CustomHbondForce.addAcceptor
+      ~CustomHbondForce.addDonor
+      ~CustomHbondForce.addExclusion
+      ~CustomHbondForce.addFunction
+      ~CustomHbondForce.addGlobalParameter
+      ~CustomHbondForce.addPerAcceptorParameter
+      ~CustomHbondForce.addPerDonorParameter
+      ~CustomHbondForce.addTabulatedFunction
+      ~CustomHbondForce.getAcceptorParameters
+      ~CustomHbondForce.getCutoffDistance
+      ~CustomHbondForce.getDonorParameters
+      ~CustomHbondForce.getEnergyFunction
+      ~CustomHbondForce.getExclusionParticles
+      ~CustomHbondForce.getForceGroup
+      ~CustomHbondForce.getFunctionParameters
+      ~CustomHbondForce.getGlobalParameterDefaultValue
+      ~CustomHbondForce.getGlobalParameterName
+      ~CustomHbondForce.getNonbondedMethod
+      ~CustomHbondForce.getNumAcceptors
+      ~CustomHbondForce.getNumDonors
+      ~CustomHbondForce.getNumExclusions
+      ~CustomHbondForce.getNumFunctions
+      ~CustomHbondForce.getNumGlobalParameters
+      ~CustomHbondForce.getNumPerAcceptorParameters
+      ~CustomHbondForce.getNumPerDonorParameters
+      ~CustomHbondForce.getNumTabulatedFunctions
+      ~CustomHbondForce.getPerAcceptorParameterName
+      ~CustomHbondForce.getPerDonorParameterName
+      ~CustomHbondForce.getTabulatedFunction
+      ~CustomHbondForce.getTabulatedFunctionName
+      ~CustomHbondForce.setAcceptorParameters
+      ~CustomHbondForce.setCutoffDistance
+      ~CustomHbondForce.setDonorParameters
+      ~CustomHbondForce.setEnergyFunction
+      ~CustomHbondForce.setExclusionParticles
+      ~CustomHbondForce.setForceGroup
+      ~CustomHbondForce.setFunctionParameters
+      ~CustomHbondForce.setGlobalParameterDefaultValue
+      ~CustomHbondForce.setGlobalParameterName
+      ~CustomHbondForce.setNonbondedMethod
+      ~CustomHbondForce.setPerAcceptorParameterName
+      ~CustomHbondForce.setPerDonorParameterName
+      ~CustomHbondForce.updateParametersInContext
+      ~CustomHbondForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CustomHbondForce.CutoffNonPeriodic
+      ~CustomHbondForce.CutoffPeriodic
+      ~CustomHbondForce.NoCutoff
+   
+   

@@ -1,0 +1,66 @@
+CustomGBForce
+=====================
+
+.. autodoxyclass:: OpenMM::CustomGBForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CustomGBForce::CustomGBForce
+      ~OpenMM::CustomGBForce::~CustomGBForce
+      ~OpenMM::CustomGBForce::getNumParticles
+      ~OpenMM::CustomGBForce::getNumExclusions
+      ~OpenMM::CustomGBForce::getNumPerParticleParameters
+      ~OpenMM::CustomGBForce::getNumGlobalParameters
+      ~OpenMM::CustomGBForce::getNumEnergyParameterDerivatives
+      ~OpenMM::CustomGBForce::getNumTabulatedFunctions
+      ~OpenMM::CustomGBForce::getNumFunctions
+      ~OpenMM::CustomGBForce::getNumComputedValues
+      ~OpenMM::CustomGBForce::getNumEnergyTerms
+      ~OpenMM::CustomGBForce::getNonbondedMethod
+      ~OpenMM::CustomGBForce::setNonbondedMethod
+      ~OpenMM::CustomGBForce::getCutoffDistance
+      ~OpenMM::CustomGBForce::setCutoffDistance
+      ~OpenMM::CustomGBForce::addPerParticleParameter
+      ~OpenMM::CustomGBForce::getPerParticleParameterName
+      ~OpenMM::CustomGBForce::setPerParticleParameterName
+      ~OpenMM::CustomGBForce::addGlobalParameter
+      ~OpenMM::CustomGBForce::getGlobalParameterName
+      ~OpenMM::CustomGBForce::setGlobalParameterName
+      ~OpenMM::CustomGBForce::getGlobalParameterDefaultValue
+      ~OpenMM::CustomGBForce::setGlobalParameterDefaultValue
+      ~OpenMM::CustomGBForce::addEnergyParameterDerivative
+      ~OpenMM::CustomGBForce::getEnergyParameterDerivativeName
+      ~OpenMM::CustomGBForce::addParticle
+      ~OpenMM::CustomGBForce::getParticleParameters
+      ~OpenMM::CustomGBForce::setParticleParameters
+      ~OpenMM::CustomGBForce::addComputedValue
+      ~OpenMM::CustomGBForce::getComputedValueParameters
+      ~OpenMM::CustomGBForce::setComputedValueParameters
+      ~OpenMM::CustomGBForce::addEnergyTerm
+      ~OpenMM::CustomGBForce::getEnergyTermParameters
+      ~OpenMM::CustomGBForce::setEnergyTermParameters
+      ~OpenMM::CustomGBForce::addExclusion
+      ~OpenMM::CustomGBForce::getExclusionParticles
+      ~OpenMM::CustomGBForce::setExclusionParticles
+      ~OpenMM::CustomGBForce::addTabulatedFunction
+      ~OpenMM::CustomGBForce::getTabulatedFunction
+      ~OpenMM::CustomGBForce::getTabulatedFunction
+      ~OpenMM::CustomGBForce::getTabulatedFunctionName
+      ~OpenMM::CustomGBForce::addFunction
+      ~OpenMM::CustomGBForce::getFunctionParameters
+      ~OpenMM::CustomGBForce::setFunctionParameters
+      ~OpenMM::CustomGBForce::updateParametersInContext
+      ~OpenMM::CustomGBForce::usesPeriodicBoundaryConditions
+   
+
+   
+   
+   .. autodoxyenum:: NonbondedMethod
+   
+   .. autodoxyenum:: ComputationType
+   
+   

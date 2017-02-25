@@ -1,0 +1,18 @@
+OutOfPlaneSite
+======================
+
+.. autodoxyclass:: OpenMM::OutOfPlaneSite
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::OutOfPlaneSite::OutOfPlaneSite
+      ~OpenMM::OutOfPlaneSite::getWeight12
+      ~OpenMM::OutOfPlaneSite::getWeight13
+      ~OpenMM::OutOfPlaneSite::getWeightCross
+   
+
+   

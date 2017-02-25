@@ -1,0 +1,37 @@
+SerializationNode
+=====================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: SerializationNode
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SerializationNode.__init__
+      ~SerializationNode.createChildNode
+      ~SerializationNode.getBoolProperty
+      ~SerializationNode.getChildNode
+      ~SerializationNode.getChildren
+      ~SerializationNode.getDoubleProperty
+      ~SerializationNode.getIntProperty
+      ~SerializationNode.getName
+      ~SerializationNode.getProperties
+      ~SerializationNode.getStringProperty
+      ~SerializationNode.hasProperty
+      ~SerializationNode.setBoolProperty
+      ~SerializationNode.setDoubleProperty
+      ~SerializationNode.setIntProperty
+      ~SerializationNode.setName
+      ~SerializationNode.setStringProperty
+   
+   
+
+   
+   
+   

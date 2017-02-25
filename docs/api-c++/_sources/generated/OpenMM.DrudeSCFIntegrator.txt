@@ -1,0 +1,18 @@
+DrudeSCFIntegrator
+==========================
+
+.. autodoxyclass:: OpenMM::DrudeSCFIntegrator
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::DrudeSCFIntegrator::DrudeSCFIntegrator
+      ~OpenMM::DrudeSCFIntegrator::getMinimizationErrorTolerance
+      ~OpenMM::DrudeSCFIntegrator::setMinimizationErrorTolerance
+      ~OpenMM::DrudeSCFIntegrator::step
+   
+
+   

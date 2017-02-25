@@ -1,0 +1,33 @@
+AndersenThermostat
+======================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: AndersenThermostat
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AndersenThermostat.CollisionFrequency
+      ~AndersenThermostat.Temperature
+      ~AndersenThermostat.__init__
+      ~AndersenThermostat.getDefaultCollisionFrequency
+      ~AndersenThermostat.getDefaultTemperature
+      ~AndersenThermostat.getForceGroup
+      ~AndersenThermostat.getRandomNumberSeed
+      ~AndersenThermostat.setDefaultCollisionFrequency
+      ~AndersenThermostat.setDefaultTemperature
+      ~AndersenThermostat.setForceGroup
+      ~AndersenThermostat.setRandomNumberSeed
+      ~AndersenThermostat.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

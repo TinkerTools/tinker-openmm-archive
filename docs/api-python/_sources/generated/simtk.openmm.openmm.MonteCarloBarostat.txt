@@ -1,0 +1,35 @@
+MonteCarloBarostat
+======================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: MonteCarloBarostat
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MonteCarloBarostat.Pressure
+      ~MonteCarloBarostat.Temperature
+      ~MonteCarloBarostat.__init__
+      ~MonteCarloBarostat.getDefaultPressure
+      ~MonteCarloBarostat.getDefaultTemperature
+      ~MonteCarloBarostat.getForceGroup
+      ~MonteCarloBarostat.getFrequency
+      ~MonteCarloBarostat.getRandomNumberSeed
+      ~MonteCarloBarostat.setDefaultPressure
+      ~MonteCarloBarostat.setDefaultTemperature
+      ~MonteCarloBarostat.setForceGroup
+      ~MonteCarloBarostat.setFrequency
+      ~MonteCarloBarostat.setRandomNumberSeed
+      ~MonteCarloBarostat.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

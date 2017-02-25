@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modeller &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Application Layer" href="../app.html" />
+    <link rel="next" title="ForceField" href="simtk.openmm.app.forcefield.ForceField.html" />
+    <link rel="prev" title="Atom" href="simtk.openmm.app.topology.Atom.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="modeller">
+<h1>Modeller<a class="headerlink" href="#modeller" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.app.modeller.Modeller">
+<em class="property">class </em><code class="descclassname">simtk.openmm.app.modeller.</code><code class="descname">Modeller</code><span class="sig-paren">(</span><em>topology</em>, <em>positions</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modeller provides tools for editing molecular models, such as adding water or missing hydrogens.</p>
+<p>To use it, create a Modeller object, specifying the initial Topology and atom positions.  You can
+then call various methods to change the model in different ways.  Each time you do, a new Topology
+and list of coordinates is created to represent the changed model.  Finally, call getTopology()
+and getPositions() to get the results.</p>
+<dl class="method">
+<dt id="simtk.openmm.app.modeller.Modeller.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>topology</em>, <em>positions</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Modeller object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; the initial Topology of the model</li>
+<li><strong>positions</strong> (<em>list</em>) &#8211; the initial atomic positions</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.__init__" title="simtk.openmm.app.modeller.Modeller.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>(topology,&nbsp;positions)</td>
+<td>Create a new Modeller object</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.add" title="simtk.openmm.app.modeller.Modeller.add"><code class="xref py py-obj docutils literal"><span class="pre">add</span></code></a>(addTopology,&nbsp;addPositions)</td>
+<td>Add chains, residues, atoms, and bonds to the model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.addExtraParticles" title="simtk.openmm.app.modeller.Modeller.addExtraParticles"><code class="xref py py-obj docutils literal"><span class="pre">addExtraParticles</span></code></a>(forcefield)</td>
+<td>Add missing extra particles to the model that are required by a force field.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.addHydrogens" title="simtk.openmm.app.modeller.Modeller.addHydrogens"><code class="xref py py-obj docutils literal"><span class="pre">addHydrogens</span></code></a>([forcefield,&nbsp;pH,&nbsp;variants,&nbsp;...])</td>
+<td>Add missing hydrogens to the model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.addSolvent" title="simtk.openmm.app.modeller.Modeller.addSolvent"><code class="xref py py-obj docutils literal"><span class="pre">addSolvent</span></code></a>(forcefield[,&nbsp;model,&nbsp;boxSize,&nbsp;...])</td>
+<td>Add solvent (both water and ions) to the model to fill a rectangular box.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.convertWater" title="simtk.openmm.app.modeller.Modeller.convertWater"><code class="xref py py-obj docutils literal"><span class="pre">convertWater</span></code></a>([model])</td>
+<td>Convert all water molecules to a different water model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.delete" title="simtk.openmm.app.modeller.Modeller.delete"><code class="xref py py-obj docutils literal"><span class="pre">delete</span></code></a>(toDelete)</td>
+<td>Delete chains, residues, atoms, and bonds from the model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.deleteWater" title="simtk.openmm.app.modeller.Modeller.deleteWater"><code class="xref py py-obj docutils literal"><span class="pre">deleteWater</span></code></a>()</td>
+<td>Delete all water molecules from the model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.getPositions" title="simtk.openmm.app.modeller.Modeller.getPositions"><code class="xref py py-obj docutils literal"><span class="pre">getPositions</span></code></a>()</td>
+<td>Get the atomic positions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.getTopology" title="simtk.openmm.app.modeller.Modeller.getTopology"><code class="xref py py-obj docutils literal"><span class="pre">getTopology</span></code></a>()</td>
+<td>Get the Topology of the model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.modeller.Modeller.loadHydrogenDefinitions" title="simtk.openmm.app.modeller.Modeller.loadHydrogenDefinitions"><code class="xref py py-obj docutils literal"><span class="pre">loadHydrogenDefinitions</span></code></a>(file)</td>
+<td>Load an XML file containing definitions of hydrogens that should be added by addHydrogens().</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.app.modeller.Modeller.getTopology">
+<code class="descname">getTopology</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.getTopology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Topology of the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.modeller.Modeller.getPositions">
+<code class="descname">getPositions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.getPositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the atomic positions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.modeller.Modeller.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>addTopology</em>, <em>addPositions</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add chains, residues, atoms, and bonds to the model.</p>
+<p>Specify what to add by providing a new Topology object and the
+corresponding atomic positions. All chains, residues, atoms, and bonds
+contained in the Topology are added to the model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>addTopology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; a Topology whose contents should be added to the model</li>
+<li><strong>addPositions</strong> (<em>list</em>) &#8211; the positions of the atoms to add</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.modeller.Modeller.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>toDelete</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete chains, residues, atoms, and bonds from the model.</p>
+<p>You can specify objects to delete at any granularity: atoms, residues, or chains.  Passing
+in an Atom object causes that Atom to be deleted.  Passing in a Residue object causes that
+Residue and all Atoms it contains to be deleted.  Passing in a Chain object causes that
+Chain and all Residues and Atoms it contains to be deleted.</p>
+<p>In all cases, when an Atom is deleted, any bonds it participates in are also deleted.
+You also can specify a bond (as a tuple of Atom objects) to delete just that bond without
+deleting the Atoms it connects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>toDelete</strong> (<em>list</em>) &#8211; a list of Atoms, Residues, Chains, and bonds (specified as tuples of
+Atoms) to delete</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.modeller.Modeller.deleteWater">
+<code class="descname">deleteWater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.deleteWater" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete all water molecules from the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.modeller.Modeller.convertWater">
+<code class="descname">convertWater</code><span class="sig-paren">(</span><em>model='tip3p'</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.convertWater" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert all water molecules to a different water model.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">Use addExtraParticles() instead.  It performs the same function but in a more general way.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> (<em>string=&#8217;tip3p&#8217;</em>) &#8211; the water model to convert to.  Supported values are &#8216;tip3p&#8217;,
+&#8216;spce&#8217;, &#8216;tip4pew&#8217;, and &#8216;tip5p&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.modeller.Modeller.addSolvent">
+<code class="descname">addSolvent</code><span class="sig-paren">(</span><em>forcefield</em>, <em>model='tip3p'</em>, <em>boxSize=None</em>, <em>boxVectors=None</em>, <em>padding=None</em>, <em>numAdded=None</em>, <em>positiveIon='Na+'</em>, <em>negativeIon='Cl-'</em>, <em>ionicStrength=Quantity(value=0</em>, <em>unit=molar)</em>, <em>neutralize=True</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.addSolvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add solvent (both water and ions) to the model to fill a rectangular box.</p>
+<p>The algorithm works as follows:</p>
+<ol class="arabic simple">
+<li>Water molecules are added to fill the box.</li>
+<li>Water molecules are removed if their distance to any solute atom is less than the sum of their van der Waals radii.</li>
+<li>If the solute is charged and neutralize=True, enough positive or negative ions are added to neutralize it.  Each ion is added by
+randomly selecting a water molecule and replacing it with the ion.</li>
+<li>Ion pairs are added to give the requested total ionic strength.  Note that only monovalent ions are currently supported.</li>
+</ol>
+<p>The box size can be specified in any of several ways:</p>
+<ol class="arabic simple">
+<li>You can explicitly give the vectors defining the periodic box to use.</li>
+<li>Alternatively, for a rectangular box you can simply give the dimensions of the unit cell.</li>
+<li>You can give a padding distance.  The largest dimension of the solute (along the x, y, or z axis) is determined, and a cubic
+box of size (largest dimension)+2*padding is used.</li>
+<li>You can specify the total number of molecules (both waters and ions) to add.  A cubic box is then created whose size is
+just large enough hold the specified amount of solvent.</li>
+<li>Finally, if none of the above options is specified, the existing Topology&#8217;s box vectors are used.</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>forcefield</strong> (<a class="reference internal" href="simtk.openmm.app.forcefield.ForceField.html#simtk.openmm.app.forcefield.ForceField" title="simtk.openmm.app.forcefield.ForceField"><em>ForceField</em></a>) &#8211; the ForceField to use for determining van der Waals radii and atomic charges</li>
+<li><strong>model</strong> (<em>str=&#8217;tip3p&#8217;</em>) &#8211; the water model to use.  Supported values are &#8216;tip3p&#8217;, &#8216;spce&#8217;, &#8216;tip4pew&#8217;, and &#8216;tip5p&#8217;.</li>
+<li><strong>boxSize</strong> (<em>Vec3=None</em>) &#8211; the size of the box to fill with water</li>
+<li><strong>boxVectors</strong> (<em>tuple of Vec3=None</em>) &#8211; the vectors defining the periodic box to fill with water</li>
+<li><strong>padding</strong> (<em>distance=None</em>) &#8211; the padding distance to use</li>
+<li><strong>numAdded</strong> (<em>int=None</em>) &#8211; the total number of molecules (waters and ions) to add</li>
+<li><strong>positiveIon</strong> (<em>string=&#8217;Na+&#8217;</em>) &#8211; the type of positive ion to add.  Allowed values are &#8216;Cs+&#8217;, &#8216;K+&#8217;, &#8216;Li+&#8217;, &#8216;Na+&#8217;, and &#8216;Rb+&#8217;</li>
+<li><strong>negativeIon</strong> (<em>string=&#8217;Cl-&#8216;</em>) &#8211; the type of negative ion to add.  Allowed values are &#8216;Cl-&#8216;, &#8216;Br-&#8216;, &#8216;F-&#8216;, and &#8216;I-&#8216;. Be aware
+that not all force fields support all ion types.</li>
+<li><strong>ionicStrength</strong> (<em>concentration=0*molar</em>) &#8211; the total concentration of ions (both positive and negative) to add.  This
+does not include ions that are added to neutralize the system.
+Note that only monovalent ions are currently supported.</li>
+<li><strong>neutralize</strong> (<em>bool=True</em>) &#8211; whether to add ions to neutralize the system</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="simtk.openmm.app.modeller.Modeller.loadHydrogenDefinitions">
+<em class="property">static </em><code class="descname">loadHydrogenDefinitions</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.loadHydrogenDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an XML file containing definitions of hydrogens that should be added by addHydrogens().</p>
+<p>The built in hydrogens.xml file containing definitions for standard amino acids and nucleotides is loaded automatically.
+This method can be used to load additional definitions for other residue types.  They will then be used in subsequent
+calls to addHydrogens().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.modeller.Modeller.addHydrogens">
+<code class="descname">addHydrogens</code><span class="sig-paren">(</span><em>forcefield=None</em>, <em>pH=7.0</em>, <em>variants=None</em>, <em>platform=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.addHydrogens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add missing hydrogens to the model.</p>
+<p>Some residues can exist in multiple forms depending on the pH and properties of the local environment.  These
+variants differ in the presence or absence of particular hydrogens.  In particular, the following variants
+are supported:</p>
+<dl class="docutils">
+<dt>Aspartic acid:</dt>
+<dd>ASH: Neutral form with a hydrogen on one of the delta oxygens
+ASP: Negatively charged form without a hydrogen on either delta oxygen</dd>
+<dt>Cysteine:</dt>
+<dd>CYS: Neutral form with a hydrogen on the sulfur
+CYX: No hydrogen on the sulfur (either negatively charged, or part of a disulfide bond)</dd>
+<dt>Glutamic acid:</dt>
+<dd>GLH: Neutral form with a hydrogen on one of the epsilon oxygens
+GLU: Negatively charged form without a hydrogen on either epsilon oxygen</dd>
+<dt>Histidine:</dt>
+<dd>HID: Neutral form with a hydrogen on the ND1 atom
+HIE: Neutral form with a hydrogen on the NE2 atom
+HIP: Positively charged form with hydrogens on both ND1 and NE2
+HIN: Negatively charged form without a hydrogen on either ND1 or NE2</dd>
+<dt>Lysine:</dt>
+<dd>LYN: Neutral form with two hydrogens on the zeta nitrogen
+LYS: Positively charged form with three hydrogens on the zeta nitrogen</dd>
+</dl>
+<p>The variant to use for each residue is determined by the following rules:</p>
+<ol class="arabic simple">
+<li>The most common variant at the specified pH is selected.</li>
+<li>Any Cysteine that participates in a disulfide bond uses the CYX variant regardless of pH.</li>
+<li>For a neutral Histidine residue, the HID or HIE variant is selected based on which one forms a better hydrogen bond.</li>
+</ol>
+<p>You can override these rules by explicitly specifying a variant for any residue.  To do that, provide a list for the
+&#8216;variants&#8217; parameter, and set the corresponding element to the name of the variant to use.</p>
+<p>A special case is when the model already contains a hydrogen that should not be present in the desired variant.
+If you explicitly specify a variant using the &#8216;variants&#8217; parameter, the residue will be modified to match the
+desired variant, removing hydrogens if necessary.  On the other hand, for residues whose variant is selected
+automatically, this function will only add hydrogens.  It will never remove ones that are already present in the
+model, regardless of the specified pH.</p>
+<p>Definitions for standard amino acids and nucleotides are built in.  You can call loadHydrogenDefinitions() to load
+additional definitions for other residue types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>forcefield</strong> (<em>ForceField=None</em>) &#8211; the ForceField to use for determining the positions of hydrogens.
+If this is None, positions will be picked which are generally
+reasonable but not optimized for any particular ForceField.</li>
+<li><strong>pH</strong> (<em>float=7.0</em>) &#8211; the pH based on which to select variants</li>
+<li><strong>variants</strong> (<em>list=None</em>) &#8211; an optional list of variants to use.  If this is specified, its
+length must equal the number of residues in the model.  variants[i]
+is the name of the variant to use for residue i (indexed starting at
+0). If an element is None, the standard rules will be followed to
+select a variant for that residue.</li>
+<li><strong>platform</strong> (<em>Platform=None</em>) &#8211; the Platform to use when computing the hydrogen atom positions.  If
+this is None, the default Platform will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of what variant was actually selected for each residue,
+in the same format as the variants parameter</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.modeller.Modeller.addExtraParticles">
+<code class="descname">addExtraParticles</code><span class="sig-paren">(</span><em>forcefield</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.modeller.Modeller.addExtraParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add missing extra particles to the model that are required by a force
+field.</p>
+<p>Some force fields use &#8220;extra particles&#8221; that do not represent
+actual atoms, but still need to be included in the System.  Examples
+include lone pairs, Drude particles, and the virtual sites used in some
+water models to adjust the charge distribution.  Extra particles can be
+recognized by the fact that their element is None.</p>
+<p>This method is primarily used to add extra particles, but it can also
+remove them.  It tries to match every residue in the Topology to a
+template in the force field.  If there is no match, it will both add
+and remove extra particles as necessary to make it match.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>forcefield</strong> (<a class="reference internal" href="simtk.openmm.app.forcefield.ForceField.html#simtk.openmm.app.forcefield.ForceField" title="simtk.openmm.app.forcefield.ForceField"><em>ForceField</em></a>) &#8211; the ForceField defining what extra particles should be present</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../app.html">Application Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../app.html#loaders-and-setup">Loaders and Setup</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../app.html#representation-and-manipulation">Representation and Manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#reporting-output">Reporting Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#extras">Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#units">Units</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library Layer</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.app.modeller.Modeller.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

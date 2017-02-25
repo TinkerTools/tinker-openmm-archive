@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OutOfPlaneSite &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="outofplanesite">
+<h1>OutOfPlaneSite<a class="headerlink" href="#outofplanesite" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM14OutOfPlaneSiteE">
+<span id="OpenMM::OutOfPlaneSite"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">OutOfPlaneSite</code><a class="headerlink" href="#_CPPv2N6OpenMM14OutOfPlaneSiteE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a <a class="reference internal" href="OpenMM.VirtualSite.html#_CPPv2N6OpenMM11VirtualSiteE" title="OpenMM::VirtualSite"><code class="xref cpp cpp-any docutils literal"><span class="pre">VirtualSite</span></code></a> that computes the particle location based on three other particles&#8217; locations. If r<sub>1</sub>  is the location of particle 1, r<sub>12</sub>  is the vector from particle 1 to particle 2, and r<sub>13</sub>  is the vector from particle 1 to particle 3, then the virtual site location is given by</p>
+<p>r<sub>1</sub>  + w<sub>12</sub> r<sub>12</sub>  + w<sub>13</sub> r<sub>13</sub>  + w<sub>cross</sub> (r<sub>12</sub>  x r<sub>13</sub> )</p>
+<p>The three weight factors are user-specified. This allows the virtual site location to be out of the plane of the three particles.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM14OutOfPlaneSite14OutOfPlaneSiteEiiiddd" title="OpenMM::OutOfPlaneSite::OutOfPlaneSite"><code class="xref cpp cpp-any docutils literal"><span class="pre">OutOfPlaneSite</span></code></a></td>
+<td>Create a new <a class="reference internal" href="#_CPPv2N6OpenMM14OutOfPlaneSite14OutOfPlaneSiteEiiiddd" title="OpenMM::OutOfPlaneSite::OutOfPlaneSite"><code class="xref cpp cpp-any docutils literal"><span class="pre">OutOfPlaneSite</span></code></a> virtual site.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14OutOfPlaneSite11getWeight12Ev" title="OpenMM::OutOfPlaneSite::getWeight12"><code class="xref cpp cpp-any docutils literal"><span class="pre">getWeight12</span></code></a></td>
+<td>Get the weight factor for the vector from particle1 to particle2.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14OutOfPlaneSite11getWeight13Ev" title="OpenMM::OutOfPlaneSite::getWeight13"><code class="xref cpp cpp-any docutils literal"><span class="pre">getWeight13</span></code></a></td>
+<td>Get the weight factor for the vector from particle1 to particle3.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM14OutOfPlaneSite14getWeightCrossEv" title="OpenMM::OutOfPlaneSite::getWeightCross"><code class="xref cpp cpp-any docutils literal"><span class="pre">getWeightCross</span></code></a></td>
+<td>Get the weight factor for the cross product.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM14OutOfPlaneSite14OutOfPlaneSiteEiiiddd">
+<span id="OpenMM::OutOfPlaneSite::OutOfPlaneSite__i.i.i.double.double.double"></span><code class="descclassname"></code><code class="descname">OutOfPlaneSite</code><span class="sig-paren">(</span>int <em>particle1</em>, int <em>particle2</em>, int <em>particle3</em>, double <em>weight12</em>, double <em>weight13</em>, double <em>weightCross</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM14OutOfPlaneSite14OutOfPlaneSiteEiiiddd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new <a class="reference internal" href="#_CPPv2N6OpenMM14OutOfPlaneSite14OutOfPlaneSiteEiiiddd" title="OpenMM::OutOfPlaneSite::OutOfPlaneSite"><code class="xref cpp cpp-any docutils literal"><span class="pre">OutOfPlaneSite</span></code></a> virtual site.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particle1</strong> &#8211; the index of the first particle</li>
+<li><strong>particle2</strong> &#8211; the index of the second particle</li>
+<li><strong>particle3</strong> &#8211; the index of the third particle</li>
+<li><strong>weight12</strong> &#8211; the weight factor for the vector from particle1 to particle2</li>
+<li><strong>weight13</strong> &#8211; the weight factor for the vector from particle1 to particle3</li>
+<li><strong>weightCross</strong> &#8211; the weight factor for the cross product</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14OutOfPlaneSite11getWeight12Ev">
+<span id="OpenMM::OutOfPlaneSite::getWeight12C"></span>double <code class="descclassname"></code><code class="descname">getWeight12</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14OutOfPlaneSite11getWeight12Ev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the weight factor for the vector from particle1 to particle2.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14OutOfPlaneSite11getWeight13Ev">
+<span id="OpenMM::OutOfPlaneSite::getWeight13C"></span>double <code class="descclassname"></code><code class="descname">getWeight13</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14OutOfPlaneSite11getWeight13Ev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the weight factor for the vector from particle1 to particle3.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM14OutOfPlaneSite14getWeightCrossEv">
+<span id="OpenMM::OutOfPlaneSite::getWeightCrossC"></span>double <code class="descclassname"></code><code class="descname">getWeightCross</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM14OutOfPlaneSite14getWeightCrossEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the weight factor for the cross product.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.OutOfPlaneSite.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

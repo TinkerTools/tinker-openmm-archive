@@ -1,0 +1,22 @@
+AmoebaStretchBendForce
+==============================
+
+.. autodoxyclass:: OpenMM::AmoebaStretchBendForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaStretchBendForce::AmoebaStretchBendForce
+      ~OpenMM::AmoebaStretchBendForce::getNumStretchBends
+      ~OpenMM::AmoebaStretchBendForce::addStretchBend
+      ~OpenMM::AmoebaStretchBendForce::getStretchBendParameters
+      ~OpenMM::AmoebaStretchBendForce::setStretchBendParameters
+      ~OpenMM::AmoebaStretchBendForce::updateParametersInContext
+      ~OpenMM::AmoebaStretchBendForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::AmoebaStretchBendForce::usesPeriodicBoundaryConditions
+   
+
+   

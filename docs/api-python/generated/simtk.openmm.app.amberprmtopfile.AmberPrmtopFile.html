@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>AmberPrmtopFile &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Application Layer" href="../app.html" />
+    <link rel="next" title="CharmmCrdFile" href="simtk.openmm.app.charmmcrdfiles.CharmmCrdFile.html" />
+    <link rel="prev" title="AmberInpcrdFile" href="simtk.openmm.app.amberinpcrdfile.AmberInpcrdFile.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="amberprmtopfile">
+<h1>AmberPrmtopFile<a class="headerlink" href="#amberprmtopfile" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.app.amberprmtopfile.AmberPrmtopFile">
+<em class="property">class </em><code class="descclassname">simtk.openmm.app.amberprmtopfile.</code><code class="descname">AmberPrmtopFile</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.amberprmtopfile.AmberPrmtopFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>AmberPrmtopFile parses an AMBER prmtop file and constructs a Topology and (optionally) an OpenMM System from it.</p>
+<dl class="method">
+<dt id="simtk.openmm.app.amberprmtopfile.AmberPrmtopFile.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.amberprmtopfile.AmberPrmtopFile.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a prmtop file.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.amberprmtopfile.AmberPrmtopFile.__init__" title="simtk.openmm.app.amberprmtopfile.AmberPrmtopFile.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>(file)</td>
+<td>Load a prmtop file.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.amberprmtopfile.AmberPrmtopFile.createSystem" title="simtk.openmm.app.amberprmtopfile.AmberPrmtopFile.createSystem"><code class="xref py py-obj docutils literal"><span class="pre">createSystem</span></code></a>([nonbondedMethod,&nbsp;...])</td>
+<td>Construct an OpenMM System representing the topology described by this prmtop file.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.app.amberprmtopfile.AmberPrmtopFile.createSystem">
+<code class="descname">createSystem</code><span class="sig-paren">(</span><em>nonbondedMethod=NoCutoff</em>, <em>nonbondedCutoff=Quantity(value=1.0</em>, <em>unit=nanometer)</em>, <em>constraints=None</em>, <em>rigidWater=True</em>, <em>implicitSolvent=None</em>, <em>implicitSolventSaltConc=Quantity(value=0.0</em>, <em>unit=mole/liter)</em>, <em>implicitSolventKappa=None</em>, <em>temperature=Quantity(value=298.15</em>, <em>unit=kelvin)</em>, <em>soluteDielectric=1.0</em>, <em>solventDielectric=78.5</em>, <em>removeCMMotion=True</em>, <em>hydrogenMass=None</em>, <em>ewaldErrorTolerance=0.0005</em>, <em>switchDistance=Quantity(value=0.0</em>, <em>unit=nanometer)</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.amberprmtopfile.AmberPrmtopFile.createSystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct an OpenMM System representing the topology described by this
+prmtop file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nonbondedMethod</strong> (<em>object=NoCutoff</em>) &#8211; The method to use for nonbonded interactions.  Allowed values are
+NoCutoff, CutoffNonPeriodic, CutoffPeriodic, Ewald, or PME.</li>
+<li><strong>nonbondedCutoff</strong> (<em>distance=1*nanometer</em>) &#8211; The cutoff distance to use for nonbonded interactions</li>
+<li><strong>constraints</strong> (<em>object=None</em>) &#8211; Specifies which bonds angles should be implemented with constraints.
+Allowed values are None, HBonds, AllBonds, or HAngles.</li>
+<li><strong>rigidWater</strong> (<em>boolean=True</em>) &#8211; If true, water molecules will be fully rigid regardless of the value
+passed for the constraints argument</li>
+<li><strong>implicitSolvent</strong> (<em>object=None</em>) &#8211; If not None, the implicit solvent model to use.  Allowed values are
+HCT, OBC1, OBC2, GBn, or GBn2.</li>
+<li><strong>implicitSolventSaltConc</strong> (<em>float=0.0*unit.moles/unit.liter</em>) &#8211; The salt concentration for GB calculations (modelled as a debye
+screening parameter). It is converted to the debye length (kappa)
+using the provided temperature and solventDielectric</li>
+<li><strong>temperature</strong> (<em>float=300*kelvin</em>) &#8211; Temperature of the system. Only used to compute the Debye length
+from implicitSolventSoltConc</li>
+<li><strong>implicitSolventKappa</strong> (<em>float units of 1/length</em>) &#8211; If this value is set, implicitSolventSaltConc will be ignored.</li>
+<li><strong>soluteDielectric</strong> (<em>float=1.0</em>) &#8211; The solute dielectric constant to use in the implicit solvent model.</li>
+<li><strong>solventDielectric</strong> (<em>float=78.5</em>) &#8211; The solvent dielectric constant to use in the implicit solvent
+model.</li>
+<li><strong>removeCMMotion</strong> (<em>boolean=True</em>) &#8211; If true, a CMMotionRemover will be added to the System</li>
+<li><strong>hydrogenMass</strong> (<em>mass=None</em>) &#8211; The mass to use for hydrogen atoms bound to heavy atoms.  Any mass
+added to a hydrogen is subtracted from the heavy atom to keep their
+total mass the same.</li>
+<li><strong>ewaldErrorTolerance</strong> (<em>float=0.0005</em>) &#8211; The error tolerance to use if nonbondedMethod is Ewald or PME.</li>
+<li><strong>switchDistance</strong> (<em>float=0*nanometers</em>) &#8211; The distance at which the potential energy switching function is
+turned on for Lennard-Jones interactions. If the switchDistance is 0
+or evaluates to boolean False, no switching function will be used.
+Values greater than nonbondedCutoff or less than 0 raise ValueError</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the newly created System</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="simtk.openmm.openmm.System.html#simtk.openmm.openmm.System" title="simtk.openmm.openmm.System">System</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../app.html">Application Layer</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../app.html#loaders-and-setup">Loaders and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#representation-and-manipulation">Representation and Manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#reporting-output">Reporting Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#extras">Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#units">Units</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library Layer</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.app.amberprmtopfile.AmberPrmtopFile.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

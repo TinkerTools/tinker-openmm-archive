@@ -1,0 +1,547 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Context &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="context">
+<h1>Context<a class="headerlink" href="#context" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM7ContextE">
+<span id="OpenMM::Context"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">Context</code><a class="headerlink" href="#_CPPv2N6OpenMM7ContextE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> stores the complete state of a simulation. More specifically, it includes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The current time</li>
+<li>The position of each particle</li>
+<li>The velocity of each particle</li>
+<li>The values of configurable parameters defined by <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> objects in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a></li>
+</ul>
+</div></blockquote>
+<p>You can retrieve a snapshot of the current state at any time by calling <a class="reference internal" href="#_CPPv2NK6OpenMM7Context8getStateEibi" title="OpenMM::Context::getState"><code class="xref cpp cpp-any docutils literal"><span class="pre">getState()</span></code></a>. This allows you to record the state of the simulation at various points, either for analysis or for checkpointing. <a class="reference internal" href="#_CPPv2NK6OpenMM7Context8getStateEibi" title="OpenMM::Context::getState"><code class="xref cpp cpp-any docutils literal"><span class="pre">getState()</span></code></a> can also be used to retrieve the current forces on each particle and the current energy of the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a></td>
+<td>Construct a new <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> in which to run a simulation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a></td>
+<td>Construct a new <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> in which to run a simulation, explicitly specifying what <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> should be used to perform calculations.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a></td>
+<td>Construct a new <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> in which to run a simulation, explicitly specifying what <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> should be used to perform calculations and the values of platform-specific properties.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM7ContextD0Ev" title="OpenMM::Context::~Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">~Context</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM7Context9getSystemEv" title="OpenMM::Context::getSystem"><code class="xref cpp cpp-any docutils literal"><span class="pre">getSystem</span></code></a></td>
+<td>Get <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> being simulated in this context.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM7Context13getIntegratorEv" title="OpenMM::Context::getIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">getIntegrator</span></code></a></td>
+<td>Get <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code></a> being used to by this context.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM7Context13getIntegratorEv" title="OpenMM::Context::getIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">getIntegrator</span></code></a></td>
+<td>Get <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code></a> being used to by this context.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM7Context11getPlatformEv" title="OpenMM::Context::getPlatform"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPlatform</span></code></a></td>
+<td>Get the <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> being used for calculations.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM7Context11getPlatformEv" title="OpenMM::Context::getPlatform"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPlatform</span></code></a></td>
+<td>Get the <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> being used for calculations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM7Context8getStateEibi" title="OpenMM::Context::getState"><code class="xref cpp cpp-any docutils literal"><span class="pre">getState</span></code></a></td>
+<td>Get a <a class="reference internal" href="OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> object recording the current state information stored in this context.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context8setStateERK5State" title="OpenMM::Context::setState"><code class="xref cpp cpp-any docutils literal"><span class="pre">setState</span></code></a></td>
+<td>Copy information from a <a class="reference internal" href="OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> object into this <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context7setTimeEd" title="OpenMM::Context::setTime"><code class="xref cpp cpp-any docutils literal"><span class="pre">setTime</span></code></a></td>
+<td>Set the current time of the simulation (in picoseconds).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context12setPositionsERKNSt6vectorI4Vec3EE" title="OpenMM::Context::setPositions"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPositions</span></code></a></td>
+<td>Set the positions of all particles in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> (measured in nm).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context13setVelocitiesERKNSt6vectorI4Vec3EE" title="OpenMM::Context::setVelocities"><code class="xref cpp cpp-any docutils literal"><span class="pre">setVelocities</span></code></a></td>
+<td>Set the velocities of all particles in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> (measured in nm/picosecond).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context26setVelocitiesToTemperatureEdi" title="OpenMM::Context::setVelocitiesToTemperature"><code class="xref cpp cpp-any docutils literal"><span class="pre">setVelocitiesToTemperature</span></code></a></td>
+<td>Set the velocities of all particles in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> to random values chosen from a Boltzmann distribution at a given temperature.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM7Context13getParametersEv" title="OpenMM::Context::getParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getParameters</span></code></a></td>
+<td>Get all adjustable parameters that have been defined by <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> objects in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>, along with their current values.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM7Context12getParameterERKNSt6stringE" title="OpenMM::Context::getParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">getParameter</span></code></a></td>
+<td>Get the value of an adjustable parameter defined by a <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context12setParameterERKNSt6stringEd" title="OpenMM::Context::setParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParameter</span></code></a></td>
+<td>Set the value of an adjustable parameter defined by a <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context21setPeriodicBoxVectorsERK4Vec3RK4Vec3RK4Vec3" title="OpenMM::Context::setPeriodicBoxVectors"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPeriodicBoxVectors</span></code></a></td>
+<td>Set the vectors defining the axes of the periodic box (measured in nm).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context16applyConstraintsEd" title="OpenMM::Context::applyConstraints"><code class="xref cpp cpp-any docutils literal"><span class="pre">applyConstraints</span></code></a></td>
+<td>Update the positions of particles so that all distance constraints are satisfied.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context24applyVelocityConstraintsEd" title="OpenMM::Context::applyVelocityConstraints"><code class="xref cpp cpp-any docutils literal"><span class="pre">applyVelocityConstraints</span></code></a></td>
+<td>Update the velocities of particles so the net velocity of each constrained distance is zero.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context19computeVirtualSitesEv" title="OpenMM::Context::computeVirtualSites"><code class="xref cpp cpp-any docutils literal"><span class="pre">computeVirtualSites</span></code></a></td>
+<td>Recompute the locations of all virtual sites.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context12reinitializeEv" title="OpenMM::Context::reinitialize"><code class="xref cpp cpp-any docutils literal"><span class="pre">reinitialize</span></code></a></td>
+<td>When a <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> is created, it may cache information about the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> being simulated and the <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> objects contained in it.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context16createCheckpointERNSt7ostreamE" title="OpenMM::Context::createCheckpoint"><code class="xref cpp cpp-any docutils literal"><span class="pre">createCheckpoint</span></code></a></td>
+<td>Create a checkpoint recording the current state of the <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM7Context14loadCheckpointERNSt7istreamE" title="OpenMM::Context::loadCheckpoint"><code class="xref cpp cpp-any docutils literal"><span class="pre">loadCheckpoint</span></code></a></td>
+<td>Load a checkpoint that was written by <a class="reference internal" href="#_CPPv2N6OpenMM7Context16createCheckpointERNSt7ostreamE" title="OpenMM::Context::createCheckpoint"><code class="xref cpp cpp-any docutils literal"><span class="pre">createCheckpoint()</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM7Context12getMoleculesEv" title="OpenMM::Context::getMolecules"><code class="xref cpp cpp-any docutils literal"><span class="pre">getMolecules</span></code></a></td>
+<td>Get a description of how the particles in the system are grouped into molecules.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator">
+<span id="OpenMM::Context::Context__SystemCR.IntegratorR"></span><code class="descclassname"></code><code class="descname">Context</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System">System</a> &amp;<em>system</em>, <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator">Integrator</a> &amp;<em>integrator</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> in which to run a simulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>system</strong> &#8211; the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> which will be simulated</li>
+<li><strong>integrator</strong> &#8211; the <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code></a> which will be used to simulate the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context7ContextERK6SystemR10IntegratorR8Platform">
+<span id="OpenMM::Context::Context__SystemCR.IntegratorR.PlatformR"></span><code class="descclassname"></code><code class="descname">Context</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System">System</a> &amp;<em>system</em>, <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator">Integrator</a> &amp;<em>integrator</em>, <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform">Platform</a> &amp;<em>platform</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10IntegratorR8Platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> in which to run a simulation, explicitly specifying what <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> should be used to perform calculations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>system</strong> &#8211; the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> which will be simulated</li>
+<li><strong>integrator</strong> &#8211; the <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code></a> which will be used to simulate the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a></li>
+<li><strong>platform</strong> &#8211; the <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> to use for calculations</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context7ContextERK6SystemR10IntegratorR8PlatformRKNSt3mapINSt6stringENSt6stringEEE">
+<span id="OpenMM::Context::Context__SystemCR.IntegratorR.PlatformR.std::map:ss.ss:CR"></span><code class="descclassname"></code><code class="descname">Context</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System">System</a> &amp;<em>system</em>, <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator">Integrator</a> &amp;<em>integrator</em>, <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform">Platform</a> &amp;<em>platform</em>, <em class="property">const</em> std::map&lt;std::string, std::string&gt; &amp;<em>properties</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10IntegratorR8PlatformRKNSt3mapINSt6stringENSt6stringEEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> in which to run a simulation, explicitly specifying what <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> should be used to perform calculations and the values of platform-specific properties.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>system</strong> &#8211; the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> which will be simulated</li>
+<li><strong>integrator</strong> &#8211; the <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code></a> which will be used to simulate the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a></li>
+<li><strong>platform</strong> &#8211; the <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> to use for calculations</li>
+<li><strong>properties</strong> &#8211; a set of values for platform-specific properties. Keys are the property names.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7ContextD0Ev">
+<span id="OpenMM::Context::~Context"></span><code class="descclassname"></code><code class="descname">~Context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7ContextD0Ev" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM7Context9getSystemEv">
+<span id="OpenMM::Context::getSystemC"></span><em class="property">const</em> <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System">System</a> &amp;<code class="descclassname"></code><code class="descname">getSystem</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM7Context9getSystemEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> being simulated in this context.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM7Context13getIntegratorEv">
+<span id="OpenMM::Context::getIntegratorC"></span><em class="property">const</em> <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator">Integrator</a> &amp;<code class="descclassname"></code><code class="descname">getIntegrator</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM7Context13getIntegratorEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code></a> being used to by this context.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context13getIntegratorEv">
+<span id="OpenMM::Context::getIntegrator"></span><a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator">Integrator</a> &amp;<code class="descclassname"></code><code class="descname">getIntegrator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context13getIntegratorEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get <a class="reference internal" href="OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code></a> being used to by this context.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM7Context11getPlatformEv">
+<span id="OpenMM::Context::getPlatformC"></span><em class="property">const</em> <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform">Platform</a> &amp;<code class="descclassname"></code><code class="descname">getPlatform</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM7Context11getPlatformEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> being used for calculations.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context11getPlatformEv">
+<span id="OpenMM::Context::getPlatform"></span><a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform">Platform</a> &amp;<code class="descclassname"></code><code class="descname">getPlatform</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context11getPlatformEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> being used for calculations.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM7Context8getStateEibi">
+<span id="OpenMM::Context::getState__i.b.iC"></span><a class="reference internal" href="OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State">State</a> <code class="descclassname"></code><code class="descname">getState</code><span class="sig-paren">(</span>int <em>types</em>, bool <em>enforcePeriodicBox</em> = false, int <em>groups</em> = 0xFFFFFFFF<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM7Context8getStateEibi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a <a class="reference internal" href="OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> object recording the current state information stored in this context.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>types</strong> &#8211; the set of data types which should be stored in the <a class="reference internal" href="OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> object. This should be a union of DataType values, e.g. (State::Positions | State::Velocities).</li>
+<li><strong>enforcePeriodicBox</strong> &#8211; if false, the position of each particle will be whatever position is stored in the <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>, regardless of periodic boundary conditions. If true, particle positions will be translated so the center of every molecule lies in the same periodic box.</li>
+<li><strong>groups</strong> &#8211; a set of bit flags for which force groups to include when computing forces and energies. Group i will be included if (groups&amp;(1&lt;&lt;i)) != 0. The default value includes all groups.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context8setStateERK5State">
+<span id="OpenMM::Context::setState__StateCR"></span>void <code class="descclassname"></code><code class="descname">setState</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State">State</a> &amp;<em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context8setStateERK5State" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy information from a <a class="reference internal" href="OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> object into this <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>. This restores the <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to approximately the same state it was in when the <a class="reference internal" href="OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> was created. If the <a class="reference internal" href="OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> does not include a piece of information (e.g. positions or velocities), that aspect of the <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> is left unchanged.</p>
+<p>Even when all possible information is included in the <a class="reference internal" href="OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a>, the effect of calling this method is still less complete than <a class="reference internal" href="#_CPPv2N6OpenMM7Context14loadCheckpointERNSt7istreamE" title="OpenMM::Context::loadCheckpoint"><code class="xref cpp cpp-any docutils literal"><span class="pre">loadCheckpoint()</span></code></a>. For example, it does not restore the internal states of random number generators. On the other hand, it has the advantage of not being hardware specific.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context7setTimeEd">
+<span id="OpenMM::Context::setTime__double"></span>void <code class="descclassname"></code><code class="descname">setTime</code><span class="sig-paren">(</span>double <em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context7setTimeEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current time of the simulation (in picoseconds).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context12setPositionsERKNSt6vectorI4Vec3EE">
+<span id="OpenMM::Context::setPositions__std::vector:Vec3:CR"></span>void <code class="descclassname"></code><code class="descname">setPositions</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<em>positions</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context12setPositionsERKNSt6vectorI4Vec3EE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the positions of all particles in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> (measured in nm). This method simply sets the positions without checking to see whether they satisfy distance constraints. If you want constraints to be enforced, call <a class="reference internal" href="#_CPPv2N6OpenMM7Context16applyConstraintsEd" title="OpenMM::Context::applyConstraints"><code class="xref cpp cpp-any docutils literal"><span class="pre">applyConstraints()</span></code></a> after setting the positions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>positions</strong> &#8211; a vector whose length equals the number of particles in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>. The i&#8217;th element contains the position of the i&#8217;th particle.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context13setVelocitiesERKNSt6vectorI4Vec3EE">
+<span id="OpenMM::Context::setVelocities__std::vector:Vec3:CR"></span>void <code class="descclassname"></code><code class="descname">setVelocities</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<em>velocities</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context13setVelocitiesERKNSt6vectorI4Vec3EE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the velocities of all particles in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> (measured in nm/picosecond).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>velocities</strong> &#8211; a vector whose length equals the number of particles in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>. The i&#8217;th element contains the velocity of the i&#8217;th particle.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context26setVelocitiesToTemperatureEdi">
+<span id="OpenMM::Context::setVelocitiesToTemperature__double.i"></span>void <code class="descclassname"></code><code class="descname">setVelocitiesToTemperature</code><span class="sig-paren">(</span>double <em>temperature</em>, int <em>randomSeed</em> = osrngseed()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context26setVelocitiesToTemperatureEdi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the velocities of all particles in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> to random values chosen from a Boltzmann distribution at a given temperature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>temperature</strong> &#8211; the temperature for which to select the velocities (measured in Kelvin)</li>
+<li><strong>randomSeed</strong> &#8211; the random number seed to use when selecting velocities</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM7Context13getParametersEv">
+<span id="OpenMM::Context::getParametersC"></span><em class="property">const</em> std::map&lt;std::string, double&gt; &amp;<code class="descclassname"></code><code class="descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM7Context13getParametersEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all adjustable parameters that have been defined by <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> objects in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>, along with their current values.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM7Context12getParameterERKNSt6stringE">
+<span id="OpenMM::Context::getParameter__ssCRC"></span>double <code class="descclassname"></code><code class="descname">getParameter</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM7Context12getParameterERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of an adjustable parameter defined by a <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the parameter to get</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context12setParameterERKNSt6stringEd">
+<span id="OpenMM::Context::setParameter__ssCR.double"></span>void <code class="descclassname"></code><code class="descname">setParameter</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, double <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context12setParameterERKNSt6stringEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of an adjustable parameter defined by a <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the parameter to set</li>
+<li><strong>value</strong> &#8211; the value of the parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context21setPeriodicBoxVectorsERK4Vec3RK4Vec3RK4Vec3">
+<span id="OpenMM::Context::setPeriodicBoxVectors__Vec3CR.Vec3CR.Vec3CR"></span>void <code class="descclassname"></code><code class="descname">setPeriodicBoxVectors</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>b</em>, <em class="property">const</em> <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context21setPeriodicBoxVectorsERK4Vec3RK4Vec3RK4Vec3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the vectors defining the axes of the periodic box (measured in nm). They will affect any <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> that uses periodic boundary conditions.</p>
+<p>Triclinic boxes are supported, but the vectors must satisfy certain requirements. In particular, a must point in the x direction, b must point &#8220;mostly&#8221; in the y direction, and c must point &#8220;mostly&#8221; in the z direction. See the documentation for details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>a</strong> &#8211; the vector defining the first edge of the periodic box</li>
+<li><strong>b</strong> &#8211; the vector defining the second edge of the periodic box</li>
+<li><strong>c</strong> &#8211; the vector defining the third edge of the periodic box</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context16applyConstraintsEd">
+<span id="OpenMM::Context::applyConstraints__double"></span>void <code class="descclassname"></code><code class="descname">applyConstraints</code><span class="sig-paren">(</span>double <em>tol</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context16applyConstraintsEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the positions of particles so that all distance constraints are satisfied. This also recomputes the locations of all virtual sites.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>tol</strong> &#8211; the distance tolerance within which constraints must be satisfied.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context24applyVelocityConstraintsEd">
+<span id="OpenMM::Context::applyVelocityConstraints__double"></span>void <code class="descclassname"></code><code class="descname">applyVelocityConstraints</code><span class="sig-paren">(</span>double <em>tol</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context24applyVelocityConstraintsEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the velocities of particles so the net velocity of each constrained distance is zero.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>tol</strong> &#8211; the velocity tolerance within which constraints must be satisfied.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context19computeVirtualSitesEv">
+<span id="OpenMM::Context::computeVirtualSites"></span>void <code class="descclassname"></code><code class="descname">computeVirtualSites</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context19computeVirtualSitesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recompute the locations of all virtual sites. There is rarely a reason to call this, since virtual sites are also updated by <a class="reference internal" href="#_CPPv2N6OpenMM7Context16applyConstraintsEd" title="OpenMM::Context::applyConstraints"><code class="xref cpp cpp-any docutils literal"><span class="pre">applyConstraints()</span></code></a>. This is only for the rare situations when you want to enforce virtual sites but</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context12reinitializeEv">
+<span id="OpenMM::Context::reinitialize"></span>void <code class="descclassname"></code><code class="descname">reinitialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context12reinitializeEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>When a <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> is created, it may cache information about the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> being simulated and the <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> objects contained in it. This means that, if the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> or Forces are then modified, the <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> might not see all of the changes. Call <a class="reference internal" href="#_CPPv2N6OpenMM7Context12reinitializeEv" title="OpenMM::Context::reinitialize"><code class="xref cpp cpp-any docutils literal"><span class="pre">reinitialize()</span></code></a> to force the <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to rebuild its internal representation of the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> and pick up any changes that have been made.</p>
+<p>This is an expensive operation, so you should try to avoid calling it too frequently.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context16createCheckpointERNSt7ostreamE">
+<span id="OpenMM::Context::createCheckpoint__osR"></span>void <code class="descclassname"></code><code class="descname">createCheckpoint</code><span class="sig-paren">(</span>std::ostream &amp;<em>stream</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context16createCheckpointERNSt7ostreamE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a checkpoint recording the current state of the <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>. This should be treated as an opaque block of binary data. See <a class="reference internal" href="#_CPPv2N6OpenMM7Context14loadCheckpointERNSt7istreamE" title="OpenMM::Context::loadCheckpoint"><code class="xref cpp cpp-any docutils literal"><span class="pre">loadCheckpoint()</span></code></a> for more details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>stream</strong> &#8211; an output stream the checkpoint data should be written to</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM7Context14loadCheckpointERNSt7istreamE">
+<span id="OpenMM::Context::loadCheckpoint__isR"></span>void <code class="descclassname"></code><code class="descname">loadCheckpoint</code><span class="sig-paren">(</span>std::istream &amp;<em>stream</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM7Context14loadCheckpointERNSt7istreamE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a checkpoint that was written by <a class="reference internal" href="#_CPPv2N6OpenMM7Context16createCheckpointERNSt7ostreamE" title="OpenMM::Context::createCheckpoint"><code class="xref cpp cpp-any docutils literal"><span class="pre">createCheckpoint()</span></code></a>.</p>
+<p>A checkpoint contains not only publicly visible data such as the particle positions and velocities, but also internal data such as the states of random number generators. Ideally, loading a checkpoint should restore the <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to an identical state to when it was written, such that continuing the simulation will produce an identical trajectory. This is not strictly guaranteed to be true, however, and should not be relied on. For most purposes, however, the internal state should be close enough to be reasonably considered equivalent.</p>
+<p>A checkpoint contains data that is highly specific to the <a class="reference internal" href="#_CPPv2N6OpenMM7Context7ContextERK6SystemR10Integrator" title="OpenMM::Context::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> from which it was created. It depends on the details of the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>, the <a class="reference internal" href="OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> being used, and the hardware and software of the computer it was created on. If you try to load it on a computer with different hardware, or for a <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> that is different in any way, loading is likely to fail. Checkpoints created with different versions of OpenMM are also often incompatible. If a checkpoint cannot be loaded, that is signaled by throwing an exception.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>stream</strong> &#8211; an input stream the checkpoint data should be read from</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM7Context12getMoleculesEv">
+<span id="OpenMM::Context::getMoleculesC"></span><em class="property">const</em> std::vector&lt;std::vector&lt;int&gt;&gt; &amp;<code class="descclassname"></code><code class="descname">getMolecules</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM7Context12getMoleculesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a description of how the particles in the system are grouped into molecules. Two particles are in the same molecule if they are connected by constraints or bonds, where every <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object can define bonds in whatever way are appropriate to that force.</p>
+<p>Each element lists the indices of all particles in a single molecule. Every particle is guaranteed to belong to exactly one molecule.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.Context.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

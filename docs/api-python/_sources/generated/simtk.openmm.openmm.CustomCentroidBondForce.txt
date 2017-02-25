@@ -1,0 +1,56 @@
+CustomCentroidBondForce
+===========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CustomCentroidBondForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CustomCentroidBondForce.__init__
+      ~CustomCentroidBondForce.addBond
+      ~CustomCentroidBondForce.addEnergyParameterDerivative
+      ~CustomCentroidBondForce.addGlobalParameter
+      ~CustomCentroidBondForce.addGroup
+      ~CustomCentroidBondForce.addPerBondParameter
+      ~CustomCentroidBondForce.addTabulatedFunction
+      ~CustomCentroidBondForce.getBondParameters
+      ~CustomCentroidBondForce.getEnergyFunction
+      ~CustomCentroidBondForce.getEnergyParameterDerivativeName
+      ~CustomCentroidBondForce.getForceGroup
+      ~CustomCentroidBondForce.getGlobalParameterDefaultValue
+      ~CustomCentroidBondForce.getGlobalParameterName
+      ~CustomCentroidBondForce.getGroupParameters
+      ~CustomCentroidBondForce.getNumBonds
+      ~CustomCentroidBondForce.getNumEnergyParameterDerivatives
+      ~CustomCentroidBondForce.getNumFunctions
+      ~CustomCentroidBondForce.getNumGlobalParameters
+      ~CustomCentroidBondForce.getNumGroups
+      ~CustomCentroidBondForce.getNumGroupsPerBond
+      ~CustomCentroidBondForce.getNumPerBondParameters
+      ~CustomCentroidBondForce.getNumTabulatedFunctions
+      ~CustomCentroidBondForce.getPerBondParameterName
+      ~CustomCentroidBondForce.getTabulatedFunction
+      ~CustomCentroidBondForce.getTabulatedFunctionName
+      ~CustomCentroidBondForce.setBondParameters
+      ~CustomCentroidBondForce.setEnergyFunction
+      ~CustomCentroidBondForce.setForceGroup
+      ~CustomCentroidBondForce.setGlobalParameterDefaultValue
+      ~CustomCentroidBondForce.setGlobalParameterName
+      ~CustomCentroidBondForce.setGroupParameters
+      ~CustomCentroidBondForce.setPerBondParameterName
+      ~CustomCentroidBondForce.setUsesPeriodicBoundaryConditions
+      ~CustomCentroidBondForce.updateParametersInContext
+      ~CustomCentroidBondForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

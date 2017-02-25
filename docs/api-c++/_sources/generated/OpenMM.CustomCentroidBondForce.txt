@@ -1,0 +1,49 @@
+CustomCentroidBondForce
+===============================
+
+.. autodoxyclass:: OpenMM::CustomCentroidBondForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CustomCentroidBondForce::CustomCentroidBondForce
+      ~OpenMM::CustomCentroidBondForce::~CustomCentroidBondForce
+      ~OpenMM::CustomCentroidBondForce::getNumGroupsPerBond
+      ~OpenMM::CustomCentroidBondForce::getNumGroups
+      ~OpenMM::CustomCentroidBondForce::getNumBonds
+      ~OpenMM::CustomCentroidBondForce::getNumPerBondParameters
+      ~OpenMM::CustomCentroidBondForce::getNumGlobalParameters
+      ~OpenMM::CustomCentroidBondForce::getNumEnergyParameterDerivatives
+      ~OpenMM::CustomCentroidBondForce::getNumTabulatedFunctions
+      ~OpenMM::CustomCentroidBondForce::getNumFunctions
+      ~OpenMM::CustomCentroidBondForce::getEnergyFunction
+      ~OpenMM::CustomCentroidBondForce::setEnergyFunction
+      ~OpenMM::CustomCentroidBondForce::addPerBondParameter
+      ~OpenMM::CustomCentroidBondForce::getPerBondParameterName
+      ~OpenMM::CustomCentroidBondForce::setPerBondParameterName
+      ~OpenMM::CustomCentroidBondForce::addGlobalParameter
+      ~OpenMM::CustomCentroidBondForce::getGlobalParameterName
+      ~OpenMM::CustomCentroidBondForce::setGlobalParameterName
+      ~OpenMM::CustomCentroidBondForce::getGlobalParameterDefaultValue
+      ~OpenMM::CustomCentroidBondForce::setGlobalParameterDefaultValue
+      ~OpenMM::CustomCentroidBondForce::addEnergyParameterDerivative
+      ~OpenMM::CustomCentroidBondForce::getEnergyParameterDerivativeName
+      ~OpenMM::CustomCentroidBondForce::addGroup
+      ~OpenMM::CustomCentroidBondForce::getGroupParameters
+      ~OpenMM::CustomCentroidBondForce::setGroupParameters
+      ~OpenMM::CustomCentroidBondForce::addBond
+      ~OpenMM::CustomCentroidBondForce::getBondParameters
+      ~OpenMM::CustomCentroidBondForce::setBondParameters
+      ~OpenMM::CustomCentroidBondForce::addTabulatedFunction
+      ~OpenMM::CustomCentroidBondForce::getTabulatedFunction
+      ~OpenMM::CustomCentroidBondForce::getTabulatedFunction
+      ~OpenMM::CustomCentroidBondForce::getTabulatedFunctionName
+      ~OpenMM::CustomCentroidBondForce::updateParametersInContext
+      ~OpenMM::CustomCentroidBondForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::CustomCentroidBondForce::usesPeriodicBoundaryConditions
+   
+
+   

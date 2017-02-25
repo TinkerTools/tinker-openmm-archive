@@ -1,0 +1,18 @@
+Continuous1DFunction
+============================
+
+.. autodoxyclass:: OpenMM::Continuous1DFunction
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::Continuous1DFunction::Continuous1DFunction
+      ~OpenMM::Continuous1DFunction::getFunctionParameters
+      ~OpenMM::Continuous1DFunction::setFunctionParameters
+      ~OpenMM::Continuous1DFunction::Copy
+   
+
+   

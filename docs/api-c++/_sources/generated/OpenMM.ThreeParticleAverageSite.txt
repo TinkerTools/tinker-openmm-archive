@@ -1,0 +1,16 @@
+ThreeParticleAverageSite
+================================
+
+.. autodoxyclass:: OpenMM::ThreeParticleAverageSite
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::ThreeParticleAverageSite::ThreeParticleAverageSite
+      ~OpenMM::ThreeParticleAverageSite::getWeight
+   
+
+   

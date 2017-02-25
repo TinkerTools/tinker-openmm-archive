@@ -1,0 +1,25 @@
+Continuous3DFunction
+========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: Continuous3DFunction
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Continuous3DFunction.Copy
+      ~Continuous3DFunction.__init__
+      ~Continuous3DFunction.getFunctionParameters
+      ~Continuous3DFunction.setFunctionParameters
+   
+   
+
+   
+   
+   

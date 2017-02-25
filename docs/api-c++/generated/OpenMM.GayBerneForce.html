@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>GayBerneForce &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="gayberneforce">
+<h1>GayBerneForce<a class="headerlink" href="#gayberneforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM13GayBerneForceE">
+<span id="OpenMM::GayBerneForce"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">GayBerneForce</code><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForceE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements the Gay-Berne anisotropic potential. This is similar to a Lennard-Jones potential, but it represents the particles as ellipsoids rather than point particles. In addition to the standard sigma and epsilon parameters, each particle has three widths sx, sy, and sz that give the diameter of the ellipsoid along each axis. It also has three scale factors ex, ey, and ez that scale the strength of the interaction along each axis. You can think of this force as a Lennard-Jones interaction computed based on the distance between the nearest points on two ellipsoids. The scale factors act as multipliers for epsilon along each axis, so the strength of the interaction along the ellipsoid&#8217;s x axis is multiplied by ex, and likewise for the other axes. If two particles each have all their widths set to sigma and all their scale factors set to 1, the interaction simplifies to a standard Lennard-Jones force between point particles.</p>
+<p>The orientation of a particle&#8217;s ellipsoid is determined based on the positions of two other particles. The vector to the first particle sets the direction of the x axis. The vector to the second particle (after subtracting out any x component) sets the direction of the y axis. If the ellipsoid is axially symmetric (sy=sz and ey=ez), you can omit the second particle and define only an x axis direction. If the ellipsoid is a sphere (all three widths and all three scale factors are equal), both particles can be omitted.</p>
+<p>To determine the values of sigma and epsilon for an interaction, this class uses Lorentz-Berthelot combining rules: it takes the arithmetic mean of the sigmas and the geometric mean of the epsilons for the two interacting particles. You also can specify &#8220;exceptions&#8221;, particular pairs of particles for which different values should be used.</p>
+<p>To use this class, create a <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce13GayBerneForceEv" title="OpenMM::GayBerneForce::GayBerneForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">GayBerneForce</span></code></a> object, then call <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce11addParticleEddiidddddd" title="OpenMM::GayBerneForce::addParticle"><code class="xref cpp cpp-any docutils literal"><span class="pre">addParticle()</span></code></a> once for each particle in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> to define its parameters. The number of particles for which you define parameters must be exactly equal to the number of particles in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>, or else an exception will be thrown when you try to create a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>. After a particle has been added, you can modify its force field parameters by calling <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce21setParticleParametersEiddiidddddd" title="OpenMM::GayBerneForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters()</span></code></a>. This will have no effect on Contexts that already exist unless you call <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce25updateParametersInContextER7Context" title="OpenMM::GayBerneForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a>.</p>
+<p>When using a cutoff, by default interactions are sharply truncated at the cutoff distance. Optionally you can instead use a switching function to make the interaction smoothly go to zero over a finite distance range. To enable this, call <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce23setUseSwitchingFunctionEb" title="OpenMM::GayBerneForce::setUseSwitchingFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">setUseSwitchingFunction()</span></code></a>. You must also call <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce20setSwitchingDistanceEd" title="OpenMM::GayBerneForce::setSwitchingDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">setSwitchingDistance()</span></code></a> to specify the distance at which the interaction should begin to decrease. The switching distance must be less than the cutoff distance.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce13GayBerneForceEv" title="OpenMM::GayBerneForce::GayBerneForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">GayBerneForce</span></code></a></td>
+<td>Create a <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce13GayBerneForceEv" title="OpenMM::GayBerneForce::GayBerneForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">GayBerneForce</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13GayBerneForce15getNumParticlesEv" title="OpenMM::GayBerneForce::getNumParticles"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumParticles</span></code></a></td>
+<td>Get the number of particles for which force field parameters have been defined.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13GayBerneForce16getNumExceptionsEv" title="OpenMM::GayBerneForce::getNumExceptions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumExceptions</span></code></a></td>
+<td>Get the number of special interactions that should be calculated differently from other interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13GayBerneForce18getNonbondedMethodEv" title="OpenMM::GayBerneForce::getNonbondedMethod"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNonbondedMethod</span></code></a></td>
+<td>Get the method used for handling long range interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce18setNonbondedMethodE15NonbondedMethod" title="OpenMM::GayBerneForce::setNonbondedMethod"><code class="xref cpp cpp-any docutils literal"><span class="pre">setNonbondedMethod</span></code></a></td>
+<td>Set the method used for handling long range interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13GayBerneForce17getCutoffDistanceEv" title="OpenMM::GayBerneForce::getCutoffDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">getCutoffDistance</span></code></a></td>
+<td>Get the cutoff distance (in nm) being used for interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce17setCutoffDistanceEd" title="OpenMM::GayBerneForce::setCutoffDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">setCutoffDistance</span></code></a></td>
+<td>Set the cutoff distance (in nm) being used for interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13GayBerneForce23getUseSwitchingFunctionEv" title="OpenMM::GayBerneForce::getUseSwitchingFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">getUseSwitchingFunction</span></code></a></td>
+<td>Get whether a switching function is applied to the interaction.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce23setUseSwitchingFunctionEb" title="OpenMM::GayBerneForce::setUseSwitchingFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">setUseSwitchingFunction</span></code></a></td>
+<td>Set whether a switching function is applied to the interaction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13GayBerneForce20getSwitchingDistanceEv" title="OpenMM::GayBerneForce::getSwitchingDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">getSwitchingDistance</span></code></a></td>
+<td>Get the distance at which the switching function begins to reduce the interaction.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce20setSwitchingDistanceEd" title="OpenMM::GayBerneForce::setSwitchingDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">setSwitchingDistance</span></code></a></td>
+<td>Set the distance at which the switching function begins to reduce the interaction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce11addParticleEddiidddddd" title="OpenMM::GayBerneForce::addParticle"><code class="xref cpp cpp-any docutils literal"><span class="pre">addParticle</span></code></a></td>
+<td>Add the parameters for a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13GayBerneForce21getParticleParametersEiRdRdRiRiRdRdRdRdRdRd" title="OpenMM::GayBerneForce::getParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getParticleParameters</span></code></a></td>
+<td>Get the parameters for a particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce21setParticleParametersEiddiidddddd" title="OpenMM::GayBerneForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters</span></code></a></td>
+<td>Set the parameters for a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce12addExceptionEiiddb" title="OpenMM::GayBerneForce::addException"><code class="xref cpp cpp-any docutils literal"><span class="pre">addException</span></code></a></td>
+<td>Add an interaction to the list of exceptions that should be calculated differently from other interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13GayBerneForce22getExceptionParametersEiRiRiRdRd" title="OpenMM::GayBerneForce::getExceptionParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getExceptionParameters</span></code></a></td>
+<td>Get the force field parameters for an interaction that should be calculated differently from others.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce22setExceptionParametersEiiidd" title="OpenMM::GayBerneForce::setExceptionParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setExceptionParameters</span></code></a></td>
+<td>Set the force field parameters for an interaction that should be calculated differently from others.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce25updateParametersInContextER7Context" title="OpenMM::GayBerneForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext</span></code></a></td>
+<td>Update the particle and exception parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13GayBerneForce30usesPeriodicBoundaryConditionsEv" title="OpenMM::GayBerneForce::usesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a></td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Enum: NonbondedMethod</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>NoCutoff</strong></td>
+<td>No cutoff is applied to nonbonded interactions. The full set of N^2 interactions is computed exactly. This necessarily means that periodic boundary conditions cannot be used. This is the default.</td>
+</tr>
+<tr class="row-even"><td><strong>CutoffNonPeriodic</strong></td>
+<td>Interactions beyond the cutoff distance are ignored.</td>
+</tr>
+<tr class="row-odd"><td><strong>CutoffPeriodic</strong></td>
+<td>Periodic boundary conditions are used, so that each particle interacts only with the nearest periodic copy of each other particle. Interactions beyond the cutoff distance are ignored.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13GayBerneForce13GayBerneForceEv">
+<span id="OpenMM::GayBerneForce::GayBerneForce"></span><code class="descclassname"></code><code class="descname">GayBerneForce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForce13GayBerneForceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce13GayBerneForceEv" title="OpenMM::GayBerneForce::GayBerneForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">GayBerneForce</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13GayBerneForce15getNumParticlesEv">
+<span id="OpenMM::GayBerneForce::getNumParticlesC"></span>int <code class="descclassname"></code><code class="descname">getNumParticles</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13GayBerneForce15getNumParticlesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles for which force field parameters have been defined.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13GayBerneForce16getNumExceptionsEv">
+<span id="OpenMM::GayBerneForce::getNumExceptionsC"></span>int <code class="descclassname"></code><code class="descname">getNumExceptions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13GayBerneForce16getNumExceptionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of special interactions that should be calculated differently from other interactions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13GayBerneForce18getNonbondedMethodEv">
+<span id="OpenMM::GayBerneForce::getNonbondedMethodC"></span>NonbondedMethod <code class="descclassname"></code><code class="descname">getNonbondedMethod</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13GayBerneForce18getNonbondedMethodEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the method used for handling long range interactions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13GayBerneForce18setNonbondedMethodE15NonbondedMethod">
+<span id="OpenMM::GayBerneForce::setNonbondedMethod__NonbondedMethod"></span>void <code class="descclassname"></code><code class="descname">setNonbondedMethod</code><span class="sig-paren">(</span>NonbondedMethod <em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForce18setNonbondedMethodE15NonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the method used for handling long range interactions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13GayBerneForce17getCutoffDistanceEv">
+<span id="OpenMM::GayBerneForce::getCutoffDistanceC"></span>double <code class="descclassname"></code><code class="descname">getCutoffDistance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13GayBerneForce17getCutoffDistanceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cutoff distance (in nm) being used for interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the cutoff distance, measured in nm</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13GayBerneForce17setCutoffDistanceEd">
+<span id="OpenMM::GayBerneForce::setCutoffDistance__double"></span>void <code class="descclassname"></code><code class="descname">setCutoffDistance</code><span class="sig-paren">(</span>double <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForce17setCutoffDistanceEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cutoff distance (in nm) being used for interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>distance</strong> &#8211; the cutoff distance, measured in nm</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13GayBerneForce23getUseSwitchingFunctionEv">
+<span id="OpenMM::GayBerneForce::getUseSwitchingFunctionC"></span>bool <code class="descclassname"></code><code class="descname">getUseSwitchingFunction</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13GayBerneForce23getUseSwitchingFunctionEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether a switching function is applied to the interaction. If the nonbonded method is set to NoCutoff, this option is ignored.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13GayBerneForce23setUseSwitchingFunctionEb">
+<span id="OpenMM::GayBerneForce::setUseSwitchingFunction__b"></span>void <code class="descclassname"></code><code class="descname">setUseSwitchingFunction</code><span class="sig-paren">(</span>bool <em>use</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForce23setUseSwitchingFunctionEb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether a switching function is applied to the interaction. If the nonbonded method is set to NoCutoff, this option is ignored.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13GayBerneForce20getSwitchingDistanceEv">
+<span id="OpenMM::GayBerneForce::getSwitchingDistanceC"></span>double <code class="descclassname"></code><code class="descname">getSwitchingDistance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13GayBerneForce20getSwitchingDistanceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the distance at which the switching function begins to reduce the interaction. This must be less than the cutoff distance.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13GayBerneForce20setSwitchingDistanceEd">
+<span id="OpenMM::GayBerneForce::setSwitchingDistance__double"></span>void <code class="descclassname"></code><code class="descname">setSwitchingDistance</code><span class="sig-paren">(</span>double <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForce20setSwitchingDistanceEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the distance at which the switching function begins to reduce the interaction. This must be less than the cutoff distance.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13GayBerneForce11addParticleEddiidddddd">
+<span id="OpenMM::GayBerneForce::addParticle__double.double.i.i.double.double.double.double.double.double"></span>int <code class="descclassname"></code><code class="descname">addParticle</code><span class="sig-paren">(</span>double <em>sigma</em>, double <em>epsilon</em>, int <em>xparticle</em>, int <em>yparticle</em>, double <em>sx</em>, double <em>sy</em>, double <em>sz</em>, double <em>ex</em>, double <em>ey</em>, double <em>ez</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForce11addParticleEddiidddddd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the parameters for a particle. This should be called once for each particle in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>. When it is called for the i&#8217;th time, it specifies the parameters for the i&#8217;th particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>sigma</strong> &#8211; the sigma parameter (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> &#8211; the epsilon parameter (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+<li><strong>xparticle</strong> &#8211; the index of the particle whose position defines the ellipsoid&#8217;s x axis, or -1 if the ellipsoid is a sphere</li>
+<li><strong>yparticle</strong> &#8211; the index of the particle whose position defines the ellipsoid&#8217;s y axis, or -1 if the ellipsoid is axially symmetric</li>
+<li><strong>sx</strong> &#8211; the diameter of the ellipsoid along its x axis</li>
+<li><strong>sy</strong> &#8211; the diameter of the ellipsoid along its y axis</li>
+<li><strong>sz</strong> &#8211; the diameter of the ellipsoid along its z axis</li>
+<li><strong>ex</strong> &#8211; the factor by which epsilon is scaled along the ellipsoid&#8217;s x axis</li>
+<li><strong>ey</strong> &#8211; the factor by which epsilon is scaled along the ellipsoid&#8217;s y axis</li>
+<li><strong>ez</strong> &#8211; the factor by which epsilon is scaled along the ellipsoid&#8217;s z axis</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the particle that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13GayBerneForce21getParticleParametersEiRdRdRiRiRdRdRdRdRdRd">
+<span id="OpenMM::GayBerneForce::getParticleParameters__i.doubleR.doubleR.iR.iR.doubleR.doubleR.doubleR.doubleR.doubleR.doubleRC"></span>void <code class="descclassname"></code><code class="descname">getParticleParameters</code><span class="sig-paren">(</span>int <em>index</em>, double &amp;<em>sigma</em>, double &amp;<em>epsilon</em>, int &amp;<em>xparticle</em>, int &amp;<em>yparticle</em>, double &amp;<em>sx</em>, double &amp;<em>sy</em>, double &amp;<em>sz</em>, double &amp;<em>ex</em>, double &amp;<em>ey</em>, double &amp;<em>ez</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13GayBerneForce21getParticleParametersEiRdRdRiRiRdRdRdRdRdRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the particle for which to get parameters</li>
+<li><strong>sigma</strong> &#8211; [out] the sigma parameter (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> &#8211; [out] the epsilon parameter (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+<li><strong>xparticle</strong> &#8211; [out] the index of the particle whose position defines the ellipsoid&#8217;s x axis, or -1 if the ellipsoid is a sphere</li>
+<li><strong>yparticle</strong> &#8211; [out] the index of the particle whose position defines the ellipsoid&#8217;s y axis, or -1 if the ellipsoid is axially symmetric</li>
+<li><strong>sx</strong> &#8211; [out] the diameter of the ellipsoid along its x axis</li>
+<li><strong>sy</strong> &#8211; [out] the diameter of the ellipsoid along its y axis</li>
+<li><strong>sz</strong> &#8211; [out] the diameter of the ellipsoid along its z axis</li>
+<li><strong>ex</strong> &#8211; [out] the factor by which epsilon is scaled along the ellipsoid&#8217;s x axis</li>
+<li><strong>ey</strong> &#8211; [out] the factor by which epsilon is scaled along the ellipsoid&#8217;s y axis</li>
+<li><strong>ez</strong> &#8211; [out] the factor by which epsilon is scaled along the ellipsoid&#8217;s z axis</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13GayBerneForce21setParticleParametersEiddiidddddd">
+<span id="OpenMM::GayBerneForce::setParticleParameters__i.double.double.i.i.double.double.double.double.double.double"></span>void <code class="descclassname"></code><code class="descname">setParticleParameters</code><span class="sig-paren">(</span>int <em>index</em>, double <em>sigma</em>, double <em>epsilon</em>, int <em>xparticle</em>, int <em>yparticle</em>, double <em>sx</em>, double <em>sy</em>, double <em>sz</em>, double <em>ex</em>, double <em>ey</em>, double <em>ez</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForce21setParticleParametersEiddiidddddd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the particle for which to set parameters</li>
+<li><strong>sigma</strong> &#8211; the sigma parameter (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> &#8211; the epsilon parameter (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+<li><strong>xparticle</strong> &#8211; the index of the particle whose position defines the ellipsoid&#8217;s x axis, or -1 if the ellipsoid is a sphere</li>
+<li><strong>yparticle</strong> &#8211; the index of the particle whose position defines the ellipsoid&#8217;s y axis, or -1 if the ellipsoid is axially symmetric</li>
+<li><strong>sx</strong> &#8211; the diameter of the ellipsoid along its x axis</li>
+<li><strong>sy</strong> &#8211; the diameter of the ellipsoid along its y axis</li>
+<li><strong>sz</strong> &#8211; the diameter of the ellipsoid along its z axis</li>
+<li><strong>ex</strong> &#8211; the factor by which epsilon is scaled along the ellipsoid&#8217;s x axis</li>
+<li><strong>ey</strong> &#8211; the factor by which epsilon is scaled along the ellipsoid&#8217;s y axis</li>
+<li><strong>ez</strong> &#8211; the factor by which epsilon is scaled along the ellipsoid&#8217;s z axis</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13GayBerneForce12addExceptionEiiddb">
+<span id="OpenMM::GayBerneForce::addException__i.i.double.double.b"></span>int <code class="descclassname"></code><code class="descname">addException</code><span class="sig-paren">(</span>int <em>particle1</em>, int <em>particle2</em>, double <em>sigma</em>, double <em>epsilon</em>, bool <em>replace</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForce12addExceptionEiiddb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an interaction to the list of exceptions that should be calculated differently from other interactions. If epsilon is equal to 0, this will cause the interaction to be completely omitted from force and energy calculations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particle1</strong> &#8211; the index of the first particle involved in the interaction</li>
+<li><strong>particle2</strong> &#8211; the index of the second particle involved in the interaction</li>
+<li><strong>sigma</strong> &#8211; the sigma parameter (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> &#8211; the epsilon parameter (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+<li><strong>replace</strong> &#8211; determines the behavior if there is already an exception for the same two particles. If true, the existing one is replaced. If false, an exception is thrown.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the exception that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13GayBerneForce22getExceptionParametersEiRiRiRdRd">
+<span id="OpenMM::GayBerneForce::getExceptionParameters__i.iR.iR.doubleR.doubleRC"></span>void <code class="descclassname"></code><code class="descname">getExceptionParameters</code><span class="sig-paren">(</span>int <em>index</em>, int &amp;<em>particle1</em>, int &amp;<em>particle2</em>, double &amp;<em>sigma</em>, double &amp;<em>epsilon</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13GayBerneForce22getExceptionParametersEiRiRiRdRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force field parameters for an interaction that should be calculated differently from others.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the interaction for which to get parameters</li>
+<li><strong>particle1</strong> &#8211; [out] the index of the first particle involved in the interaction</li>
+<li><strong>particle2</strong> &#8211; [out] the index of the second particle involved in the interaction</li>
+<li><strong>sigma</strong> &#8211; [out] the sigma parameter (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> &#8211; [out] the epsilon parameter (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13GayBerneForce22setExceptionParametersEiiidd">
+<span id="OpenMM::GayBerneForce::setExceptionParameters__i.i.i.double.double"></span>void <code class="descclassname"></code><code class="descname">setExceptionParameters</code><span class="sig-paren">(</span>int <em>index</em>, int <em>particle1</em>, int <em>particle2</em>, double <em>sigma</em>, double <em>epsilon</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForce22setExceptionParametersEiiidd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force field parameters for an interaction that should be calculated differently from others. If epsilon is equal to 0, this will cause the interaction to be completely omitted from force and energy calculations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the interaction for which to get parameters</li>
+<li><strong>particle1</strong> &#8211; the index of the first particle involved in the interaction</li>
+<li><strong>particle2</strong> &#8211; the index of the second particle involved in the interaction</li>
+<li><strong>sigma</strong> &#8211; the sigma parameter (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> &#8211; the epsilon parameter (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13GayBerneForce25updateParametersInContextER7Context">
+<span id="OpenMM::GayBerneForce::updateParametersInContext__ContextR"></span>void <code class="descclassname"></code><code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13GayBerneForce25updateParametersInContextER7Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the particle and exception parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object. This method provides an efficient method to update certain parameters in an existing <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> without needing to reinitialize it. Simply call <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce21setParticleParametersEiddiidddddd" title="OpenMM::GayBerneForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters()</span></code></a> and <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce22setExceptionParametersEiiidd" title="OpenMM::GayBerneForce::setExceptionParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setExceptionParameters()</span></code></a> to modify this object&#8217;s parameters, then call <a class="reference internal" href="#_CPPv2N6OpenMM13GayBerneForce25updateParametersInContextER7Context" title="OpenMM::GayBerneForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a> to copy them over to the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<p>This method has several limitations. The only information it updates is the parameters of particles and exceptions. All other aspects of the <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> (the nonbonded method, the cutoff distance, etc.) are unaffected and can only be changed by reinitializing the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>. Furthermore, only the sigma and epsilon values of an exception can be changed; the pair of particles involved in the exception cannot change. Likewise, the xparticle and yparticle defining the orientation of an ellipse cannot be changed. Finally, this method cannot be used to add new particles or exceptions, only to change the parameters of existing ones.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13GayBerneForce30usesPeriodicBoundaryConditionsEv">
+<span id="OpenMM::GayBerneForce::usesPeriodicBoundaryConditionsC"></span>bool <code class="descclassname"></code><code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13GayBerneForce30usesPeriodicBoundaryConditionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if force uses PBC and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.GayBerneForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

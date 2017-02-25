@@ -1,0 +1,27 @@
+OutOfPlaneSite
+==================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: OutOfPlaneSite
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OutOfPlaneSite.__init__
+      ~OutOfPlaneSite.getNumParticles
+      ~OutOfPlaneSite.getParticle
+      ~OutOfPlaneSite.getWeight12
+      ~OutOfPlaneSite.getWeight13
+      ~OutOfPlaneSite.getWeightCross
+   
+   
+
+   
+   
+   

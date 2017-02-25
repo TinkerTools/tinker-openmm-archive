@@ -1,0 +1,37 @@
+SerializationNode
+=========================
+
+.. autodoxyclass:: OpenMM::SerializationNode
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::SerializationNode::getName
+      ~OpenMM::SerializationNode::setName
+      ~OpenMM::SerializationNode::getChildren
+      ~OpenMM::SerializationNode::getChildren
+      ~OpenMM::SerializationNode::getChildNode
+      ~OpenMM::SerializationNode::getChildNode
+      ~OpenMM::SerializationNode::getProperties
+      ~OpenMM::SerializationNode::hasProperty
+      ~OpenMM::SerializationNode::getStringProperty
+      ~OpenMM::SerializationNode::getStringProperty
+      ~OpenMM::SerializationNode::setStringProperty
+      ~OpenMM::SerializationNode::getIntProperty
+      ~OpenMM::SerializationNode::getIntProperty
+      ~OpenMM::SerializationNode::setIntProperty
+      ~OpenMM::SerializationNode::getBoolProperty
+      ~OpenMM::SerializationNode::getBoolProperty
+      ~OpenMM::SerializationNode::setBoolProperty
+      ~OpenMM::SerializationNode::getDoubleProperty
+      ~OpenMM::SerializationNode::getDoubleProperty
+      ~OpenMM::SerializationNode::setDoubleProperty
+      ~OpenMM::SerializationNode::createChildNode
+      ~OpenMM::SerializationNode::createChildNode
+      ~OpenMM::SerializationNode::decodeObject
+   
+
+   

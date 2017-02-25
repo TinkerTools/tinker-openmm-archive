@@ -1,0 +1,724 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>NonbondedForce &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Library Layer" href="../library.html" />
+    <link rel="next" title="PeriodicTorsionForce" href="simtk.openmm.openmm.PeriodicTorsionForce.html" />
+    <link rel="prev" title="MonteCarloMembraneBarostat" href="simtk.openmm.openmm.MonteCarloMembraneBarostat.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nonbondedforce">
+<h1>NonbondedForce<a class="headerlink" href="#nonbondedforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.openmm.NonbondedForce">
+<em class="property">class </em><code class="descclassname">simtk.openmm.openmm.</code><code class="descname">NonbondedForce</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements nonbonded interactions between particles, including a Coulomb force to represent electrostatics and a Lennard-Jones force to represent van der Waals interactions. It optionally supports periodic boundary conditions and cutoffs for long range interactions. Lennard-Jones interactions are calculated with the Lorentz-Berthelot combining rule: it uses the arithmetic mean of the sigmas and the geometric mean of the epsilons for the two interacting particles.</p>
+<p>To use this class, create a NonbondedForce object, then call addParticle() once for each particle in the System to define its parameters. The number of particles for which you define nonbonded parameters must be exactly equal to the number of particles in the System, or else an exception will be thrown when you try to create a Context. After a particle has been added, you can modify its force field parameters by calling setParticleParameters(). This will have no effect on Contexts that already exist unless you call updateParametersInContext().</p>
+<p>NonbondedForce also lets you specify &#8220;exceptions&#8221;, particular pairs of particles whose interactions should be computed based on different parameters than those defined for the individual particles. This can be used to completely exclude certain interactions from the force calculation, or to alter how they interact with each other.</p>
+<p>Many molecular force fields omit Coulomb and Lennard-Jones interactions between particles separated by one or two bonds, while using modified parameters for those separated by three bonds (known as &#8220;1-4 interactions&#8221;). This class provides a convenience method for this case called createExceptionsFromBonds(). You pass to it a list of bonds and the scale factors to use for 1-4 interactions. It identifies all pairs of particles which are separated by 1, 2, or 3 bonds, then automatically creates exceptions for them.</p>
+<p>When using a cutoff, by default Lennard-Jones interactions are sharply truncated at the cutoff distance. Optionally you can instead use a switching function to make the interaction smoothly go to zero over a finite distance range. To enable this, call setUseSwitchingFunction(). You must also call setSwitchingDistance() to specify the distance at which the interaction should begin to decrease. The switching distance must be less than the cutoff distance.</p>
+<p>Another optional feature of this class (enabled by default) is to add a contribution to the energy which approximates the effect of all Lennard-Jones interactions beyond the cutoff in a periodic system. When running a simulation at constant pressure, this can improve the quality of the result. Call setUseDispersionCorrection() to set whether this should be used.</p>
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; NonbondedForce<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>__init__(self, other) -&gt; NonbondedForce</p>
+<p>Create a NonbondedForce.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.__init__" title="simtk.openmm.openmm.NonbondedForce.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>((self)&nbsp;-&gt;&nbsp;NonbondedForce)</td>
+<td>__init__(self, other) -&gt; NonbondedForce</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.addException" title="simtk.openmm.openmm.NonbondedForce.addException"><code class="xref py py-obj docutils literal"><span class="pre">addException</span></code></a>((self,&nbsp;particle1,&nbsp;particle2,&nbsp;...)</td>
+<td>addException(self, particle1, particle2, chargeProd, sigma, epsilon) -&gt; int</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.addException_usingRMin" title="simtk.openmm.openmm.NonbondedForce.addException_usingRMin"><code class="xref py py-obj docutils literal"><span class="pre">addException_usingRMin</span></code></a>(particle1,&nbsp;particle2,&nbsp;...)</td>
+<td>Add interaction exception using the product of the two atoms&#8217; elementary charges, rMin and epsilon, which is standard for AMBER force fields.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.addParticle" title="simtk.openmm.openmm.NonbondedForce.addParticle"><code class="xref py py-obj docutils literal"><span class="pre">addParticle</span></code></a>((self,&nbsp;charge,&nbsp;sigma,&nbsp;...)</td>
+<td>Add the nonbonded force parameters for a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.addParticle_usingRVdw" title="simtk.openmm.openmm.NonbondedForce.addParticle_usingRVdw"><code class="xref py py-obj docutils literal"><span class="pre">addParticle_usingRVdw</span></code></a>(charge,&nbsp;rVDW,&nbsp;epsilon)</td>
+<td>Add particle using elemetrary charge.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.createExceptionsFromBonds" title="simtk.openmm.openmm.NonbondedForce.createExceptionsFromBonds"><code class="xref py py-obj docutils literal"><span class="pre">createExceptionsFromBonds</span></code></a>(self,&nbsp;bonds,&nbsp;...)</td>
+<td>Identify exceptions based on the molecular topology.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getCutoffDistance" title="simtk.openmm.openmm.NonbondedForce.getCutoffDistance"><code class="xref py py-obj docutils literal"><span class="pre">getCutoffDistance</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getEwaldErrorTolerance" title="simtk.openmm.openmm.NonbondedForce.getEwaldErrorTolerance"><code class="xref py py-obj docutils literal"><span class="pre">getEwaldErrorTolerance</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the error tolerance for Ewald summation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getExceptionParameters" title="simtk.openmm.openmm.NonbondedForce.getExceptionParameters"><code class="xref py py-obj docutils literal"><span class="pre">getExceptionParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the force field parameters for an interaction that should be calculated differently from others.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getForceGroup" title="simtk.openmm.openmm.NonbondedForce.getForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">getForceGroup</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the force group this Force belongs to.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getNonbondedMethod" title="simtk.openmm.openmm.NonbondedForce.getNonbondedMethod"><code class="xref py py-obj docutils literal"><span class="pre">getNonbondedMethod</span></code></a>(...)</td>
+<td>Get the method used for handling long range nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getNumExceptions" title="simtk.openmm.openmm.NonbondedForce.getNumExceptions"><code class="xref py py-obj docutils literal"><span class="pre">getNumExceptions</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of special interactions that should be calculated differently from other interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getNumParticles" title="simtk.openmm.openmm.NonbondedForce.getNumParticles"><code class="xref py py-obj docutils literal"><span class="pre">getNumParticles</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of particles for which force field parameters have been defined.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getPMEParameters" title="simtk.openmm.openmm.NonbondedForce.getPMEParameters"><code class="xref py py-obj docutils literal"><span class="pre">getPMEParameters</span></code></a>(self)</td>
+<td>Get the parameters to use for PME calculations.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getPMEParametersInContext" title="simtk.openmm.openmm.NonbondedForce.getPMEParametersInContext"><code class="xref py py-obj docutils literal"><span class="pre">getPMEParametersInContext</span></code></a>(self,&nbsp;context)</td>
+<td>Get the parameters being used for PME in a particular Context.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getParticleParameters" title="simtk.openmm.openmm.NonbondedForce.getParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">getParticleParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the nonbonded force parameters for a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getReactionFieldDielectric" title="simtk.openmm.openmm.NonbondedForce.getReactionFieldDielectric"><code class="xref py py-obj docutils literal"><span class="pre">getReactionFieldDielectric</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the dielectric constant to use for the solvent in the reaction field approximation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getReciprocalSpaceForceGroup" title="simtk.openmm.openmm.NonbondedForce.getReciprocalSpaceForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">getReciprocalSpaceForceGroup</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the force group that reciprocal space interactions for Ewald or PME are included in.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getSwitchingDistance" title="simtk.openmm.openmm.NonbondedForce.getSwitchingDistance"><code class="xref py py-obj docutils literal"><span class="pre">getSwitchingDistance</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the distance at which the switching function begins to reduce the Lennard-Jones interaction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getUseDispersionCorrection" title="simtk.openmm.openmm.NonbondedForce.getUseDispersionCorrection"><code class="xref py py-obj docutils literal"><span class="pre">getUseDispersionCorrection</span></code></a>((self)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Get whether to add a contribution to the energy that approximately represents the effect of Lennard-Jones interactions beyond the cutoff distance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.getUseSwitchingFunction" title="simtk.openmm.openmm.NonbondedForce.getUseSwitchingFunction"><code class="xref py py-obj docutils literal"><span class="pre">getUseSwitchingFunction</span></code></a>((self)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Get whether a switching function is applied to the Lennard-Jones interaction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setCutoffDistance" title="simtk.openmm.openmm.NonbondedForce.setCutoffDistance"><code class="xref py py-obj docutils literal"><span class="pre">setCutoffDistance</span></code></a>(self,&nbsp;distance)</td>
+<td>Set the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setEwaldErrorTolerance" title="simtk.openmm.openmm.NonbondedForce.setEwaldErrorTolerance"><code class="xref py py-obj docutils literal"><span class="pre">setEwaldErrorTolerance</span></code></a>(self,&nbsp;tol)</td>
+<td>Set the error tolerance for Ewald summation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setExceptionParameters" title="simtk.openmm.openmm.NonbondedForce.setExceptionParameters"><code class="xref py py-obj docutils literal"><span class="pre">setExceptionParameters</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the force field parameters for an interaction that should be calculated differently from others.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setForceGroup" title="simtk.openmm.openmm.NonbondedForce.setForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">setForceGroup</span></code></a>(self,&nbsp;group)</td>
+<td>Set the force group this Force belongs to.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setNonbondedMethod" title="simtk.openmm.openmm.NonbondedForce.setNonbondedMethod"><code class="xref py py-obj docutils literal"><span class="pre">setNonbondedMethod</span></code></a>(self,&nbsp;method)</td>
+<td>Set the method used for handling long range nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setPMEParameters" title="simtk.openmm.openmm.NonbondedForce.setPMEParameters"><code class="xref py py-obj docutils literal"><span class="pre">setPMEParameters</span></code></a>(self,&nbsp;alpha,&nbsp;nx,&nbsp;ny,&nbsp;nz)</td>
+<td>Set the parameters to use for PME calculations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setParticleParameters" title="simtk.openmm.openmm.NonbondedForce.setParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">setParticleParameters</span></code></a>(self,&nbsp;index,&nbsp;charge,&nbsp;...)</td>
+<td>Set the nonbonded force parameters for a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setReactionFieldDielectric" title="simtk.openmm.openmm.NonbondedForce.setReactionFieldDielectric"><code class="xref py py-obj docutils literal"><span class="pre">setReactionFieldDielectric</span></code></a>(self,&nbsp;dielectric)</td>
+<td>Set the dielectric constant to use for the solvent in the reaction field approximation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setReciprocalSpaceForceGroup" title="simtk.openmm.openmm.NonbondedForce.setReciprocalSpaceForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">setReciprocalSpaceForceGroup</span></code></a>(self,&nbsp;group)</td>
+<td>Set the force group that reciprocal space interactions for Ewald or PME are included in.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setSwitchingDistance" title="simtk.openmm.openmm.NonbondedForce.setSwitchingDistance"><code class="xref py py-obj docutils literal"><span class="pre">setSwitchingDistance</span></code></a>(self,&nbsp;distance)</td>
+<td>Set the distance at which the switching function begins to reduce the Lennard-Jones interaction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setUseDispersionCorrection" title="simtk.openmm.openmm.NonbondedForce.setUseDispersionCorrection"><code class="xref py py-obj docutils literal"><span class="pre">setUseDispersionCorrection</span></code></a>(self,&nbsp;useCorrection)</td>
+<td>Set whether to add a contribution to the energy that approximately represents the effect of Lennard-Jones interactions beyond the cutoff distance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.setUseSwitchingFunction" title="simtk.openmm.openmm.NonbondedForce.setUseSwitchingFunction"><code class="xref py py-obj docutils literal"><span class="pre">setUseSwitchingFunction</span></code></a>(self,&nbsp;use)</td>
+<td>Set whether a switching function is applied to the Lennard-Jones interaction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.updateParametersInContext" title="simtk.openmm.openmm.NonbondedForce.updateParametersInContext"><code class="xref py py-obj docutils literal"><span class="pre">updateParametersInContext</span></code></a>(self,&nbsp;context)</td>
+<td>Update the particle and exception parameters in a Context to match those stored in this Force object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.NonbondedForce.usesPeriodicBoundaryConditions" title="simtk.openmm.openmm.NonbondedForce.usesPeriodicBoundaryConditions"><code class="xref py py-obj docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a>((self)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">CutoffNonPeriodic</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">CutoffPeriodic</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Ewald</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">NoCutoff</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PME</span></code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.__copy__">
+<code class="descname">__copy__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; Force<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.__copy__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getForceGroup">
+<code class="descname">getForceGroup</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force group this Force belongs to.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setForceGroup">
+<code class="descname">setForceGroup</code><span class="sig-paren">(</span><em>self</em>, <em>group</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force group this Force belongs to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>group</strong> (<em>int</em>) &#8211; the group index. Legal values are between 0 and 31 (inclusive).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getNumParticles">
+<code class="descname">getNumParticles</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getNumParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles for which force field parameters have been defined.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getNumExceptions">
+<code class="descname">getNumExceptions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getNumExceptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of special interactions that should be calculated differently from other interactions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getNonbondedMethod">
+<code class="descname">getNonbondedMethod</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; OpenMM::NonbondedForce::NonbondedMethod<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getNonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the method used for handling long range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setNonbondedMethod">
+<code class="descname">setNonbondedMethod</code><span class="sig-paren">(</span><em>self</em>, <em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setNonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the method used for handling long range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getCutoffDistance">
+<code class="descname">getCutoffDistance</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getCutoffDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the cutoff distance, measured in nm</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setCutoffDistance">
+<code class="descname">setCutoffDistance</code><span class="sig-paren">(</span><em>self</em>, <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setCutoffDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>distance</strong> (<em>double</em>) &#8211; the cutoff distance, measured in nm</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getUseSwitchingFunction">
+<code class="descname">getUseSwitchingFunction</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getUseSwitchingFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether a switching function is applied to the Lennard-Jones interaction. If the nonbonded method is set to NoCutoff, this option is ignored.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setUseSwitchingFunction">
+<code class="descname">setUseSwitchingFunction</code><span class="sig-paren">(</span><em>self</em>, <em>use</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setUseSwitchingFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether a switching function is applied to the Lennard-Jones interaction. If the nonbonded method is set to NoCutoff, this option is ignored.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getSwitchingDistance">
+<code class="descname">getSwitchingDistance</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getSwitchingDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the distance at which the switching function begins to reduce the Lennard-Jones interaction. This must be less than the cutoff distance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setSwitchingDistance">
+<code class="descname">setSwitchingDistance</code><span class="sig-paren">(</span><em>self</em>, <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setSwitchingDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the distance at which the switching function begins to reduce the Lennard-Jones interaction. This must be less than the cutoff distance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getReactionFieldDielectric">
+<code class="descname">getReactionFieldDielectric</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getReactionFieldDielectric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dielectric constant to use for the solvent in the reaction field approximation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setReactionFieldDielectric">
+<code class="descname">setReactionFieldDielectric</code><span class="sig-paren">(</span><em>self</em>, <em>dielectric</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setReactionFieldDielectric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the dielectric constant to use for the solvent in the reaction field approximation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getEwaldErrorTolerance">
+<code class="descname">getEwaldErrorTolerance</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getEwaldErrorTolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error tolerance for Ewald summation. This corresponds to the fractional error in the forces which is acceptable. This value is used to select the reciprocal space cutoff and separation parameter so that the average error level will be less than the tolerance. There is not a rigorous guarantee that all forces on all atoms will be less than the tolerance, however.</p>
+<p>For PME calculations, if setPMEParameters() is used to set alpha to something other than 0, this value is ignored.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setEwaldErrorTolerance">
+<code class="descname">setEwaldErrorTolerance</code><span class="sig-paren">(</span><em>self</em>, <em>tol</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setEwaldErrorTolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the error tolerance for Ewald summation. This corresponds to the fractional error in the forces which is acceptable. This value is used to select the reciprocal space cutoff and separation parameter so that the average error level will be less than the tolerance. There is not a rigorous guarantee that all forces on all atoms will be less than the tolerance, however.</p>
+<p>For PME calculations, if setPMEParameters() is used to set alpha to something other than 0, this value is ignored.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getPMEParameters">
+<code class="descname">getPMEParameters</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getPMEParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters to use for PME calculations. If alpha is 0 (the default), these parameters are ignored and instead their values are chosen based on the Ewald error tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>alpha</strong> (<em>double</em>) &#8211;
+the separation parameter</li>
+<li><strong>nx</strong> (<em>int</em>) &#8211;
+the number of grid points along the X axis</li>
+<li><strong>ny</strong> (<em>int</em>) &#8211;
+the number of grid points along the Y axis</li>
+<li><strong>nz</strong> (<em>int</em>) &#8211;
+the number of grid points along the Z axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setPMEParameters">
+<code class="descname">setPMEParameters</code><span class="sig-paren">(</span><em>self</em>, <em>alpha</em>, <em>nx</em>, <em>ny</em>, <em>nz</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setPMEParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parameters to use for PME calculations. If alpha is 0 (the default), these parameters are ignored and instead their values are chosen based on the Ewald error tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>alpha</strong> (<em>double</em>) &#8211; the separation parameter</li>
+<li><strong>nx</strong> (<em>int</em>) &#8211; the number of grid points along the X axis</li>
+<li><strong>ny</strong> (<em>int</em>) &#8211; the number of grid points along the Y axis</li>
+<li><strong>nz</strong> (<em>int</em>) &#8211; the number of grid points along the Z axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getPMEParametersInContext">
+<code class="descname">getPMEParametersInContext</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getPMEParametersInContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters being used for PME in a particular Context. Because some platforms have restrictions on the allowed grid sizes, the values that are actually used may be slightly different from those specified with setPMEParameters(), or the standard values calculated based on the Ewald error tolerance. See the manual for details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>context</strong> (<a class="reference internal" href="simtk.openmm.openmm.Context.html#simtk.openmm.openmm.Context" title="simtk.openmm.openmm.Context"><em>Context</em></a>) &#8211; the Context for which to get the parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>alpha</strong> (<em>double</em>) &#8211;
+the separation parameter</li>
+<li><strong>nx</strong> (<em>int</em>) &#8211;
+the number of grid points along the X axis</li>
+<li><strong>ny</strong> (<em>int</em>) &#8211;
+the number of grid points along the Y axis</li>
+<li><strong>nz</strong> (<em>int</em>) &#8211;
+the number of grid points along the Z axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.addParticle">
+<code class="descname">addParticle</code><span class="sig-paren">(</span><em>self</em>, <em>charge</em>, <em>sigma</em>, <em>epsilon</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.addParticle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the nonbonded force parameters for a particle. This should be called once for each particle in the System. When it is called for the i&#8217;th time, it specifies the parameters for the i&#8217;th particle. For calculating the Lennard-Jones interaction between two particles, the arithmetic mean of the sigmas and the geometric mean of the epsilons for the two interacting particles is used (the Lorentz-Berthelot combining rule).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>charge</strong> (<em>double</em>) &#8211; the charge of the particle, measured in units of the proton charge</li>
+<li><strong>sigma</strong> (<em>double</em>) &#8211; the sigma parameter of the Lennard-Jones potential (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> (<em>double</em>) &#8211; the epsilon parameter of the Lennard-Jones potential (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the particle that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getParticleParameters">
+<code class="descname">getParticleParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the nonbonded force parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the particle for which to get parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>charge</strong> (<em>double</em>) &#8211;
+the charge of the particle, measured in units of the proton charge</li>
+<li><strong>sigma</strong> (<em>double</em>) &#8211;
+the sigma parameter of the Lennard-Jones potential (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> (<em>double</em>) &#8211;
+the epsilon parameter of the Lennard-Jones potential (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setParticleParameters">
+<code class="descname">setParticleParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>charge</em>, <em>sigma</em>, <em>epsilon</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the nonbonded force parameters for a particle. When calculating the Lennard-Jones interaction between two particles, it uses the arithmetic mean of the sigmas and the geometric mean of the epsilons for the two interacting particles (the Lorentz-Berthelot combining rule).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the particle for which to set parameters</li>
+<li><strong>charge</strong> (<em>double</em>) &#8211; the charge of the particle, measured in units of the proton charge</li>
+<li><strong>sigma</strong> (<em>double</em>) &#8211; the sigma parameter of the Lennard-Jones potential (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> (<em>double</em>) &#8211; the epsilon parameter of the Lennard-Jones potential (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.addException">
+<code class="descname">addException</code><span class="sig-paren">(</span><em>self</em>, <em>particle1</em>, <em>particle2</em>, <em>chargeProd</em>, <em>sigma</em>, <em>epsilon</em>, <em>replace=False</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.addException" title="Permalink to this definition">¶</a></dt>
+<dd><p>addException(self, particle1, particle2, chargeProd, sigma, epsilon) -&gt; int</p>
+<p>Add an interaction to the list of exceptions that should be calculated differently from other interactions. If chargeProd and epsilon are both equal to 0, this will cause the interaction to be completely omitted from force and energy calculations.</p>
+<p>In many cases, you can use createExceptionsFromBonds() rather than adding each exception explicitly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>particle1</strong> (<em>int</em>) &#8211; the index of the first particle involved in the interaction</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211; the index of the second particle involved in the interaction</li>
+<li><strong>chargeProd</strong> (<em>double</em>) &#8211; the scaled product of the atomic charges (i.e. the strength of the Coulomb interaction), measured in units of the proton charge squared</li>
+<li><strong>sigma</strong> (<em>double</em>) &#8211; the sigma parameter of the Lennard-Jones potential (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> (<em>double</em>) &#8211; the epsilon parameter of the Lennard-Jones potential (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+<li><strong>replace</strong> (<em>bool</em>) &#8211; determines the behavior if there is already an exception for the same two particles. If true, the existing one is replaced. If false, an exception is thrown.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the exception that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getExceptionParameters">
+<code class="descname">getExceptionParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getExceptionParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force field parameters for an interaction that should be calculated differently from others.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the interaction for which to get parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>particle1</strong> (<em>int</em>) &#8211;
+the index of the first particle involved in the interaction</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211;
+the index of the second particle involved in the interaction</li>
+<li><strong>chargeProd</strong> (<em>double</em>) &#8211;
+the scaled product of the atomic charges (i.e. the strength of the Coulomb interaction), measured in units of the proton charge squared</li>
+<li><strong>sigma</strong> (<em>double</em>) &#8211;
+the sigma parameter of the Lennard-Jones potential (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> (<em>double</em>) &#8211;
+the epsilon parameter of the Lennard-Jones potential (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setExceptionParameters">
+<code class="descname">setExceptionParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>particle1</em>, <em>particle2</em>, <em>chargeProd</em>, <em>sigma</em>, <em>epsilon</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setExceptionParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force field parameters for an interaction that should be calculated differently from others. If chargeProd and epsilon are both equal to 0, this will cause the interaction to be completely omitted from force and energy calculations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the interaction for which to get parameters</li>
+<li><strong>particle1</strong> (<em>int</em>) &#8211; the index of the first particle involved in the interaction</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211; the index of the second particle involved in the interaction</li>
+<li><strong>chargeProd</strong> (<em>double</em>) &#8211; the scaled product of the atomic charges (i.e. the strength of the Coulomb interaction), measured in units of the proton charge squared</li>
+<li><strong>sigma</strong> (<em>double</em>) &#8211; the sigma parameter of the Lennard-Jones potential (corresponding to the van der Waals radius of the particle), measured in nm</li>
+<li><strong>epsilon</strong> (<em>double</em>) &#8211; the epsilon parameter of the Lennard-Jones potential (corresponding to the well depth of the van der Waals interaction), measured in kJ/mol</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.createExceptionsFromBonds">
+<code class="descname">createExceptionsFromBonds</code><span class="sig-paren">(</span><em>self</em>, <em>bonds</em>, <em>coulomb14Scale</em>, <em>lj14Scale</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.createExceptionsFromBonds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identify exceptions based on the molecular topology. Particles which are separated by one or two bonds are set to not interact at all, while pairs of particles separated by three bonds (known as &#8220;1-4 interactions&#8221;) have their Coulomb and Lennard-Jones interactions reduced by a fixed factor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>bonds</strong> (<em>vector&lt; std::pair&lt; int, int &gt; &gt;</em>) &#8211; the set of bonds based on which to construct exceptions. Each element specifies the indices of two particles that are bonded to each other.</li>
+<li><strong>coulomb14Scale</strong> (<em>double</em>) &#8211; pairs of particles separated by three bonds will have the strength of their Coulomb interaction multiplied by this factor</li>
+<li><strong>lj14Scale</strong> (<em>double</em>) &#8211; pairs of particles separated by three bonds will have the strength of their Lennard-Jones interaction multiplied by this factor</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getUseDispersionCorrection">
+<code class="descname">getUseDispersionCorrection</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getUseDispersionCorrection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether to add a contribution to the energy that approximately represents the effect of Lennard-Jones interactions beyond the cutoff distance. The energy depends on the volume of the periodic box, and is only applicable when periodic boundary conditions are used. When running simulations at constant pressure, adding this contribution can improve the quality of results.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setUseDispersionCorrection">
+<code class="descname">setUseDispersionCorrection</code><span class="sig-paren">(</span><em>self</em>, <em>useCorrection</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setUseDispersionCorrection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether to add a contribution to the energy that approximately represents the effect of Lennard-Jones interactions beyond the cutoff distance. The energy depends on the volume of the periodic box, and is only applicable when periodic boundary conditions are used. When running simulations at constant pressure, adding this contribution can improve the quality of results.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.getReciprocalSpaceForceGroup">
+<code class="descname">getReciprocalSpaceForceGroup</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.getReciprocalSpaceForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force group that reciprocal space interactions for Ewald or PME are included in. This allows multiple time step integrators to evaluate direct and reciprocal space interactions at different intervals: getForceGroup() specifies the group for direct space, and getReciprocalSpaceForceGroup() specifies the group for reciprocal space. If this is -1 (the default value), the same force group is used for reciprocal space as for direct space.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.setReciprocalSpaceForceGroup">
+<code class="descname">setReciprocalSpaceForceGroup</code><span class="sig-paren">(</span><em>self</em>, <em>group</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.setReciprocalSpaceForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force group that reciprocal space interactions for Ewald or PME are included in. This allows multiple time step integrators to evaluate direct and reciprocal space interactions at different intervals: setForceGroup() specifies the group for direct space, and setReciprocalSpaceForceGroup() specifies the group for reciprocal space. If this is -1 (the default value), the same force group is used for reciprocal space as for direct space.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>group</strong> (<em>int</em>) &#8211; the group index. Legal values are between 0 and 31 (inclusive), or -1 to use the same force group that is specified for direct space.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.updateParametersInContext">
+<code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.updateParametersInContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the particle and exception parameters in a Context to match those stored in this Force object. This method provides an efficient method to update certain parameters in an existing Context without needing to reinitialize it. Simply call setParticleParameters() and setExceptionParameters() to modify this object&#8217;s parameters, then call updateParametersInContext() to copy them over to the Context.</p>
+<p>This method has several limitations. The only information it updates is the parameters of particles and exceptions. All other aspects of the Force (the nonbonded method, the cutoff distance, etc.) are unaffected and can only be changed by reinitializing the Context. Furthermore, only the chargeProd, sigma, and epsilon values of an exception can be changed; the pair of particles involved in the exception cannot change. Finally, this method cannot be used to add new particles or exceptions, only to change the parameters of existing ones.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.usesPeriodicBoundaryConditions">
+<code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.usesPeriodicBoundaryConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if force uses PBC and false otherwise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.addParticle_usingRVdw">
+<code class="descname">addParticle_usingRVdw</code><span class="sig-paren">(</span><em>charge</em>, <em>rVDW</em>, <em>epsilon</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.addParticle_usingRVdw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add particle using elemetrary charge.  Rvdw and epsilon,
+which is consistent with AMBER parameter file usage.
+Note that the sum of the radii of the two interacting atoms is
+the minimum energy point in the Lennard Jones potential and
+is often called rMin.  The conversion from sigma follows:
+rVDW = 2^1/6 * sigma/2</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.NonbondedForce.addException_usingRMin">
+<code class="descname">addException_usingRMin</code><span class="sig-paren">(</span><em>particle1</em>, <em>particle2</em>, <em>chargeProd</em>, <em>rMin</em>, <em>epsilon</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.NonbondedForce.addException_usingRMin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add interaction exception using the product of the two atoms&#8217;
+elementary charges, rMin and epsilon, which is standard for AMBER
+force fields.  Note that rMin is the minimum energy point in the
+Lennard Jones potential.  The conversion from sigma is:
+rMin = 2^1/6 * sigma.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Application Layer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../library.html">Library Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../library.html#core-objects">Core Objects</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../library.html#forces">Forces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#integrators">Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.openmm.NonbondedForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

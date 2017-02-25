@@ -1,0 +1,27 @@
+CharmmParameterSet
+======================================================
+
+.. currentmodule:: simtk.openmm.app.charmmparameterset
+
+.. autoclass:: CharmmParameterSet
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CharmmParameterSet.__init__
+      ~CharmmParameterSet.condense
+      ~CharmmParameterSet.loadSet
+      ~CharmmParameterSet.readParameterFile
+      ~CharmmParameterSet.readStreamFile
+      ~CharmmParameterSet.readTopologyFile
+   
+   
+
+   
+   
+   

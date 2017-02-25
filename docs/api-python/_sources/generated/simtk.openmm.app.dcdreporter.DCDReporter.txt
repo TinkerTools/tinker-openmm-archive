@@ -1,0 +1,24 @@
+DCDReporter
+========================================
+
+.. currentmodule:: simtk.openmm.app.dcdreporter
+
+.. autoclass:: DCDReporter
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DCDReporter.__init__
+      ~DCDReporter.describeNextReport
+      ~DCDReporter.report
+   
+   
+
+   
+   
+   

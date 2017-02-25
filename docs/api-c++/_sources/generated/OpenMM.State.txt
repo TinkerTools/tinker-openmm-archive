@@ -1,0 +1,39 @@
+State
+=============
+
+.. autodoxyclass:: OpenMM::State
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::State::State
+      ~OpenMM::State::getTime
+      ~OpenMM::State::getPositions
+      ~OpenMM::State::getVelocities
+      ~OpenMM::State::getForces
+      ~OpenMM::State::getKineticEnergy
+      ~OpenMM::State::getPotentialEnergy
+      ~OpenMM::State::getPeriodicBoxVectors
+      ~OpenMM::State::getPeriodicBoxVolume
+      ~OpenMM::State::getParameters
+      ~OpenMM::State::getEnergyParameterDerivatives
+      ~OpenMM::State::getDataTypes
+      ~OpenMM::State::StateBuilder
+      ~OpenMM::State::getState
+      ~OpenMM::State::setPositions
+      ~OpenMM::State::setVelocities
+      ~OpenMM::State::setForces
+      ~OpenMM::State::setParameters
+      ~OpenMM::State::setEnergyParameterDerivatives
+      ~OpenMM::State::setEnergy
+      ~OpenMM::State::setPeriodicBoxVectors
+   
+
+   
+   
+   .. autodoxyenum:: DataType
+   
+   

@@ -1,0 +1,31 @@
+RBTorsionForce
+==================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: RBTorsionForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RBTorsionForce.__init__
+      ~RBTorsionForce.addTorsion
+      ~RBTorsionForce.getForceGroup
+      ~RBTorsionForce.getNumTorsions
+      ~RBTorsionForce.getTorsionParameters
+      ~RBTorsionForce.setForceGroup
+      ~RBTorsionForce.setTorsionParameters
+      ~RBTorsionForce.setUsesPeriodicBoundaryConditions
+      ~RBTorsionForce.updateParametersInContext
+      ~RBTorsionForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

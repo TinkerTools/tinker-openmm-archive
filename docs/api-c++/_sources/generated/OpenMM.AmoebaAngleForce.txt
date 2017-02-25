@@ -1,0 +1,30 @@
+AmoebaAngleForce
+========================
+
+.. autodoxyclass:: OpenMM::AmoebaAngleForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaAngleForce::AmoebaAngleForce
+      ~OpenMM::AmoebaAngleForce::getNumAngles
+      ~OpenMM::AmoebaAngleForce::setAmoebaGlobalAngleCubic
+      ~OpenMM::AmoebaAngleForce::getAmoebaGlobalAngleCubic
+      ~OpenMM::AmoebaAngleForce::setAmoebaGlobalAngleQuartic
+      ~OpenMM::AmoebaAngleForce::getAmoebaGlobalAngleQuartic
+      ~OpenMM::AmoebaAngleForce::setAmoebaGlobalAnglePentic
+      ~OpenMM::AmoebaAngleForce::getAmoebaGlobalAnglePentic
+      ~OpenMM::AmoebaAngleForce::setAmoebaGlobalAngleSextic
+      ~OpenMM::AmoebaAngleForce::getAmoebaGlobalAngleSextic
+      ~OpenMM::AmoebaAngleForce::addAngle
+      ~OpenMM::AmoebaAngleForce::getAngleParameters
+      ~OpenMM::AmoebaAngleForce::setAngleParameters
+      ~OpenMM::AmoebaAngleForce::updateParametersInContext
+      ~OpenMM::AmoebaAngleForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::AmoebaAngleForce::usesPeriodicBoundaryConditions
+   
+
+   

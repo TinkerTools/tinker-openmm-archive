@@ -1,0 +1,50 @@
+GayBerneForce
+=================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: GayBerneForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GayBerneForce.__init__
+      ~GayBerneForce.addException
+      ~GayBerneForce.addParticle
+      ~GayBerneForce.getCutoffDistance
+      ~GayBerneForce.getExceptionParameters
+      ~GayBerneForce.getForceGroup
+      ~GayBerneForce.getNonbondedMethod
+      ~GayBerneForce.getNumExceptions
+      ~GayBerneForce.getNumParticles
+      ~GayBerneForce.getParticleParameters
+      ~GayBerneForce.getSwitchingDistance
+      ~GayBerneForce.getUseSwitchingFunction
+      ~GayBerneForce.setCutoffDistance
+      ~GayBerneForce.setExceptionParameters
+      ~GayBerneForce.setForceGroup
+      ~GayBerneForce.setNonbondedMethod
+      ~GayBerneForce.setParticleParameters
+      ~GayBerneForce.setSwitchingDistance
+      ~GayBerneForce.setUseSwitchingFunction
+      ~GayBerneForce.updateParametersInContext
+      ~GayBerneForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~GayBerneForce.CutoffNonPeriodic
+      ~GayBerneForce.CutoffPeriodic
+      ~GayBerneForce.NoCutoff
+   
+   

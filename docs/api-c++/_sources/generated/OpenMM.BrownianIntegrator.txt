@@ -1,0 +1,22 @@
+BrownianIntegrator
+==========================
+
+.. autodoxyclass:: OpenMM::BrownianIntegrator
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::BrownianIntegrator::BrownianIntegrator
+      ~OpenMM::BrownianIntegrator::getTemperature
+      ~OpenMM::BrownianIntegrator::setTemperature
+      ~OpenMM::BrownianIntegrator::getFriction
+      ~OpenMM::BrownianIntegrator::setFriction
+      ~OpenMM::BrownianIntegrator::getRandomNumberSeed
+      ~OpenMM::BrownianIntegrator::setRandomNumberSeed
+      ~OpenMM::BrownianIntegrator::step
+   
+
+   

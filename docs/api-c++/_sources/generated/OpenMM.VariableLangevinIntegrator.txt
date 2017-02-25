@@ -1,0 +1,25 @@
+VariableLangevinIntegrator
+==================================
+
+.. autodoxyclass:: OpenMM::VariableLangevinIntegrator
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::VariableLangevinIntegrator::VariableLangevinIntegrator
+      ~OpenMM::VariableLangevinIntegrator::getTemperature
+      ~OpenMM::VariableLangevinIntegrator::setTemperature
+      ~OpenMM::VariableLangevinIntegrator::getFriction
+      ~OpenMM::VariableLangevinIntegrator::setFriction
+      ~OpenMM::VariableLangevinIntegrator::getErrorTolerance
+      ~OpenMM::VariableLangevinIntegrator::setErrorTolerance
+      ~OpenMM::VariableLangevinIntegrator::getRandomNumberSeed
+      ~OpenMM::VariableLangevinIntegrator::setRandomNumberSeed
+      ~OpenMM::VariableLangevinIntegrator::step
+      ~OpenMM::VariableLangevinIntegrator::stepTo
+   
+
+   

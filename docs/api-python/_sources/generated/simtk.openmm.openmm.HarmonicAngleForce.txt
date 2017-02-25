@@ -1,0 +1,31 @@
+HarmonicAngleForce
+======================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: HarmonicAngleForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~HarmonicAngleForce.__init__
+      ~HarmonicAngleForce.addAngle
+      ~HarmonicAngleForce.getAngleParameters
+      ~HarmonicAngleForce.getForceGroup
+      ~HarmonicAngleForce.getNumAngles
+      ~HarmonicAngleForce.setAngleParameters
+      ~HarmonicAngleForce.setForceGroup
+      ~HarmonicAngleForce.setUsesPeriodicBoundaryConditions
+      ~HarmonicAngleForce.updateParametersInContext
+      ~HarmonicAngleForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

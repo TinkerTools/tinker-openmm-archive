@@ -1,0 +1,51 @@
+AmoebaVdwForce
+==================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: AmoebaVdwForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AmoebaVdwForce.__init__
+      ~AmoebaVdwForce.addParticle
+      ~AmoebaVdwForce.getCutoff
+      ~AmoebaVdwForce.getCutoffDistance
+      ~AmoebaVdwForce.getEpsilonCombiningRule
+      ~AmoebaVdwForce.getForceGroup
+      ~AmoebaVdwForce.getNonbondedMethod
+      ~AmoebaVdwForce.getNumParticles
+      ~AmoebaVdwForce.getParticleExclusions
+      ~AmoebaVdwForce.getParticleParameters
+      ~AmoebaVdwForce.getSigmaCombiningRule
+      ~AmoebaVdwForce.getUseDispersionCorrection
+      ~AmoebaVdwForce.setCutoff
+      ~AmoebaVdwForce.setCutoffDistance
+      ~AmoebaVdwForce.setEpsilonCombiningRule
+      ~AmoebaVdwForce.setForceGroup
+      ~AmoebaVdwForce.setNonbondedMethod
+      ~AmoebaVdwForce.setParticleExclusions
+      ~AmoebaVdwForce.setParticleParameters
+      ~AmoebaVdwForce.setSigmaCombiningRule
+      ~AmoebaVdwForce.setUseDispersionCorrection
+      ~AmoebaVdwForce.updateParametersInContext
+      ~AmoebaVdwForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AmoebaVdwForce.CutoffPeriodic
+      ~AmoebaVdwForce.NoCutoff
+   
+   

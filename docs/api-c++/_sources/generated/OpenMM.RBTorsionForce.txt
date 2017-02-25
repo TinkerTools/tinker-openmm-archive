@@ -1,0 +1,22 @@
+RBTorsionForce
+======================
+
+.. autodoxyclass:: OpenMM::RBTorsionForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::RBTorsionForce::RBTorsionForce
+      ~OpenMM::RBTorsionForce::getNumTorsions
+      ~OpenMM::RBTorsionForce::addTorsion
+      ~OpenMM::RBTorsionForce::getTorsionParameters
+      ~OpenMM::RBTorsionForce::setTorsionParameters
+      ~OpenMM::RBTorsionForce::updateParametersInContext
+      ~OpenMM::RBTorsionForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::RBTorsionForce::usesPeriodicBoundaryConditions
+   
+
+   

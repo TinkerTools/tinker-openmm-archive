@@ -1,0 +1,26 @@
+AmoebaBondForce
+=======================
+
+.. autodoxyclass:: OpenMM::AmoebaBondForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaBondForce::AmoebaBondForce
+      ~OpenMM::AmoebaBondForce::getNumBonds
+      ~OpenMM::AmoebaBondForce::setAmoebaGlobalBondCubic
+      ~OpenMM::AmoebaBondForce::getAmoebaGlobalBondCubic
+      ~OpenMM::AmoebaBondForce::setAmoebaGlobalBondQuartic
+      ~OpenMM::AmoebaBondForce::getAmoebaGlobalBondQuartic
+      ~OpenMM::AmoebaBondForce::addBond
+      ~OpenMM::AmoebaBondForce::getBondParameters
+      ~OpenMM::AmoebaBondForce::setBondParameters
+      ~OpenMM::AmoebaBondForce::updateParametersInContext
+      ~OpenMM::AmoebaBondForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::AmoebaBondForce::usesPeriodicBoundaryConditions
+   
+
+   

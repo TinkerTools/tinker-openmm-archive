@@ -1,0 +1,40 @@
+Context
+===============
+
+.. autodoxyclass:: OpenMM::Context
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::Context::Context
+      ~OpenMM::Context::Context
+      ~OpenMM::Context::Context
+      ~OpenMM::Context::~Context
+      ~OpenMM::Context::getSystem
+      ~OpenMM::Context::getIntegrator
+      ~OpenMM::Context::getIntegrator
+      ~OpenMM::Context::getPlatform
+      ~OpenMM::Context::getPlatform
+      ~OpenMM::Context::getState
+      ~OpenMM::Context::setState
+      ~OpenMM::Context::setTime
+      ~OpenMM::Context::setPositions
+      ~OpenMM::Context::setVelocities
+      ~OpenMM::Context::setVelocitiesToTemperature
+      ~OpenMM::Context::getParameters
+      ~OpenMM::Context::getParameter
+      ~OpenMM::Context::setParameter
+      ~OpenMM::Context::setPeriodicBoxVectors
+      ~OpenMM::Context::applyConstraints
+      ~OpenMM::Context::applyVelocityConstraints
+      ~OpenMM::Context::computeVirtualSites
+      ~OpenMM::Context::reinitialize
+      ~OpenMM::Context::createCheckpoint
+      ~OpenMM::Context::loadCheckpoint
+      ~OpenMM::Context::getMolecules
+   
+
+   

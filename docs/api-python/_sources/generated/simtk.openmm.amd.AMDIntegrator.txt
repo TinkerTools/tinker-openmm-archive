@@ -1,0 +1,75 @@
+AMDIntegrator
+==============================
+
+.. currentmodule:: simtk.openmm.amd
+
+.. autoclass:: AMDIntegrator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AMDIntegrator.__init__
+      ~AMDIntegrator.addComputeGlobal
+      ~AMDIntegrator.addComputePerDof
+      ~AMDIntegrator.addComputeSum
+      ~AMDIntegrator.addConstrainPositions
+      ~AMDIntegrator.addConstrainVelocities
+      ~AMDIntegrator.addGlobalVariable
+      ~AMDIntegrator.addPerDofVariable
+      ~AMDIntegrator.addUpdateContextState
+      ~AMDIntegrator.beginIfBlock
+      ~AMDIntegrator.beginWhileBlock
+      ~AMDIntegrator.endBlock
+      ~AMDIntegrator.getAlpha
+      ~AMDIntegrator.getComputationStep
+      ~AMDIntegrator.getConstraintTolerance
+      ~AMDIntegrator.getE
+      ~AMDIntegrator.getEffectiveEnergy
+      ~AMDIntegrator.getGlobalVariable
+      ~AMDIntegrator.getGlobalVariableByName
+      ~AMDIntegrator.getGlobalVariableName
+      ~AMDIntegrator.getKineticEnergyExpression
+      ~AMDIntegrator.getNumComputations
+      ~AMDIntegrator.getNumGlobalVariables
+      ~AMDIntegrator.getNumPerDofVariables
+      ~AMDIntegrator.getPerDofVariable
+      ~AMDIntegrator.getPerDofVariableByName
+      ~AMDIntegrator.getPerDofVariableName
+      ~AMDIntegrator.getRandomNumberSeed
+      ~AMDIntegrator.getStepSize
+      ~AMDIntegrator.setAlpha
+      ~AMDIntegrator.setConstraintTolerance
+      ~AMDIntegrator.setE
+      ~AMDIntegrator.setGlobalVariable
+      ~AMDIntegrator.setGlobalVariableByName
+      ~AMDIntegrator.setKineticEnergyExpression
+      ~AMDIntegrator.setPerDofVariable
+      ~AMDIntegrator.setPerDofVariableByName
+      ~AMDIntegrator.setRandomNumberSeed
+      ~AMDIntegrator.setStepSize
+      ~AMDIntegrator.step
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AMDIntegrator.BlockEnd
+      ~AMDIntegrator.ComputeGlobal
+      ~AMDIntegrator.ComputePerDof
+      ~AMDIntegrator.ComputeSum
+      ~AMDIntegrator.ConstrainPositions
+      ~AMDIntegrator.ConstrainVelocities
+      ~AMDIntegrator.IfBlockStart
+      ~AMDIntegrator.UpdateContextState
+      ~AMDIntegrator.WhileBlockStart
+   
+   

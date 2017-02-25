@@ -1,0 +1,40 @@
+MonteCarloAnisotropicBarostat
+=================================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: MonteCarloAnisotropicBarostat
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MonteCarloAnisotropicBarostat.PressureX
+      ~MonteCarloAnisotropicBarostat.PressureY
+      ~MonteCarloAnisotropicBarostat.PressureZ
+      ~MonteCarloAnisotropicBarostat.Temperature
+      ~MonteCarloAnisotropicBarostat.__init__
+      ~MonteCarloAnisotropicBarostat.getDefaultPressure
+      ~MonteCarloAnisotropicBarostat.getDefaultTemperature
+      ~MonteCarloAnisotropicBarostat.getForceGroup
+      ~MonteCarloAnisotropicBarostat.getFrequency
+      ~MonteCarloAnisotropicBarostat.getRandomNumberSeed
+      ~MonteCarloAnisotropicBarostat.getScaleX
+      ~MonteCarloAnisotropicBarostat.getScaleY
+      ~MonteCarloAnisotropicBarostat.getScaleZ
+      ~MonteCarloAnisotropicBarostat.setDefaultPressure
+      ~MonteCarloAnisotropicBarostat.setDefaultTemperature
+      ~MonteCarloAnisotropicBarostat.setForceGroup
+      ~MonteCarloAnisotropicBarostat.setFrequency
+      ~MonteCarloAnisotropicBarostat.setRandomNumberSeed
+      ~MonteCarloAnisotropicBarostat.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

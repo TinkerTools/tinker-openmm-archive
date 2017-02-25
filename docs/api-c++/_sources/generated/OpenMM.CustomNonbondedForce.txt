@@ -1,0 +1,70 @@
+CustomNonbondedForce
+============================
+
+.. autodoxyclass:: OpenMM::CustomNonbondedForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CustomNonbondedForce::CustomNonbondedForce
+      ~OpenMM::CustomNonbondedForce::CustomNonbondedForce
+      ~OpenMM::CustomNonbondedForce::~CustomNonbondedForce
+      ~OpenMM::CustomNonbondedForce::getNumParticles
+      ~OpenMM::CustomNonbondedForce::getNumExclusions
+      ~OpenMM::CustomNonbondedForce::getNumPerParticleParameters
+      ~OpenMM::CustomNonbondedForce::getNumGlobalParameters
+      ~OpenMM::CustomNonbondedForce::getNumTabulatedFunctions
+      ~OpenMM::CustomNonbondedForce::getNumFunctions
+      ~OpenMM::CustomNonbondedForce::getNumInteractionGroups
+      ~OpenMM::CustomNonbondedForce::getNumEnergyParameterDerivatives
+      ~OpenMM::CustomNonbondedForce::getEnergyFunction
+      ~OpenMM::CustomNonbondedForce::setEnergyFunction
+      ~OpenMM::CustomNonbondedForce::getNonbondedMethod
+      ~OpenMM::CustomNonbondedForce::setNonbondedMethod
+      ~OpenMM::CustomNonbondedForce::getCutoffDistance
+      ~OpenMM::CustomNonbondedForce::setCutoffDistance
+      ~OpenMM::CustomNonbondedForce::getUseSwitchingFunction
+      ~OpenMM::CustomNonbondedForce::setUseSwitchingFunction
+      ~OpenMM::CustomNonbondedForce::getSwitchingDistance
+      ~OpenMM::CustomNonbondedForce::setSwitchingDistance
+      ~OpenMM::CustomNonbondedForce::getUseLongRangeCorrection
+      ~OpenMM::CustomNonbondedForce::setUseLongRangeCorrection
+      ~OpenMM::CustomNonbondedForce::addPerParticleParameter
+      ~OpenMM::CustomNonbondedForce::getPerParticleParameterName
+      ~OpenMM::CustomNonbondedForce::setPerParticleParameterName
+      ~OpenMM::CustomNonbondedForce::addGlobalParameter
+      ~OpenMM::CustomNonbondedForce::getGlobalParameterName
+      ~OpenMM::CustomNonbondedForce::setGlobalParameterName
+      ~OpenMM::CustomNonbondedForce::getGlobalParameterDefaultValue
+      ~OpenMM::CustomNonbondedForce::setGlobalParameterDefaultValue
+      ~OpenMM::CustomNonbondedForce::addEnergyParameterDerivative
+      ~OpenMM::CustomNonbondedForce::getEnergyParameterDerivativeName
+      ~OpenMM::CustomNonbondedForce::addParticle
+      ~OpenMM::CustomNonbondedForce::getParticleParameters
+      ~OpenMM::CustomNonbondedForce::setParticleParameters
+      ~OpenMM::CustomNonbondedForce::addExclusion
+      ~OpenMM::CustomNonbondedForce::getExclusionParticles
+      ~OpenMM::CustomNonbondedForce::setExclusionParticles
+      ~OpenMM::CustomNonbondedForce::createExclusionsFromBonds
+      ~OpenMM::CustomNonbondedForce::addTabulatedFunction
+      ~OpenMM::CustomNonbondedForce::getTabulatedFunction
+      ~OpenMM::CustomNonbondedForce::getTabulatedFunction
+      ~OpenMM::CustomNonbondedForce::getTabulatedFunctionName
+      ~OpenMM::CustomNonbondedForce::addFunction
+      ~OpenMM::CustomNonbondedForce::getFunctionParameters
+      ~OpenMM::CustomNonbondedForce::setFunctionParameters
+      ~OpenMM::CustomNonbondedForce::addInteractionGroup
+      ~OpenMM::CustomNonbondedForce::getInteractionGroupParameters
+      ~OpenMM::CustomNonbondedForce::setInteractionGroupParameters
+      ~OpenMM::CustomNonbondedForce::updateParametersInContext
+      ~OpenMM::CustomNonbondedForce::usesPeriodicBoundaryConditions
+   
+
+   
+   
+   .. autodoxyenum:: NonbondedMethod
+   
+   

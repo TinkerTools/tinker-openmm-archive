@@ -1,0 +1,920 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>AmoebaMultipoleForce &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="amoebamultipoleforce">
+<h1>AmoebaMultipoleForce<a class="headerlink" href="#amoebamultipoleforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForceE">
+<span id="OpenMM::AmoebaMultipoleForce"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">AmoebaMultipoleForce</code><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForceE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements the Amoeba multipole interaction.</p>
+<p>To use it, create an <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce20AmoebaMultipoleForceEv" title="OpenMM::AmoebaMultipoleForce::AmoebaMultipoleForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaMultipoleForce</span></code></a> object then call <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce12addMultipoleEdRKNSt6vectorIdEERKNSt6vectorIdEEiiiiddd" title="OpenMM::AmoebaMultipoleForce::addMultipole"><code class="xref cpp cpp-any docutils literal"><span class="pre">addMultipole()</span></code></a> once for each atom. After an entry has been added, you can modify its force field parameters by calling <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce22setMultipoleParametersEidRKNSt6vectorIdEERKNSt6vectorIdEEiiiiddd" title="OpenMM::AmoebaMultipoleForce::setMultipoleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setMultipoleParameters()</span></code></a>. This will have no effect on Contexts that already exist unless you call <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce25updateParametersInContextER7Context" title="OpenMM::AmoebaMultipoleForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a>.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce20AmoebaMultipoleForceEv" title="OpenMM::AmoebaMultipoleForce::AmoebaMultipoleForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaMultipoleForce</span></code></a></td>
+<td>Create an <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce20AmoebaMultipoleForceEv" title="OpenMM::AmoebaMultipoleForce::AmoebaMultipoleForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaMultipoleForce</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce16getNumMultipolesEv" title="OpenMM::AmoebaMultipoleForce::getNumMultipoles"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumMultipoles</span></code></a></td>
+<td>Get the number of particles in the potential function</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce18getNonbondedMethodEv" title="OpenMM::AmoebaMultipoleForce::getNonbondedMethod"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNonbondedMethod</span></code></a></td>
+<td>Get the method used for handling long-range nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce18setNonbondedMethodE15NonbondedMethod" title="OpenMM::AmoebaMultipoleForce::setNonbondedMethod"><code class="xref cpp cpp-any docutils literal"><span class="pre">setNonbondedMethod</span></code></a></td>
+<td>Set the method used for handling long-range nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce19getPolarizationTypeEv" title="OpenMM::AmoebaMultipoleForce::getPolarizationType"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPolarizationType</span></code></a></td>
+<td>Get polarization type</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce19setPolarizationTypeE16PolarizationType" title="OpenMM::AmoebaMultipoleForce::setPolarizationType"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPolarizationType</span></code></a></td>
+<td>Set the polarization type</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce17getCutoffDistanceEv" title="OpenMM::AmoebaMultipoleForce::getCutoffDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">getCutoffDistance</span></code></a></td>
+<td>Get the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce17setCutoffDistanceEd" title="OpenMM::AmoebaMultipoleForce::setCutoffDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">setCutoffDistance</span></code></a></td>
+<td>Set the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce16getPMEParametersERdRiRiRi" title="OpenMM::AmoebaMultipoleForce::getPMEParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPMEParameters</span></code></a></td>
+<td>Get the parameters to use for PME calculations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce16setPMEParametersEdiii" title="OpenMM::AmoebaMultipoleForce::setPMEParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPMEParameters</span></code></a></td>
+<td>Set the parameters to use for PME calculations.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce9getAEwaldEv" title="OpenMM::AmoebaMultipoleForce::getAEwald"><code class="xref cpp cpp-any docutils literal"><span class="pre">getAEwald</span></code></a></td>
+<td>Get the Ewald alpha parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce9setAEwaldEd" title="OpenMM::AmoebaMultipoleForce::setAEwald"><code class="xref cpp cpp-any docutils literal"><span class="pre">setAEwald</span></code></a></td>
+<td>Set the Ewald alpha parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce18getPmeBSplineOrderEv" title="OpenMM::AmoebaMultipoleForce::getPmeBSplineOrder"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPmeBSplineOrder</span></code></a></td>
+<td>Get the B-spline order to use for PME charge spreading</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce20getPmeGridDimensionsERNSt6vectorIiEE" title="OpenMM::AmoebaMultipoleForce::getPmeGridDimensions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPmeGridDimensions</span></code></a></td>
+<td>Get the PME grid dimensions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce20setPmeGridDimensionsERKNSt6vectorIiEE" title="OpenMM::AmoebaMultipoleForce::setPmeGridDimensions"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPmeGridDimensions</span></code></a></td>
+<td>Set the PME grid dimensions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce25getPMEParametersInContextERK7ContextRdRiRiRi" title="OpenMM::AmoebaMultipoleForce::getPMEParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPMEParametersInContext</span></code></a></td>
+<td>Get the parameters being used for PME in a particular <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce12addMultipoleEdRKNSt6vectorIdEERKNSt6vectorIdEEiiiiddd" title="OpenMM::AmoebaMultipoleForce::addMultipole"><code class="xref cpp cpp-any docutils literal"><span class="pre">addMultipole</span></code></a></td>
+<td>Add multipole-related info for a particle</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce22getMultipoleParametersEiRdRNSt6vectorIdEERNSt6vectorIdEERiRiRiRiRdRdRd" title="OpenMM::AmoebaMultipoleForce::getMultipoleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getMultipoleParameters</span></code></a></td>
+<td>Get the multipole parameters for a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce22setMultipoleParametersEidRKNSt6vectorIdEERKNSt6vectorIdEEiiiiddd" title="OpenMM::AmoebaMultipoleForce::setMultipoleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setMultipoleParameters</span></code></a></td>
+<td>Set the multipole parameters for a particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce14setCovalentMapEi12CovalentTypeRKNSt6vectorIiEE" title="OpenMM::AmoebaMultipoleForce::setCovalentMap"><code class="xref cpp cpp-any docutils literal"><span class="pre">setCovalentMap</span></code></a></td>
+<td>Set the CovalentMap for an atom</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce14getCovalentMapEi12CovalentTypeRNSt6vectorIiEE" title="OpenMM::AmoebaMultipoleForce::getCovalentMap"><code class="xref cpp cpp-any docutils literal"><span class="pre">getCovalentMap</span></code></a></td>
+<td>Get the CovalentMap for an atom</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce15getCovalentMapsEiRNSt6vectorINSt6vectorIiEEEE" title="OpenMM::AmoebaMultipoleForce::getCovalentMaps"><code class="xref cpp cpp-any docutils literal"><span class="pre">getCovalentMaps</span></code></a></td>
+<td>Get the CovalentMap for an atom</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce29getMutualInducedMaxIterationsEv" title="OpenMM::AmoebaMultipoleForce::getMutualInducedMaxIterations"><code class="xref cpp cpp-any docutils literal"><span class="pre">getMutualInducedMaxIterations</span></code></a></td>
+<td>Get the max number of iterations to be used in calculating the mutual induced dipoles</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce29setMutualInducedMaxIterationsEi" title="OpenMM::AmoebaMultipoleForce::setMutualInducedMaxIterations"><code class="xref cpp cpp-any docutils literal"><span class="pre">setMutualInducedMaxIterations</span></code></a></td>
+<td>Set the max number of iterations to be used in calculating the mutual induced dipoles</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce29getMutualInducedTargetEpsilonEv" title="OpenMM::AmoebaMultipoleForce::getMutualInducedTargetEpsilon"><code class="xref cpp cpp-any docutils literal"><span class="pre">getMutualInducedTargetEpsilon</span></code></a></td>
+<td>Get the target epsilon to be used to test for convergence of iterative method used in calculating the mutual induced dipoles</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce29setMutualInducedTargetEpsilonEd" title="OpenMM::AmoebaMultipoleForce::setMutualInducedTargetEpsilon"><code class="xref cpp cpp-any docutils literal"><span class="pre">setMutualInducedTargetEpsilon</span></code></a></td>
+<td>Set the target epsilon to be used to test for convergence of iterative method used in calculating the mutual induced dipoles</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce28setExtrapolationCoefficientsERKNSt6vectorIdEE" title="OpenMM::AmoebaMultipoleForce::setExtrapolationCoefficients"><code class="xref cpp cpp-any docutils literal"><span class="pre">setExtrapolationCoefficients</span></code></a></td>
+<td>Set the coefficients for the mu_0, mu_1, mu_2, ..., mu_n terms in the extrapolation algorithm for induced dipoles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce28getExtrapolationCoefficientsEv" title="OpenMM::AmoebaMultipoleForce::getExtrapolationCoefficients"><code class="xref cpp cpp-any docutils literal"><span class="pre">getExtrapolationCoefficients</span></code></a></td>
+<td>Get the coefficients for the mu_0, mu_1, mu_2, ..., mu_n terms in the extrapolation algorithm for induced dipoles.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce22getEwaldErrorToleranceEv" title="OpenMM::AmoebaMultipoleForce::getEwaldErrorTolerance"><code class="xref cpp cpp-any docutils literal"><span class="pre">getEwaldErrorTolerance</span></code></a></td>
+<td>Get the error tolerance for Ewald summation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce22setEwaldErrorToleranceEd" title="OpenMM::AmoebaMultipoleForce::setEwaldErrorTolerance"><code class="xref cpp cpp-any docutils literal"><span class="pre">setEwaldErrorTolerance</span></code></a></td>
+<td>Get the error tolerance for Ewald summation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce27getLabFramePermanentDipolesER7ContextRNSt6vectorI4Vec3EE" title="OpenMM::AmoebaMultipoleForce::getLabFramePermanentDipoles"><code class="xref cpp cpp-any docutils literal"><span class="pre">getLabFramePermanentDipoles</span></code></a></td>
+<td>Get the fixed dipole moments of all particles in the global reference frame.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce17getInducedDipolesER7ContextRNSt6vectorI4Vec3EE" title="OpenMM::AmoebaMultipoleForce::getInducedDipoles"><code class="xref cpp cpp-any docutils literal"><span class="pre">getInducedDipoles</span></code></a></td>
+<td>Get the induced dipole moments of all particles.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce15getTotalDipolesER7ContextRNSt6vectorI4Vec3EE" title="OpenMM::AmoebaMultipoleForce::getTotalDipoles"><code class="xref cpp cpp-any docutils literal"><span class="pre">getTotalDipoles</span></code></a></td>
+<td>Get the total dipole moments (fixed plus induced) of all particles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce25getElectrostaticPotentialERKNSt6vectorI4Vec3EER7ContextRNSt6vectorIdEE" title="OpenMM::AmoebaMultipoleForce::getElectrostaticPotential"><code class="xref cpp cpp-any docutils literal"><span class="pre">getElectrostaticPotential</span></code></a></td>
+<td>Get the electrostatic potential.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce25getSystemMultipoleMomentsER7ContextRNSt6vectorIdEE" title="OpenMM::AmoebaMultipoleForce::getSystemMultipoleMoments"><code class="xref cpp cpp-any docutils literal"><span class="pre">getSystemMultipoleMoments</span></code></a></td>
+<td>Get the system multipole moments.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce25updateParametersInContextER7Context" title="OpenMM::AmoebaMultipoleForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext</span></code></a></td>
+<td>Update the multipole parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce30usesPeriodicBoundaryConditionsEv" title="OpenMM::AmoebaMultipoleForce::usesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a></td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Enum: NonbondedMethod</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>NoCutoff</strong></td>
+<td>No cutoff is applied to nonbonded interactions. The full set of N^2 interactions is computed exactly. This necessarily means that periodic boundary conditions cannot be used. This is the default.</td>
+</tr>
+<tr class="row-even"><td><strong>PME</strong></td>
+<td>Periodic boundary conditions are used, and Particle-Mesh Ewald (PME) summation is used to compute the interaction of each particle with all periodic copies of every other particle.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Enum: PolarizationType</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Mutual</strong></td>
+<td>Full mutually induced polarization. The dipoles are iterated until the converge to the accuracy specified by <a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce29getMutualInducedTargetEpsilonEv" title="OpenMM::AmoebaMultipoleForce::getMutualInducedTargetEpsilon"><code class="xref cpp cpp-any docutils literal"><span class="pre">getMutualInducedTargetEpsilon()</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><strong>Direct</strong></td>
+<td>Direct polarization approximation. The induced dipoles depend only on the fixed multipoles, not on other induced dipoles.</td>
+</tr>
+<tr class="row-odd"><td><strong>Extrapolated</strong></td>
+<td>Extrapolated perturbation theory approximation. The dipoles are iterated a few times, and then an analytic approximation is used to extrapolate to the fully converged values. Call <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce28setExtrapolationCoefficientsERKNSt6vectorIdEE" title="OpenMM::AmoebaMultipoleForce::setExtrapolationCoefficients"><code class="xref cpp cpp-any docutils literal"><span class="pre">setExtrapolationCoefficients()</span></code></a> to set the coefficients used for the extrapolation. The default coefficients used in this release are [-0.154, 0.017, 0.658, 0.474], but be aware that those may change in a future release.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Enum: MultipoleAxisTypes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>ZThenX</strong></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><strong>Bisector</strong></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><strong>ZBisect</strong></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><strong>ThreeFold</strong></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><strong>ZOnly</strong></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><strong>NoAxisType</strong></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><strong>LastAxisTypeIndex</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Enum: CovalentType</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Covalent12</strong></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><strong>Covalent13</strong></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><strong>Covalent14</strong></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><strong>Covalent15</strong></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><strong>PolarizationCovalent11</strong></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><strong>PolarizationCovalent12</strong></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><strong>PolarizationCovalent13</strong></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><strong>PolarizationCovalent14</strong></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><strong>CovalentEnd</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce20AmoebaMultipoleForceEv">
+<span id="OpenMM::AmoebaMultipoleForce::AmoebaMultipoleForce"></span><code class="descclassname"></code><code class="descname">AmoebaMultipoleForce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce20AmoebaMultipoleForceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce20AmoebaMultipoleForceEv" title="OpenMM::AmoebaMultipoleForce::AmoebaMultipoleForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaMultipoleForce</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce16getNumMultipolesEv">
+<span id="OpenMM::AmoebaMultipoleForce::getNumMultipolesC"></span>int <code class="descclassname"></code><code class="descname">getNumMultipoles</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce16getNumMultipolesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles in the potential function</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce18getNonbondedMethodEv">
+<span id="OpenMM::AmoebaMultipoleForce::getNonbondedMethodC"></span>NonbondedMethod <code class="descclassname"></code><code class="descname">getNonbondedMethod</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce18getNonbondedMethodEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the method used for handling long-range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce18setNonbondedMethodE15NonbondedMethod">
+<span id="OpenMM::AmoebaMultipoleForce::setNonbondedMethod__NonbondedMethod"></span>void <code class="descclassname"></code><code class="descname">setNonbondedMethod</code><span class="sig-paren">(</span>NonbondedMethod <em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce18setNonbondedMethodE15NonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the method used for handling long-range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce19getPolarizationTypeEv">
+<span id="OpenMM::AmoebaMultipoleForce::getPolarizationTypeC"></span>PolarizationType <code class="descclassname"></code><code class="descname">getPolarizationType</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce19getPolarizationTypeEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get polarization type</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce19setPolarizationTypeE16PolarizationType">
+<span id="OpenMM::AmoebaMultipoleForce::setPolarizationType__PolarizationType"></span>void <code class="descclassname"></code><code class="descname">setPolarizationType</code><span class="sig-paren">(</span>PolarizationType <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce19setPolarizationTypeE16PolarizationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the polarization type</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce17getCutoffDistanceEv">
+<span id="OpenMM::AmoebaMultipoleForce::getCutoffDistanceC"></span>double <code class="descclassname"></code><code class="descname">getCutoffDistance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce17getCutoffDistanceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the cutoff distance, measured in nm</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce17setCutoffDistanceEd">
+<span id="OpenMM::AmoebaMultipoleForce::setCutoffDistance__double"></span>void <code class="descclassname"></code><code class="descname">setCutoffDistance</code><span class="sig-paren">(</span>double <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce17setCutoffDistanceEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>distance</strong> &#8211; the cutoff distance, measured in nm</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce16getPMEParametersERdRiRiRi">
+<span id="OpenMM::AmoebaMultipoleForce::getPMEParameters__doubleR.iR.iR.iRC"></span>void <code class="descclassname"></code><code class="descname">getPMEParameters</code><span class="sig-paren">(</span>double &amp;<em>alpha</em>, int &amp;<em>nx</em>, int &amp;<em>ny</em>, int &amp;<em>nz</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce16getPMEParametersERdRiRiRi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters to use for PME calculations. If alpha is 0 (the default), these parameters are ignored and instead their values are chosen based on the Ewald error tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>alpha</strong> &#8211; [out] the separation parameter</li>
+<li><strong>nx</strong> &#8211; [out] the number of grid points along the X axis</li>
+<li><strong>ny</strong> &#8211; [out] the number of grid points along the Y axis</li>
+<li><strong>nz</strong> &#8211; [out] the number of grid points along the Z axis</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce16setPMEParametersEdiii">
+<span id="OpenMM::AmoebaMultipoleForce::setPMEParameters__double.i.i.i"></span>void <code class="descclassname"></code><code class="descname">setPMEParameters</code><span class="sig-paren">(</span>double <em>alpha</em>, int <em>nx</em>, int <em>ny</em>, int <em>nz</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce16setPMEParametersEdiii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parameters to use for PME calculations. If alpha is 0 (the default), these parameters are ignored and instead their values are chosen based on the Ewald error tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>alpha</strong> &#8211; the separation parameter</li>
+<li><strong>nx</strong> &#8211; the number of grid points along the X axis</li>
+<li><strong>ny</strong> &#8211; the number of grid points along the Y axis</li>
+<li><strong>nz</strong> &#8211; the number of grid points along the Z axis</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce9getAEwaldEv">
+<span id="OpenMM::AmoebaMultipoleForce::getAEwaldC"></span>double <code class="descclassname"></code><code class="descname">getAEwald</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce9getAEwaldEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Ewald alpha parameter. If this is 0 (the default), a value is chosen automatically based on the Ewald error tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the Ewald alpha parameter</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use <a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce16getPMEParametersERdRiRiRi" title="OpenMM::AmoebaMultipoleForce::getPMEParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPMEParameters()</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce9setAEwaldEd">
+<span id="OpenMM::AmoebaMultipoleForce::setAEwald__double"></span>void <code class="descclassname"></code><code class="descname">setAEwald</code><span class="sig-paren">(</span>double <em>aewald</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce9setAEwaldEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the Ewald alpha parameter. If this is 0 (the default), a value is chosen automatically based on the Ewald error tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>aewald</strong> &#8211; alpha parameter</li>
+</ul>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce16setPMEParametersEdiii" title="OpenMM::AmoebaMultipoleForce::setPMEParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPMEParameters()</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce18getPmeBSplineOrderEv">
+<span id="OpenMM::AmoebaMultipoleForce::getPmeBSplineOrderC"></span>int <code class="descclassname"></code><code class="descname">getPmeBSplineOrder</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce18getPmeBSplineOrderEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the B-spline order to use for PME charge spreading</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the B-spline order</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce20getPmeGridDimensionsERNSt6vectorIiEE">
+<span id="OpenMM::AmoebaMultipoleForce::getPmeGridDimensions__std::vector:i:RC"></span>void <code class="descclassname"></code><code class="descname">getPmeGridDimensions</code><span class="sig-paren">(</span>std::vector&lt;int&gt; &amp;<em>gridDimension</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce20getPmeGridDimensionsERNSt6vectorIiEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the PME grid dimensions. If Ewald alpha is 0 (the default), this is ignored and grid dimensions are chosen automatically based on the Ewald error tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the PME grid dimensions</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use <a class="reference internal" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce16getPMEParametersERdRiRiRi" title="OpenMM::AmoebaMultipoleForce::getPMEParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPMEParameters()</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce20setPmeGridDimensionsERKNSt6vectorIiEE">
+<span id="OpenMM::AmoebaMultipoleForce::setPmeGridDimensions__std::vector:i:CR"></span>void <code class="descclassname"></code><code class="descname">setPmeGridDimensions</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;int&gt; &amp;<em>gridDimension</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce20setPmeGridDimensionsERKNSt6vectorIiEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the PME grid dimensions. If Ewald alpha is 0 (the default), this is ignored and grid dimensions are chosen automatically based on the Ewald error tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>gridDimension</strong> &#8211; the PME grid dimensions</li>
+</ul>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce16setPMEParametersEdiii" title="OpenMM::AmoebaMultipoleForce::setPMEParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPMEParameters()</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce25getPMEParametersInContextERK7ContextRdRiRiRi">
+<span id="OpenMM::AmoebaMultipoleForce::getPMEParametersInContext__ContextCR.doubleR.iR.iR.iRC"></span>void <code class="descclassname"></code><code class="descname">getPMEParametersInContext</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em>, double &amp;<em>alpha</em>, int &amp;<em>nx</em>, int &amp;<em>ny</em>, int &amp;<em>nz</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce25getPMEParametersInContextERK7ContextRdRiRiRi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters being used for PME in a particular <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>. Because some platforms have restrictions on the allowed grid sizes, the values that are actually used may be slightly different from those specified with <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce20setPmeGridDimensionsERKNSt6vectorIiEE" title="OpenMM::AmoebaMultipoleForce::setPmeGridDimensions"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPmeGridDimensions()</span></code></a>, or the standard values calculated based on the Ewald error tolerance. See the manual for details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>context</strong> &#8211; the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> for which to get the parameters</li>
+<li><strong>alpha</strong> &#8211; [out] the separation parameter</li>
+<li><strong>nx</strong> &#8211; [out] the number of grid points along the X axis</li>
+<li><strong>ny</strong> &#8211; [out] the number of grid points along the Y axis</li>
+<li><strong>nz</strong> &#8211; [out] the number of grid points along the Z axis</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce12addMultipoleEdRKNSt6vectorIdEERKNSt6vectorIdEEiiiiddd">
+<span id="OpenMM::AmoebaMultipoleForce::addMultipole__double.std::vector:double:CR.std::vector:double:CR.i.i.i.i.double.double.double"></span>int <code class="descclassname"></code><code class="descname">addMultipole</code><span class="sig-paren">(</span>double <em>charge</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>molecularDipole</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>molecularQuadrupole</em>, int <em>axisType</em>, int <em>multipoleAtomZ</em>, int <em>multipoleAtomX</em>, int <em>multipoleAtomY</em>, double <em>thole</em>, double <em>dampingFactor</em>, double <em>polarity</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce12addMultipoleEdRKNSt6vectorIdEERKNSt6vectorIdEEiiiiddd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add multipole-related info for a particle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>charge</strong> &#8211; the particle&#8217;s charge</li>
+<li><strong>molecularDipole</strong> &#8211; the particle&#8217;s molecular dipole (vector of size 3)</li>
+<li><strong>molecularQuadrupole</strong> &#8211; the particle&#8217;s molecular quadrupole (vector of size 9)</li>
+<li><strong>axisType</strong> &#8211; the particle&#8217;s axis type</li>
+<li><strong>multipoleAtomZ</strong> &#8211; index of first atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomX</strong> &#8211; index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomY</strong> &#8211; index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>thole</strong> &#8211; Thole parameter</li>
+<li><strong>dampingFactor</strong> &#8211; dampingFactor parameter</li>
+<li><strong>polarity</strong> &#8211; polarity parameter</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the particle that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce22getMultipoleParametersEiRdRNSt6vectorIdEERNSt6vectorIdEERiRiRiRiRdRdRd">
+<span id="OpenMM::AmoebaMultipoleForce::getMultipoleParameters__i.doubleR.std::vector:double:R.std::vector:double:R.iR.iR.iR.iR.doubleR.doubleR.doubleRC"></span>void <code class="descclassname"></code><code class="descname">getMultipoleParameters</code><span class="sig-paren">(</span>int <em>index</em>, double &amp;<em>charge</em>, std::vector&lt;double&gt; &amp;<em>molecularDipole</em>, std::vector&lt;double&gt; &amp;<em>molecularQuadrupole</em>, int &amp;<em>axisType</em>, int &amp;<em>multipoleAtomZ</em>, int &amp;<em>multipoleAtomX</em>, int &amp;<em>multipoleAtomY</em>, double &amp;<em>thole</em>, double &amp;<em>dampingFactor</em>, double &amp;<em>polarity</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce22getMultipoleParametersEiRdRNSt6vectorIdEERNSt6vectorIdEERiRiRiRiRdRdRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the multipole parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the atom for which to get parameters</li>
+<li><strong>charge</strong> &#8211; [out] the particle&#8217;s charge</li>
+<li><strong>molecularDipole</strong> &#8211; [out] the particle&#8217;s molecular dipole (vector of size 3)</li>
+<li><strong>molecularQuadrupole</strong> &#8211; [out] the particle&#8217;s molecular quadrupole (vector of size 9)</li>
+<li><strong>axisType</strong> &#8211; [out] the particle&#8217;s axis type</li>
+<li><strong>multipoleAtomZ</strong> &#8211; [out] index of first atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomX</strong> &#8211; [out] index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomY</strong> &#8211; [out] index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>thole</strong> &#8211; [out] Thole parameter</li>
+<li><strong>dampingFactor</strong> &#8211; [out] dampingFactor parameter</li>
+<li><strong>polarity</strong> &#8211; [out] polarity parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce22setMultipoleParametersEidRKNSt6vectorIdEERKNSt6vectorIdEEiiiiddd">
+<span id="OpenMM::AmoebaMultipoleForce::setMultipoleParameters__i.double.std::vector:double:CR.std::vector:double:CR.i.i.i.i.double.double.double"></span>void <code class="descclassname"></code><code class="descname">setMultipoleParameters</code><span class="sig-paren">(</span>int <em>index</em>, double <em>charge</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>molecularDipole</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>molecularQuadrupole</em>, int <em>axisType</em>, int <em>multipoleAtomZ</em>, int <em>multipoleAtomX</em>, int <em>multipoleAtomY</em>, double <em>thole</em>, double <em>dampingFactor</em>, double <em>polarity</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce22setMultipoleParametersEidRKNSt6vectorIdEERKNSt6vectorIdEEiiiiddd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the multipole parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the atom for which to set parameters</li>
+<li><strong>charge</strong> &#8211; the particle&#8217;s charge</li>
+<li><strong>molecularDipole</strong> &#8211; the particle&#8217;s molecular dipole (vector of size 3)</li>
+<li><strong>molecularQuadrupole</strong> &#8211; the particle&#8217;s molecular quadrupole (vector of size 9)</li>
+<li><strong>axisType</strong> &#8211; the particle&#8217;s axis type</li>
+<li><strong>multipoleAtomZ</strong> &#8211; index of first atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomX</strong> &#8211; index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomY</strong> &#8211; index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>thole</strong> &#8211; thole parameter</li>
+<li><strong>dampingFactor</strong> &#8211; damping factor parameter</li>
+<li><strong>polarity</strong> &#8211; polarity parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce14setCovalentMapEi12CovalentTypeRKNSt6vectorIiEE">
+<span id="OpenMM::AmoebaMultipoleForce::setCovalentMap__i.CovalentType.std::vector:i:CR"></span>void <code class="descclassname"></code><code class="descname">setCovalentMap</code><span class="sig-paren">(</span>int <em>index</em>, CovalentType <em>typeId</em>, <em class="property">const</em> std::vector&lt;int&gt; &amp;<em>covalentAtoms</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce14setCovalentMapEi12CovalentTypeRKNSt6vectorIiEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the CovalentMap for an atom</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the atom for which to set parameters</li>
+<li><strong>typeId</strong> &#8211; CovalentTypes type</li>
+<li><strong>covalentAtoms</strong> &#8211; vector of covalent atoms associated w/ the specfied CovalentType</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce14getCovalentMapEi12CovalentTypeRNSt6vectorIiEE">
+<span id="OpenMM::AmoebaMultipoleForce::getCovalentMap__i.CovalentType.std::vector:i:RC"></span>void <code class="descclassname"></code><code class="descname">getCovalentMap</code><span class="sig-paren">(</span>int <em>index</em>, CovalentType <em>typeId</em>, std::vector&lt;int&gt; &amp;<em>covalentAtoms</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce14getCovalentMapEi12CovalentTypeRNSt6vectorIiEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the CovalentMap for an atom</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the atom for which to set parameters</li>
+<li><strong>typeId</strong> &#8211; CovalentTypes type</li>
+<li><strong>covalentAtoms</strong> &#8211; [out] output vector of covalent atoms associated w/ the specfied CovalentType</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce15getCovalentMapsEiRNSt6vectorINSt6vectorIiEEEE">
+<span id="OpenMM::AmoebaMultipoleForce::getCovalentMaps__i.std::vector:std::vector:i::RC"></span>void <code class="descclassname"></code><code class="descname">getCovalentMaps</code><span class="sig-paren">(</span>int <em>index</em>, std::vector&lt;std::vector&lt;int&gt;&gt; &amp;<em>covalentLists</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce15getCovalentMapsEiRNSt6vectorINSt6vectorIiEEEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the CovalentMap for an atom</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the atom for which to set parameters</li>
+<li><strong>covalentLists</strong> &#8211; [out] output vector of covalent lists of atoms</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce29getMutualInducedMaxIterationsEv">
+<span id="OpenMM::AmoebaMultipoleForce::getMutualInducedMaxIterations__voidC"></span>int <code class="descclassname"></code><code class="descname">getMutualInducedMaxIterations</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce29getMutualInducedMaxIterationsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the max number of iterations to be used in calculating the mutual induced dipoles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">max number of iterations</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce29setMutualInducedMaxIterationsEi">
+<span id="OpenMM::AmoebaMultipoleForce::setMutualInducedMaxIterations__i"></span>void <code class="descclassname"></code><code class="descname">setMutualInducedMaxIterations</code><span class="sig-paren">(</span>int <em>inputMutualInducedMaxIterations</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce29setMutualInducedMaxIterationsEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the max number of iterations to be used in calculating the mutual induced dipoles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>inputMutualInducedMaxIterations</strong> &#8211; number of iterations</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce29getMutualInducedTargetEpsilonEv">
+<span id="OpenMM::AmoebaMultipoleForce::getMutualInducedTargetEpsilon__voidC"></span>double <code class="descclassname"></code><code class="descname">getMutualInducedTargetEpsilon</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce29getMutualInducedTargetEpsilonEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the target epsilon to be used to test for convergence of iterative method used in calculating the mutual induced dipoles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">target epsilon</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce29setMutualInducedTargetEpsilonEd">
+<span id="OpenMM::AmoebaMultipoleForce::setMutualInducedTargetEpsilon__double"></span>void <code class="descclassname"></code><code class="descname">setMutualInducedTargetEpsilon</code><span class="sig-paren">(</span>double <em>inputMutualInducedTargetEpsilon</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce29setMutualInducedTargetEpsilonEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the target epsilon to be used to test for convergence of iterative method used in calculating the mutual induced dipoles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>inputMutualInducedTargetEpsilon</strong> &#8211; target epsilon</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce28setExtrapolationCoefficientsERKNSt6vectorIdEE">
+<span id="OpenMM::AmoebaMultipoleForce::setExtrapolationCoefficients__std::vector:double:CR"></span>void <code class="descclassname"></code><code class="descname">setExtrapolationCoefficients</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;double&gt; &amp;<em>coefficients</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce28setExtrapolationCoefficientsERKNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the coefficients for the mu_0, mu_1, mu_2, ..., mu_n terms in the extrapolation algorithm for induced dipoles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>coefficients</strong> &#8211; a vector whose mth entry specifies the coefficient for mu_m. The length of this vector determines how many iterations are performed.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce28getExtrapolationCoefficientsEv">
+<span id="OpenMM::AmoebaMultipoleForce::getExtrapolationCoefficientsC"></span><em class="property">const</em> std::vector&lt;double&gt; &amp;<code class="descclassname"></code><code class="descname">getExtrapolationCoefficients</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce28getExtrapolationCoefficientsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the coefficients for the mu_0, mu_1, mu_2, ..., mu_n terms in the extrapolation algorithm for induced dipoles. In this release, the default values for the coefficients are [-0.154, 0.017, 0.658, 0.474], but be aware that those may change in a future release.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce22getEwaldErrorToleranceEv">
+<span id="OpenMM::AmoebaMultipoleForce::getEwaldErrorToleranceC"></span>double <code class="descclassname"></code><code class="descname">getEwaldErrorTolerance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce22getEwaldErrorToleranceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error tolerance for Ewald summation. This corresponds to the fractional error in the forces which is acceptable. This value is used to select the grid dimensions and separation (alpha) parameter so that the average error level will be less than the tolerance. There is not a rigorous guarantee that all forces on all atoms will be less than the tolerance, however.</p>
+<p>This can be overridden by explicitly setting an alpha parameter and grid dimensions to use.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce22setEwaldErrorToleranceEd">
+<span id="OpenMM::AmoebaMultipoleForce::setEwaldErrorTolerance__double"></span>void <code class="descclassname"></code><code class="descname">setEwaldErrorTolerance</code><span class="sig-paren">(</span>double <em>tol</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce22setEwaldErrorToleranceEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error tolerance for Ewald summation. This corresponds to the fractional error in the forces which is acceptable. This value is used to select the grid dimensions and separation (alpha) parameter so that the average error level will be less than the tolerance. There is not a rigorous guarantee that all forces on all atoms will be less than the tolerance, however.</p>
+<p>This can be overridden by explicitly setting an alpha parameter and grid dimensions to use.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce27getLabFramePermanentDipolesER7ContextRNSt6vectorI4Vec3EE">
+<span id="OpenMM::AmoebaMultipoleForce::getLabFramePermanentDipoles__ContextR.std::vector:Vec3:R"></span>void <code class="descclassname"></code><code class="descname">getLabFramePermanentDipoles</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em>, std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<em>dipoles</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce27getLabFramePermanentDipolesER7ContextRNSt6vectorI4Vec3EE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the fixed dipole moments of all particles in the global reference frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>context</strong> &#8211; the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> for which to get the fixed dipoles</li>
+<li><strong>dipoles</strong> &#8211; [out] the fixed dipole moment of particle i is stored into the i&#8217;th element</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce17getInducedDipolesER7ContextRNSt6vectorI4Vec3EE">
+<span id="OpenMM::AmoebaMultipoleForce::getInducedDipoles__ContextR.std::vector:Vec3:R"></span>void <code class="descclassname"></code><code class="descname">getInducedDipoles</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em>, std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<em>dipoles</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce17getInducedDipolesER7ContextRNSt6vectorI4Vec3EE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the induced dipole moments of all particles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>context</strong> &#8211; the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> for which to get the induced dipoles</li>
+<li><strong>dipoles</strong> &#8211; [out] the induced dipole moment of particle i is stored into the i&#8217;th element</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce15getTotalDipolesER7ContextRNSt6vectorI4Vec3EE">
+<span id="OpenMM::AmoebaMultipoleForce::getTotalDipoles__ContextR.std::vector:Vec3:R"></span>void <code class="descclassname"></code><code class="descname">getTotalDipoles</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em>, std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<em>dipoles</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce15getTotalDipolesER7ContextRNSt6vectorI4Vec3EE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the total dipole moments (fixed plus induced) of all particles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>context</strong> &#8211; the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> for which to get the total dipoles</li>
+<li><strong>dipoles</strong> &#8211; [out] the total dipole moment of particle i is stored into the i&#8217;th element</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce25getElectrostaticPotentialERKNSt6vectorI4Vec3EER7ContextRNSt6vectorIdEE">
+<span id="OpenMM::AmoebaMultipoleForce::getElectrostaticPotential__std::vector:Vec3:CR.ContextR.std::vector:double:R"></span>void <code class="descclassname"></code><code class="descname">getElectrostaticPotential</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<em>inputGrid</em>, <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em>, std::vector&lt;double&gt; &amp;<em>outputElectrostaticPotential</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce25getElectrostaticPotentialERKNSt6vectorI4Vec3EER7ContextRNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the electrostatic potential.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>inputGrid</strong> &#8211; input grid points over which the potential is to be evaluated</li>
+<li><strong>context</strong> &#8211; context</li>
+<li><strong>outputElectrostaticPotential</strong> &#8211; [out] output potential</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce25getSystemMultipoleMomentsER7ContextRNSt6vectorIdEE">
+<span id="OpenMM::AmoebaMultipoleForce::getSystemMultipoleMoments__ContextR.std::vector:double:R"></span>void <code class="descclassname"></code><code class="descname">getSystemMultipoleMoments</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em>, std::vector&lt;double&gt; &amp;<em>outputMultipoleMoments</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce25getSystemMultipoleMomentsER7ContextRNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the system multipole moments.</p>
+<p>This method is most useful for non-periodic systems. When called for a periodic system, only the</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>context</strong> &#8211; context</li>
+<li><strong>outputMultipoleMoments</strong> &#8211; [out] (charge, dipole_x, dipole_y, dipole_z, quadrupole_xx, quadrupole_xy, quadrupole_xz, quadrupole_yx, quadrupole_yy, quadrupole_yz, quadrupole_zx, quadrupole_zy, quadrupole_zz)</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM20AmoebaMultipoleForce25updateParametersInContextER7Context">
+<span id="OpenMM::AmoebaMultipoleForce::updateParametersInContext__ContextR"></span>void <code class="descclassname"></code><code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce25updateParametersInContextER7Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the multipole parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object. This method provides an efficient method to update certain parameters in an existing <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> without needing to reinitialize it. Simply call <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce22setMultipoleParametersEidRKNSt6vectorIdEERKNSt6vectorIdEEiiiiddd" title="OpenMM::AmoebaMultipoleForce::setMultipoleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setMultipoleParameters()</span></code></a> to modify this object&#8217;s parameters, then call <a class="reference internal" href="#_CPPv2N6OpenMM20AmoebaMultipoleForce25updateParametersInContextER7Context" title="OpenMM::AmoebaMultipoleForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a> to copy them over to the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<p>This method has several limitations. The only information it updates is the parameters of multipoles. All other aspects of the <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> (the nonbonded method, the cutoff distance, etc.) are unaffected and can only be changed by reinitializing the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>. Furthermore, this method cannot be used to add new multipoles, only to change the parameters of existing ones.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM20AmoebaMultipoleForce30usesPeriodicBoundaryConditionsEv">
+<span id="OpenMM::AmoebaMultipoleForce::usesPeriodicBoundaryConditionsC"></span>bool <code class="descclassname"></code><code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM20AmoebaMultipoleForce30usesPeriodicBoundaryConditionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if nonbondedMethod uses PBC and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.AmoebaMultipoleForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

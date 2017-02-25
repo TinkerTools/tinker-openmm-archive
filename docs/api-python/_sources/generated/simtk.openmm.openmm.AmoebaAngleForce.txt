@@ -1,0 +1,39 @@
+AmoebaAngleForce
+====================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: AmoebaAngleForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AmoebaAngleForce.__init__
+      ~AmoebaAngleForce.addAngle
+      ~AmoebaAngleForce.getAmoebaGlobalAngleCubic
+      ~AmoebaAngleForce.getAmoebaGlobalAnglePentic
+      ~AmoebaAngleForce.getAmoebaGlobalAngleQuartic
+      ~AmoebaAngleForce.getAmoebaGlobalAngleSextic
+      ~AmoebaAngleForce.getAngleParameters
+      ~AmoebaAngleForce.getForceGroup
+      ~AmoebaAngleForce.getNumAngles
+      ~AmoebaAngleForce.setAmoebaGlobalAngleCubic
+      ~AmoebaAngleForce.setAmoebaGlobalAnglePentic
+      ~AmoebaAngleForce.setAmoebaGlobalAngleQuartic
+      ~AmoebaAngleForce.setAmoebaGlobalAngleSextic
+      ~AmoebaAngleForce.setAngleParameters
+      ~AmoebaAngleForce.setForceGroup
+      ~AmoebaAngleForce.setUsesPeriodicBoundaryConditions
+      ~AmoebaAngleForce.updateParametersInContext
+      ~AmoebaAngleForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

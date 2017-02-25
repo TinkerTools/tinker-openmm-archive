@@ -1,0 +1,27 @@
+CompoundIntegrator
+==========================
+
+.. autodoxyclass:: OpenMM::CompoundIntegrator
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CompoundIntegrator::CompoundIntegrator
+      ~OpenMM::CompoundIntegrator::~CompoundIntegrator
+      ~OpenMM::CompoundIntegrator::getNumIntegrators
+      ~OpenMM::CompoundIntegrator::addIntegrator
+      ~OpenMM::CompoundIntegrator::getIntegrator
+      ~OpenMM::CompoundIntegrator::getIntegrator
+      ~OpenMM::CompoundIntegrator::getCurrentIntegrator
+      ~OpenMM::CompoundIntegrator::setCurrentIntegrator
+      ~OpenMM::CompoundIntegrator::getStepSize
+      ~OpenMM::CompoundIntegrator::setStepSize
+      ~OpenMM::CompoundIntegrator::getConstraintTolerance
+      ~OpenMM::CompoundIntegrator::setConstraintTolerance
+      ~OpenMM::CompoundIntegrator::step
+   
+
+   

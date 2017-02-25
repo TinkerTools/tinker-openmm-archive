@@ -1,0 +1,9 @@
+LocalEnergyMinimizer
+============================
+
+.. autodoxyclass:: OpenMM::LocalEnergyMinimizer
+   :members:
+
+   
+
+   

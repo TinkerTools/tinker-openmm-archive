@@ -1,0 +1,52 @@
+MonteCarloMembraneBarostat
+==============================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: MonteCarloMembraneBarostat
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MonteCarloMembraneBarostat.Pressure
+      ~MonteCarloMembraneBarostat.SurfaceTension
+      ~MonteCarloMembraneBarostat.Temperature
+      ~MonteCarloMembraneBarostat.__init__
+      ~MonteCarloMembraneBarostat.getDefaultPressure
+      ~MonteCarloMembraneBarostat.getDefaultSurfaceTension
+      ~MonteCarloMembraneBarostat.getDefaultTemperature
+      ~MonteCarloMembraneBarostat.getForceGroup
+      ~MonteCarloMembraneBarostat.getFrequency
+      ~MonteCarloMembraneBarostat.getRandomNumberSeed
+      ~MonteCarloMembraneBarostat.getXYMode
+      ~MonteCarloMembraneBarostat.getZMode
+      ~MonteCarloMembraneBarostat.setDefaultPressure
+      ~MonteCarloMembraneBarostat.setDefaultSurfaceTension
+      ~MonteCarloMembraneBarostat.setDefaultTemperature
+      ~MonteCarloMembraneBarostat.setForceGroup
+      ~MonteCarloMembraneBarostat.setFrequency
+      ~MonteCarloMembraneBarostat.setRandomNumberSeed
+      ~MonteCarloMembraneBarostat.setXYMode
+      ~MonteCarloMembraneBarostat.setZMode
+      ~MonteCarloMembraneBarostat.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~MonteCarloMembraneBarostat.ConstantVolume
+      ~MonteCarloMembraneBarostat.XYAnisotropic
+      ~MonteCarloMembraneBarostat.XYIsotropic
+      ~MonteCarloMembraneBarostat.ZFixed
+      ~MonteCarloMembraneBarostat.ZFree
+   
+   

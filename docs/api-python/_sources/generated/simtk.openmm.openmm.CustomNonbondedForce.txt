@@ -1,0 +1,80 @@
+CustomNonbondedForce
+========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CustomNonbondedForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CustomNonbondedForce.__init__
+      ~CustomNonbondedForce.addEnergyParameterDerivative
+      ~CustomNonbondedForce.addExclusion
+      ~CustomNonbondedForce.addFunction
+      ~CustomNonbondedForce.addGlobalParameter
+      ~CustomNonbondedForce.addInteractionGroup
+      ~CustomNonbondedForce.addParticle
+      ~CustomNonbondedForce.addPerParticleParameter
+      ~CustomNonbondedForce.addTabulatedFunction
+      ~CustomNonbondedForce.createExclusionsFromBonds
+      ~CustomNonbondedForce.getCutoffDistance
+      ~CustomNonbondedForce.getEnergyFunction
+      ~CustomNonbondedForce.getEnergyParameterDerivativeName
+      ~CustomNonbondedForce.getExclusionParticles
+      ~CustomNonbondedForce.getForceGroup
+      ~CustomNonbondedForce.getFunctionParameters
+      ~CustomNonbondedForce.getGlobalParameterDefaultValue
+      ~CustomNonbondedForce.getGlobalParameterName
+      ~CustomNonbondedForce.getInteractionGroupParameters
+      ~CustomNonbondedForce.getNonbondedMethod
+      ~CustomNonbondedForce.getNumEnergyParameterDerivatives
+      ~CustomNonbondedForce.getNumExclusions
+      ~CustomNonbondedForce.getNumFunctions
+      ~CustomNonbondedForce.getNumGlobalParameters
+      ~CustomNonbondedForce.getNumInteractionGroups
+      ~CustomNonbondedForce.getNumParticles
+      ~CustomNonbondedForce.getNumPerParticleParameters
+      ~CustomNonbondedForce.getNumTabulatedFunctions
+      ~CustomNonbondedForce.getParticleParameters
+      ~CustomNonbondedForce.getPerParticleParameterName
+      ~CustomNonbondedForce.getSwitchingDistance
+      ~CustomNonbondedForce.getTabulatedFunction
+      ~CustomNonbondedForce.getTabulatedFunctionName
+      ~CustomNonbondedForce.getUseLongRangeCorrection
+      ~CustomNonbondedForce.getUseSwitchingFunction
+      ~CustomNonbondedForce.setCutoffDistance
+      ~CustomNonbondedForce.setEnergyFunction
+      ~CustomNonbondedForce.setExclusionParticles
+      ~CustomNonbondedForce.setForceGroup
+      ~CustomNonbondedForce.setFunctionParameters
+      ~CustomNonbondedForce.setGlobalParameterDefaultValue
+      ~CustomNonbondedForce.setGlobalParameterName
+      ~CustomNonbondedForce.setInteractionGroupParameters
+      ~CustomNonbondedForce.setNonbondedMethod
+      ~CustomNonbondedForce.setParticleParameters
+      ~CustomNonbondedForce.setPerParticleParameterName
+      ~CustomNonbondedForce.setSwitchingDistance
+      ~CustomNonbondedForce.setUseLongRangeCorrection
+      ~CustomNonbondedForce.setUseSwitchingFunction
+      ~CustomNonbondedForce.updateParametersInContext
+      ~CustomNonbondedForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CustomNonbondedForce.CutoffNonPeriodic
+      ~CustomNonbondedForce.CutoffPeriodic
+      ~CustomNonbondedForce.NoCutoff
+   
+   

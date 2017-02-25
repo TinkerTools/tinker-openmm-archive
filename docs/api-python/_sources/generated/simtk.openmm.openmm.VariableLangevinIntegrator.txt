@@ -1,0 +1,36 @@
+VariableLangevinIntegrator
+==============================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: VariableLangevinIntegrator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~VariableLangevinIntegrator.__init__
+      ~VariableLangevinIntegrator.getConstraintTolerance
+      ~VariableLangevinIntegrator.getErrorTolerance
+      ~VariableLangevinIntegrator.getFriction
+      ~VariableLangevinIntegrator.getRandomNumberSeed
+      ~VariableLangevinIntegrator.getStepSize
+      ~VariableLangevinIntegrator.getTemperature
+      ~VariableLangevinIntegrator.setConstraintTolerance
+      ~VariableLangevinIntegrator.setErrorTolerance
+      ~VariableLangevinIntegrator.setFriction
+      ~VariableLangevinIntegrator.setRandomNumberSeed
+      ~VariableLangevinIntegrator.setStepSize
+      ~VariableLangevinIntegrator.setTemperature
+      ~VariableLangevinIntegrator.step
+      ~VariableLangevinIntegrator.stepTo
+   
+   
+
+   
+   
+   

@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>State &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="state">
+<h1>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM5StateE">
+<span id="OpenMM::State"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">State</code><a class="headerlink" href="#_CPPv2N6OpenMM5StateE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> object records a snapshot of the current state of a simulation at a point in time. You create it by calling getState() on a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<p>When a <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> is created, you specify what information should be stored in it. This saves time and memory by only copying in the information that you actually want. This is especially important for forces and energies, since they may need to be calculated. If you query a <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> object for a piece of information which is not available (because it was not requested when the <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> was created), it will throw an exception.</p>
+<p>Internal class used to construct new <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> objects.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a></td>
+<td>Construct an empty <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> containing no data.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State7getTimeEv" title="OpenMM::State::getTime"><code class="xref cpp cpp-any docutils literal"><span class="pre">getTime</span></code></a></td>
+<td>Get the time for which this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> was created.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State12getPositionsEv" title="OpenMM::State::getPositions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPositions</span></code></a></td>
+<td>Get the position of each particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State13getVelocitiesEv" title="OpenMM::State::getVelocities"><code class="xref cpp cpp-any docutils literal"><span class="pre">getVelocities</span></code></a></td>
+<td>Get the velocity of each particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State9getForcesEv" title="OpenMM::State::getForces"><code class="xref cpp cpp-any docutils literal"><span class="pre">getForces</span></code></a></td>
+<td>Get the force acting on each particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State16getKineticEnergyEv" title="OpenMM::State::getKineticEnergy"><code class="xref cpp cpp-any docutils literal"><span class="pre">getKineticEnergy</span></code></a></td>
+<td>Get the total kinetic energy of the system.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State18getPotentialEnergyEv" title="OpenMM::State::getPotentialEnergy"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPotentialEnergy</span></code></a></td>
+<td>Get the total potential energy of the system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State21getPeriodicBoxVectorsER4Vec3R4Vec3R4Vec3" title="OpenMM::State::getPeriodicBoxVectors"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPeriodicBoxVectors</span></code></a></td>
+<td>Get the vectors defining the axes of the periodic box (measured in nm).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State20getPeriodicBoxVolumeEv" title="OpenMM::State::getPeriodicBoxVolume"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPeriodicBoxVolume</span></code></a></td>
+<td>Get the volume of the periodic box (measured in nm^3).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State13getParametersEv" title="OpenMM::State::getParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getParameters</span></code></a></td>
+<td>Get a map containing the values of all parameters.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State29getEnergyParameterDerivativesEv" title="OpenMM::State::getEnergyParameterDerivatives"><code class="xref cpp cpp-any docutils literal"><span class="pre">getEnergyParameterDerivatives</span></code></a></td>
+<td>Get a map containing derivatives of the potential energy with respect to context parameters.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM5State12getDataTypesEv" title="OpenMM::State::getDataTypes"><code class="xref cpp cpp-any docutils literal"><span class="pre">getDataTypes</span></code></a></td>
+<td>Get which data types are stored in this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM5State12StateBuilderEd" title="OpenMM::State::StateBuilder"><code class="xref cpp cpp-any docutils literal"><span class="pre">StateBuilder</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM5State8getStateEv" title="OpenMM::State::getState"><code class="xref cpp cpp-any docutils literal"><span class="pre">getState</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM5State12setPositionsERKNSt6vectorI4Vec3EE" title="OpenMM::State::setPositions"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPositions</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM5State13setVelocitiesERKNSt6vectorI4Vec3EE" title="OpenMM::State::setVelocities"><code class="xref cpp cpp-any docutils literal"><span class="pre">setVelocities</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM5State9setForcesERKNSt6vectorI4Vec3EE" title="OpenMM::State::setForces"><code class="xref cpp cpp-any docutils literal"><span class="pre">setForces</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM5State13setParametersERKNSt3mapINSt6stringEdEE" title="OpenMM::State::setParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParameters</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM5State29setEnergyParameterDerivativesERKNSt3mapINSt6stringEdEE" title="OpenMM::State::setEnergyParameterDerivatives"><code class="xref cpp cpp-any docutils literal"><span class="pre">setEnergyParameterDerivatives</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM5State9setEnergyEdd" title="OpenMM::State::setEnergy"><code class="xref cpp cpp-any docutils literal"><span class="pre">setEnergy</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM5State21setPeriodicBoxVectorsERK4Vec3RK4Vec3RK4Vec3" title="OpenMM::State::setPeriodicBoxVectors"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPeriodicBoxVectors</span></code></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Enum: DataType</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Positions</strong></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><strong>Velocities</strong></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><strong>Forces</strong></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><strong>Energy</strong></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><strong>Parameters</strong></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><strong>ParameterDerivatives</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM5State5StateEv">
+<span id="OpenMM::State::State"></span><code class="descclassname"></code><code class="descname">State</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM5State5StateEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct an empty <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> containing no data. This exists so <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> objects can be used in STL containers.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State7getTimeEv">
+<span id="OpenMM::State::getTimeC"></span>double <code class="descclassname"></code><code class="descname">getTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State7getTimeEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the time for which this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> was created.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State12getPositionsEv">
+<span id="OpenMM::State::getPositionsC"></span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<code class="descclassname"></code><code class="descname">getPositions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State12getPositionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the position of each particle. If this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> does not contain positions, this will throw an exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State13getVelocitiesEv">
+<span id="OpenMM::State::getVelocitiesC"></span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<code class="descclassname"></code><code class="descname">getVelocities</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State13getVelocitiesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the velocity of each particle. If this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> does not contain velocities, this will throw an exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State9getForcesEv">
+<span id="OpenMM::State::getForcesC"></span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<code class="descclassname"></code><code class="descname">getForces</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State9getForcesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force acting on each particle. If this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> does not contain forces, this will throw an exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State16getKineticEnergyEv">
+<span id="OpenMM::State::getKineticEnergyC"></span>double <code class="descclassname"></code><code class="descname">getKineticEnergy</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State16getKineticEnergyEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the total kinetic energy of the system. If this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> does not contain energies, this will throw an exception.</p>
+<p>Note that this may be different from simply mv:cpp:any:<cite>Integrator</cite> is being used.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State18getPotentialEnergyEv">
+<span id="OpenMM::State::getPotentialEnergyC"></span>double <code class="descclassname"></code><code class="descname">getPotentialEnergy</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State18getPotentialEnergyEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the total potential energy of the system. If this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> does not contain energies, this will throw an exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State21getPeriodicBoxVectorsER4Vec3R4Vec3R4Vec3">
+<span id="OpenMM::State::getPeriodicBoxVectors__Vec3R.Vec3R.Vec3RC"></span>void <code class="descclassname"></code><code class="descname">getPeriodicBoxVectors</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>a</em>, <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>b</em>, <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>c</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State21getPeriodicBoxVectorsER4Vec3R4Vec3R4Vec3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the vectors defining the axes of the periodic box (measured in nm).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>a</strong> &#8211; [out] the vector defining the first edge of the periodic box</li>
+<li><strong>b</strong> &#8211; [out] the vector defining the second edge of the periodic box</li>
+<li><strong>c</strong> &#8211; [out] the vector defining the third edge of the periodic box</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State20getPeriodicBoxVolumeEv">
+<span id="OpenMM::State::getPeriodicBoxVolumeC"></span>double <code class="descclassname"></code><code class="descname">getPeriodicBoxVolume</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State20getPeriodicBoxVolumeEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the volume of the periodic box (measured in nm^3).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State13getParametersEv">
+<span id="OpenMM::State::getParametersC"></span><em class="property">const</em> std::map&lt;std::string, double&gt; &amp;<code class="descclassname"></code><code class="descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State13getParametersEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a map containing the values of all parameters. If this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> does not contain parameters, this will throw an exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State29getEnergyParameterDerivativesEv">
+<span id="OpenMM::State::getEnergyParameterDerivativesC"></span><em class="property">const</em> std::map&lt;std::string, double&gt; &amp;<code class="descclassname"></code><code class="descname">getEnergyParameterDerivatives</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State29getEnergyParameterDerivativesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a map containing derivatives of the potential energy with respect to context parameters. In most cases derivatives are only calculated if the corresponding <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> objects have been specifically told to compute them. Otherwise, the values in the map will be zero. Likewise, if multiple Forces depend on the same parameter but only some have been told to compute derivatives with respect to it, the returned value will include only the contributions from the Forces that were told to compute it.</p>
+<p>If this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a> does not contain parameter derivatives, this will throw an exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM5State12getDataTypesEv">
+<span id="OpenMM::State::getDataTypesC"></span>int <code class="descclassname"></code><code class="descname">getDataTypes</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM5State12getDataTypesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get which data types are stored in this <a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a>. The return value is a sum of DataType flags.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM5State12StateBuilderEd">
+<span id="OpenMM::State::StateBuilder__double"></span><code class="descclassname"></code><code class="descname">StateBuilder</code><span class="sig-paren">(</span>double <em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM5State12StateBuilderEd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM5State8getStateEv">
+<span id="OpenMM::State::getState"></span><a class="reference internal" href="#_CPPv2N6OpenMM5State5StateEv" title="OpenMM::State::State">State</a> <code class="descclassname"></code><code class="descname">getState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM5State8getStateEv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM5State12setPositionsERKNSt6vectorI4Vec3EE">
+<span id="OpenMM::State::setPositions__std::vector:Vec3:CR"></span>void <code class="descclassname"></code><code class="descname">setPositions</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM5State12setPositionsERKNSt6vectorI4Vec3EE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM5State13setVelocitiesERKNSt6vectorI4Vec3EE">
+<span id="OpenMM::State::setVelocities__std::vector:Vec3:CR"></span>void <code class="descclassname"></code><code class="descname">setVelocities</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<em>vel</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM5State13setVelocitiesERKNSt6vectorI4Vec3EE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM5State9setForcesERKNSt6vectorI4Vec3EE">
+<span id="OpenMM::State::setForces__std::vector:Vec3:CR"></span>void <code class="descclassname"></code><code class="descname">setForces</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a>&gt; &amp;<em>force</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM5State9setForcesERKNSt6vectorI4Vec3EE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM5State13setParametersERKNSt3mapINSt6stringEdEE">
+<span id="OpenMM::State::setParameters__std::map:ss.double:CR"></span>void <code class="descclassname"></code><code class="descname">setParameters</code><span class="sig-paren">(</span><em class="property">const</em> std::map&lt;std::string, double&gt; &amp;<em>params</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM5State13setParametersERKNSt3mapINSt6stringEdEE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM5State29setEnergyParameterDerivativesERKNSt3mapINSt6stringEdEE">
+<span id="OpenMM::State::setEnergyParameterDerivatives__std::map:ss.double:CR"></span>void <code class="descclassname"></code><code class="descname">setEnergyParameterDerivatives</code><span class="sig-paren">(</span><em class="property">const</em> std::map&lt;std::string, double&gt; &amp;<em>params</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM5State29setEnergyParameterDerivativesERKNSt3mapINSt6stringEdEE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM5State9setEnergyEdd">
+<span id="OpenMM::State::setEnergy__double.double"></span>void <code class="descclassname"></code><code class="descname">setEnergy</code><span class="sig-paren">(</span>double <em>ke</em>, double <em>pe</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM5State9setEnergyEdd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM5State21setPeriodicBoxVectorsERK4Vec3RK4Vec3RK4Vec3">
+<span id="OpenMM::State::setPeriodicBoxVectors__Vec3CR.Vec3CR.Vec3CR"></span>void <code class="descclassname"></code><code class="descname">setPeriodicBoxVectors</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>b</em>, <em class="property">const</em> <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM5State21setPeriodicBoxVectorsERK4Vec3RK4Vec3RK4Vec3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.State.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

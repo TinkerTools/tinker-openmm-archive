@@ -1,0 +1,26 @@
+XmlSerializer
+=================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: XmlSerializer
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~XmlSerializer.__init__
+      ~XmlSerializer.deserialize
+      ~XmlSerializer.deserializeSystem
+      ~XmlSerializer.serialize
+      ~XmlSerializer.serializeSystem
+   
+   
+
+   
+   
+   

@@ -1,0 +1,25 @@
+Discrete1DFunction
+======================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: Discrete1DFunction
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Discrete1DFunction.Copy
+      ~Discrete1DFunction.__init__
+      ~Discrete1DFunction.getFunctionParameters
+      ~Discrete1DFunction.setFunctionParameters
+   
+   
+
+   
+   
+   

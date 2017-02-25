@@ -1,0 +1,889 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CustomIntegrator &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Library Layer" href="../library.html" />
+    <link rel="next" title="DrudeLangevinIntegrator" href="simtk.openmm.openmm.DrudeLangevinIntegrator.html" />
+    <link rel="prev" title="CompoundIntegrator" href="simtk.openmm.openmm.CompoundIntegrator.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="customintegrator">
+<h1>CustomIntegrator<a class="headerlink" href="#customintegrator" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.openmm.CustomIntegrator">
+<em class="property">class </em><code class="descclassname">simtk.openmm.openmm.</code><code class="descname">CustomIntegrator</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is an Integrator that can be used to implemented arbitrary, user defined integration algorithms. It is flexible enough to support a wide range of methods including both deterministic and stochastic integrators, Metropolized integrators, and integrators that must integrate additional quantities along with the particle positions and momenta.</p>
+<p>To create an integration algorithm, you first define a set of variables the integrator will compute. Variables come in two types: _global_ variables have a single value, while _per-<a href="#id1"><span class="problematic" id="id2">DOF_</span></a> variables have a value for every degree of freedom (x, y, or z coordinate of a particle). You can define as many variables as you want of each type. The value of any variable can be computed by the integration algorithm, or set directly by calling a method on the CustomIntegrator. All variables are persistent between integration steps; once a value is set, it keeps that value until it is changed by the user or recomputed in a later integration step.</p>
+<p>Next, you define the algorithm as a series of computations. To execute a time step, the integrator performs the list of computations in order. Each computation updates the value of one global or per-DOF value. There are several types of computations that can be done:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Global: You provide a mathematical expression involving only global variables. It is evaluated and stored into a global variable.</li>
+<li>Per-DOF: You provide a mathematical expression involving both global and per-DOF variables. It is evaluated once for every degree of freedom, and the values are stored into a per-DOF variable.</li>
+<li>Sum: You provide a mathematical expression involving both global and per-DOF variables. It is evaluated once for every degree of freedom. All of those values are then added together, and the sum is stored into a global variable.</li>
+<li>Constrain Positions: The particle positions are updated so that all distance constraints are satisfied.</li>
+<li>Constrain Velocities: The particle velocities are updated so the net velocity along any constrained distance is 0.</li>
+</ul>
+</div></blockquote>
+<p>Like all integrators, CustomIntegrator ignores any particle whose mass is 0. It is skipped when doing per-DOF computations, and is not included when computing sums over degrees of freedom.</p>
+<p>In addition to the variables you define by calling addGlobalVariable() and addPerDofVariable(), the integrator provides the following pre-defined variables:</p>
+<blockquote>
+<div><ul class="simple">
+<li>dt: (global) This is the step size being used by the integrator.</li>
+<li>energy: (global, read-only) This is the current potential energy of the system.</li>
+<li>energy0, energy1, energy2, ...: (global, read-only) This is similar to energy, but includes only the contribution from forces in one force group. A single computation step may only depend on a single energy variable (energy, energy0, energy1, etc.).</li>
+<li>x: (per-DOF) This is the current value of the degree of freedom (the x, y, or z coordinate of a particle).</li>
+<li>v: (per-DOF) This is the current velocity associated with the degree of freedom (the x, y, or z component of a particle&#8217;s velocity).</li>
+<li>f: (per-DOF, read-only) This is the current force acting on the degree of freedom (the x, y, or z component of the force on a particle).</li>
+<li>f0, f1, f2, ...: (per-DOF, read-only) This is similar to f, but includes only the contribution from forces in one force group. A single computation step may only depend on a single force variable (f, f0, f1, etc.).</li>
+<li>m: (per-DOF, read-only) This is the mass of the particle the degree of freedom is associated with.</li>
+<li>uniform: (either global or per-DOF, read-only) This is a uniformly distributed random number between 0 and 1. Every time an expression is evaluated, a different value will be used. When used in a per-DOF expression, a different value will be used for every degree of freedom. Note, however, that if this variable appears multiple times in a single expression, the _same_ value is used everywhere it appears in that expression.</li>
+<li>gaussian: (either global or per-DOF, read-only) This is a Gaussian distributed random number with mean 0 and variance 1. Every time an expression is evaluated, a different value will be used. When used in a per-DOF expression, a different value will be used for every degree of freedom. Note, however, that if this variable appears multiple times in a single expression, the _same_ value is used everywhere it appears in that expression.</li>
+<li>A global variable is created for every adjustable parameter defined in the integrator&#8217;s Context.</li>
+</ul>
+</div></blockquote>
+<p>The following example uses a CustomIntegrator to implement a velocity Verlet integrator:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">CustomIntegrator</span> <span class="nf">integrator</span><span class="p">(</span><span class="mf">0.001</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;v&quot;</span><span class="p">,</span> <span class="s">&quot;v+0.5*dt*f/m&quot;</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;x+dt*v&quot;</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;v&quot;</span><span class="p">,</span> <span class="s">&quot;v+0.5*dt*f/m&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The first step updates the velocities based on the current forces. The second step updates the positions based on the new velocities, and the third step updates the velocities again. Although the first and third steps look identical, the forces used in them are different. You do not need to tell the integrator that; it will recognize that the positions have changed and know to recompute the forces automatically.</p>
+<p>The above example has two problems. First, it does not respect distance constraints. To make the integrator work with constraints, you need to add extra steps to tell it when and how to apply them. Second, it never gives Forces an opportunity to update the context state. This should be done every time step so that, for example, an AndersenThermostat can randomize velocities or a MonteCarloBarostat can scale particle positions. You need to add a step to tell the integrator when to do this. The following example corrects both these problems, using the RATTLE algorithm to apply constraints:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">CustomIntegrator</span> <span class="nf">integrator</span><span class="p">(</span><span class="mf">0.001</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addPerDofVariable</span><span class="p">(</span><span class="s">&quot;x1&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addUpdateContextState</span><span class="p">();</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;v&quot;</span><span class="p">,</span> <span class="s">&quot;v+0.5*dt*f/m&quot;</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;x+dt*v&quot;</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;x1&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addConstrainPositions</span><span class="p">();</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;v&quot;</span><span class="p">,</span> <span class="s">&quot;v+0.5*dt*f/m+(x-x1)/dt&quot;</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addConstrainVelocities</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>CustomIntegrator can be used to implement multiple time step integrators. The following example shows an r-RESPA integrator. It assumes the quickly changing forces are in force group 0 and the slowly changing ones are in force group 1. It evaluates the &#8220;fast&#8221; forces four times as often as the &#8220;slow&#8221; forces.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">CustomIntegrator</span> <span class="nf">integrator</span><span class="p">(</span><span class="mf">0.004</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;v&quot;</span><span class="p">,</span> <span class="s">&quot;v+0.5*dt*f1/m&quot;</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;v&quot;</span><span class="p">,</span> <span class="s">&quot;v+0.5*(dt/4)*f0/m&quot;</span><span class="p">);</span>
+    <span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;x+(dt/4)*v&quot;</span><span class="p">);</span>
+    <span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;v&quot;</span><span class="p">,</span> <span class="s">&quot;v+0.5*(dt/4)*f0/m&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">addComputePerDof</span><span class="p">(</span><span class="s">&quot;v&quot;</span><span class="p">,</span> <span class="s">&quot;v+0.5*dt*f1/m&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The sequence of computations in a CustomIntegrator can include flow control in the form of &#8220;if&#8221; and &#8220;while&#8221; blocks. The computations inside an &#8220;if&#8221; block are executed either zero or one times, depending on whether a condition is true. The computations inside a &#8220;while&#8221; block are executed repeatedly for as long as the condition remains true. Be very careful when writing &#8220;while&#8221; blocks; there is nothing to stop you from creating an infinite loop!</p>
+<p>For example, suppose you are writing a Monte Carlo algorithm. Assume you have already computed a new set of particle coordinates &#8220;xnew&#8221; and a step acceptance probability &#8220;acceptanceProbability&#8221;. The following lines use an &#8220;if&#8221; block to decide whether to accept the step, and if it is accepted, store the new positions into &#8220;x&#8221;.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="p">.</span><span class="n">beginIfBlock</span><span class="p">(</span><span class="s">&quot;uniform &lt; acceptanceProbability&quot;</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">computePerDof</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;xnew&quot;</span><span class="p">);</span>
+<span class="n">integrator</span><span class="p">.</span><span class="n">endBlock</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The condition in an &#8220;if&#8221; or &#8220;while&#8221; block is evaluated globally, so it may only involve global variables, not per-DOF ones. It may use any of the following comparison operators: =, &lt;. &gt;, !=, &lt;=, &gt;=. Blocks may be nested inside each other.</p>
+<p>Another feature of CustomIntegrator is that it can use derivatives of the potential energy with respect to context parameters. These derivatives are typically computed by custom forces, and are only computed if a Force object has been specifically told to compute them by calling addEnergyParameterDerivative() on it. CustomIntegrator provides a deriv() function for accessing these derivatives in global or per-DOF expressions. For example, &#8220;deriv(energy, lambda)&#8221; is the derivative of the total potentially energy with respect to the parameter lambda. You can also restrict it to a single force group by specifying a different variable for the first argument, such as &#8220;deriv(energy1, lambda)&#8221;.</p>
+<p>An Integrator has one other job in addition to evolving the equations of motion: it defines how to compute the kinetic energy of the system. Depending on the integration method used, simply summing mv/2 over all degrees of freedom may not give the correct answer. For example, in a leapfrog integrator the velocities are &#8220;delayed&#8221; by half a time step, so the above formula would give the kinetic energy half a time step ago, not at the current time.</p>
+<p>Call setKineticEnergyExpression() to set an expression for the kinetic energy. It is computed for every degree of freedom (excluding ones whose mass is 0) and the result is summed. The default expression is &#8220;m*v*v/2&#8221;, which is correct for many integrators.</p>
+<p>As example, the following line defines the correct way to compute kinetic energy when using a leapfrog algorithm:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">integrator</span><span class="p">.</span><span class="n">setKineticEnergyExpression</span><span class="p">(</span><span class="s">&quot;m*v1*v1/2; v1=v+0.5*dt*f/m&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The kinetic energy expression may depend on the following pre-defined variables: x, v, f, m, dt. It also may depend on user-defined global and per-DOF variables, and on the values of adjustable parameters defined in the integrator&#8217;s Context. It may _not_ depend on any other variable, such as the potential energy, the force from a single force group, or a random number.</p>
+<p>Expressions may involve the operators + (add), - (subtract), * (multiply), / (divide), and ^ (power), and the following functions: sqrt, exp, log, sin, cos, sec, csc, tan, cot, asin, acos, atan, sinh, cosh, tanh, erf, erfc, min, max, abs, floor, ceil, step, delta, select. All trigonometric functions are defined in radians, and log is the natural logarithm. step(x) = 0 if x is less than 0, 1 otherwise. delta(x) = 1 if x is 0, 0 otherwise. select(x,y,z) = z if x = 0, y otherwise. An expression may also involve intermediate quantities that are defined following the main expression, using &#8221;;&#8221; as a separator.</p>
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>self</em>, <em>stepSize</em><span class="sig-paren">)</span> &rarr; CustomIntegrator<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>__init__(self, other) -&gt; CustomIntegrator</p>
+<p>Create a CustomIntegrator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stepSize</strong> (<em>double</em>) &#8211; the step size with which to integrate the system (in picoseconds)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.__init__" title="simtk.openmm.openmm.CustomIntegrator.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>((self,&nbsp;stepSize)&nbsp;-&gt;&nbsp;CustomIntegrator)</td>
+<td>__init__(self, other) -&gt; CustomIntegrator</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.addComputeGlobal" title="simtk.openmm.openmm.CustomIntegrator.addComputeGlobal"><code class="xref py py-obj docutils literal"><span class="pre">addComputeGlobal</span></code></a>((self,&nbsp;variable,&nbsp;...)</td>
+<td>Add a step to the integration algorithm that computes a global value.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.addComputePerDof" title="simtk.openmm.openmm.CustomIntegrator.addComputePerDof"><code class="xref py py-obj docutils literal"><span class="pre">addComputePerDof</span></code></a>((self,&nbsp;variable,&nbsp;...)</td>
+<td>Add a step to the integration algorithm that computes a per-DOF value.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.addComputeSum" title="simtk.openmm.openmm.CustomIntegrator.addComputeSum"><code class="xref py py-obj docutils literal"><span class="pre">addComputeSum</span></code></a>((self,&nbsp;variable,&nbsp;...)</td>
+<td>Add a step to the integration algorithm that computes a sum over degrees of freedom.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.addConstrainPositions" title="simtk.openmm.openmm.CustomIntegrator.addConstrainPositions"><code class="xref py py-obj docutils literal"><span class="pre">addConstrainPositions</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a step to the integration algorithm that updates particle positions so all constraints are satisfied.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.addConstrainVelocities" title="simtk.openmm.openmm.CustomIntegrator.addConstrainVelocities"><code class="xref py py-obj docutils literal"><span class="pre">addConstrainVelocities</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a step to the integration algorithm that updates particle velocities so the net velocity along all constraints is 0.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.addGlobalVariable" title="simtk.openmm.openmm.CustomIntegrator.addGlobalVariable"><code class="xref py py-obj docutils literal"><span class="pre">addGlobalVariable</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Define a new global variable.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.addPerDofVariable" title="simtk.openmm.openmm.CustomIntegrator.addPerDofVariable"><code class="xref py py-obj docutils literal"><span class="pre">addPerDofVariable</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Define a new per-DOF variable.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.addUpdateContextState" title="simtk.openmm.openmm.CustomIntegrator.addUpdateContextState"><code class="xref py py-obj docutils literal"><span class="pre">addUpdateContextState</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a step to the integration algorithm that allows Forces to update the context state.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.beginIfBlock" title="simtk.openmm.openmm.CustomIntegrator.beginIfBlock"><code class="xref py py-obj docutils literal"><span class="pre">beginIfBlock</span></code></a>((self,&nbsp;condition)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a step which begins a new &#8220;if&#8221; block.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.beginWhileBlock" title="simtk.openmm.openmm.CustomIntegrator.beginWhileBlock"><code class="xref py py-obj docutils literal"><span class="pre">beginWhileBlock</span></code></a>((self,&nbsp;condition)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a step which begins a new &#8220;while&#8221; block.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.endBlock" title="simtk.openmm.openmm.CustomIntegrator.endBlock"><code class="xref py py-obj docutils literal"><span class="pre">endBlock</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a step which marks the end of the most recently begun &#8220;if&#8221; or &#8220;while&#8221; block.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getComputationStep" title="simtk.openmm.openmm.CustomIntegrator.getComputationStep"><code class="xref py py-obj docutils literal"><span class="pre">getComputationStep</span></code></a>(self,&nbsp;index)</td>
+<td>Get the details of a computation step that has been added to the integration algorithm.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getConstraintTolerance" title="simtk.openmm.openmm.CustomIntegrator.getConstraintTolerance"><code class="xref py py-obj docutils literal"><span class="pre">getConstraintTolerance</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the distance tolerance within which constraints are maintained, as a fraction of the constrained distance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getGlobalVariable" title="simtk.openmm.openmm.CustomIntegrator.getGlobalVariable"><code class="xref py py-obj docutils literal"><span class="pre">getGlobalVariable</span></code></a>((self,&nbsp;index)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the current value of a global variable.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getGlobalVariableByName" title="simtk.openmm.openmm.CustomIntegrator.getGlobalVariableByName"><code class="xref py py-obj docutils literal"><span class="pre">getGlobalVariableByName</span></code></a>((self,&nbsp;name)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the current value of a global variable, specified by name.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getGlobalVariableName" title="simtk.openmm.openmm.CustomIntegrator.getGlobalVariableName"><code class="xref py py-obj docutils literal"><span class="pre">getGlobalVariableName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a global variable.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getKineticEnergyExpression" title="simtk.openmm.openmm.CustomIntegrator.getKineticEnergyExpression"><code class="xref py py-obj docutils literal"><span class="pre">getKineticEnergyExpression</span></code></a>(...)</td>
+<td>Get the expression to use for computing the kinetic energy.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getNumComputations" title="simtk.openmm.openmm.CustomIntegrator.getNumComputations"><code class="xref py py-obj docutils literal"><span class="pre">getNumComputations</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of computation steps that have been added.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getNumGlobalVariables" title="simtk.openmm.openmm.CustomIntegrator.getNumGlobalVariables"><code class="xref py py-obj docutils literal"><span class="pre">getNumGlobalVariables</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of global variables that have been defined.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getNumPerDofVariables" title="simtk.openmm.openmm.CustomIntegrator.getNumPerDofVariables"><code class="xref py py-obj docutils literal"><span class="pre">getNumPerDofVariables</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of per-DOF variables that have been defined.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getPerDofVariable" title="simtk.openmm.openmm.CustomIntegrator.getPerDofVariable"><code class="xref py py-obj docutils literal"><span class="pre">getPerDofVariable</span></code></a>(self,&nbsp;index)</td>
+<td>getPerDofVariable(self, index) -&gt; PyObject *</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getPerDofVariableByName" title="simtk.openmm.openmm.CustomIntegrator.getPerDofVariableByName"><code class="xref py py-obj docutils literal"><span class="pre">getPerDofVariableByName</span></code></a>(self,&nbsp;name)</td>
+<td>Get the value of a per-DOF variable, specified by name.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getPerDofVariableName" title="simtk.openmm.openmm.CustomIntegrator.getPerDofVariableName"><code class="xref py py-obj docutils literal"><span class="pre">getPerDofVariableName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a per-DOF variable.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getRandomNumberSeed" title="simtk.openmm.openmm.CustomIntegrator.getRandomNumberSeed"><code class="xref py py-obj docutils literal"><span class="pre">getRandomNumberSeed</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the random number seed.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.getStepSize" title="simtk.openmm.openmm.CustomIntegrator.getStepSize"><code class="xref py py-obj docutils literal"><span class="pre">getStepSize</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the size of each time step, in picoseconds.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.setConstraintTolerance" title="simtk.openmm.openmm.CustomIntegrator.setConstraintTolerance"><code class="xref py py-obj docutils literal"><span class="pre">setConstraintTolerance</span></code></a>(self,&nbsp;tol)</td>
+<td>Set the distance tolerance within which constraints are maintained, as a fraction of the constrained distance.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.setGlobalVariable" title="simtk.openmm.openmm.CustomIntegrator.setGlobalVariable"><code class="xref py py-obj docutils literal"><span class="pre">setGlobalVariable</span></code></a>(self,&nbsp;index,&nbsp;value)</td>
+<td>Set the value of a global variable.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.setGlobalVariableByName" title="simtk.openmm.openmm.CustomIntegrator.setGlobalVariableByName"><code class="xref py py-obj docutils literal"><span class="pre">setGlobalVariableByName</span></code></a>(self,&nbsp;name,&nbsp;value)</td>
+<td>Set the value of a global variable, specified by name.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.setKineticEnergyExpression" title="simtk.openmm.openmm.CustomIntegrator.setKineticEnergyExpression"><code class="xref py py-obj docutils literal"><span class="pre">setKineticEnergyExpression</span></code></a>(self,&nbsp;expression)</td>
+<td>Set the expression to use for computing the kinetic energy.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.setPerDofVariable" title="simtk.openmm.openmm.CustomIntegrator.setPerDofVariable"><code class="xref py py-obj docutils literal"><span class="pre">setPerDofVariable</span></code></a>(self,&nbsp;index,&nbsp;values)</td>
+<td>Set the value of a per-DOF variable.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.setPerDofVariableByName" title="simtk.openmm.openmm.CustomIntegrator.setPerDofVariableByName"><code class="xref py py-obj docutils literal"><span class="pre">setPerDofVariableByName</span></code></a>(self,&nbsp;name,&nbsp;values)</td>
+<td>Set the value of a per-DOF variable, specified by name.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.setRandomNumberSeed" title="simtk.openmm.openmm.CustomIntegrator.setRandomNumberSeed"><code class="xref py py-obj docutils literal"><span class="pre">setRandomNumberSeed</span></code></a>(self,&nbsp;seed)</td>
+<td>Set the random number seed.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.setStepSize" title="simtk.openmm.openmm.CustomIntegrator.setStepSize"><code class="xref py py-obj docutils literal"><span class="pre">setStepSize</span></code></a>(self,&nbsp;size)</td>
+<td>Set the size of each time step, in picoseconds.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomIntegrator.step" title="simtk.openmm.openmm.CustomIntegrator.step"><code class="xref py py-obj docutils literal"><span class="pre">step</span></code></a>(self,&nbsp;steps)</td>
+<td>Advance a simulation through time by taking a series of time steps.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BlockEnd</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ComputeGlobal</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ComputePerDof</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ComputeSum</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ConstrainPositions</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ConstrainVelocities</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">IfBlockStart</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">UpdateContextState</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">WhileBlockStart</span></code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getNumGlobalVariables">
+<code class="descname">getNumGlobalVariables</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getNumGlobalVariables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of global variables that have been defined.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getNumPerDofVariables">
+<code class="descname">getNumPerDofVariables</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getNumPerDofVariables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of per-DOF variables that have been defined.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getNumComputations">
+<code class="descname">getNumComputations</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getNumComputations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of computation steps that have been added.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.addGlobalVariable">
+<code class="descname">addGlobalVariable</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>initialValue</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.addGlobalVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a new global variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the variable</li>
+<li><strong>initialValue</strong> (<em>double</em>) &#8211; the variable will initially be set to this value</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the variable that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getGlobalVariableName">
+<code class="descname">getGlobalVariableName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getGlobalVariableName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a global variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the variable to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the name of the variable</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.addPerDofVariable">
+<code class="descname">addPerDofVariable</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>initialValue</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.addPerDofVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a new per-DOF variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the variable</li>
+<li><strong>initialValue</strong> (<em>double</em>) &#8211; the variable will initially be set to this value for all degrees of freedom</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the variable that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getPerDofVariableName">
+<code class="descname">getPerDofVariableName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getPerDofVariableName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a per-DOF variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the variable to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the name of the variable</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getGlobalVariable">
+<code class="descname">getGlobalVariable</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getGlobalVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current value of a global variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the variable to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the current value of the variable</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getGlobalVariableByName">
+<code class="descname">getGlobalVariableByName</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getGlobalVariableByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current value of a global variable, specified by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; the name of the variable to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the current value of the parameter</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.setGlobalVariable">
+<code class="descname">setGlobalVariable</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.setGlobalVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a global variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the variable to set</li>
+<li><strong>value</strong> (<em>double</em>) &#8211; the new value of the variable</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.setGlobalVariableByName">
+<code class="descname">setGlobalVariableByName</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.setGlobalVariableByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a global variable, specified by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the variable to set</li>
+<li><strong>value</strong> (<em>double</em>) &#8211; the new value of the variable</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getPerDofVariableByName">
+<code class="descname">getPerDofVariableByName</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getPerDofVariableByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of a per-DOF variable, specified by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; the name of the variable to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>values</strong> &#8211;
+the values of the variable for all degrees of freedom are stored into this</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">vector&lt; Vec3 &gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.setPerDofVariable">
+<code class="descname">setPerDofVariable</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>values</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.setPerDofVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a per-DOF variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the variable to set</li>
+<li><strong>values</strong> (<em>vector&lt; Vec3 &gt;</em>) &#8211; the new values of the variable for all degrees of freedom</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.setPerDofVariableByName">
+<code class="descname">setPerDofVariableByName</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>values</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.setPerDofVariableByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a per-DOF variable, specified by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the variable to set</li>
+<li><strong>values</strong> (<em>vector&lt; Vec3 &gt;</em>) &#8211; the new values of the variable for all degrees of freedom</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.addComputeGlobal">
+<code class="descname">addComputeGlobal</code><span class="sig-paren">(</span><em>self</em>, <em>variable</em>, <em>expression</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.addComputeGlobal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a step to the integration algorithm that computes a global value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>variable</strong> (<em>string</em>) &#8211; the global variable to store the computed value into</li>
+<li><strong>expression</strong> (<em>string</em>) &#8211; a mathematical expression involving only global variables. In each integration step, its value is computed and stored into the specified variable.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the step that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.addComputePerDof">
+<code class="descname">addComputePerDof</code><span class="sig-paren">(</span><em>self</em>, <em>variable</em>, <em>expression</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.addComputePerDof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a step to the integration algorithm that computes a per-DOF value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>variable</strong> (<em>string</em>) &#8211; the per-DOF variable to store the computed value into</li>
+<li><strong>expression</strong> (<em>string</em>) &#8211; a mathematical expression involving both global and per-DOF variables. In each integration step, its value is computed for every degree of freedom and stored into the specified variable.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the step that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.addComputeSum">
+<code class="descname">addComputeSum</code><span class="sig-paren">(</span><em>self</em>, <em>variable</em>, <em>expression</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.addComputeSum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a step to the integration algorithm that computes a sum over degrees of freedom.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>variable</strong> (<em>string</em>) &#8211; the global variable to store the computed value into</li>
+<li><strong>expression</strong> (<em>string</em>) &#8211; a mathematical expression involving both global and per-DOF variables. In each integration step, its value is computed for every degree of freedom. Those values are then added together, and the sum is stored in the specified variable.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the step that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.addConstrainPositions">
+<code class="descname">addConstrainPositions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.addConstrainPositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a step to the integration algorithm that updates particle positions so all constraints are satisfied.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the step that was added</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.addConstrainVelocities">
+<code class="descname">addConstrainVelocities</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.addConstrainVelocities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a step to the integration algorithm that updates particle velocities so the net velocity along all constraints is 0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the step that was added</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.addUpdateContextState">
+<code class="descname">addUpdateContextState</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.addUpdateContextState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a step to the integration algorithm that allows Forces to update the context state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the step that was added</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.beginIfBlock">
+<code class="descname">beginIfBlock</code><span class="sig-paren">(</span><em>self</em>, <em>condition</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.beginIfBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a step which begins a new &#8220;if&#8221; block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>condition</strong> (<em>string</em>) &#8211; a mathematical expression involving a comparison operator and global variables. All steps between this one and the end of the block are executed only if the condition is true.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the index of the step that was added</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.beginWhileBlock">
+<code class="descname">beginWhileBlock</code><span class="sig-paren">(</span><em>self</em>, <em>condition</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.beginWhileBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a step which begins a new &#8220;while&#8221; block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>condition</strong> (<em>string</em>) &#8211; a mathematical expression involving a comparison operator and global variables. All steps between this one and the end of the block are executed repeatedly as long as the condition remains true.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the index of the step that was added</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.endBlock">
+<code class="descname">endBlock</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.endBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a step which marks the end of the most recently begun &#8220;if&#8221; or &#8220;while&#8221; block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the step that was added</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getComputationStep">
+<code class="descname">getComputationStep</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getComputationStep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the details of a computation step that has been added to the integration algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the computation step to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>type</strong> (<em>ComputationType</em>) &#8211;
+the type of computation this step performs</li>
+<li><strong>variable</strong> (<em>string</em>) &#8211;
+the variable into which this step stores its result. If this step does not store a result in a variable, this will be an empty string.</li>
+<li><strong>expression</strong> (<em>string</em>) &#8211;
+the expression this step evaluates. If this step does not evaluate an expression, this will be an empty string.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getKineticEnergyExpression">
+<code class="descname">getKineticEnergyExpression</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getKineticEnergyExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the expression to use for computing the kinetic energy. The expression is evaluated for every degree of freedom. Those values are then added together, and the sum is reported as the current kinetic energy.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.setKineticEnergyExpression">
+<code class="descname">setKineticEnergyExpression</code><span class="sig-paren">(</span><em>self</em>, <em>expression</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.setKineticEnergyExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the expression to use for computing the kinetic energy. The expression is evaluated for every degree of freedom. Those values are then added together, and the sum is reported as the current kinetic energy.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getRandomNumberSeed">
+<code class="descname">getRandomNumberSeed</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getRandomNumberSeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the random number seed. See setRandomNumberSeed() for details.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.setRandomNumberSeed">
+<code class="descname">setRandomNumberSeed</code><span class="sig-paren">(</span><em>self</em>, <em>seed</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.setRandomNumberSeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the random number seed. The precise meaning of this parameter is undefined, and is left up to each Platform to interpret in an appropriate way. It is guaranteed that if two simulations are run with different random number seeds, the sequence of random numbers will be different. On the other hand, no guarantees are made about the behavior of simulations that use the same seed. In particular, Platforms are permitted to use non-deterministic algorithms which produce different results on successive runs, even if those runs were initialized identically.</p>
+<p>If seed is set to 0 (which is the default value assigned), a unique seed is chosen when a Context is created from this Force. This is done to ensure that each Context receives unique random seeds without you needing to set them explicitly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.step">
+<code class="descname">step</code><span class="sig-paren">(</span><em>self</em>, <em>steps</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Advance a simulation through time by taking a series of time steps.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>steps</strong> (<em>int</em>) &#8211; the number of time steps to take</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getPerDofVariable">
+<code class="descname">getPerDofVariable</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getPerDofVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>getPerDofVariable(self, index) -&gt; PyObject *</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.__copy__">
+<code class="descname">__copy__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; Integrator<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.__copy__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getConstraintTolerance">
+<code class="descname">getConstraintTolerance</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getConstraintTolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the distance tolerance within which constraints are maintained, as a fraction of the constrained distance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.getStepSize">
+<code class="descname">getStepSize</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.getStepSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the size of each time step, in picoseconds. If this integrator uses variable time steps, the size of the most recent step is returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the step size, measured in ps</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.setConstraintTolerance">
+<code class="descname">setConstraintTolerance</code><span class="sig-paren">(</span><em>self</em>, <em>tol</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.setConstraintTolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the distance tolerance within which constraints are maintained, as a fraction of the constrained distance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomIntegrator.setStepSize">
+<code class="descname">setStepSize</code><span class="sig-paren">(</span><em>self</em>, <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomIntegrator.setStepSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the size of each time step, in picoseconds. If this integrator uses variable time steps, the effect of calling this method is undefined, and it may simply be ignored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>double</em>) &#8211; the step size, measured in ps</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Application Layer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../library.html">Library Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../library.html#core-objects">Core Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#forces">Forces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../library.html#integrators">Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.openmm.CustomIntegrator.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

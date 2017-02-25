@@ -1,0 +1,33 @@
+AmoebaTorsionTorsionForce
+=============================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: AmoebaTorsionTorsionForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AmoebaTorsionTorsionForce.__init__
+      ~AmoebaTorsionTorsionForce.addTorsionTorsion
+      ~AmoebaTorsionTorsionForce.getForceGroup
+      ~AmoebaTorsionTorsionForce.getNumTorsionTorsionGrids
+      ~AmoebaTorsionTorsionForce.getNumTorsionTorsions
+      ~AmoebaTorsionTorsionForce.getTorsionTorsionGrid
+      ~AmoebaTorsionTorsionForce.getTorsionTorsionParameters
+      ~AmoebaTorsionTorsionForce.setForceGroup
+      ~AmoebaTorsionTorsionForce.setTorsionTorsionGrid
+      ~AmoebaTorsionTorsionForce.setTorsionTorsionParameters
+      ~AmoebaTorsionTorsionForce.setUsesPeriodicBoundaryConditions
+      ~AmoebaTorsionTorsionForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

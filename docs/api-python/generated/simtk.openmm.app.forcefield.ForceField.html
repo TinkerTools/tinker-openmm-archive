@@ -1,0 +1,441 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ForceField &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Application Layer" href="../app.html" />
+    <link rel="next" title="Simulation" href="simtk.openmm.app.simulation.Simulation.html" />
+    <link rel="prev" title="Modeller" href="simtk.openmm.app.modeller.Modeller.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="forcefield">
+<h1>ForceField<a class="headerlink" href="#forcefield" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.app.forcefield.ForceField">
+<em class="property">class </em><code class="descclassname">simtk.openmm.app.forcefield.</code><code class="descname">ForceField</code><span class="sig-paren">(</span><em>*files</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ForceField constructs OpenMM System objects based on a Topology.</p>
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*files</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load one or more XML files and create a ForceField object based on them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>files</strong> (<em>list</em>) &#8211; A list of XML files defining the force field.  Each entry may
+be an absolute file path, a path relative to the current working
+directory, a path relative to this module&#8217;s data subdirectory
+(for built in force fields), or an open file-like object with a
+read() method from which the forcefield XML data can be loaded.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.__init__" title="simtk.openmm.app.forcefield.ForceField.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>(*files)</td>
+<td>Load one or more XML files and create a ForceField object based on them.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.createSystem" title="simtk.openmm.app.forcefield.ForceField.createSystem"><code class="xref py py-obj docutils literal"><span class="pre">createSystem</span></code></a>(topology[,&nbsp;nonbondedMethod,&nbsp;...])</td>
+<td>Construct an OpenMM System representing a Topology with this force field.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.generateTemplatesForUnmatchedResidues" title="simtk.openmm.app.forcefield.ForceField.generateTemplatesForUnmatchedResidues"><code class="xref py py-obj docutils literal"><span class="pre">generateTemplatesForUnmatchedResidues</span></code></a>(topology)</td>
+<td>Generate forcefield residue templates for residues in specified topology for which no forcefield templates are available.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.getGenerators" title="simtk.openmm.app.forcefield.ForceField.getGenerators"><code class="xref py py-obj docutils literal"><span class="pre">getGenerators</span></code></a>()</td>
+<td>Get the list of all registered generators.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.getMatchingTemplates" title="simtk.openmm.app.forcefield.ForceField.getMatchingTemplates"><code class="xref py py-obj docutils literal"><span class="pre">getMatchingTemplates</span></code></a>(topology[,&nbsp;...])</td>
+<td>Return a list of forcefield residue templates matching residues in the specified topology.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.getUnmatchedResidues" title="simtk.openmm.app.forcefield.ForceField.getUnmatchedResidues"><code class="xref py py-obj docutils literal"><span class="pre">getUnmatchedResidues</span></code></a>(topology)</td>
+<td>Return a list of Residue objects from specified topology for which no forcefield templates are available.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.loadFile" title="simtk.openmm.app.forcefield.ForceField.loadFile"><code class="xref py py-obj docutils literal"><span class="pre">loadFile</span></code></a>(files)</td>
+<td>Load an XML file and add the definitions from it to this ForceField.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.registerAtomType" title="simtk.openmm.app.forcefield.ForceField.registerAtomType"><code class="xref py py-obj docutils literal"><span class="pre">registerAtomType</span></code></a>(parameters)</td>
+<td>Register a new atom type.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.registerGenerator" title="simtk.openmm.app.forcefield.ForceField.registerGenerator"><code class="xref py py-obj docutils literal"><span class="pre">registerGenerator</span></code></a>(generator)</td>
+<td>Register a new generator.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.registerPatch" title="simtk.openmm.app.forcefield.ForceField.registerPatch"><code class="xref py py-obj docutils literal"><span class="pre">registerPatch</span></code></a>(patch)</td>
+<td>Register a new patch that can be applied to templates.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.registerResidueTemplate" title="simtk.openmm.app.forcefield.ForceField.registerResidueTemplate"><code class="xref py py-obj docutils literal"><span class="pre">registerResidueTemplate</span></code></a>(template)</td>
+<td>Register a new residue template.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.registerScript" title="simtk.openmm.app.forcefield.ForceField.registerScript"><code class="xref py py-obj docutils literal"><span class="pre">registerScript</span></code></a>(script)</td>
+<td>Register a new script to be executed after building the System.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.registerTemplateGenerator" title="simtk.openmm.app.forcefield.ForceField.registerTemplateGenerator"><code class="xref py py-obj docutils literal"><span class="pre">registerTemplateGenerator</span></code></a>(generator)</td>
+<td>Register a residue template generator that can be used to parameterize residues that do not match existing forcefield templates.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.forcefield.ForceField.registerTemplatePatch" title="simtk.openmm.app.forcefield.ForceField.registerTemplatePatch"><code class="xref py py-obj docutils literal"><span class="pre">registerTemplatePatch</span></code></a>(residue,&nbsp;patch,&nbsp;...)</td>
+<td>Register that a particular patch can be used with a particular residue.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.loadFile">
+<code class="descname">loadFile</code><span class="sig-paren">(</span><em>files</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.loadFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an XML file and add the definitions from it to this ForceField.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>files</strong> (<em>string or file or tuple</em>) &#8211; An XML file or tuple of XML files containing force field definitions.
+Each entry may be either an absolute file path, a path relative to the current working
+directory, a path relative to this module&#8217;s data subdirectory (for
+built in force fields), or an open file-like object with a read()
+method from which the forcefield XML data can be loaded.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.getGenerators">
+<code class="descname">getGenerators</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.getGenerators" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of all registered generators.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.registerGenerator">
+<code class="descname">registerGenerator</code><span class="sig-paren">(</span><em>generator</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.registerGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a new generator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.registerAtomType">
+<code class="descname">registerAtomType</code><span class="sig-paren">(</span><em>parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.registerAtomType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a new atom type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.registerResidueTemplate">
+<code class="descname">registerResidueTemplate</code><span class="sig-paren">(</span><em>template</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.registerResidueTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a new residue template.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.registerPatch">
+<code class="descname">registerPatch</code><span class="sig-paren">(</span><em>patch</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.registerPatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a new patch that can be applied to templates.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.registerTemplatePatch">
+<code class="descname">registerTemplatePatch</code><span class="sig-paren">(</span><em>residue</em>, <em>patch</em>, <em>patchResidueIndex</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.registerTemplatePatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register that a particular patch can be used with a particular residue.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.registerScript">
+<code class="descname">registerScript</code><span class="sig-paren">(</span><em>script</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.registerScript" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a new script to be executed after building the System.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.registerTemplateGenerator">
+<code class="descname">registerTemplateGenerator</code><span class="sig-paren">(</span><em>generator</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.registerTemplateGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a residue template generator that can be used to parameterize residues that do not match existing forcefield templates.</p>
+<p>This functionality can be used to add handlers to parameterize small molecules or unnatural/modified residues.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">This method is experimental, and its API is subject to change.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>generator</strong> (<em>function</em>) &#8211; A function that will be called when a residue is encountered that does not match an existing forcefield template.</li>
+<li><strong>a residue without a template is encountered, the generator function is called with</strong> (<em>When</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>:param : success = generator(forcefield, residue)
+:type : :
+:param <a href="#id1"><span class="problematic" id="id2">``</span></a><cite>:
+:param where `forcefield</cite> is the calling <cite>ForceField</cite> object and <cite>residue</cite> is a simtk.openmm.app.topology.Residue object.:
+:param <cite>generator</cite> must conform to the following API: 
+:param : Parameters</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>forcefield <span class="classifier-delimiter">:</span> <span class="classifier">simtk.openmm.app.ForceField</span></dt>
+<dd>The ForceField object to which residue templates and/or parameters are to be added.</dd>
+<dt>residue <span class="classifier-delimiter">:</span> <span class="classifier">simtk.openmm.app.Topology.Residue</span></dt>
+<dd>The residue topology for which a template is to be generated.</dd>
+</dl>
+<dl class="docutils">
+<dt>success <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>If the generator is able to successfully parameterize the residue, <cite>True</cite> is returned.
+If the generator cannot parameterize the residue, it should return <cite>False</cite> and not modify <cite>forcefield</cite>.</dd>
+</dl>
+<p>The generator should either register a residue template directly with <cite>forcefield.registerResidueTemplate(template)</cite>
+or it should call <cite>forcefield.loadFile(file)</cite> to load residue definitions from an ffxml file.</p>
+<p>It can also use the <cite>ForceField</cite> programmatic API to add additional atom types (via <cite>forcefield.registerAtomType(parameters)</cite>)
+or additional parameters.</p>
+</div></blockquote>
+<p>:type : :</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.getUnmatchedResidues">
+<code class="descname">getUnmatchedResidues</code><span class="sig-paren">(</span><em>topology</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.getUnmatchedResidues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of Residue objects from specified topology for which no forcefield templates are available.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">This method is experimental, and its API is subject to change.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology whose residues are to be checked against the forcefield residue templates.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>unmatched_residues</strong> (<em>list of Residue</em>) &#8211;
+List of Residue objects from <cite>topology</cite> for which no forcefield residue templates are available.
+Note that multiple instances of the same residue appearing at different points in the topology may be returned.</li>
+<li><em>This method may be of use in generating missing residue templates or diagnosing parameterization failures.</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.getMatchingTemplates">
+<code class="descname">getMatchingTemplates</code><span class="sig-paren">(</span><em>topology</em>, <em>ignoreExternalBonds=False</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.getMatchingTemplates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of forcefield residue templates matching residues in the specified topology.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">This method is experimental, and its API is subject to change.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology whose residues are to be checked against the forcefield residue templates.</li>
+<li><strong>ignoreExternalBonds</strong> (<em>bool=False</em>) &#8211; If true, ignore external bonds when matching residues to templates.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>templates</strong> (<em>list of _TemplateData</em>) &#8211;
+List of forcefield residue templates corresponding to residues in the topology.
+templates[index] is template corresponding to residue <cite>index</cite> in topology.residues()</li>
+<li><em>This method may be of use in debugging issues related to parameter assignment.</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.generateTemplatesForUnmatchedResidues">
+<code class="descname">generateTemplatesForUnmatchedResidues</code><span class="sig-paren">(</span><em>topology</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.generateTemplatesForUnmatchedResidues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate forcefield residue templates for residues in specified topology for which no forcefield templates are available.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">This method is experimental, and its API is subject to change.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology whose residues are to be checked against the forcefield residue templates.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>templates</strong> (<em>list of _TemplateData</em>) &#8211;
+List of forcefield residue templates corresponding to residues in <cite>topology</cite> for which no forcefield templates are currently available.
+Atom types will be set to <cite>None</cite>, but template name, atom names, elements, and connectivity will be taken from corresponding Residue objects.</li>
+<li><strong>residues</strong> (<em>list of Residue</em>) &#8211;
+List of Residue objects that were used to generate the templates.
+<cite>residues[index]</cite> is the Residue that was used to generate the template <cite>templates[index]</cite></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.forcefield.ForceField.createSystem">
+<code class="descname">createSystem</code><span class="sig-paren">(</span><em>topology</em>, <em>nonbondedMethod=NoCutoff</em>, <em>nonbondedCutoff=Quantity(value=1.0</em>, <em>unit=nanometer)</em>, <em>constraints=None</em>, <em>rigidWater=True</em>, <em>removeCMMotion=True</em>, <em>hydrogenMass=None</em>, <em>residueTemplates={}</em>, <em>ignoreExternalBonds=False</em>, <em>**args</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.forcefield.ForceField.createSystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct an OpenMM System representing a Topology with this force field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology for which to create a System</li>
+<li><strong>nonbondedMethod</strong> (<em>object=NoCutoff</em>) &#8211; The method to use for nonbonded interactions.  Allowed values are
+NoCutoff, CutoffNonPeriodic, CutoffPeriodic, Ewald, or PME.</li>
+<li><strong>nonbondedCutoff</strong> (<em>distance=1*nanometer</em>) &#8211; The cutoff distance to use for nonbonded interactions</li>
+<li><strong>constraints</strong> (<em>object=None</em>) &#8211; Specifies which bonds and angles should be implemented with constraints.
+Allowed values are None, HBonds, AllBonds, or HAngles.</li>
+<li><strong>rigidWater</strong> (<em>boolean=True</em>) &#8211; If true, water molecules will be fully rigid regardless of the value
+passed for the constraints argument</li>
+<li><strong>removeCMMotion</strong> (<em>boolean=True</em>) &#8211; If true, a CMMotionRemover will be added to the System</li>
+<li><strong>hydrogenMass</strong> (<em>mass=None</em>) &#8211; The mass to use for hydrogen atoms bound to heavy atoms.  Any mass
+added to a hydrogen is subtracted from the heavy atom to keep
+their total mass the same.</li>
+<li><strong>residueTemplates</strong> (<em>dict=dict()</em>) &#8211; Key: Topology Residue object
+Value: string, name of _TemplateData residue template object to use for (Key) residue.
+This allows user to specify which template to apply to particular Residues
+in the event that multiple matching templates are available (e.g Fe2+ and Fe3+
+templates in the ForceField for a monoatomic iron ion in the topology).</li>
+<li><strong>ignoreExternalBonds</strong> (<em>boolean=False</em>) &#8211; If true, ignore external bonds when matching residues to templates.  This is
+useful when the Topology represents one piece of a larger molecule, so chains are
+not terminated properly.  This option can create ambiguities where multiple
+templates match the same residue.  If that happens, use the residueTemplates
+argument to specify which one to use.</li>
+<li><strong>args</strong> &#8211; Arbitrary additional keyword arguments may also be specified.
+This allows extra parameters to be specified that are specific to
+particular force fields.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the newly created System</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="simtk.openmm.app.charmmpsffile.CharmmPsfFile.html#simtk.openmm.app.charmmpsffile.CharmmPsfFile.system" title="simtk.openmm.app.charmmpsffile.CharmmPsfFile.system">system</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../app.html">Application Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../app.html#loaders-and-setup">Loaders and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#representation-and-manipulation">Representation and Manipulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../app.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#reporting-output">Reporting Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#extras">Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#units">Units</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library Layer</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.app.forcefield.ForceField.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

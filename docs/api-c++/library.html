@@ -1,0 +1,392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Core Objects &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="index.html" />
+    <link rel="prev" title="OpenMM C++ API" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>Core Objects<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a></td>
+<td>This class represents a molecular system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a></td>
+<td>A <code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code> stores the complete state of a simulation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.State.html#_CPPv2N6OpenMM5StateE" title="OpenMM::State"><code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code></a></td>
+<td>A <code class="xref cpp cpp-any docutils literal"><span class="pre">State</span></code> object records a snapshot of the current state of a simulation at a point in time.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.Platform.html#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a></td>
+<td>A <code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code> defines an implementation of all the kernels needed to perform some calculation.</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h1>Forces<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.AmoebaAngleForce.html#_CPPv2N6OpenMM16AmoebaAngleForceE" title="OpenMM::AmoebaAngleForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaAngleForce</span></code></a></td>
+<td>This class implements an interaction between triplets of particles that varies with the angle between them.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.AmoebaBondForce.html#_CPPv2N6OpenMM15AmoebaBondForceE" title="OpenMM::AmoebaBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaBondForce</span></code></a></td>
+<td>This class implements an interaction between pairs of particles that varies with the distance between them.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.AmoebaGeneralizedKirkwoodForce.html#_CPPv2N6OpenMM30AmoebaGeneralizedKirkwoodForceE" title="OpenMM::AmoebaGeneralizedKirkwoodForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaGeneralizedKirkwoodForce</span></code></a></td>
+<td>This class implements an implicit solvation force using the generalized Kirkwood/Grycuk model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.AmoebaInPlaneAngleForce.html#_CPPv2N6OpenMM23AmoebaInPlaneAngleForceE" title="OpenMM::AmoebaInPlaneAngleForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaInPlaneAngleForce</span></code></a></td>
+<td>This class implements an interaction at trigonal centers corresponding to the projected in-plane angle bend energy between four particles.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.AmoebaMultipoleForce.html#_CPPv2N6OpenMM20AmoebaMultipoleForceE" title="OpenMM::AmoebaMultipoleForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaMultipoleForce</span></code></a></td>
+<td>This class implements the Amoeba multipole interaction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.AmoebaOutOfPlaneBendForce.html#_CPPv2N6OpenMM25AmoebaOutOfPlaneBendForceE" title="OpenMM::AmoebaOutOfPlaneBendForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaOutOfPlaneBendForce</span></code></a></td>
+<td>This class implements the Amoeba out-of-plane bend interaction.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.AmoebaPiTorsionForce.html#_CPPv2N6OpenMM20AmoebaPiTorsionForceE" title="OpenMM::AmoebaPiTorsionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaPiTorsionForce</span></code></a></td>
+<td>This class implements the Amoeba pi-torsion interaction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.AmoebaStretchBendForce.html#_CPPv2N6OpenMM22AmoebaStretchBendForceE" title="OpenMM::AmoebaStretchBendForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaStretchBendForce</span></code></a></td>
+<td>This class implements the Amoeba stretch-bend interaction.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.AmoebaTorsionTorsionForce.html#_CPPv2N6OpenMM25AmoebaTorsionTorsionForceE" title="OpenMM::AmoebaTorsionTorsionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaTorsionTorsionForce</span></code></a></td>
+<td>This class implements the Amoeba torsion-torsion interaction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.AmoebaVdwForce.html#_CPPv2N6OpenMM14AmoebaVdwForceE" title="OpenMM::AmoebaVdwForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaVdwForce</span></code></a></td>
+<td>This class implements a buffered 14-7 potential used to model van der Waals forces.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.AmoebaWcaDispersionForce.html#_CPPv2N6OpenMM24AmoebaWcaDispersionForceE" title="OpenMM::AmoebaWcaDispersionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaWcaDispersionForce</span></code></a></td>
+<td>This class implements a nonbonded interaction between pairs of particles typically used along with <code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaGeneralizedKirkwoodForce</span></code> as part of an implicit solvent model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.AndersenThermostat.html#_CPPv2N6OpenMM18AndersenThermostatE" title="OpenMM::AndersenThermostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">AndersenThermostat</span></code></a></td>
+<td>This class uses the Andersen method to maintain constant temperature.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.CMAPTorsionForce.html#_CPPv2N6OpenMM16CMAPTorsionForceE" title="OpenMM::CMAPTorsionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CMAPTorsionForce</span></code></a></td>
+<td>This class implements an interaction between pairs of dihedral angles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.CMMotionRemover.html#_CPPv2N6OpenMM15CMMotionRemoverE" title="OpenMM::CMMotionRemover"><code class="xref cpp cpp-any docutils literal"><span class="pre">CMMotionRemover</span></code></a></td>
+<td>This class prevents the center of mass of a <code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code> from drifting.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.CustomAngleForce.html#_CPPv2N6OpenMM16CustomAngleForceE" title="OpenMM::CustomAngleForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomAngleForce</span></code></a></td>
+<td>This class implements interactions between sets of three particles that depend on the angle between them.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.CustomBondForce.html#_CPPv2N6OpenMM15CustomBondForceE" title="OpenMM::CustomBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomBondForce</span></code></a></td>
+<td>This class implements bonded interactions between pairs of particles.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.CustomCentroidBondForce.html#_CPPv2N6OpenMM23CustomCentroidBondForceE" title="OpenMM::CustomCentroidBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCentroidBondForce</span></code></a></td>
+<td>This class is similar to <code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCompoundBondForce</span></code>, but instead of applying forces between individual particles, it applies them between the centers of groups of particles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.CustomCompoundBondForce.html#_CPPv2N6OpenMM23CustomCompoundBondForceE" title="OpenMM::CustomCompoundBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomCompoundBondForce</span></code></a></td>
+<td>This class supports a wide variety of bonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.CustomExternalForce.html#_CPPv2N6OpenMM19CustomExternalForceE" title="OpenMM::CustomExternalForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomExternalForce</span></code></a></td>
+<td>This class implements an &#8220;external&#8221; force on particles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.CustomGBForce.html#_CPPv2N6OpenMM13CustomGBForceE" title="OpenMM::CustomGBForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomGBForce</span></code></a></td>
+<td>This class implements complex, multiple stage nonbonded interactions between particles.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.CustomHbondForce.html#_CPPv2N6OpenMM16CustomHbondForceE" title="OpenMM::CustomHbondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomHbondForce</span></code></a></td>
+<td>This class supports a wide variety of energy functions used to represent hydrogen bonding.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.CustomManyParticleForce.html#_CPPv2N6OpenMM23CustomManyParticleForceE" title="OpenMM::CustomManyParticleForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomManyParticleForce</span></code></a></td>
+<td>This class supports a wide variety of nonbonded N-particle interactions, where N is user specified.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.CustomNonbondedForce.html#_CPPv2N6OpenMM20CustomNonbondedForceE" title="OpenMM::CustomNonbondedForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomNonbondedForce</span></code></a></td>
+<td>This class implements nonbonded interactions between particles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.CustomTorsionForce.html#_CPPv2N6OpenMM18CustomTorsionForceE" title="OpenMM::CustomTorsionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomTorsionForce</span></code></a></td>
+<td>This class implements interactions between sets of four particles that depend on the torsion angle between them.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.DrudeForce.html#_CPPv2N6OpenMM10DrudeForceE" title="OpenMM::DrudeForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">DrudeForce</span></code></a></td>
+<td>This class implements forces that are specific to Drude oscillators.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a></td>
+<td><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code> objects apply forces to the particles in a <code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code>, or alter their behavior in other ways. This is an abstract class. Subclasses define particular forces.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.GBSAOBCForce.html#_CPPv2N6OpenMM12GBSAOBCForceE" title="OpenMM::GBSAOBCForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">GBSAOBCForce</span></code></a></td>
+<td>This class implements an implicit solvation force using the GBSA-OBC model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.GayBerneForce.html#_CPPv2N6OpenMM13GayBerneForceE" title="OpenMM::GayBerneForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">GayBerneForce</span></code></a></td>
+<td>This class implements the Gay-Berne anisotropic potential.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.HarmonicAngleForce.html#_CPPv2N6OpenMM18HarmonicAngleForceE" title="OpenMM::HarmonicAngleForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">HarmonicAngleForce</span></code></a></td>
+<td>This class implements an interaction between groups of three particles that varies harmonically with the angle between them.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.HarmonicBondForce.html#_CPPv2N6OpenMM17HarmonicBondForceE" title="OpenMM::HarmonicBondForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">HarmonicBondForce</span></code></a></td>
+<td>This class implements an interaction between pairs of particles that varies harmonically with the distance between them.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.MonteCarloAnisotropicBarostat.html#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostatE" title="OpenMM::MonteCarloAnisotropicBarostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">MonteCarloAnisotropicBarostat</span></code></a></td>
+<td>This class uses a Monte Carlo algorithm to adjust the size of the periodic box, simulating the effect of constant pressure.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.MonteCarloBarostat.html#_CPPv2N6OpenMM18MonteCarloBarostatE" title="OpenMM::MonteCarloBarostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">MonteCarloBarostat</span></code></a></td>
+<td>This class uses a Monte Carlo algorithm to adjust the size of the periodic box, simulating the effect of constant pressure.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.MonteCarloMembraneBarostat.html#_CPPv2N6OpenMM26MonteCarloMembraneBarostatE" title="OpenMM::MonteCarloMembraneBarostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">MonteCarloMembraneBarostat</span></code></a></td>
+<td>This is a Monte Carlo barostat designed specifically for membrane simulations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.NonbondedForce.html#_CPPv2N6OpenMM14NonbondedForceE" title="OpenMM::NonbondedForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">NonbondedForce</span></code></a></td>
+<td>This class implements nonbonded interactions between particles, including a Coulomb force to represent electrostatics and a Lennard-Jones force to represent van der Waals interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.PeriodicTorsionForce.html#_CPPv2N6OpenMM20PeriodicTorsionForceE" title="OpenMM::PeriodicTorsionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">PeriodicTorsionForce</span></code></a></td>
+<td>This class implements an interaction between groups of four particles that varies periodically with the torsion angle between them.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.RBTorsionForce.html#_CPPv2N6OpenMM14RBTorsionForceE" title="OpenMM::RBTorsionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">RBTorsionForce</span></code></a></td>
+<td>This class implements an interaction between groups of four particles that varies with the torsion angle between them according to the Ryckaert-Bellemans potential.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.RPMDMonteCarloBarostat.html#_CPPv2N6OpenMM22RPMDMonteCarloBarostatE" title="OpenMM::RPMDMonteCarloBarostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">RPMDMonteCarloBarostat</span></code></a></td>
+<td>This class is very similar to <code class="xref cpp cpp-any docutils literal"><span class="pre">MonteCarloBarostat</span></code>, but it is specifically designed for use with <code class="xref cpp cpp-any docutils literal"><span class="pre">RPMDIntegrator</span></code>.</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h1>Integrators<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
+<p>These integrators implement an algorithm for advancing the simulation
+through time.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.BrownianIntegrator.html#_CPPv2N6OpenMM18BrownianIntegratorE" title="OpenMM::BrownianIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">BrownianIntegrator</span></code></a></td>
+<td>This is an <code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code> which simulates a <code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code> using Brownian dynamics.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.CompoundIntegrator.html#_CPPv2N6OpenMM18CompoundIntegratorE" title="OpenMM::CompoundIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">CompoundIntegrator</span></code></a></td>
+<td>This class allows you to use multiple integration algorithms within a single simulation, switching back and forth between them.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.CustomIntegrator.html#_CPPv2N6OpenMM16CustomIntegratorE" title="OpenMM::CustomIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomIntegrator</span></code></a></td>
+<td>This is an <code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code> that can be used to implemented arbitrary, user defined integration algorithms.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.DrudeLangevinIntegrator.html#_CPPv2N6OpenMM23DrudeLangevinIntegratorE" title="OpenMM::DrudeLangevinIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">DrudeLangevinIntegrator</span></code></a></td>
+<td>This <code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code> simulates systems that include Drude particles.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.DrudeSCFIntegrator.html#_CPPv2N6OpenMM18DrudeSCFIntegratorE" title="OpenMM::DrudeSCFIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">DrudeSCFIntegrator</span></code></a></td>
+<td>This is a leap-frog Verlet <code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code> that simulates systems with Drude particles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.Integrator.html#_CPPv2N6OpenMM10IntegratorE" title="OpenMM::Integrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code></a></td>
+<td>An <code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code> defines a method for simulating a <code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code> by integrating the equations of motion.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.LangevinIntegrator.html#_CPPv2N6OpenMM18LangevinIntegratorE" title="OpenMM::LangevinIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">LangevinIntegrator</span></code></a></td>
+<td>This is an <code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code> which simulates a <code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code> using Langevin dynamics.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.RPMDIntegrator.html#_CPPv2N6OpenMM14RPMDIntegratorE" title="OpenMM::RPMDIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">RPMDIntegrator</span></code></a></td>
+<td>This is an <code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code> which simulates a <code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code> using ring polymer molecular dynamics (RPMD).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.VariableLangevinIntegrator.html#_CPPv2N6OpenMM26VariableLangevinIntegratorE" title="OpenMM::VariableLangevinIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">VariableLangevinIntegrator</span></code></a></td>
+<td>This is an error contolled, variable time step <code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code> that simulates a <code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code> using Langevin dynamics.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.VariableVerletIntegrator.html#_CPPv2N6OpenMM24VariableVerletIntegratorE" title="OpenMM::VariableVerletIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">VariableVerletIntegrator</span></code></a></td>
+<td>This is an error contolled, variable time step <code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code> that simulates a <code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code> using the leap-frog Verlet algorithm.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.VerletIntegrator.html#_CPPv2N6OpenMM16VerletIntegratorE" title="OpenMM::VerletIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">VerletIntegrator</span></code></a></td>
+<td>This is an <code class="xref cpp cpp-any docutils literal"><span class="pre">Integrator</span></code> which simulates a <code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code> using the leap-frog Verlet algorithm.</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h1>Extras<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.Continuous1DFunction.html#_CPPv2N6OpenMM20Continuous1DFunctionE" title="OpenMM::Continuous1DFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">Continuous1DFunction</span></code></a></td>
+<td>This is a <code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code> that computes a continuous one dimensional function.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.Continuous2DFunction.html#_CPPv2N6OpenMM20Continuous2DFunctionE" title="OpenMM::Continuous2DFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">Continuous2DFunction</span></code></a></td>
+<td>This is a <code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code> that computes a continuous two dimensional function.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.Continuous3DFunction.html#_CPPv2N6OpenMM20Continuous3DFunctionE" title="OpenMM::Continuous3DFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">Continuous3DFunction</span></code></a></td>
+<td>This is a <code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code> that computes a continuous three dimensional function.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.Discrete1DFunction.html#_CPPv2N6OpenMM18Discrete1DFunctionE" title="OpenMM::Discrete1DFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">Discrete1DFunction</span></code></a></td>
+<td>This is a <code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code> that computes a discrete one dimensional function f(x).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.Discrete2DFunction.html#_CPPv2N6OpenMM18Discrete2DFunctionE" title="OpenMM::Discrete2DFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">Discrete2DFunction</span></code></a></td>
+<td>This is a <code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code> that computes a discrete two dimensional function f(x,y).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.Discrete3DFunction.html#_CPPv2N6OpenMM18Discrete3DFunctionE" title="OpenMM::Discrete3DFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">Discrete3DFunction</span></code></a></td>
+<td>This is a <code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code> that computes a discrete three dimensional function f(x,y,z).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.LocalCoordinatesSite.html#_CPPv2N6OpenMM20LocalCoordinatesSiteE" title="OpenMM::LocalCoordinatesSite"><code class="xref cpp cpp-any docutils literal"><span class="pre">LocalCoordinatesSite</span></code></a></td>
+<td>This is a <code class="xref cpp cpp-any docutils literal"><span class="pre">VirtualSite</span></code> that uses the locations of three other particles to compute a local coordinate system, then places the virtual site at a fixed location in that coordinate system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.LocalEnergyMinimizer.html#_CPPv2N6OpenMM20LocalEnergyMinimizerE" title="OpenMM::LocalEnergyMinimizer"><code class="xref cpp cpp-any docutils literal"><span class="pre">LocalEnergyMinimizer</span></code></a></td>
+<td>Given a <code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code>, this class searches for a new set of particle positions that represent a local minimum of the potential energy.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.OpenMMException.html#_CPPv2N6OpenMM15OpenMMExceptionE" title="OpenMM::OpenMMException"><code class="xref cpp cpp-any docutils literal"><span class="pre">OpenMMException</span></code></a></td>
+<td>This class is used for all exceptions thrown by OpenMM.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.OutOfPlaneSite.html#_CPPv2N6OpenMM14OutOfPlaneSiteE" title="OpenMM::OutOfPlaneSite"><code class="xref cpp cpp-any docutils literal"><span class="pre">OutOfPlaneSite</span></code></a></td>
+<td>This is a <code class="xref cpp cpp-any docutils literal"><span class="pre">VirtualSite</span></code> that computes the particle location based on three other particles&#8217; locations.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.SerializationNode.html#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code></a></td>
+<td>A <code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code> stores information about an object during serialization or deserialization.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.SerializationProxy.html#_CPPv2N6OpenMM18SerializationProxyE" title="OpenMM::SerializationProxy"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationProxy</span></code></a></td>
+<td>A <code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationProxy</span></code> is an object that knows how to serialize and deserialize objects of a particular type.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a></td>
+<td>A <code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code> uses a set of tabulated values to define a mathematical function.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.ThreeParticleAverageSite.html#_CPPv2N6OpenMM24ThreeParticleAverageSiteE" title="OpenMM::ThreeParticleAverageSite"><code class="xref cpp cpp-any docutils literal"><span class="pre">ThreeParticleAverageSite</span></code></a></td>
+<td>This is a <code class="xref cpp cpp-any docutils literal"><span class="pre">VirtualSite</span></code> that computes the particle location as a weighted average of three other particle&#8217;s locations.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.TwoParticleAverageSite.html#_CPPv2N6OpenMM22TwoParticleAverageSiteE" title="OpenMM::TwoParticleAverageSite"><code class="xref cpp cpp-any docutils literal"><span class="pre">TwoParticleAverageSite</span></code></a></td>
+<td>This is a <code class="xref cpp cpp-any docutils literal"><span class="pre">VirtualSite</span></code> that computes the particle location as a weighted average of two other particle&#8217;s locations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3"><code class="xref cpp cpp-any docutils literal"><span class="pre">Vec3</span></code></a></td>
+<td>This class represents a three component vector.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/OpenMM.VirtualSite.html#_CPPv2N6OpenMM11VirtualSiteE" title="OpenMM::VirtualSite"><code class="xref cpp cpp-any docutils literal"><span class="pre">VirtualSite</span></code></a></td>
+<td>A <code class="xref cpp cpp-any docutils literal"><span class="pre">VirtualSite</span></code> describes the rules for computing a particle&#8217;s position based on other particles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/OpenMM.XmlSerializer.html#_CPPv2N6OpenMM13XmlSerializerE" title="OpenMM::XmlSerializer"><code class="xref cpp cpp-any docutils literal"><span class="pre">XmlSerializer</span></code></a></td>
+<td><code class="xref cpp cpp-any docutils literal"><span class="pre">XmlSerializer</span></code> is used for serializing objects as XML, and for reconstructing them again.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Core Objects</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id2">Forces</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id3">Integrators</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id4">Extras</a><ul class="simple">
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/library.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

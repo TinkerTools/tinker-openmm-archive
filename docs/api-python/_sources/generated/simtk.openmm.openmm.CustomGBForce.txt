@@ -1,0 +1,78 @@
+CustomGBForce
+=================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CustomGBForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CustomGBForce.__init__
+      ~CustomGBForce.addComputedValue
+      ~CustomGBForce.addEnergyParameterDerivative
+      ~CustomGBForce.addEnergyTerm
+      ~CustomGBForce.addExclusion
+      ~CustomGBForce.addFunction
+      ~CustomGBForce.addGlobalParameter
+      ~CustomGBForce.addParticle
+      ~CustomGBForce.addPerParticleParameter
+      ~CustomGBForce.addTabulatedFunction
+      ~CustomGBForce.getComputedValueParameters
+      ~CustomGBForce.getCutoffDistance
+      ~CustomGBForce.getEnergyParameterDerivativeName
+      ~CustomGBForce.getEnergyTermParameters
+      ~CustomGBForce.getExclusionParticles
+      ~CustomGBForce.getForceGroup
+      ~CustomGBForce.getFunctionParameters
+      ~CustomGBForce.getGlobalParameterDefaultValue
+      ~CustomGBForce.getGlobalParameterName
+      ~CustomGBForce.getNonbondedMethod
+      ~CustomGBForce.getNumComputedValues
+      ~CustomGBForce.getNumEnergyParameterDerivatives
+      ~CustomGBForce.getNumEnergyTerms
+      ~CustomGBForce.getNumExclusions
+      ~CustomGBForce.getNumFunctions
+      ~CustomGBForce.getNumGlobalParameters
+      ~CustomGBForce.getNumParticles
+      ~CustomGBForce.getNumPerParticleParameters
+      ~CustomGBForce.getNumTabulatedFunctions
+      ~CustomGBForce.getParticleParameters
+      ~CustomGBForce.getPerParticleParameterName
+      ~CustomGBForce.getTabulatedFunction
+      ~CustomGBForce.getTabulatedFunctionName
+      ~CustomGBForce.setComputedValueParameters
+      ~CustomGBForce.setCutoffDistance
+      ~CustomGBForce.setEnergyTermParameters
+      ~CustomGBForce.setExclusionParticles
+      ~CustomGBForce.setForceGroup
+      ~CustomGBForce.setFunctionParameters
+      ~CustomGBForce.setGlobalParameterDefaultValue
+      ~CustomGBForce.setGlobalParameterName
+      ~CustomGBForce.setNonbondedMethod
+      ~CustomGBForce.setParticleParameters
+      ~CustomGBForce.setPerParticleParameterName
+      ~CustomGBForce.updateParametersInContext
+      ~CustomGBForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CustomGBForce.CutoffNonPeriodic
+      ~CustomGBForce.CutoffPeriodic
+      ~CustomGBForce.NoCutoff
+      ~CustomGBForce.ParticlePair
+      ~CustomGBForce.ParticlePairNoExclusions
+      ~CustomGBForce.SingleParticle
+   
+   

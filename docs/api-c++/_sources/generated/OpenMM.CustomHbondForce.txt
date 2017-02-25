@@ -1,0 +1,63 @@
+CustomHbondForce
+========================
+
+.. autodoxyclass:: OpenMM::CustomHbondForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CustomHbondForce::CustomHbondForce
+      ~OpenMM::CustomHbondForce::~CustomHbondForce
+      ~OpenMM::CustomHbondForce::getNumDonors
+      ~OpenMM::CustomHbondForce::getNumAcceptors
+      ~OpenMM::CustomHbondForce::getNumExclusions
+      ~OpenMM::CustomHbondForce::getNumPerDonorParameters
+      ~OpenMM::CustomHbondForce::getNumPerAcceptorParameters
+      ~OpenMM::CustomHbondForce::getNumGlobalParameters
+      ~OpenMM::CustomHbondForce::getNumTabulatedFunctions
+      ~OpenMM::CustomHbondForce::getNumFunctions
+      ~OpenMM::CustomHbondForce::getEnergyFunction
+      ~OpenMM::CustomHbondForce::setEnergyFunction
+      ~OpenMM::CustomHbondForce::getNonbondedMethod
+      ~OpenMM::CustomHbondForce::setNonbondedMethod
+      ~OpenMM::CustomHbondForce::getCutoffDistance
+      ~OpenMM::CustomHbondForce::setCutoffDistance
+      ~OpenMM::CustomHbondForce::addPerDonorParameter
+      ~OpenMM::CustomHbondForce::getPerDonorParameterName
+      ~OpenMM::CustomHbondForce::setPerDonorParameterName
+      ~OpenMM::CustomHbondForce::addPerAcceptorParameter
+      ~OpenMM::CustomHbondForce::getPerAcceptorParameterName
+      ~OpenMM::CustomHbondForce::setPerAcceptorParameterName
+      ~OpenMM::CustomHbondForce::addGlobalParameter
+      ~OpenMM::CustomHbondForce::getGlobalParameterName
+      ~OpenMM::CustomHbondForce::setGlobalParameterName
+      ~OpenMM::CustomHbondForce::getGlobalParameterDefaultValue
+      ~OpenMM::CustomHbondForce::setGlobalParameterDefaultValue
+      ~OpenMM::CustomHbondForce::addDonor
+      ~OpenMM::CustomHbondForce::getDonorParameters
+      ~OpenMM::CustomHbondForce::setDonorParameters
+      ~OpenMM::CustomHbondForce::addAcceptor
+      ~OpenMM::CustomHbondForce::getAcceptorParameters
+      ~OpenMM::CustomHbondForce::setAcceptorParameters
+      ~OpenMM::CustomHbondForce::addExclusion
+      ~OpenMM::CustomHbondForce::getExclusionParticles
+      ~OpenMM::CustomHbondForce::setExclusionParticles
+      ~OpenMM::CustomHbondForce::addTabulatedFunction
+      ~OpenMM::CustomHbondForce::getTabulatedFunction
+      ~OpenMM::CustomHbondForce::getTabulatedFunction
+      ~OpenMM::CustomHbondForce::getTabulatedFunctionName
+      ~OpenMM::CustomHbondForce::addFunction
+      ~OpenMM::CustomHbondForce::getFunctionParameters
+      ~OpenMM::CustomHbondForce::setFunctionParameters
+      ~OpenMM::CustomHbondForce::updateParametersInContext
+      ~OpenMM::CustomHbondForce::usesPeriodicBoundaryConditions
+   
+
+   
+   
+   .. autodoxyenum:: NonbondedMethod
+   
+   

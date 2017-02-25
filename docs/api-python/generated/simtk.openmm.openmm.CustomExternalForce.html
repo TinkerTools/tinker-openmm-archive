@@ -1,0 +1,530 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CustomExternalForce &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Library Layer" href="../library.html" />
+    <link rel="next" title="CustomGBForce" href="simtk.openmm.openmm.CustomGBForce.html" />
+    <link rel="prev" title="CustomCompoundBondForce" href="simtk.openmm.openmm.CustomCompoundBondForce.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="customexternalforce">
+<h1>CustomExternalForce<a class="headerlink" href="#customexternalforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.openmm.CustomExternalForce">
+<em class="property">class </em><code class="descclassname">simtk.openmm.openmm.</code><code class="descname">CustomExternalForce</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements an &#8220;external&#8221; force on particles. The force may be applied to any subset of the particles in the System. The force on each particle is specified by an arbitrary algebraic expression, which may depend on the current position of the particle as well as on arbitrary global and per-particle parameters.</p>
+<p>To use this class, create a CustomExternalForce object, passing an algebraic expression to the constructor that defines the potential energy of each affected particle. The expression may depend on the particle&#8217;s x, y, and z coordinates, as well as on any parameters you choose. Then call addPerParticleParameter() to define per-particle parameters, and addGlobalParameter() to define global parameters. The values of per-particle parameters are specified as part of the system definition, while values of global parameters may be modified during a simulation by calling Context::setParameter(). Finally, call addParticle() once for each particle that should be affected by the force. After a particle has been added, you can modify its parameters by calling setParticleParameters(). This will have no effect on Contexts that already exist unless you call updateParametersInContext().</p>
+<p>As an example, the following code creates a CustomExternalForce that attracts each particle to a target position (x0, y0, z0) via a harmonic potential:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">CustomExternalForce</span><span class="o">*</span> <span class="n">force</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomExternalForce</span><span class="p">(</span><span class="s">&quot;k*((x-x0)^2+(y-y0)^2+(z-z0)^2)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This force depends on four parameters: the spring constant k and equilibrium coordinates x0, y0, and z0. The following code defines these parameters:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">force</span><span class="o">-&gt;</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s">&quot;k&quot;</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s">&quot;x0&quot;</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s">&quot;y0&quot;</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s">&quot;z0&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Special care is needed in systems that use periodic boundary conditions. In that case, each particle really represents an infinite set of particles repeating through space. The variables x, y, and z contain the coordinates of one of those periodic copies, but there is no guarantee about which. It might even change from one time step to the next. You can handle this situation by using the function periodicdistance(x1, y1, z1, x2, y2, z2), which returns the minimum distance between periodic copies of the points (x1, y1, z1) and (x2, y2, z2). For example, the force given above would be rewritten as</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">CustomExternalForce</span><span class="o">*</span> <span class="n">force</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomExternalForce</span><span class="p">(</span><span class="s">&quot;k*periodicdistance(x, y, z, x0, y0, z0)^2&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Expressions may involve the operators + (add), - (subtract), * (multiply), / (divide), and ^ (power), and the following functions: sqrt, exp, log, sin, cos, sec, csc, tan, cot, asin, acos, atan, sinh, cosh, tanh, erf, erfc, min, max, abs, floor, ceil, step, delta, select. All trigonometric functions are defined in radians, and log is the natural logarithm. step(x) = 0 if x is less than 0, 1 otherwise. delta(x) = 1 if x is 0, 0 otherwise. select(x,y,z) = z if x = 0, y otherwise.</p>
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>self</em>, <em>energy</em><span class="sig-paren">)</span> &rarr; CustomExternalForce<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>__init__(self, other) -&gt; CustomExternalForce</p>
+<p>Create a CustomExternalForce.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>energy</strong> (<em>string</em>) &#8211; an algebraic expression giving the potential energy of each particle as a function of its x, y, and z coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.__init__" title="simtk.openmm.openmm.CustomExternalForce.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>((self,&nbsp;energy)&nbsp;-&gt;&nbsp;CustomExternalForce)</td>
+<td>__init__(self, other) -&gt; CustomExternalForce</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.addGlobalParameter" title="simtk.openmm.openmm.CustomExternalForce.addGlobalParameter"><code class="xref py py-obj docutils literal"><span class="pre">addGlobalParameter</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Add a new global parameter that the force may depend on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.addParticle" title="simtk.openmm.openmm.CustomExternalForce.addParticle"><code class="xref py py-obj docutils literal"><span class="pre">addParticle</span></code></a>((self,&nbsp;particle,&nbsp;parameters)&nbsp;-&gt;&nbsp;int)</td>
+<td>addParticle(self, particle) -&gt; int</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.addPerParticleParameter" title="simtk.openmm.openmm.CustomExternalForce.addPerParticleParameter"><code class="xref py py-obj docutils literal"><span class="pre">addPerParticleParameter</span></code></a>((self,&nbsp;name)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a new per-particle parameter that the force may depend on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.getEnergyFunction" title="simtk.openmm.openmm.CustomExternalForce.getEnergyFunction"><code class="xref py py-obj docutils literal"><span class="pre">getEnergyFunction</span></code></a>((self)&nbsp;-&gt;&nbsp;std::string&nbsp;const&nbsp;&amp;)</td>
+<td>Get the algebraic expression that gives the potential energy of each particle</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.getForceGroup" title="simtk.openmm.openmm.CustomExternalForce.getForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">getForceGroup</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the force group this Force belongs to.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.getGlobalParameterDefaultValue" title="simtk.openmm.openmm.CustomExternalForce.getGlobalParameterDefaultValue"><code class="xref py py-obj docutils literal"><span class="pre">getGlobalParameterDefaultValue</span></code></a>((self,&nbsp;...)</td>
+<td>Get the default value of a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.getGlobalParameterName" title="simtk.openmm.openmm.CustomExternalForce.getGlobalParameterName"><code class="xref py py-obj docutils literal"><span class="pre">getGlobalParameterName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.getNumGlobalParameters" title="simtk.openmm.openmm.CustomExternalForce.getNumGlobalParameters"><code class="xref py py-obj docutils literal"><span class="pre">getNumGlobalParameters</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of global parameters that the force depends on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.getNumParticles" title="simtk.openmm.openmm.CustomExternalForce.getNumParticles"><code class="xref py py-obj docutils literal"><span class="pre">getNumParticles</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of particles for which force field parameters have been defined.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.getNumPerParticleParameters" title="simtk.openmm.openmm.CustomExternalForce.getNumPerParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">getNumPerParticleParameters</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of per-particle parameters that the force depends on</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.getParticleParameters" title="simtk.openmm.openmm.CustomExternalForce.getParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">getParticleParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the force field parameters for a force field term.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.getPerParticleParameterName" title="simtk.openmm.openmm.CustomExternalForce.getPerParticleParameterName"><code class="xref py py-obj docutils literal"><span class="pre">getPerParticleParameterName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a per-particle parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.setEnergyFunction" title="simtk.openmm.openmm.CustomExternalForce.setEnergyFunction"><code class="xref py py-obj docutils literal"><span class="pre">setEnergyFunction</span></code></a>(self,&nbsp;energy)</td>
+<td>Set the algebraic expression that gives the potential energy of each particle</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.setForceGroup" title="simtk.openmm.openmm.CustomExternalForce.setForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">setForceGroup</span></code></a>(self,&nbsp;group)</td>
+<td>Set the force group this Force belongs to.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.setGlobalParameterDefaultValue" title="simtk.openmm.openmm.CustomExternalForce.setGlobalParameterDefaultValue"><code class="xref py py-obj docutils literal"><span class="pre">setGlobalParameterDefaultValue</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the default value of a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.setGlobalParameterName" title="simtk.openmm.openmm.CustomExternalForce.setGlobalParameterName"><code class="xref py py-obj docutils literal"><span class="pre">setGlobalParameterName</span></code></a>(self,&nbsp;index,&nbsp;name)</td>
+<td>Set the name of a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.setParticleParameters" title="simtk.openmm.openmm.CustomExternalForce.setParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">setParticleParameters</span></code></a>(self,&nbsp;index,&nbsp;particle,&nbsp;...)</td>
+<td>setParticleParameters(self, index, particle)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.setPerParticleParameterName" title="simtk.openmm.openmm.CustomExternalForce.setPerParticleParameterName"><code class="xref py py-obj docutils literal"><span class="pre">setPerParticleParameterName</span></code></a>(self,&nbsp;index,&nbsp;name)</td>
+<td>Set the name of a per-particle parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.updateParametersInContext" title="simtk.openmm.openmm.CustomExternalForce.updateParametersInContext"><code class="xref py py-obj docutils literal"><span class="pre">updateParametersInContext</span></code></a>(self,&nbsp;context)</td>
+<td>Update the per-particle parameters in a Context to match those stored in this Force object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomExternalForce.usesPeriodicBoundaryConditions" title="simtk.openmm.openmm.CustomExternalForce.usesPeriodicBoundaryConditions"><code class="xref py py-obj docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a>((self)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.getNumParticles">
+<code class="descname">getNumParticles</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.getNumParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles for which force field parameters have been defined.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.getNumPerParticleParameters">
+<code class="descname">getNumPerParticleParameters</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.getNumPerParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of per-particle parameters that the force depends on</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.getNumGlobalParameters">
+<code class="descname">getNumGlobalParameters</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.getNumGlobalParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of global parameters that the force depends on.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.getEnergyFunction">
+<code class="descname">getEnergyFunction</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.getEnergyFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the algebraic expression that gives the potential energy of each particle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.setEnergyFunction">
+<code class="descname">setEnergyFunction</code><span class="sig-paren">(</span><em>self</em>, <em>energy</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.setEnergyFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the algebraic expression that gives the potential energy of each particle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.addPerParticleParameter">
+<code class="descname">addPerParticleParameter</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.addPerParticleParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new per-particle parameter that the force may depend on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the index of the parameter that was added</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.getPerParticleParameterName">
+<code class="descname">getPerParticleParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.getPerParticleParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a per-particle parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to get the name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.setPerParticleParameterName">
+<code class="descname">setPerParticleParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.setPerParticleParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of a per-particle parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to set the name</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.addGlobalParameter">
+<code class="descname">addGlobalParameter</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>defaultValue</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.addGlobalParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new global parameter that the force may depend on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</li>
+<li><strong>defaultValue</strong> (<em>double</em>) &#8211; the default value of the parameter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the parameter that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.getGlobalParameterName">
+<code class="descname">getGlobalParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.getGlobalParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to get the name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.setGlobalParameterName">
+<code class="descname">setGlobalParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.setGlobalParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to set the name</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.getGlobalParameterDefaultValue">
+<code class="descname">getGlobalParameterDefaultValue</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.getGlobalParameterDefaultValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default value of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to get the default value</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parameter default value</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.setGlobalParameterDefaultValue">
+<code class="descname">setGlobalParameterDefaultValue</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>defaultValue</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.setGlobalParameterDefaultValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default value of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to set the default value</li>
+<li><strong>defaultValue</strong> (<em>double</em>) &#8211; the default value of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.addParticle">
+<code class="descname">addParticle</code><span class="sig-paren">(</span><em>self</em>, <em>particle</em>, <em>parameters</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.addParticle" title="Permalink to this definition">¶</a></dt>
+<dd><p>addParticle(self, particle) -&gt; int</p>
+<p>Add a particle term to the force field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>particle</strong> (<em>int</em>) &#8211; the index of the particle this term is applied to</li>
+<li><strong>parameters</strong> (<em>vector&lt; double &gt;</em>) &#8211; the list of parameters for the new force term</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the particle term that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.getParticleParameters">
+<code class="descname">getParticleParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.getParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force field parameters for a force field term.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the particle term for which to get parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>particle</strong> (<em>int</em>) &#8211;
+the index of the particle this term is applied to</li>
+<li><strong>parameters</strong> (<em>vector&lt; double &gt;</em>) &#8211;
+the list of parameters for the force field term</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.setParticleParameters">
+<code class="descname">setParticleParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>particle</em>, <em>parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.setParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>setParticleParameters(self, index, particle)</p>
+<p>Set the force field parameters for a force field term.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the particle term for which to set parameters</li>
+<li><strong>particle</strong> (<em>int</em>) &#8211; the index of the particle this term is applied to</li>
+<li><strong>parameters</strong> (<em>vector&lt; double &gt;</em>) &#8211; the list of parameters for the force field term</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.updateParametersInContext">
+<code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.updateParametersInContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the per-particle parameters in a Context to match those stored in this Force object. This method provides an efficient method to update certain parameters in an existing Context without needing to reinitialize it. Simply call setParticleParameters() to modify this object&#8217;s parameters, then call updateParametersInContext() to copy them over to the Context.</p>
+<p>This method has several limitations. The only information it updates is the values of per-particle parameters. All other aspects of the Force (such as the energy function) are unaffected and can only be changed by reinitializing the Context. Also, this method cannot be used to add new particles, only to change the parameters of existing ones.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.usesPeriodicBoundaryConditions">
+<code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.usesPeriodicBoundaryConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">false</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.__copy__">
+<code class="descname">__copy__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; Force<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.__copy__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.getForceGroup">
+<code class="descname">getForceGroup</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.getForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force group this Force belongs to.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomExternalForce.setForceGroup">
+<code class="descname">setForceGroup</code><span class="sig-paren">(</span><em>self</em>, <em>group</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomExternalForce.setForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force group this Force belongs to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>group</strong> (<em>int</em>) &#8211; the group index. Legal values are between 0 and 31 (inclusive).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Application Layer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../library.html">Library Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../library.html#core-objects">Core Objects</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../library.html#forces">Forces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#integrators">Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.openmm.CustomExternalForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

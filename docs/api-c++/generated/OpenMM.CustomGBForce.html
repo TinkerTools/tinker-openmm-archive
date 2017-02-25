@@ -1,0 +1,1072 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CustomGBForce &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="customgbforce">
+<h1>CustomGBForce<a class="headerlink" href="#customgbforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM13CustomGBForceE">
+<span id="OpenMM::CustomGBForce"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">CustomGBForce</code><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForceE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements complex, multiple stage nonbonded interactions between particles. It is designed primarily for implementing Generalized Born implicit solvation models, although it is not strictly limited to that purpose. The interaction is specified as a series of computations, each defined by an arbitrary algebraic expression. It also allows tabulated functions to be defined and used with the computations. It optionally supports periodic boundary conditions and cutoffs for long range interactions.</p>
+<p>The computation consists of calculating some number of per-particle</p>
+<p>When specifying a computed value or energy term, you provide an algebraic expression to evaluate and a</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>. In the case of a computed value, this means the value for a particle depends only on other properties of that particle (its position, parameters, and other computed values). In the case of an energy term, it means each particle makes an independent contribution to the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> energy.</li>
+<li><a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> energy. (Note that energy terms are assumed to be symmetric with respect to the two interacting particles, and therefore are evaluated only once per pair. In contrast, expressions for computed values need not be symmetric and therefore are calculated twice for each pair: once when calculating the value for the first particle, and again when calculating the value for the second particle.)</li>
+</ul>
+</div></blockquote>
+<p>Be aware that, although this class is extremely general in the computations it can define, particular Platforms may only support more restricted types of computations. In particular, all currently existing Platforms require that the first computed value</p>
+<p>This is a complicated class to use, and an example may help to clarify it. The following code implements the OBC variant of the GB/SA solvation model, using the ACE approximation to estimate surface area:</p>
+<div class="highlight-C++"><div class="highlight"><pre><span></span><span class="n">CustomGBForce</span><span class="o">*</span> <span class="n">custom</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomGBForce</span><span class="p">();</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s">&quot;q&quot;</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s">&quot;radius&quot;</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s">&quot;scale&quot;</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s">&quot;solventDielectric&quot;</span><span class="p">,</span> <span class="n">obc</span><span class="o">-&gt;</span><span class="n">getSolventDielectric</span><span class="p">());</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s">&quot;soluteDielectric&quot;</span><span class="p">,</span> <span class="n">obc</span><span class="o">-&gt;</span><span class="n">getSoluteDielectric</span><span class="p">());</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addComputedValue</span><span class="p">(</span><span class="s">&quot;I&quot;</span><span class="p">,</span> <span class="s">&quot;step(r+sr2-or1)*0.5*(1/L-1/U+0.25*(1/U^2-1/L^2)*(r-sr2*sr2/r)+0.5*log(L/U)/r+C);&quot;</span>
+                              <span class="s">&quot;U=r+sr2;&quot;</span>
+                              <span class="s">&quot;C=2*(1/or1-1/L)*step(sr2-r-or1);&quot;</span>
+                              <span class="s">&quot;L=max(or1, D);&quot;</span>
+                              <span class="s">&quot;D=abs(r-sr2);&quot;</span>
+                              <span class="s">&quot;sr2 = scale2*or2;&quot;</span>
+                              <span class="s">&quot;or1 = radius1-0.009; or2 = radius2-0.009&quot;</span><span class="p">,</span> <span class="n">CustomGBForce</span><span class="o">::</span><span class="n">ParticlePairNoExclusions</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addComputedValue</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="s">&quot;1/(1/or-tanh(1*psi-0.8*psi^2+4.85*psi^3)/radius);&quot;</span>
+                              <span class="s">&quot;psi=I*or; or=radius-0.009&quot;</span><span class="p">,</span> <span class="n">CustomGBForce</span><span class="o">::</span><span class="n">SingleParticle</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addEnergyTerm</span><span class="p">(</span><span class="s">&quot;28.3919551*(radius+0.14)^2*(radius/B)^6-0.5*138.935456*(1/soluteDielectric-1/solventDielectric)*q^2/B&quot;</span><span class="p">,</span>
+                      <span class="n">CustomGBForce</span><span class="o">::</span><span class="n">SingleParticle</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addEnergyTerm</span><span class="p">(</span><span class="s">&quot;-138.935456*(1/soluteDielectric-1/solventDielectric)*q1*q2/f;&quot;</span>
+                      <span class="s">&quot;f=sqrt(r^2+B1*B2*exp(-r^2/(4*B1*B2)))&quot;</span><span class="p">,</span> <span class="n">CustomGBForce</span><span class="o">::</span><span class="n">ParticlePair</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>It begins by defining three per-particle parameters (charge, atomic radius, and scale factor) and two global parameters (the dielectric constants for the solute and solvent). It then defines a computed value &#8220;I&#8221; of type ParticlePair. The expression for evaluating it is a complicated function of the distance between each pair of particles (r), their atomic radii (radius1 and radius2), and their scale factors (scale1 and scale2). Very roughly speaking, it is a measure of the distance between each particle and other nearby particles.</p>
+<p>Next a computation is defined for the Born Radius (B). It is computed independently for each particle, and is a function of that particle&#8217;s atomic radius and the intermediate value I defined above.</p>
+<p>Finally, two energy terms are defined. The first one is computed for each particle and represents the surface area term, as well as the self interaction part of the polarization energy. The second term is calculated for each pair of particles, and represents the screening of electrostatic interactions by the solvent.</p>
+<p>After defining the force as shown above, you should then call <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce11addParticleERKNSt6vectorIdEE" title="OpenMM::CustomGBForce::addParticle"><code class="xref cpp cpp-any docutils literal"><span class="pre">addParticle()</span></code></a> once for each particle in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a> to set the values of its per-particle parameters (q, radius, and scale). The number of particles for which you set parameters must be exactly equal to the number of particles in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>, or else an exception will be thrown when you try to create a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>. After a particle has been added, you can modify its parameters by calling <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce21setParticleParametersEiRKNSt6vectorIdEE" title="OpenMM::CustomGBForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters()</span></code></a>. This will have no effect on Contexts that already exist unless you call <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce25updateParametersInContextER7Context" title="OpenMM::CustomGBForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a>.
+<a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce13CustomGBForceEv" title="OpenMM::CustomGBForce::CustomGBForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomGBForce</span></code></a> also lets you specify &#8220;exclusions&#8221;, particular pairs of particles whose interactions should be omitted from calculations. This is most often used for particles that are bonded to each other. Even if you specify exclusions, however, you can use the computation type ParticlePairNoExclusions to indicate that exclusions should not be applied to a particular piece of the computation.</p>
+<p>This class also has the ability to compute derivatives of the potential energy with respect to global parameters. Call <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce28addEnergyParameterDerivativeERKNSt6stringE" title="OpenMM::CustomGBForce::addEnergyParameterDerivative"><code class="xref cpp cpp-any docutils literal"><span class="pre">addEnergyParameterDerivative()</span></code></a> to request that the derivative with respect to a particular parameter be computed. You can then query its value in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> by calling getState() on it.</p>
+<p>Expressions may involve the operators + (add), - (subtract), * (multiply), / (divide), and ^ (power), and the following functions: sqrt, exp, log, sin, cos, sec, csc, tan, cot, asin, acos, atan, sinh, cosh, tanh, erf, erfc, min, max, abs, floor, ceil, step, delta, select. All trigonometric functions are defined in radians, and log is the natural logarithm. step(x) = 0 if x is less than 0, 1 otherwise. delta(x) = 1 if x is 0, 0 otherwise. select(x,y,z) = z if x = 0, y otherwise. In expressions for particle pair calculations, the names of per-particle parameters and computed values have the suffix &#8220;1&#8221; or &#8220;2&#8221; appended to them to indicate the values for the two interacting particles. As seen in the above example, an expression may also involve intermediate quantities that are defined following the main expression, using &#8221;;&#8221; as a separator.</p>
+<p>In addition, you can call <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce20addTabulatedFunctionERKNSt6stringEP17TabulatedFunction" title="OpenMM::CustomGBForce::addTabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">addTabulatedFunction()</span></code></a> to define a new function based on tabulated values. You specify the function by creating a <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a> object. That function can then appear in expressions.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce13CustomGBForceEv" title="OpenMM::CustomGBForce::CustomGBForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomGBForce</span></code></a></td>
+<td>Create a <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce13CustomGBForceEv" title="OpenMM::CustomGBForce::CustomGBForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomGBForce</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForceD0Ev" title="OpenMM::CustomGBForce::~CustomGBForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">~CustomGBForce</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce15getNumParticlesEv" title="OpenMM::CustomGBForce::getNumParticles"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumParticles</span></code></a></td>
+<td>Get the number of particles for which force field parameters have been defined.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce16getNumExclusionsEv" title="OpenMM::CustomGBForce::getNumExclusions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumExclusions</span></code></a></td>
+<td>Get the number of particle pairs whose interactions should be excluded.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce27getNumPerParticleParametersEv" title="OpenMM::CustomGBForce::getNumPerParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumPerParticleParameters</span></code></a></td>
+<td>Get the number of per-particle parameters that the interaction depends on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce22getNumGlobalParametersEv" title="OpenMM::CustomGBForce::getNumGlobalParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumGlobalParameters</span></code></a></td>
+<td>Get the number of global parameters that the interaction depends on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce32getNumEnergyParameterDerivativesEv" title="OpenMM::CustomGBForce::getNumEnergyParameterDerivatives"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumEnergyParameterDerivatives</span></code></a></td>
+<td>Get the number of global parameters with respect to which the derivative of the energy should be computed.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce24getNumTabulatedFunctionsEv" title="OpenMM::CustomGBForce::getNumTabulatedFunctions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumTabulatedFunctions</span></code></a></td>
+<td>Get the number of tabulated functions that have been defined.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce15getNumFunctionsEv" title="OpenMM::CustomGBForce::getNumFunctions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumFunctions</span></code></a></td>
+<td>Get the number of tabulated functions that have been defined.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce20getNumComputedValuesEv" title="OpenMM::CustomGBForce::getNumComputedValues"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumComputedValues</span></code></a></td>
+<td>Get the number of per-particle computed values the interaction depends on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce17getNumEnergyTermsEv" title="OpenMM::CustomGBForce::getNumEnergyTerms"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumEnergyTerms</span></code></a></td>
+<td>Get the number of terms in the energy computation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce18getNonbondedMethodEv" title="OpenMM::CustomGBForce::getNonbondedMethod"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNonbondedMethod</span></code></a></td>
+<td>Get the method used for handling long range nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce18setNonbondedMethodE15NonbondedMethod" title="OpenMM::CustomGBForce::setNonbondedMethod"><code class="xref cpp cpp-any docutils literal"><span class="pre">setNonbondedMethod</span></code></a></td>
+<td>Set the method used for handling long range nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce17getCutoffDistanceEv" title="OpenMM::CustomGBForce::getCutoffDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">getCutoffDistance</span></code></a></td>
+<td>Get the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce17setCutoffDistanceEd" title="OpenMM::CustomGBForce::setCutoffDistance"><code class="xref cpp cpp-any docutils literal"><span class="pre">setCutoffDistance</span></code></a></td>
+<td>Set the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce23addPerParticleParameterERKNSt6stringE" title="OpenMM::CustomGBForce::addPerParticleParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">addPerParticleParameter</span></code></a></td>
+<td>Add a new per-particle parameter that the interaction may depend on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce27getPerParticleParameterNameEi" title="OpenMM::CustomGBForce::getPerParticleParameterName"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPerParticleParameterName</span></code></a></td>
+<td>Get the name of a per-particle parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce27setPerParticleParameterNameEiRKNSt6stringE" title="OpenMM::CustomGBForce::setPerParticleParameterName"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPerParticleParameterName</span></code></a></td>
+<td>Set the name of a per-particle parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce18addGlobalParameterERKNSt6stringEd" title="OpenMM::CustomGBForce::addGlobalParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">addGlobalParameter</span></code></a></td>
+<td>Add a new global parameter that the interaction may depend on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce22getGlobalParameterNameEi" title="OpenMM::CustomGBForce::getGlobalParameterName"><code class="xref cpp cpp-any docutils literal"><span class="pre">getGlobalParameterName</span></code></a></td>
+<td>Get the name of a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce22setGlobalParameterNameEiRKNSt6stringE" title="OpenMM::CustomGBForce::setGlobalParameterName"><code class="xref cpp cpp-any docutils literal"><span class="pre">setGlobalParameterName</span></code></a></td>
+<td>Set the name of a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce30getGlobalParameterDefaultValueEi" title="OpenMM::CustomGBForce::getGlobalParameterDefaultValue"><code class="xref cpp cpp-any docutils literal"><span class="pre">getGlobalParameterDefaultValue</span></code></a></td>
+<td>Get the default value of a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce30setGlobalParameterDefaultValueEid" title="OpenMM::CustomGBForce::setGlobalParameterDefaultValue"><code class="xref cpp cpp-any docutils literal"><span class="pre">setGlobalParameterDefaultValue</span></code></a></td>
+<td>Set the default value of a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce28addEnergyParameterDerivativeERKNSt6stringE" title="OpenMM::CustomGBForce::addEnergyParameterDerivative"><code class="xref cpp cpp-any docutils literal"><span class="pre">addEnergyParameterDerivative</span></code></a></td>
+<td>Request that this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> compute the derivative of its energy with respect to a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce32getEnergyParameterDerivativeNameEi" title="OpenMM::CustomGBForce::getEnergyParameterDerivativeName"><code class="xref cpp cpp-any docutils literal"><span class="pre">getEnergyParameterDerivativeName</span></code></a></td>
+<td>Get the name of a global parameter with respect to which this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> should compute the derivative of the energy.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce11addParticleERKNSt6vectorIdEE" title="OpenMM::CustomGBForce::addParticle"><code class="xref cpp cpp-any docutils literal"><span class="pre">addParticle</span></code></a></td>
+<td>Add the nonbonded force parameters for a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce21getParticleParametersEiRNSt6vectorIdEE" title="OpenMM::CustomGBForce::getParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getParticleParameters</span></code></a></td>
+<td>Get the nonbonded force parameters for a particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce21setParticleParametersEiRKNSt6vectorIdEE" title="OpenMM::CustomGBForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters</span></code></a></td>
+<td>Set the nonbonded force parameters for a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce16addComputedValueERKNSt6stringERKNSt6stringE15ComputationType" title="OpenMM::CustomGBForce::addComputedValue"><code class="xref cpp cpp-any docutils literal"><span class="pre">addComputedValue</span></code></a></td>
+<td>Add a computed value to calculate for each particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce26getComputedValueParametersEiRNSt6stringERNSt6stringER15ComputationType" title="OpenMM::CustomGBForce::getComputedValueParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getComputedValueParameters</span></code></a></td>
+<td>Get the properties of a computed value.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce26setComputedValueParametersEiRKNSt6stringERKNSt6stringE15ComputationType" title="OpenMM::CustomGBForce::setComputedValueParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setComputedValueParameters</span></code></a></td>
+<td>Set the properties of a computed value.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce13addEnergyTermERKNSt6stringE15ComputationType" title="OpenMM::CustomGBForce::addEnergyTerm"><code class="xref cpp cpp-any docutils literal"><span class="pre">addEnergyTerm</span></code></a></td>
+<td>Add a term to the energy computation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce23getEnergyTermParametersEiRNSt6stringER15ComputationType" title="OpenMM::CustomGBForce::getEnergyTermParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getEnergyTermParameters</span></code></a></td>
+<td>Get the properties of a term to the energy computation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce23setEnergyTermParametersEiRKNSt6stringE15ComputationType" title="OpenMM::CustomGBForce::setEnergyTermParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setEnergyTermParameters</span></code></a></td>
+<td>Set the properties of a term to the energy computation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce12addExclusionEii" title="OpenMM::CustomGBForce::addExclusion"><code class="xref cpp cpp-any docutils literal"><span class="pre">addExclusion</span></code></a></td>
+<td>Add a particle pair to the list of interactions that should be excluded.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce21getExclusionParticlesEiRiRi" title="OpenMM::CustomGBForce::getExclusionParticles"><code class="xref cpp cpp-any docutils literal"><span class="pre">getExclusionParticles</span></code></a></td>
+<td>Get the particles in a pair whose interaction should be excluded.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce21setExclusionParticlesEiii" title="OpenMM::CustomGBForce::setExclusionParticles"><code class="xref cpp cpp-any docutils literal"><span class="pre">setExclusionParticles</span></code></a></td>
+<td>Set the particles in a pair whose interaction should be excluded.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce20addTabulatedFunctionERKNSt6stringEP17TabulatedFunction" title="OpenMM::CustomGBForce::addTabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">addTabulatedFunction</span></code></a></td>
+<td>Add a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce20getTabulatedFunctionEi" title="OpenMM::CustomGBForce::getTabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">getTabulatedFunction</span></code></a></td>
+<td>Get a const reference to a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce20getTabulatedFunctionEi" title="OpenMM::CustomGBForce::getTabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">getTabulatedFunction</span></code></a></td>
+<td>Get a reference to a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce24getTabulatedFunctionNameEi" title="OpenMM::CustomGBForce::getTabulatedFunctionName"><code class="xref cpp cpp-any docutils literal"><span class="pre">getTabulatedFunctionName</span></code></a></td>
+<td>Get the name of a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce11addFunctionERKNSt6stringERKNSt6vectorIdEEdd" title="OpenMM::CustomGBForce::addFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">addFunction</span></code></a></td>
+<td>Add a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce21getFunctionParametersEiRNSt6stringERNSt6vectorIdEERdRd" title="OpenMM::CustomGBForce::getFunctionParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getFunctionParameters</span></code></a></td>
+<td>Get the parameters for a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce21setFunctionParametersEiRKNSt6stringERKNSt6vectorIdEEdd" title="OpenMM::CustomGBForce::setFunctionParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setFunctionParameters</span></code></a></td>
+<td>Set the parameters for a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce25updateParametersInContextER7Context" title="OpenMM::CustomGBForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext</span></code></a></td>
+<td>Update the per-particle parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce30usesPeriodicBoundaryConditionsEv" title="OpenMM::CustomGBForce::usesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a></td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Enum: NonbondedMethod</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>NoCutoff</strong></td>
+<td>No cutoff is applied to nonbonded interactions. The full set of N^2 interactions is computed exactly. This necessarily means that periodic boundary conditions cannot be used. This is the default.</td>
+</tr>
+<tr class="row-even"><td><strong>CutoffNonPeriodic</strong></td>
+<td>Interactions beyond the cutoff distance are ignored.</td>
+</tr>
+<tr class="row-odd"><td><strong>CutoffPeriodic</strong></td>
+<td>Periodic boundary conditions are used, so that each particle interacts only with the nearest periodic copy of each other particle. Interactions beyond the cutoff distance are ignored.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Enum: ComputationType</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>SingleParticle</strong></td>
+<td>The value is computed independently for each particle, based only on the parameters and computed values for that particle.</td>
+</tr>
+<tr class="row-even"><td><strong>ParticlePair</strong></td>
+<td>The value is computed as a sum over all pairs of particles, except those which have been added as exclusions.</td>
+</tr>
+<tr class="row-odd"><td><strong>ParticlePairNoExclusions</strong></td>
+<td>The value is computed as a sum over all pairs of particles. Unlike ParticlePair, the list of exclusions is ignored and all pairs are included in the sum, even those marked as exclusions.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce13CustomGBForceEv">
+<span id="OpenMM::CustomGBForce::CustomGBForce"></span><code class="descclassname"></code><code class="descname">CustomGBForce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce13CustomGBForceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce13CustomGBForceEv" title="OpenMM::CustomGBForce::CustomGBForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">CustomGBForce</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForceD0Ev">
+<span id="OpenMM::CustomGBForce::~CustomGBForce"></span><code class="descclassname"></code><code class="descname">~CustomGBForce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForceD0Ev" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce15getNumParticlesEv">
+<span id="OpenMM::CustomGBForce::getNumParticlesC"></span>int <code class="descclassname"></code><code class="descname">getNumParticles</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce15getNumParticlesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles for which force field parameters have been defined.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce16getNumExclusionsEv">
+<span id="OpenMM::CustomGBForce::getNumExclusionsC"></span>int <code class="descclassname"></code><code class="descname">getNumExclusions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce16getNumExclusionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particle pairs whose interactions should be excluded.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce27getNumPerParticleParametersEv">
+<span id="OpenMM::CustomGBForce::getNumPerParticleParametersC"></span>int <code class="descclassname"></code><code class="descname">getNumPerParticleParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce27getNumPerParticleParametersEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of per-particle parameters that the interaction depends on.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce22getNumGlobalParametersEv">
+<span id="OpenMM::CustomGBForce::getNumGlobalParametersC"></span>int <code class="descclassname"></code><code class="descname">getNumGlobalParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce22getNumGlobalParametersEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of global parameters that the interaction depends on.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce32getNumEnergyParameterDerivativesEv">
+<span id="OpenMM::CustomGBForce::getNumEnergyParameterDerivativesC"></span>int <code class="descclassname"></code><code class="descname">getNumEnergyParameterDerivatives</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce32getNumEnergyParameterDerivativesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of global parameters with respect to which the derivative of the energy should be computed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce24getNumTabulatedFunctionsEv">
+<span id="OpenMM::CustomGBForce::getNumTabulatedFunctionsC"></span>int <code class="descclassname"></code><code class="descname">getNumTabulatedFunctions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce24getNumTabulatedFunctionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of tabulated functions that have been defined.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce15getNumFunctionsEv">
+<span id="OpenMM::CustomGBForce::getNumFunctionsC"></span>int <code class="descclassname"></code><code class="descname">getNumFunctions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce15getNumFunctionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of tabulated functions that have been defined.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use <a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce24getNumTabulatedFunctionsEv" title="OpenMM::CustomGBForce::getNumTabulatedFunctions"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumTabulatedFunctions()</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce20getNumComputedValuesEv">
+<span id="OpenMM::CustomGBForce::getNumComputedValuesC"></span>int <code class="descclassname"></code><code class="descname">getNumComputedValues</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce20getNumComputedValuesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of per-particle computed values the interaction depends on.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce17getNumEnergyTermsEv">
+<span id="OpenMM::CustomGBForce::getNumEnergyTermsC"></span>int <code class="descclassname"></code><code class="descname">getNumEnergyTerms</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce17getNumEnergyTermsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of terms in the energy computation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce18getNonbondedMethodEv">
+<span id="OpenMM::CustomGBForce::getNonbondedMethodC"></span>NonbondedMethod <code class="descclassname"></code><code class="descname">getNonbondedMethod</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce18getNonbondedMethodEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the method used for handling long range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce18setNonbondedMethodE15NonbondedMethod">
+<span id="OpenMM::CustomGBForce::setNonbondedMethod__NonbondedMethod"></span>void <code class="descclassname"></code><code class="descname">setNonbondedMethod</code><span class="sig-paren">(</span>NonbondedMethod <em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce18setNonbondedMethodE15NonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the method used for handling long range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce17getCutoffDistanceEv">
+<span id="OpenMM::CustomGBForce::getCutoffDistanceC"></span>double <code class="descclassname"></code><code class="descname">getCutoffDistance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce17getCutoffDistanceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the cutoff distance, measured in nm</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce17setCutoffDistanceEd">
+<span id="OpenMM::CustomGBForce::setCutoffDistance__double"></span>void <code class="descclassname"></code><code class="descname">setCutoffDistance</code><span class="sig-paren">(</span>double <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce17setCutoffDistanceEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>distance</strong> &#8211; the cutoff distance, measured in nm</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce23addPerParticleParameterERKNSt6stringE">
+<span id="OpenMM::CustomGBForce::addPerParticleParameter__ssCR"></span>int <code class="descclassname"></code><code class="descname">addPerParticleParameter</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce23addPerParticleParameterERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new per-particle parameter that the interaction may depend on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the parameter</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the parameter that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce27getPerParticleParameterNameEi">
+<span id="OpenMM::CustomGBForce::getPerParticleParameterName__iC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getPerParticleParameterName</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce27getPerParticleParameterNameEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a per-particle parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to get the name</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce27setPerParticleParameterNameEiRKNSt6stringE">
+<span id="OpenMM::CustomGBForce::setPerParticleParameterName__i.ssCR"></span>void <code class="descclassname"></code><code class="descname">setPerParticleParameterName</code><span class="sig-paren">(</span>int <em>index</em>, <em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce27setPerParticleParameterNameEiRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of a per-particle parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to set the name</li>
+<li><strong>name</strong> &#8211; the name of the parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce18addGlobalParameterERKNSt6stringEd">
+<span id="OpenMM::CustomGBForce::addGlobalParameter__ssCR.double"></span>int <code class="descclassname"></code><code class="descname">addGlobalParameter</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, double <em>defaultValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce18addGlobalParameterERKNSt6stringEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new global parameter that the interaction may depend on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the parameter</li>
+<li><strong>defaultValue</strong> &#8211; the default value of the parameter</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the parameter that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce22getGlobalParameterNameEi">
+<span id="OpenMM::CustomGBForce::getGlobalParameterName__iC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getGlobalParameterName</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce22getGlobalParameterNameEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to get the name</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce22setGlobalParameterNameEiRKNSt6stringE">
+<span id="OpenMM::CustomGBForce::setGlobalParameterName__i.ssCR"></span>void <code class="descclassname"></code><code class="descname">setGlobalParameterName</code><span class="sig-paren">(</span>int <em>index</em>, <em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce22setGlobalParameterNameEiRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to set the name</li>
+<li><strong>name</strong> &#8211; the name of the parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce30getGlobalParameterDefaultValueEi">
+<span id="OpenMM::CustomGBForce::getGlobalParameterDefaultValue__iC"></span>double <code class="descclassname"></code><code class="descname">getGlobalParameterDefaultValue</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce30getGlobalParameterDefaultValueEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default value of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to get the default value</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the parameter default value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce30setGlobalParameterDefaultValueEid">
+<span id="OpenMM::CustomGBForce::setGlobalParameterDefaultValue__i.double"></span>void <code class="descclassname"></code><code class="descname">setGlobalParameterDefaultValue</code><span class="sig-paren">(</span>int <em>index</em>, double <em>defaultValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce30setGlobalParameterDefaultValueEid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default value of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter for which to set the default value</li>
+<li><strong>defaultValue</strong> &#8211; the default value of the parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce28addEnergyParameterDerivativeERKNSt6stringE">
+<span id="OpenMM::CustomGBForce::addEnergyParameterDerivative__ssCR"></span>void <code class="descclassname"></code><code class="descname">addEnergyParameterDerivative</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce28addEnergyParameterDerivativeERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request that this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> compute the derivative of its energy with respect to a global parameter. The parameter must have already been added with <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce18addGlobalParameterERKNSt6stringEd" title="OpenMM::CustomGBForce::addGlobalParameter"><code class="xref cpp cpp-any docutils literal"><span class="pre">addGlobalParameter()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the parameter</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce32getEnergyParameterDerivativeNameEi">
+<span id="OpenMM::CustomGBForce::getEnergyParameterDerivativeName__iC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getEnergyParameterDerivativeName</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce32getEnergyParameterDerivativeNameEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a global parameter with respect to which this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> should compute the derivative of the energy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the parameter derivative, between 0 and <a class="reference internal" href="#_CPPv2NK6OpenMM13CustomGBForce32getNumEnergyParameterDerivativesEv" title="OpenMM::CustomGBForce::getNumEnergyParameterDerivatives"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumEnergyParameterDerivatives()</span></code></a></li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce11addParticleERKNSt6vectorIdEE">
+<span id="OpenMM::CustomGBForce::addParticle__std::vector:double:CR"></span>int <code class="descclassname"></code><code class="descname">addParticle</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;double&gt; &amp;<em>parameters</em> = std::vector&lt; double &gt;()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce11addParticleERKNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the nonbonded force parameters for a particle. This should be called once for each particle in the <a class="reference internal" href="OpenMM.System.html#_CPPv2N6OpenMM6SystemE" title="OpenMM::System"><code class="xref cpp cpp-any docutils literal"><span class="pre">System</span></code></a>. When it is called for the i&#8217;th time, it specifies the parameters for the i&#8217;th particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>parameters</strong> &#8211; the list of parameters for the new particle</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the particle that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce21getParticleParametersEiRNSt6vectorIdEE">
+<span id="OpenMM::CustomGBForce::getParticleParameters__i.std::vector:double:RC"></span>void <code class="descclassname"></code><code class="descname">getParticleParameters</code><span class="sig-paren">(</span>int <em>index</em>, std::vector&lt;double&gt; &amp;<em>parameters</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce21getParticleParametersEiRNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the nonbonded force parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the particle for which to get parameters</li>
+<li><strong>parameters</strong> &#8211; [out] the list of parameters for the specified particle</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce21setParticleParametersEiRKNSt6vectorIdEE">
+<span id="OpenMM::CustomGBForce::setParticleParameters__i.std::vector:double:CR"></span>void <code class="descclassname"></code><code class="descname">setParticleParameters</code><span class="sig-paren">(</span>int <em>index</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce21setParticleParametersEiRKNSt6vectorIdEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the nonbonded force parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the particle for which to set parameters</li>
+<li><strong>parameters</strong> &#8211; the list of parameters for the specified particle</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce16addComputedValueERKNSt6stringERKNSt6stringE15ComputationType">
+<span id="OpenMM::CustomGBForce::addComputedValue__ssCR.ssCR.ComputationType"></span>int <code class="descclassname"></code><code class="descname">addComputedValue</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, <em class="property">const</em> std::string &amp;<em>expression</em>, ComputationType <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce16addComputedValueERKNSt6stringERKNSt6stringE15ComputationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a computed value to calculate for each particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the value</li>
+<li><strong>expression</strong> &#8211; an algebraic expression to evaluate when calculating the computed value. If the ComputationType is SingleParticle, the expression is evaluated independently for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and previous computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every other particle in the system and summed to get the final value. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and previous computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the particle whose value is being calculated, and &#8220;2&#8221; to indicate the particle it is interacting with.</li>
+<li><strong>type</strong> &#8211; the method to use for computing this value</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce26getComputedValueParametersEiRNSt6stringERNSt6stringER15ComputationType">
+<span id="OpenMM::CustomGBForce::getComputedValueParameters__i.ssR.ssR.ComputationTypeRC"></span>void <code class="descclassname"></code><code class="descname">getComputedValueParameters</code><span class="sig-paren">(</span>int <em>index</em>, std::string &amp;<em>name</em>, std::string &amp;<em>expression</em>, ComputationType &amp;<em>type</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce26getComputedValueParametersEiRNSt6stringERNSt6stringER15ComputationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the properties of a computed value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the computed value for which to get parameters</li>
+<li><strong>name</strong> &#8211; [out] the name of the value</li>
+<li><strong>expression</strong> &#8211; [out] an algebraic expression to evaluate when calculating the computed value. If the ComputationType is SingleParticle, the expression is evaluated independently for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and previous computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every other particle in the system and summed to get the final value. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and previous computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the particle whose value is being calculated, and &#8220;2&#8221; to indicate the particle it is interacting with.</li>
+<li><strong>type</strong> &#8211; [out] the method to use for computing this value</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce26setComputedValueParametersEiRKNSt6stringERKNSt6stringE15ComputationType">
+<span id="OpenMM::CustomGBForce::setComputedValueParameters__i.ssCR.ssCR.ComputationType"></span>void <code class="descclassname"></code><code class="descname">setComputedValueParameters</code><span class="sig-paren">(</span>int <em>index</em>, <em class="property">const</em> std::string &amp;<em>name</em>, <em class="property">const</em> std::string &amp;<em>expression</em>, ComputationType <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce26setComputedValueParametersEiRKNSt6stringERKNSt6stringE15ComputationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the properties of a computed value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the computed value for which to set parameters</li>
+<li><strong>name</strong> &#8211; the name of the value</li>
+<li><strong>expression</strong> &#8211; an algebraic expression to evaluate when calculating the computed value. If the ComputationType is SingleParticle, the expression is evaluated independently for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and previous computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every other particle in the system and summed to get the final value. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and previous computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the particle whose value is being calculated, and &#8220;2&#8221; to indicate the particle it is interacting with.</li>
+<li><strong>type</strong> &#8211; the method to use for computing this value</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce13addEnergyTermERKNSt6stringE15ComputationType">
+<span id="OpenMM::CustomGBForce::addEnergyTerm__ssCR.ComputationType"></span>int <code class="descclassname"></code><code class="descname">addEnergyTerm</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>expression</em>, ComputationType <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce13addEnergyTermERKNSt6stringE15ComputationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a term to the energy computation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>expression</strong> &#8211; an algebraic expression to evaluate when calculating the energy. If the ComputationType is SingleParticle, the expression is evaluated once for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every pair of particles in the system. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the first particle in the pair and &#8220;2&#8221; to indicate the second particle in the pair.</li>
+<li><strong>type</strong> &#8211; the method to use for computing this value</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce23getEnergyTermParametersEiRNSt6stringER15ComputationType">
+<span id="OpenMM::CustomGBForce::getEnergyTermParameters__i.ssR.ComputationTypeRC"></span>void <code class="descclassname"></code><code class="descname">getEnergyTermParameters</code><span class="sig-paren">(</span>int <em>index</em>, std::string &amp;<em>expression</em>, ComputationType &amp;<em>type</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce23getEnergyTermParametersEiRNSt6stringER15ComputationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the properties of a term to the energy computation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the term for which to get parameters</li>
+<li><strong>expression</strong> &#8211; [out] an algebraic expression to evaluate when calculating the energy. If the ComputationType is SingleParticle, the expression is evaluated once for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every pair of particles in the system. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the first particle in the pair and &#8220;2&#8221; to indicate the second particle in the pair.</li>
+<li><strong>type</strong> &#8211; [out] the method to use for computing this value</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce23setEnergyTermParametersEiRKNSt6stringE15ComputationType">
+<span id="OpenMM::CustomGBForce::setEnergyTermParameters__i.ssCR.ComputationType"></span>void <code class="descclassname"></code><code class="descname">setEnergyTermParameters</code><span class="sig-paren">(</span>int <em>index</em>, <em class="property">const</em> std::string &amp;<em>expression</em>, ComputationType <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce23setEnergyTermParametersEiRKNSt6stringE15ComputationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the properties of a term to the energy computation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the term for which to set parameters</li>
+<li><strong>expression</strong> &#8211; an algebraic expression to evaluate when calculating the energy. If the ComputationType is SingleParticle, the expression is evaluated once for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every pair of particles in the system. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the first particle in the pair and &#8220;2&#8221; to indicate the second particle in the pair.</li>
+<li><strong>type</strong> &#8211; the method to use for computing this value</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce12addExclusionEii">
+<span id="OpenMM::CustomGBForce::addExclusion__i.i"></span>int <code class="descclassname"></code><code class="descname">addExclusion</code><span class="sig-paren">(</span>int <em>particle1</em>, int <em>particle2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce12addExclusionEii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a particle pair to the list of interactions that should be excluded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particle1</strong> &#8211; the index of the first particle in the pair</li>
+<li><strong>particle2</strong> &#8211; the index of the second particle in the pair</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the exclusion that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce21getExclusionParticlesEiRiRi">
+<span id="OpenMM::CustomGBForce::getExclusionParticles__i.iR.iRC"></span>void <code class="descclassname"></code><code class="descname">getExclusionParticles</code><span class="sig-paren">(</span>int <em>index</em>, int &amp;<em>particle1</em>, int &amp;<em>particle2</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce21getExclusionParticlesEiRiRi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the particles in a pair whose interaction should be excluded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the exclusion for which to get particle indices</li>
+<li><strong>particle1</strong> &#8211; [out] the index of the first particle in the pair</li>
+<li><strong>particle2</strong> &#8211; [out] the index of the second particle in the pair</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce21setExclusionParticlesEiii">
+<span id="OpenMM::CustomGBForce::setExclusionParticles__i.i.i"></span>void <code class="descclassname"></code><code class="descname">setExclusionParticles</code><span class="sig-paren">(</span>int <em>index</em>, int <em>particle1</em>, int <em>particle2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce21setExclusionParticlesEiii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the particles in a pair whose interaction should be excluded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the exclusion for which to set particle indices</li>
+<li><strong>particle1</strong> &#8211; the index of the first particle in the pair</li>
+<li><strong>particle2</strong> &#8211; the index of the second particle in the pair</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce20addTabulatedFunctionERKNSt6stringEP17TabulatedFunction">
+<span id="OpenMM::CustomGBForce::addTabulatedFunction__ssCR.TabulatedFunctionP"></span>int <code class="descclassname"></code><code class="descname">addTabulatedFunction</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction">TabulatedFunction</a> *<em>function</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce20addTabulatedFunctionERKNSt6stringEP17TabulatedFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a tabulated function that may appear in expressions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the function as it appears in expressions</li>
+<li><strong>function</strong> &#8211; a <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a> object defining the function. The <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a> should have been created on the heap with the &#8220;new&#8221; operator. The <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> takes over ownership of it, and deletes it when the <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> itself is deleted.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the index of the function that was added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce20getTabulatedFunctionEi">
+<span id="OpenMM::CustomGBForce::getTabulatedFunction__iC"></span><em class="property">const</em> <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction">TabulatedFunction</a> &amp;<code class="descclassname"></code><code class="descname">getTabulatedFunction</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce20getTabulatedFunctionEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a const reference to a tabulated function that may appear in expressions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the function to get</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a> object defining the function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce20getTabulatedFunctionEi">
+<span id="OpenMM::CustomGBForce::getTabulatedFunction__i"></span><a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction">TabulatedFunction</a> &amp;<code class="descclassname"></code><code class="descname">getTabulatedFunction</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce20getTabulatedFunctionEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a reference to a tabulated function that may appear in expressions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the function to get</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the <a class="reference internal" href="OpenMM.TabulatedFunction.html#_CPPv2N6OpenMM17TabulatedFunctionE" title="OpenMM::TabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">TabulatedFunction</span></code></a> object defining the function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce24getTabulatedFunctionNameEi">
+<span id="OpenMM::CustomGBForce::getTabulatedFunctionName__iC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getTabulatedFunctionName</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce24getTabulatedFunctionNameEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a tabulated function that may appear in expressions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>index</strong> &#8211; the index of the function to get</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the name of the function as it appears in expressions</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce11addFunctionERKNSt6stringERKNSt6vectorIdEEdd">
+<span id="OpenMM::CustomGBForce::addFunction__ssCR.std::vector:double:CR.double.double"></span>int <code class="descclassname"></code><code class="descname">addFunction</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>values</em>, double <em>min</em>, double <em>max</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce11addFunctionERKNSt6stringERKNSt6vectorIdEEdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a tabulated function that may appear in expressions.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce20addTabulatedFunctionERKNSt6stringEP17TabulatedFunction" title="OpenMM::CustomGBForce::addTabulatedFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">addTabulatedFunction()</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce21getFunctionParametersEiRNSt6stringERNSt6vectorIdEERdRd">
+<span id="OpenMM::CustomGBForce::getFunctionParameters__i.ssR.std::vector:double:R.doubleR.doubleRC"></span>void <code class="descclassname"></code><code class="descname">getFunctionParameters</code><span class="sig-paren">(</span>int <em>index</em>, std::string &amp;<em>name</em>, std::vector&lt;double&gt; &amp;<em>values</em>, double &amp;<em>min</em>, double &amp;<em>max</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce21getFunctionParametersEiRNSt6stringERNSt6vectorIdEERdRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters for a tabulated function that may appear in expressions.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use getTabulatedFunctionParameters() instead. If the specified function is not a <a class="reference internal" href="OpenMM.Continuous1DFunction.html#_CPPv2N6OpenMM20Continuous1DFunctionE" title="OpenMM::Continuous1DFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">Continuous1DFunction</span></code></a>, this throws an exception.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce21setFunctionParametersEiRKNSt6stringERKNSt6vectorIdEEdd">
+<span id="OpenMM::CustomGBForce::setFunctionParameters__i.ssCR.std::vector:double:CR.double.double"></span>void <code class="descclassname"></code><code class="descname">setFunctionParameters</code><span class="sig-paren">(</span>int <em>index</em>, <em class="property">const</em> std::string &amp;<em>name</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>values</em>, double <em>min</em>, double <em>max</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce21setFunctionParametersEiRKNSt6stringERKNSt6vectorIdEEdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parameters for a tabulated function that may appear in expressions.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use setTabulatedFunctionParameters() instead. If the specified function is not a <a class="reference internal" href="OpenMM.Continuous1DFunction.html#_CPPv2N6OpenMM20Continuous1DFunctionE" title="OpenMM::Continuous1DFunction"><code class="xref cpp cpp-any docutils literal"><span class="pre">Continuous1DFunction</span></code></a>, this throws an exception.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM13CustomGBForce25updateParametersInContextER7Context">
+<span id="OpenMM::CustomGBForce::updateParametersInContext__ContextR"></span>void <code class="descclassname"></code><code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM13CustomGBForce25updateParametersInContextER7Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the per-particle parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object. This method provides an efficient method to update certain parameters in an existing <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> without needing to reinitialize it. Simply call <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce21setParticleParametersEiRKNSt6vectorIdEE" title="OpenMM::CustomGBForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters()</span></code></a> to modify this object&#8217;s parameters, then call <a class="reference internal" href="#_CPPv2N6OpenMM13CustomGBForce25updateParametersInContextER7Context" title="OpenMM::CustomGBForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a> to copy them over to the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<p>This method has several limitations. The only information it updates is the values of per-particle parameters. All other aspects of the <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> (such as the energy function) are unaffected and can only be changed by reinitializing the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>. Also, this method cannot be used to add new particles, only to change the parameters of existing ones.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM13CustomGBForce30usesPeriodicBoundaryConditionsEv">
+<span id="OpenMM::CustomGBForce::usesPeriodicBoundaryConditionsC"></span>bool <code class="descclassname"></code><code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM13CustomGBForce30usesPeriodicBoundaryConditionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if force uses PBC and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.CustomGBForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

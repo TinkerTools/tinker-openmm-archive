@@ -1,0 +1,31 @@
+AmoebaGeneralizedKirkwoodForce
+======================================
+
+.. autodoxyclass:: OpenMM::AmoebaGeneralizedKirkwoodForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::AmoebaGeneralizedKirkwoodForce
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::getNumParticles
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::addParticle
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::getParticleParameters
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::setParticleParameters
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::getSolventDielectric
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::setSolventDielectric
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::getSoluteDielectric
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::setSoluteDielectric
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::getIncludeCavityTerm
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::setIncludeCavityTerm
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::getProbeRadius
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::setProbeRadius
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::getSurfaceAreaFactor
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::setSurfaceAreaFactor
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::updateParametersInContext
+      ~OpenMM::AmoebaGeneralizedKirkwoodForce::usesPeriodicBoundaryConditions
+   
+
+   

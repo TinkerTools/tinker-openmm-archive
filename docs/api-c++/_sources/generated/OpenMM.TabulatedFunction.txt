@@ -1,0 +1,16 @@
+TabulatedFunction
+=========================
+
+.. autodoxyclass:: OpenMM::TabulatedFunction
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::TabulatedFunction::~TabulatedFunction
+      ~OpenMM::TabulatedFunction::Copy
+   
+
+   

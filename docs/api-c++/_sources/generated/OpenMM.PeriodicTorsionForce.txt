@@ -1,0 +1,22 @@
+PeriodicTorsionForce
+============================
+
+.. autodoxyclass:: OpenMM::PeriodicTorsionForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::PeriodicTorsionForce::PeriodicTorsionForce
+      ~OpenMM::PeriodicTorsionForce::getNumTorsions
+      ~OpenMM::PeriodicTorsionForce::addTorsion
+      ~OpenMM::PeriodicTorsionForce::getTorsionParameters
+      ~OpenMM::PeriodicTorsionForce::setTorsionParameters
+      ~OpenMM::PeriodicTorsionForce::updateParametersInContext
+      ~OpenMM::PeriodicTorsionForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::PeriodicTorsionForce::usesPeriodicBoundaryConditions
+   
+
+   

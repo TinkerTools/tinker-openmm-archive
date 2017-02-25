@@ -1,0 +1,25 @@
+AmberInpcrdFile
+================================================
+
+.. currentmodule:: simtk.openmm.app.amberinpcrdfile
+
+.. autoclass:: AmberInpcrdFile
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AmberInpcrdFile.__init__
+      ~AmberInpcrdFile.getBoxVectors
+      ~AmberInpcrdFile.getPositions
+      ~AmberInpcrdFile.getVelocities
+   
+   
+
+   
+   
+   

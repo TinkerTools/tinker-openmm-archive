@@ -1,0 +1,55 @@
+CustomCompoundBondForce
+===========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CustomCompoundBondForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CustomCompoundBondForce.__init__
+      ~CustomCompoundBondForce.addBond
+      ~CustomCompoundBondForce.addEnergyParameterDerivative
+      ~CustomCompoundBondForce.addFunction
+      ~CustomCompoundBondForce.addGlobalParameter
+      ~CustomCompoundBondForce.addPerBondParameter
+      ~CustomCompoundBondForce.addTabulatedFunction
+      ~CustomCompoundBondForce.getBondParameters
+      ~CustomCompoundBondForce.getEnergyFunction
+      ~CustomCompoundBondForce.getEnergyParameterDerivativeName
+      ~CustomCompoundBondForce.getForceGroup
+      ~CustomCompoundBondForce.getFunctionParameters
+      ~CustomCompoundBondForce.getGlobalParameterDefaultValue
+      ~CustomCompoundBondForce.getGlobalParameterName
+      ~CustomCompoundBondForce.getNumBonds
+      ~CustomCompoundBondForce.getNumEnergyParameterDerivatives
+      ~CustomCompoundBondForce.getNumFunctions
+      ~CustomCompoundBondForce.getNumGlobalParameters
+      ~CustomCompoundBondForce.getNumParticlesPerBond
+      ~CustomCompoundBondForce.getNumPerBondParameters
+      ~CustomCompoundBondForce.getNumTabulatedFunctions
+      ~CustomCompoundBondForce.getPerBondParameterName
+      ~CustomCompoundBondForce.getTabulatedFunction
+      ~CustomCompoundBondForce.getTabulatedFunctionName
+      ~CustomCompoundBondForce.setBondParameters
+      ~CustomCompoundBondForce.setEnergyFunction
+      ~CustomCompoundBondForce.setForceGroup
+      ~CustomCompoundBondForce.setFunctionParameters
+      ~CustomCompoundBondForce.setGlobalParameterDefaultValue
+      ~CustomCompoundBondForce.setGlobalParameterName
+      ~CustomCompoundBondForce.setPerBondParameterName
+      ~CustomCompoundBondForce.setUsesPeriodicBoundaryConditions
+      ~CustomCompoundBondForce.updateParametersInContext
+      ~CustomCompoundBondForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

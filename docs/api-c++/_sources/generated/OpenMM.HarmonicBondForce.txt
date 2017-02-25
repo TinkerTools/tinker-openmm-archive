@@ -1,0 +1,22 @@
+HarmonicBondForce
+=========================
+
+.. autodoxyclass:: OpenMM::HarmonicBondForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::HarmonicBondForce::HarmonicBondForce
+      ~OpenMM::HarmonicBondForce::getNumBonds
+      ~OpenMM::HarmonicBondForce::addBond
+      ~OpenMM::HarmonicBondForce::getBondParameters
+      ~OpenMM::HarmonicBondForce::setBondParameters
+      ~OpenMM::HarmonicBondForce::updateParametersInContext
+      ~OpenMM::HarmonicBondForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::HarmonicBondForce::usesPeriodicBoundaryConditions
+   
+
+   

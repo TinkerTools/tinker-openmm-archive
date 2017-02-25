@@ -1,0 +1,37 @@
+AmoebaWcaDispersionForce
+================================
+
+.. autodoxyclass:: OpenMM::AmoebaWcaDispersionForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaWcaDispersionForce::AmoebaWcaDispersionForce
+      ~OpenMM::AmoebaWcaDispersionForce::getNumParticles
+      ~OpenMM::AmoebaWcaDispersionForce::setParticleParameters
+      ~OpenMM::AmoebaWcaDispersionForce::getParticleParameters
+      ~OpenMM::AmoebaWcaDispersionForce::addParticle
+      ~OpenMM::AmoebaWcaDispersionForce::updateParametersInContext
+      ~OpenMM::AmoebaWcaDispersionForce::getEpso
+      ~OpenMM::AmoebaWcaDispersionForce::getEpsh
+      ~OpenMM::AmoebaWcaDispersionForce::getRmino
+      ~OpenMM::AmoebaWcaDispersionForce::getRminh
+      ~OpenMM::AmoebaWcaDispersionForce::getAwater
+      ~OpenMM::AmoebaWcaDispersionForce::getShctd
+      ~OpenMM::AmoebaWcaDispersionForce::getDispoff
+      ~OpenMM::AmoebaWcaDispersionForce::getSlevy
+      ~OpenMM::AmoebaWcaDispersionForce::setEpso
+      ~OpenMM::AmoebaWcaDispersionForce::setEpsh
+      ~OpenMM::AmoebaWcaDispersionForce::setRmino
+      ~OpenMM::AmoebaWcaDispersionForce::setRminh
+      ~OpenMM::AmoebaWcaDispersionForce::setAwater
+      ~OpenMM::AmoebaWcaDispersionForce::setShctd
+      ~OpenMM::AmoebaWcaDispersionForce::setDispoff
+      ~OpenMM::AmoebaWcaDispersionForce::setSlevy
+      ~OpenMM::AmoebaWcaDispersionForce::usesPeriodicBoundaryConditions
+   
+
+   

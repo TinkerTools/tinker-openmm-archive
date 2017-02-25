@@ -1,0 +1,27 @@
+DesmondDMSFile
+==============================================
+
+.. currentmodule:: simtk.openmm.app.desmonddmsfile
+
+.. autoclass:: DesmondDMSFile
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DesmondDMSFile.__init__
+      ~DesmondDMSFile.close
+      ~DesmondDMSFile.createSystem
+      ~DesmondDMSFile.getPositions
+      ~DesmondDMSFile.getProvenance
+      ~DesmondDMSFile.getTopology
+   
+   
+
+   
+   
+   

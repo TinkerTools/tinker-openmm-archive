@@ -1,0 +1,16 @@
+TwoParticleAverageSite
+==============================
+
+.. autodoxyclass:: OpenMM::TwoParticleAverageSite
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::TwoParticleAverageSite::TwoParticleAverageSite
+      ~OpenMM::TwoParticleAverageSite::getWeight
+   
+
+   

@@ -1,0 +1,24 @@
+Chain
+===============================
+
+.. currentmodule:: simtk.openmm.app.topology
+
+.. autoclass:: Chain
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Chain.__init__
+      ~Chain.atoms
+      ~Chain.residues
+   
+   
+
+   
+   
+   

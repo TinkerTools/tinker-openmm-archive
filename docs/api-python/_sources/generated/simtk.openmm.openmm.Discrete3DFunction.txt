@@ -1,0 +1,25 @@
+Discrete3DFunction
+======================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: Discrete3DFunction
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Discrete3DFunction.Copy
+      ~Discrete3DFunction.__init__
+      ~Discrete3DFunction.getFunctionParameters
+      ~Discrete3DFunction.setFunctionParameters
+   
+   
+
+   
+   
+   

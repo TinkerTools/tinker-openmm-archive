@@ -1,0 +1,32 @@
+Vec3
+============
+
+.. autodoxyclass:: OpenMM::Vec3
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::Vec3::Vec3
+      ~OpenMM::Vec3::Vec3
+      ~OpenMM::Vec3::operator[]
+      ~OpenMM::Vec3::operator[]
+      ~OpenMM::Vec3::operator==
+      ~OpenMM::Vec3::operator!=
+      ~OpenMM::Vec3::operator+
+      ~OpenMM::Vec3::operator+
+      ~OpenMM::Vec3::operator+=
+      ~OpenMM::Vec3::operator-
+      ~OpenMM::Vec3::operator-
+      ~OpenMM::Vec3::operator-=
+      ~OpenMM::Vec3::operator*
+      ~OpenMM::Vec3::operator*=
+      ~OpenMM::Vec3::operator/
+      ~OpenMM::Vec3::operator/=
+      ~OpenMM::Vec3::dot
+      ~OpenMM::Vec3::cross
+   
+
+   

@@ -1,0 +1,17 @@
+OpenMMException
+=======================
+
+.. autodoxyclass:: OpenMM::OpenMMException
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::OpenMMException::OpenMMException
+      ~OpenMM::OpenMMException::~OpenMMException
+      ~OpenMM::OpenMMException::what
+   
+
+   

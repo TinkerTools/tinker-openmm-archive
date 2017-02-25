@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MonteCarloAnisotropicBarostat &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="montecarloanisotropicbarostat">
+<h1>MonteCarloAnisotropicBarostat<a class="headerlink" href="#montecarloanisotropicbarostat" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM29MonteCarloAnisotropicBarostatE">
+<span id="OpenMM::MonteCarloAnisotropicBarostat"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">MonteCarloAnisotropicBarostat</code><a class="headerlink" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostatE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class uses a Monte Carlo algorithm to adjust the size of the periodic box, simulating the effect of constant pressure.</p>
+<p>This class is similar to <a class="reference internal" href="OpenMM.MonteCarloBarostat.html#_CPPv2N6OpenMM18MonteCarloBarostatE" title="OpenMM::MonteCarloBarostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">MonteCarloBarostat</span></code></a>, but each Monte Carlo move is applied to only one axis of the periodic box (unlike <a class="reference internal" href="OpenMM.MonteCarloBarostat.html#_CPPv2N6OpenMM18MonteCarloBarostatE" title="OpenMM::MonteCarloBarostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">MonteCarloBarostat</span></code></a>, which scales the entire box isotropically). This means that the box may change shape as well as size over the course of the simulation. It also allows you to specify a different pressure for each axis of the box, or to keep the box size fixed along certain axes while still allowing it to change along others.</p>
+<p>This class assumes the simulation is also being run at constant temperature, and requires you to specify the system temperature (since it affects the acceptance probability for Monte Carlo moves). It does not actually perform temperature regulation, however. You must use another mechanism along with it to maintain the temperature, such as <a class="reference internal" href="OpenMM.LangevinIntegrator.html#_CPPv2N6OpenMM18LangevinIntegratorE" title="OpenMM::LangevinIntegrator"><code class="xref cpp cpp-any docutils literal"><span class="pre">LangevinIntegrator</span></code></a> or <a class="reference internal" href="OpenMM.AndersenThermostat.html#_CPPv2N6OpenMM18AndersenThermostatE" title="OpenMM::AndersenThermostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">AndersenThermostat</span></code></a>.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat29MonteCarloAnisotropicBarostatERK4Vec3dbbbi" title="OpenMM::MonteCarloAnisotropicBarostat::MonteCarloAnisotropicBarostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">MonteCarloAnisotropicBarostat</span></code></a></td>
+<td>Create a <a class="reference internal" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat29MonteCarloAnisotropicBarostatERK4Vec3dbbbi" title="OpenMM::MonteCarloAnisotropicBarostat::MonteCarloAnisotropicBarostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">MonteCarloAnisotropicBarostat</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat18getDefaultPressureEv" title="OpenMM::MonteCarloAnisotropicBarostat::getDefaultPressure"><code class="xref cpp cpp-any docutils literal"><span class="pre">getDefaultPressure</span></code></a></td>
+<td>Get the default pressure (in bar).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat18setDefaultPressureERK4Vec3" title="OpenMM::MonteCarloAnisotropicBarostat::setDefaultPressure"><code class="xref cpp cpp-any docutils literal"><span class="pre">setDefaultPressure</span></code></a></td>
+<td>Set the default pressure acting on the system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat9getScaleXEv" title="OpenMM::MonteCarloAnisotropicBarostat::getScaleX"><code class="xref cpp cpp-any docutils literal"><span class="pre">getScaleX</span></code></a></td>
+<td>Get whether to allow the X dimension of the periodic box to change size.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat9getScaleYEv" title="OpenMM::MonteCarloAnisotropicBarostat::getScaleY"><code class="xref cpp cpp-any docutils literal"><span class="pre">getScaleY</span></code></a></td>
+<td>Get whether to allow the Y dimension of the periodic box to change size.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat9getScaleZEv" title="OpenMM::MonteCarloAnisotropicBarostat::getScaleZ"><code class="xref cpp cpp-any docutils literal"><span class="pre">getScaleZ</span></code></a></td>
+<td>Get whether to allow the Z dimension of the periodic box to change size.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat12getFrequencyEv" title="OpenMM::MonteCarloAnisotropicBarostat::getFrequency"><code class="xref cpp cpp-any docutils literal"><span class="pre">getFrequency</span></code></a></td>
+<td>Get the frequency (in time steps) at which Monte Carlo pressure changes should be attempted.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat12setFrequencyEi" title="OpenMM::MonteCarloAnisotropicBarostat::setFrequency"><code class="xref cpp cpp-any docutils literal"><span class="pre">setFrequency</span></code></a></td>
+<td>Set the frequency (in time steps) at which Monte Carlo pressure changes should be attempted.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat21getDefaultTemperatureEv" title="OpenMM::MonteCarloAnisotropicBarostat::getDefaultTemperature"><code class="xref cpp cpp-any docutils literal"><span class="pre">getDefaultTemperature</span></code></a></td>
+<td>Get the default temperature at which the system is being maintained, measured in Kelvin.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat21setDefaultTemperatureEd" title="OpenMM::MonteCarloAnisotropicBarostat::setDefaultTemperature"><code class="xref cpp cpp-any docutils literal"><span class="pre">setDefaultTemperature</span></code></a></td>
+<td>Set the default temperature at which the system is being maintained.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat19getRandomNumberSeedEv" title="OpenMM::MonteCarloAnisotropicBarostat::getRandomNumberSeed"><code class="xref cpp cpp-any docutils literal"><span class="pre">getRandomNumberSeed</span></code></a></td>
+<td>Get the random number seed.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat19setRandomNumberSeedEi" title="OpenMM::MonteCarloAnisotropicBarostat::setRandomNumberSeed"><code class="xref cpp cpp-any docutils literal"><span class="pre">setRandomNumberSeed</span></code></a></td>
+<td>Set the random number seed.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat30usesPeriodicBoundaryConditionsEv" title="OpenMM::MonteCarloAnisotropicBarostat::usesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a></td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat9PressureXEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::PressureX"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">PressureX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat9PressureXEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the name of the parameter which stores the current pressure acting on the X-axis (in bar).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat9PressureYEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::PressureY"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">PressureY</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat9PressureYEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the name of the parameter which stores the current pressure acting on the Y-axis (in bar).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat9PressureZEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::PressureZ"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">PressureZ</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat9PressureZEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the name of the parameter which stores the current pressure acting on the Z-axis (in bar).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat11TemperatureEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::Temperature"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">Temperature</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat11TemperatureEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the name of the parameter which stores the current temperature at which the system is being maintained (in Kelvin)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat29MonteCarloAnisotropicBarostatERK4Vec3dbbbi">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::MonteCarloAnisotropicBarostat__Vec3CR.double.b.b.b.i"></span><code class="descclassname"></code><code class="descname">MonteCarloAnisotropicBarostat</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>defaultPressure</em>, double <em>defaultTemperature</em>, bool <em>scaleX</em> = true, bool <em>scaleY</em> = true, bool <em>scaleZ</em> = true, int <em>frequency</em> = 25<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat29MonteCarloAnisotropicBarostatERK4Vec3dbbbi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat29MonteCarloAnisotropicBarostatERK4Vec3dbbbi" title="OpenMM::MonteCarloAnisotropicBarostat::MonteCarloAnisotropicBarostat"><code class="xref cpp cpp-any docutils literal"><span class="pre">MonteCarloAnisotropicBarostat</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>defaultPressure</strong> &#8211; The default pressure acting on each axis (in bar)</li>
+<li><strong>defaultTemperature</strong> &#8211; the default temperature at which the system is being maintained (in Kelvin)</li>
+<li><strong>scaleX</strong> &#8211; whether to allow the X dimension of the periodic box to change size</li>
+<li><strong>scaleY</strong> &#8211; whether to allow the Y dimension of the periodic box to change size</li>
+<li><strong>scaleZ</strong> &#8211; whether to allow the Z dimension of the periodic box to change size</li>
+<li><strong>frequency</strong> &#8211; the frequency at which Monte Carlo pressure changes should be attempted (in time steps)</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat18getDefaultPressureEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::getDefaultPressureC"></span><em class="property">const</em> <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<code class="descclassname"></code><code class="descname">getDefaultPressure</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat18getDefaultPressureEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default pressure (in bar).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the default pressure acting along each axis, measured in bar.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat18setDefaultPressureERK4Vec3">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::setDefaultPressure__Vec3CR"></span>void <code class="descclassname"></code><code class="descname">setDefaultPressure</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="OpenMM.Vec3.html#_CPPv2N6OpenMM4Vec3E" title="OpenMM::Vec3">Vec3</a> &amp;<em>pressure</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat18setDefaultPressureERK4Vec3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default pressure acting on the system. This will affect any new Contexts you create, but not ones that already exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>pressure</strong> &#8211; the default pressure acting on the system, measured in bar.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat9getScaleXEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::getScaleXC"></span>bool <code class="descclassname"></code><code class="descname">getScaleX</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat9getScaleXEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether to allow the X dimension of the periodic box to change size.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat9getScaleYEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::getScaleYC"></span>bool <code class="descclassname"></code><code class="descname">getScaleY</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat9getScaleYEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether to allow the Y dimension of the periodic box to change size.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat9getScaleZEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::getScaleZC"></span>bool <code class="descclassname"></code><code class="descname">getScaleZ</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat9getScaleZEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether to allow the Z dimension of the periodic box to change size.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat12getFrequencyEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::getFrequencyC"></span>int <code class="descclassname"></code><code class="descname">getFrequency</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat12getFrequencyEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the frequency (in time steps) at which Monte Carlo pressure changes should be attempted. If this is set to 0, the barostat is disabled.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat12setFrequencyEi">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::setFrequency__i"></span>void <code class="descclassname"></code><code class="descname">setFrequency</code><span class="sig-paren">(</span>int <em>freq</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat12setFrequencyEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the frequency (in time steps) at which Monte Carlo pressure changes should be attempted. If this is set to 0, the barostat is disabled.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat21getDefaultTemperatureEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::getDefaultTemperatureC"></span>double <code class="descclassname"></code><code class="descname">getDefaultTemperature</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat21getDefaultTemperatureEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default temperature at which the system is being maintained, measured in Kelvin.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat21setDefaultTemperatureEd">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::setDefaultTemperature__double"></span>void <code class="descclassname"></code><code class="descname">setDefaultTemperature</code><span class="sig-paren">(</span>double <em>temp</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat21setDefaultTemperatureEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default temperature at which the system is being maintained. This will affect any new Contexts you create, but not ones that already exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>temp</strong> &#8211; the system temperature, measured in Kelvin.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat19getRandomNumberSeedEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::getRandomNumberSeedC"></span>int <code class="descclassname"></code><code class="descname">getRandomNumberSeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat19getRandomNumberSeedEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the random number seed. See <a class="reference internal" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat19setRandomNumberSeedEi" title="OpenMM::MonteCarloAnisotropicBarostat::setRandomNumberSeed"><code class="xref cpp cpp-any docutils literal"><span class="pre">setRandomNumberSeed()</span></code></a> for details.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat19setRandomNumberSeedEi">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::setRandomNumberSeed__i"></span>void <code class="descclassname"></code><code class="descname">setRandomNumberSeed</code><span class="sig-paren">(</span>int <em>seed</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM29MonteCarloAnisotropicBarostat19setRandomNumberSeedEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the random number seed. It is guaranteed that if two simulations are run with different random number seeds, the sequence of Monte Carlo steps will be different. On the other hand, no guarantees are made about the behavior of simulations that use the same seed. In particular, Platforms are permitted to use non-deterministic algorithms which produce different results on successive runs, even if those runs were initialized identically.</p>
+<p>If seed is set to 0 (which is the default value assigned), a unique seed is chosen when a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> is created from this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a>. This is done to ensure that each <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> receives unique random seeds without you needing to set them explicitly.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat30usesPeriodicBoundaryConditionsEv">
+<span id="OpenMM::MonteCarloAnisotropicBarostat::usesPeriodicBoundaryConditionsC"></span>bool <code class="descclassname"></code><code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM29MonteCarloAnisotropicBarostat30usesPeriodicBoundaryConditionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if force uses PBC and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.MonteCarloAnisotropicBarostat.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

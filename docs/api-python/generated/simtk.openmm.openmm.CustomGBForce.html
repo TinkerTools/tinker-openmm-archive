@@ -1,0 +1,1015 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CustomGBForce &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Library Layer" href="../library.html" />
+    <link rel="next" title="CustomHbondForce" href="simtk.openmm.openmm.CustomHbondForce.html" />
+    <link rel="prev" title="CustomExternalForce" href="simtk.openmm.openmm.CustomExternalForce.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="customgbforce">
+<h1>CustomGBForce<a class="headerlink" href="#customgbforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.openmm.CustomGBForce">
+<em class="property">class </em><code class="descclassname">simtk.openmm.openmm.</code><code class="descname">CustomGBForce</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements complex, multiple stage nonbonded interactions between particles. It is designed primarily for implementing Generalized Born implicit solvation models, although it is not strictly limited to that purpose. The interaction is specified as a series of computations, each defined by an arbitrary algebraic expression. It also allows tabulated functions to be defined and used with the computations. It optionally supports periodic boundary conditions and cutoffs for long range interactions.</p>
+<p>The computation consists of calculating some number of per-particle _computed <a href="#id1"><span class="problematic" id="id2">values_</span></a>, followed by one or more _energy <a href="#id3"><span class="problematic" id="id4">terms_</span></a>. A computed value is a scalar value that is computed for each particle in the system. It may depend on an arbitrary set of global and per-particle parameters, and well as on other computed values that have been calculated before it. Once all computed values have been calculated, the energy terms and their derivatives are evaluated to determine the system energy and particle forces. The energy terms may depend on global parameters, per-particle parameters, and per-particle computed values.</p>
+<p>When specifying a computed value or energy term, you provide an algebraic expression to evaluate and a _computation <a href="#id5"><span class="problematic" id="id6">type_</span></a> describing how the expression is to be evaluated. There are two main types of computations:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>Single Particle</em>: The expression is evaluated once for each particle in the System. In the case of a computed value, this means the value for a particle depends only on other properties of that particle (its position, parameters, and other computed values). In the case of an energy term, it means each particle makes an independent contribution to the System energy.</li>
+<li><em>Particle Pairs</em>: The expression is evaluated for every pair of particles in the system. In the case of a computed value, the value for a particular particle is calculated by pairing it with every other particle in the system, evaluating the expression for each pair, and summing them. For an energy term, each particle pair makes an independent contribution to the System energy. (Note that energy terms are assumed to be symmetric with respect to the two interacting particles, and therefore are evaluated only once per pair. In contrast, expressions for computed values need not be symmetric and therefore are calculated twice for each pair: once when calculating the value for the first particle, and again when calculating the value for the second particle.)</li>
+</ul>
+</div></blockquote>
+<p>Be aware that, although this class is extremely general in the computations it can define, particular Platforms may only support more restricted types of computations. In particular, all currently existing Platforms require that the first computed value _must_ be a particle pair computation, and all computed values after the first _must_ be single particle computations. This is sufficient for most Generalized Born models, but might not permit some other types of calculations to be implemented.</p>
+<p>This is a complicated class to use, and an example may help to clarify it. The following code implements the OBC variant of the GB/SA solvation model, using the ACE approximation to estimate surface area:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">CustomGBForce</span><span class="o">*</span> <span class="n">custom</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomGBForce</span><span class="p">();</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s">&quot;q&quot;</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s">&quot;radius&quot;</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addPerParticleParameter</span><span class="p">(</span><span class="s">&quot;scale&quot;</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s">&quot;solventDielectric&quot;</span><span class="p">,</span> <span class="n">obc</span><span class="o">-&gt;</span><span class="n">getSolventDielectric</span><span class="p">());</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s">&quot;soluteDielectric&quot;</span><span class="p">,</span> <span class="n">obc</span><span class="o">-&gt;</span><span class="n">getSoluteDielectric</span><span class="p">());</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addComputedValue</span><span class="p">(</span><span class="s">&quot;I&quot;</span><span class="p">,</span> <span class="s">&quot;step(r+sr2-or1)*0.5*(1/L-1/U+0.25*(1/U^2-1/L^2)*(r-sr2*sr2/r)+0.5*log(L/U)/r+C);&quot;</span>
+                              <span class="s">&quot;U=r+sr2;&quot;</span>
+                              <span class="s">&quot;C=2*(1/or1-1/L)*step(sr2-r-or1);&quot;</span>
+                              <span class="s">&quot;L=max(or1, D);&quot;</span>
+                              <span class="s">&quot;D=abs(r-sr2);&quot;</span>
+                              <span class="s">&quot;sr2 = scale2*or2;&quot;</span>
+                              <span class="s">&quot;or1 = radius1-0.009; or2 = radius2-0.009&quot;</span><span class="p">,</span> <span class="n">CustomGBForce</span><span class="o">::</span><span class="n">ParticlePairNoExclusions</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addComputedValue</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="s">&quot;1/(1/or-tanh(1*psi-0.8*psi^2+4.85*psi^3)/radius);&quot;</span>
+                              <span class="s">&quot;psi=I*or; or=radius-0.009&quot;</span><span class="p">,</span> <span class="n">CustomGBForce</span><span class="o">::</span><span class="n">SingleParticle</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addEnergyTerm</span><span class="p">(</span><span class="s">&quot;28.3919551*(radius+0.14)^2*(radius/B)^6-0.5*138.935456*(1/soluteDielectric-1/solventDielectric)*q^2/B&quot;</span><span class="p">,</span>
+                      <span class="n">CustomGBForce</span><span class="o">::</span><span class="n">SingleParticle</span><span class="p">);</span>
+<span class="n">custom</span><span class="o">-&gt;</span><span class="n">addEnergyTerm</span><span class="p">(</span><span class="s">&quot;-138.935456*(1/soluteDielectric-1/solventDielectric)*q1*q2/f;&quot;</span>
+                      <span class="s">&quot;f=sqrt(r^2+B1*B2*exp(-r^2/(4*B1*B2)))&quot;</span><span class="p">,</span> <span class="n">CustomGBForce</span><span class="o">::</span><span class="n">ParticlePair</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>It begins by defining three per-particle parameters (charge, atomic radius, and scale factor) and two global parameters (the dielectric constants for the solute and solvent). It then defines a computed value &#8220;I&#8221; of type ParticlePair. The expression for evaluating it is a complicated function of the distance between each pair of particles (r), their atomic radii (radius1 and radius2), and their scale factors (scale1 and scale2). Very roughly speaking, it is a measure of the distance between each particle and other nearby particles.</p>
+<p>Next a computation is defined for the Born Radius (B). It is computed independently for each particle, and is a function of that particle&#8217;s atomic radius and the intermediate value I defined above.</p>
+<p>Finally, two energy terms are defined. The first one is computed for each particle and represents the surface area term, as well as the self interaction part of the polarization energy. The second term is calculated for each pair of particles, and represents the screening of electrostatic interactions by the solvent.</p>
+<p>After defining the force as shown above, you should then call addParticle() once for each particle in the System to set the values of its per-particle parameters (q, radius, and scale). The number of particles for which you set parameters must be exactly equal to the number of particles in the System, or else an exception will be thrown when you try to create a Context. After a particle has been added, you can modify its parameters by calling setParticleParameters(). This will have no effect on Contexts that already exist unless you call updateParametersInContext().</p>
+<p>CustomGBForce also lets you specify &#8220;exclusions&#8221;, particular pairs of particles whose interactions should be omitted from calculations. This is most often used for particles that are bonded to each other. Even if you specify exclusions, however, you can use the computation type ParticlePairNoExclusions to indicate that exclusions should not be applied to a particular piece of the computation.</p>
+<p>This class also has the ability to compute derivatives of the potential energy with respect to global parameters. Call addEnergyParameterDerivative() to request that the derivative with respect to a particular parameter be computed. You can then query its value in a Context by calling getState() on it.</p>
+<p>Expressions may involve the operators + (add), - (subtract), * (multiply), / (divide), and ^ (power), and the following functions: sqrt, exp, log, sin, cos, sec, csc, tan, cot, asin, acos, atan, sinh, cosh, tanh, erf, erfc, min, max, abs, floor, ceil, step, delta, select. All trigonometric functions are defined in radians, and log is the natural logarithm. step(x) = 0 if x is less than 0, 1 otherwise. delta(x) = 1 if x is 0, 0 otherwise. select(x,y,z) = z if x = 0, y otherwise. In expressions for particle pair calculations, the names of per-particle parameters and computed values have the suffix &#8220;1&#8221; or &#8220;2&#8221; appended to them to indicate the values for the two interacting particles. As seen in the above example, an expression may also involve intermediate quantities that are defined following the main expression, using &#8221;;&#8221; as a separator.</p>
+<p>In addition, you can call addTabulatedFunction() to define a new function based on tabulated values. You specify the function by creating a TabulatedFunction object. That function can then appear in expressions.</p>
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; CustomGBForce<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>__init__(self, other) -&gt; CustomGBForce</p>
+<p>Create a CustomGBForce.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.__init__" title="simtk.openmm.openmm.CustomGBForce.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>((self)&nbsp;-&gt;&nbsp;CustomGBForce)</td>
+<td>__init__(self, other) -&gt; CustomGBForce</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.addComputedValue" title="simtk.openmm.openmm.CustomGBForce.addComputedValue"><code class="xref py py-obj docutils literal"><span class="pre">addComputedValue</span></code></a>((self,&nbsp;name,&nbsp;expression,&nbsp;...)</td>
+<td>Add a computed value to calculate for each particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.addEnergyParameterDerivative" title="simtk.openmm.openmm.CustomGBForce.addEnergyParameterDerivative"><code class="xref py py-obj docutils literal"><span class="pre">addEnergyParameterDerivative</span></code></a>(self,&nbsp;name)</td>
+<td>Request that this Force compute the derivative of its energy with respect to a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.addEnergyTerm" title="simtk.openmm.openmm.CustomGBForce.addEnergyTerm"><code class="xref py py-obj docutils literal"><span class="pre">addEnergyTerm</span></code></a>((self,&nbsp;expression,&nbsp;type)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a term to the energy computation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.addExclusion" title="simtk.openmm.openmm.CustomGBForce.addExclusion"><code class="xref py py-obj docutils literal"><span class="pre">addExclusion</span></code></a>((self,&nbsp;particle1,&nbsp;particle2)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a particle pair to the list of interactions that should be excluded.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.addFunction" title="simtk.openmm.openmm.CustomGBForce.addFunction"><code class="xref py py-obj docutils literal"><span class="pre">addFunction</span></code></a>((self,&nbsp;name,&nbsp;values,&nbsp;min,&nbsp;...)</td>
+<td>Add a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.addGlobalParameter" title="simtk.openmm.openmm.CustomGBForce.addGlobalParameter"><code class="xref py py-obj docutils literal"><span class="pre">addGlobalParameter</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Add a new global parameter that the interaction may depend on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.addParticle" title="simtk.openmm.openmm.CustomGBForce.addParticle"><code class="xref py py-obj docutils literal"><span class="pre">addParticle</span></code></a>((self,&nbsp;parameters)&nbsp;-&gt;&nbsp;int)</td>
+<td>addParticle(self) -&gt; int</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.addPerParticleParameter" title="simtk.openmm.openmm.CustomGBForce.addPerParticleParameter"><code class="xref py py-obj docutils literal"><span class="pre">addPerParticleParameter</span></code></a>((self,&nbsp;name)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a new per-particle parameter that the interaction may depend on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.addTabulatedFunction" title="simtk.openmm.openmm.CustomGBForce.addTabulatedFunction"><code class="xref py py-obj docutils literal"><span class="pre">addTabulatedFunction</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Add a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getComputedValueParameters" title="simtk.openmm.openmm.CustomGBForce.getComputedValueParameters"><code class="xref py py-obj docutils literal"><span class="pre">getComputedValueParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the properties of a computed value.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getCutoffDistance" title="simtk.openmm.openmm.CustomGBForce.getCutoffDistance"><code class="xref py py-obj docutils literal"><span class="pre">getCutoffDistance</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getEnergyParameterDerivativeName" title="simtk.openmm.openmm.CustomGBForce.getEnergyParameterDerivativeName"><code class="xref py py-obj docutils literal"><span class="pre">getEnergyParameterDerivativeName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a global parameter with respect to which this Force should compute the derivative of the energy.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getEnergyTermParameters" title="simtk.openmm.openmm.CustomGBForce.getEnergyTermParameters"><code class="xref py py-obj docutils literal"><span class="pre">getEnergyTermParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the properties of a term to the energy computation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getExclusionParticles" title="simtk.openmm.openmm.CustomGBForce.getExclusionParticles"><code class="xref py py-obj docutils literal"><span class="pre">getExclusionParticles</span></code></a>(self,&nbsp;index)</td>
+<td>Get the particles in a pair whose interaction should be excluded.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getForceGroup" title="simtk.openmm.openmm.CustomGBForce.getForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">getForceGroup</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the force group this Force belongs to.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getFunctionParameters" title="simtk.openmm.openmm.CustomGBForce.getFunctionParameters"><code class="xref py py-obj docutils literal"><span class="pre">getFunctionParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the parameters for a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getGlobalParameterDefaultValue" title="simtk.openmm.openmm.CustomGBForce.getGlobalParameterDefaultValue"><code class="xref py py-obj docutils literal"><span class="pre">getGlobalParameterDefaultValue</span></code></a>((self,&nbsp;...)</td>
+<td>Get the default value of a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getGlobalParameterName" title="simtk.openmm.openmm.CustomGBForce.getGlobalParameterName"><code class="xref py py-obj docutils literal"><span class="pre">getGlobalParameterName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getNonbondedMethod" title="simtk.openmm.openmm.CustomGBForce.getNonbondedMethod"><code class="xref py py-obj docutils literal"><span class="pre">getNonbondedMethod</span></code></a>(...)</td>
+<td>Get the method used for handling long range nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getNumComputedValues" title="simtk.openmm.openmm.CustomGBForce.getNumComputedValues"><code class="xref py py-obj docutils literal"><span class="pre">getNumComputedValues</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of per-particle computed values the interaction depends on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getNumEnergyParameterDerivatives" title="simtk.openmm.openmm.CustomGBForce.getNumEnergyParameterDerivatives"><code class="xref py py-obj docutils literal"><span class="pre">getNumEnergyParameterDerivatives</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of global parameters with respect to which the derivative of the energy should be computed.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getNumEnergyTerms" title="simtk.openmm.openmm.CustomGBForce.getNumEnergyTerms"><code class="xref py py-obj docutils literal"><span class="pre">getNumEnergyTerms</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of terms in the energy computation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getNumExclusions" title="simtk.openmm.openmm.CustomGBForce.getNumExclusions"><code class="xref py py-obj docutils literal"><span class="pre">getNumExclusions</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of particle pairs whose interactions should be excluded.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getNumFunctions" title="simtk.openmm.openmm.CustomGBForce.getNumFunctions"><code class="xref py py-obj docutils literal"><span class="pre">getNumFunctions</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of tabulated functions that have been defined.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getNumGlobalParameters" title="simtk.openmm.openmm.CustomGBForce.getNumGlobalParameters"><code class="xref py py-obj docutils literal"><span class="pre">getNumGlobalParameters</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of global parameters that the interaction depends on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getNumParticles" title="simtk.openmm.openmm.CustomGBForce.getNumParticles"><code class="xref py py-obj docutils literal"><span class="pre">getNumParticles</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of particles for which force field parameters have been defined.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getNumPerParticleParameters" title="simtk.openmm.openmm.CustomGBForce.getNumPerParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">getNumPerParticleParameters</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of per-particle parameters that the interaction depends on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getNumTabulatedFunctions" title="simtk.openmm.openmm.CustomGBForce.getNumTabulatedFunctions"><code class="xref py py-obj docutils literal"><span class="pre">getNumTabulatedFunctions</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of tabulated functions that have been defined.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getParticleParameters" title="simtk.openmm.openmm.CustomGBForce.getParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">getParticleParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the nonbonded force parameters for a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getPerParticleParameterName" title="simtk.openmm.openmm.CustomGBForce.getPerParticleParameterName"><code class="xref py py-obj docutils literal"><span class="pre">getPerParticleParameterName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a per-particle parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getTabulatedFunction" title="simtk.openmm.openmm.CustomGBForce.getTabulatedFunction"><code class="xref py py-obj docutils literal"><span class="pre">getTabulatedFunction</span></code></a>((self,&nbsp;...)</td>
+<td>getTabulatedFunction(self, index) -&gt; TabulatedFunction</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.getTabulatedFunctionName" title="simtk.openmm.openmm.CustomGBForce.getTabulatedFunctionName"><code class="xref py py-obj docutils literal"><span class="pre">getTabulatedFunctionName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setComputedValueParameters" title="simtk.openmm.openmm.CustomGBForce.setComputedValueParameters"><code class="xref py py-obj docutils literal"><span class="pre">setComputedValueParameters</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the properties of a computed value.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setCutoffDistance" title="simtk.openmm.openmm.CustomGBForce.setCutoffDistance"><code class="xref py py-obj docutils literal"><span class="pre">setCutoffDistance</span></code></a>(self,&nbsp;distance)</td>
+<td>Set the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setEnergyTermParameters" title="simtk.openmm.openmm.CustomGBForce.setEnergyTermParameters"><code class="xref py py-obj docutils literal"><span class="pre">setEnergyTermParameters</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the properties of a term to the energy computation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setExclusionParticles" title="simtk.openmm.openmm.CustomGBForce.setExclusionParticles"><code class="xref py py-obj docutils literal"><span class="pre">setExclusionParticles</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the particles in a pair whose interaction should be excluded.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setForceGroup" title="simtk.openmm.openmm.CustomGBForce.setForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">setForceGroup</span></code></a>(self,&nbsp;group)</td>
+<td>Set the force group this Force belongs to.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setFunctionParameters" title="simtk.openmm.openmm.CustomGBForce.setFunctionParameters"><code class="xref py py-obj docutils literal"><span class="pre">setFunctionParameters</span></code></a>(self,&nbsp;index,&nbsp;name,&nbsp;...)</td>
+<td>Set the parameters for a tabulated function that may appear in expressions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setGlobalParameterDefaultValue" title="simtk.openmm.openmm.CustomGBForce.setGlobalParameterDefaultValue"><code class="xref py py-obj docutils literal"><span class="pre">setGlobalParameterDefaultValue</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the default value of a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setGlobalParameterName" title="simtk.openmm.openmm.CustomGBForce.setGlobalParameterName"><code class="xref py py-obj docutils literal"><span class="pre">setGlobalParameterName</span></code></a>(self,&nbsp;index,&nbsp;name)</td>
+<td>Set the name of a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setNonbondedMethod" title="simtk.openmm.openmm.CustomGBForce.setNonbondedMethod"><code class="xref py py-obj docutils literal"><span class="pre">setNonbondedMethod</span></code></a>(self,&nbsp;method)</td>
+<td>Set the method used for handling long range nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setParticleParameters" title="simtk.openmm.openmm.CustomGBForce.setParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">setParticleParameters</span></code></a>(self,&nbsp;index,&nbsp;parameters)</td>
+<td>Set the nonbonded force parameters for a particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.setPerParticleParameterName" title="simtk.openmm.openmm.CustomGBForce.setPerParticleParameterName"><code class="xref py py-obj docutils literal"><span class="pre">setPerParticleParameterName</span></code></a>(self,&nbsp;index,&nbsp;name)</td>
+<td>Set the name of a per-particle parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.updateParametersInContext" title="simtk.openmm.openmm.CustomGBForce.updateParametersInContext"><code class="xref py py-obj docutils literal"><span class="pre">updateParametersInContext</span></code></a>(self,&nbsp;context)</td>
+<td>Update the per-particle parameters in a Context to match those stored in this Force object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomGBForce.usesPeriodicBoundaryConditions" title="simtk.openmm.openmm.CustomGBForce.usesPeriodicBoundaryConditions"><code class="xref py py-obj docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a>((self)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">CutoffNonPeriodic</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">CutoffPeriodic</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">NoCutoff</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ParticlePair</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ParticlePairNoExclusions</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">SingleParticle</span></code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getNumParticles">
+<code class="descname">getNumParticles</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getNumParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles for which force field parameters have been defined.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getNumExclusions">
+<code class="descname">getNumExclusions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getNumExclusions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particle pairs whose interactions should be excluded.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getNumPerParticleParameters">
+<code class="descname">getNumPerParticleParameters</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getNumPerParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of per-particle parameters that the interaction depends on.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getNumGlobalParameters">
+<code class="descname">getNumGlobalParameters</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getNumGlobalParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of global parameters that the interaction depends on.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getNumEnergyParameterDerivatives">
+<code class="descname">getNumEnergyParameterDerivatives</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getNumEnergyParameterDerivatives" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of global parameters with respect to which the derivative of the energy should be computed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getNumTabulatedFunctions">
+<code class="descname">getNumTabulatedFunctions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getNumTabulatedFunctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of tabulated functions that have been defined.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getNumFunctions">
+<code class="descname">getNumFunctions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getNumFunctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of tabulated functions that have been defined.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use getNumTabulatedFunctions() instead.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getNumComputedValues">
+<code class="descname">getNumComputedValues</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getNumComputedValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of per-particle computed values the interaction depends on.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getNumEnergyTerms">
+<code class="descname">getNumEnergyTerms</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getNumEnergyTerms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of terms in the energy computation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getNonbondedMethod">
+<code class="descname">getNonbondedMethod</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; OpenMM::CustomGBForce::NonbondedMethod<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getNonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the method used for handling long range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setNonbondedMethod">
+<code class="descname">setNonbondedMethod</code><span class="sig-paren">(</span><em>self</em>, <em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setNonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the method used for handling long range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getCutoffDistance">
+<code class="descname">getCutoffDistance</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getCutoffDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the cutoff distance, measured in nm</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setCutoffDistance">
+<code class="descname">setCutoffDistance</code><span class="sig-paren">(</span><em>self</em>, <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setCutoffDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>distance</strong> (<em>double</em>) &#8211; the cutoff distance, measured in nm</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.addPerParticleParameter">
+<code class="descname">addPerParticleParameter</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.addPerParticleParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new per-particle parameter that the interaction may depend on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the index of the parameter that was added</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getPerParticleParameterName">
+<code class="descname">getPerParticleParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getPerParticleParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a per-particle parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to get the name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setPerParticleParameterName">
+<code class="descname">setPerParticleParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setPerParticleParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of a per-particle parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to set the name</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.addGlobalParameter">
+<code class="descname">addGlobalParameter</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>defaultValue</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.addGlobalParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new global parameter that the interaction may depend on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</li>
+<li><strong>defaultValue</strong> (<em>double</em>) &#8211; the default value of the parameter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the parameter that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getGlobalParameterName">
+<code class="descname">getGlobalParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getGlobalParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to get the name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setGlobalParameterName">
+<code class="descname">setGlobalParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setGlobalParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to set the name</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getGlobalParameterDefaultValue">
+<code class="descname">getGlobalParameterDefaultValue</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getGlobalParameterDefaultValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default value of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to get the default value</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parameter default value</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setGlobalParameterDefaultValue">
+<code class="descname">setGlobalParameterDefaultValue</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>defaultValue</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setGlobalParameterDefaultValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default value of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to set the default value</li>
+<li><strong>defaultValue</strong> (<em>double</em>) &#8211; the default value of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.addEnergyParameterDerivative">
+<code class="descname">addEnergyParameterDerivative</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.addEnergyParameterDerivative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request that this Force compute the derivative of its energy with respect to a global parameter. The parameter must have already been added with addGlobalParameter().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getEnergyParameterDerivativeName">
+<code class="descname">getEnergyParameterDerivativeName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getEnergyParameterDerivativeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a global parameter with respect to which this Force should compute the derivative of the energy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter derivative, between 0 and getNumEnergyParameterDerivatives()</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.addParticle">
+<code class="descname">addParticle</code><span class="sig-paren">(</span><em>self</em>, <em>parameters</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.addParticle" title="Permalink to this definition">¶</a></dt>
+<dd><p>addParticle(self) -&gt; int</p>
+<p>Add the nonbonded force parameters for a particle. This should be called once for each particle in the System. When it is called for the i&#8217;th time, it specifies the parameters for the i&#8217;th particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameters</strong> (<em>vector&lt; double &gt;</em>) &#8211; the list of parameters for the new particle</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the index of the particle that was added</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getParticleParameters">
+<code class="descname">getParticleParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the nonbonded force parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the particle for which to get parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>parameters</strong> &#8211;
+the list of parameters for the specified particle</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">vector&lt; double &gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setParticleParameters">
+<code class="descname">setParticleParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the nonbonded force parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the particle for which to set parameters</li>
+<li><strong>parameters</strong> (<em>vector&lt; double &gt;</em>) &#8211; the list of parameters for the specified particle</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.addComputedValue">
+<code class="descname">addComputedValue</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>expression</em>, <em>type</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.addComputedValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a computed value to calculate for each particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the value</li>
+<li><strong>expression</strong> (<em>string</em>) &#8211; an algebraic expression to evaluate when calculating the computed value. If the ComputationType is SingleParticle, the expression is evaluated independently for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and previous computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every other particle in the system and summed to get the final value. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and previous computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the particle whose value is being calculated, and &#8220;2&#8221; to indicate the particle it is interacting with.</li>
+<li><strong>type</strong> (<em>ComputationType</em>) &#8211; the method to use for computing this value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getComputedValueParameters">
+<code class="descname">getComputedValueParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getComputedValueParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the properties of a computed value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the computed value for which to get parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>name</strong> (<em>string</em>) &#8211;
+the name of the value</li>
+<li><strong>expression</strong> (<em>string</em>) &#8211;
+an algebraic expression to evaluate when calculating the computed value. If the ComputationType is SingleParticle, the expression is evaluated independently for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and previous computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every other particle in the system and summed to get the final value. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and previous computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the particle whose value is being calculated, and &#8220;2&#8221; to indicate the particle it is interacting with.</li>
+<li><strong>type</strong> (<em>ComputationType</em>) &#8211;
+the method to use for computing this value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setComputedValueParameters">
+<code class="descname">setComputedValueParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>name</em>, <em>expression</em>, <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setComputedValueParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the properties of a computed value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the computed value for which to set parameters</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the value</li>
+<li><strong>expression</strong> (<em>string</em>) &#8211; an algebraic expression to evaluate when calculating the computed value. If the ComputationType is SingleParticle, the expression is evaluated independently for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and previous computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every other particle in the system and summed to get the final value. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and previous computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the particle whose value is being calculated, and &#8220;2&#8221; to indicate the particle it is interacting with.</li>
+<li><strong>type</strong> (<em>ComputationType</em>) &#8211; the method to use for computing this value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.addEnergyTerm">
+<code class="descname">addEnergyTerm</code><span class="sig-paren">(</span><em>self</em>, <em>expression</em>, <em>type</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.addEnergyTerm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a term to the energy computation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>expression</strong> (<em>string</em>) &#8211; an algebraic expression to evaluate when calculating the energy. If the ComputationType is SingleParticle, the expression is evaluated once for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every pair of particles in the system. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the first particle in the pair and &#8220;2&#8221; to indicate the second particle in the pair.</li>
+<li><strong>type</strong> (<em>ComputationType</em>) &#8211; the method to use for computing this value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getEnergyTermParameters">
+<code class="descname">getEnergyTermParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getEnergyTermParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the properties of a term to the energy computation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the term for which to get parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>expression</strong> (<em>string</em>) &#8211;
+an algebraic expression to evaluate when calculating the energy. If the ComputationType is SingleParticle, the expression is evaluated once for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every pair of particles in the system. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the first particle in the pair and &#8220;2&#8221; to indicate the second particle in the pair.</li>
+<li><strong>type</strong> (<em>ComputationType</em>) &#8211;
+the method to use for computing this value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setEnergyTermParameters">
+<code class="descname">setEnergyTermParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>expression</em>, <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setEnergyTermParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the properties of a term to the energy computation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the term for which to set parameters</li>
+<li><strong>expression</strong> (<em>string</em>) &#8211; an algebraic expression to evaluate when calculating the energy. If the ComputationType is SingleParticle, the expression is evaluated once for each particle, and may depend on its x, y, and z coordinates, as well as the per-particle parameters and computed values for that particle. If the ComputationType is ParticlePair or ParticlePairNoExclusions, the expression is evaluated once for every pair of particles in the system. In the latter case, the expression may depend on the distance r between the two particles, and on the per-particle parameters and computed values for each of them. Append &#8220;1&#8221; to a variable name to indicate the parameter for the first particle in the pair and &#8220;2&#8221; to indicate the second particle in the pair.</li>
+<li><strong>type</strong> (<em>ComputationType</em>) &#8211; the method to use for computing this value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.addExclusion">
+<code class="descname">addExclusion</code><span class="sig-paren">(</span><em>self</em>, <em>particle1</em>, <em>particle2</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.addExclusion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a particle pair to the list of interactions that should be excluded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>particle1</strong> (<em>int</em>) &#8211; the index of the first particle in the pair</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211; the index of the second particle in the pair</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the exclusion that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getExclusionParticles">
+<code class="descname">getExclusionParticles</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getExclusionParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the particles in a pair whose interaction should be excluded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the exclusion for which to get particle indices</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>particle1</strong> (<em>int</em>) &#8211;
+the index of the first particle in the pair</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211;
+the index of the second particle in the pair</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setExclusionParticles">
+<code class="descname">setExclusionParticles</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>particle1</em>, <em>particle2</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setExclusionParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the particles in a pair whose interaction should be excluded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the exclusion for which to set particle indices</li>
+<li><strong>particle1</strong> (<em>int</em>) &#8211; the index of the first particle in the pair</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211; the index of the second particle in the pair</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.addTabulatedFunction">
+<code class="descname">addTabulatedFunction</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>function</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.addTabulatedFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a tabulated function that may appear in expressions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the function as it appears in expressions</li>
+<li><strong>function</strong> (<em>TabulatedFunction *</em>) &#8211; a TabulatedFunction object defining the function. The TabulatedFunction should have been created on the heap with the &#8220;new&#8221; operator. The Force takes over ownership of it, and deletes it when the Force itself is deleted.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the function that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getTabulatedFunction">
+<code class="descname">getTabulatedFunction</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; TabulatedFunction<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getTabulatedFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>getTabulatedFunction(self, index) -&gt; TabulatedFunction</p>
+<p>Get a reference to a tabulated function that may appear in expressions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the function to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the TabulatedFunction object defining the function</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="simtk.openmm.openmm.TabulatedFunction.html#simtk.openmm.openmm.TabulatedFunction" title="simtk.openmm.openmm.TabulatedFunction">TabulatedFunction</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getTabulatedFunctionName">
+<code class="descname">getTabulatedFunctionName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getTabulatedFunctionName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a tabulated function that may appear in expressions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the function to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the name of the function as it appears in expressions</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.addFunction">
+<code class="descname">addFunction</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>values</em>, <em>min</em>, <em>max</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.addFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a tabulated function that may appear in expressions.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use addTabulatedFunction() instead.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getFunctionParameters">
+<code class="descname">getFunctionParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getFunctionParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters for a tabulated function that may appear in expressions.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use getTabulatedFunctionParameters() instead. If the specified function is not a Continuous1DFunction, this throws an exception.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setFunctionParameters">
+<code class="descname">setFunctionParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>name</em>, <em>values</em>, <em>min</em>, <em>max</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setFunctionParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parameters for a tabulated function that may appear in expressions.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use setTabulatedFunctionParameters() instead. If the specified function is not a Continuous1DFunction, this throws an exception.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.updateParametersInContext">
+<code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.updateParametersInContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the per-particle parameters in a Context to match those stored in this Force object. This method provides an efficient method to update certain parameters in an existing Context without needing to reinitialize it. Simply call setParticleParameters() to modify this object&#8217;s parameters, then call updateParametersInContext() to copy them over to the Context.</p>
+<p>This method has several limitations. The only information it updates is the values of per-particle parameters. All other aspects of the Force (such as the energy function) are unaffected and can only be changed by reinitializing the Context. Also, this method cannot be used to add new particles, only to change the parameters of existing ones.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.usesPeriodicBoundaryConditions">
+<code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.usesPeriodicBoundaryConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if force uses PBC and false otherwise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.__copy__">
+<code class="descname">__copy__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; Force<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.__copy__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.getForceGroup">
+<code class="descname">getForceGroup</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.getForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force group this Force belongs to.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomGBForce.setForceGroup">
+<code class="descname">setForceGroup</code><span class="sig-paren">(</span><em>self</em>, <em>group</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomGBForce.setForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force group this Force belongs to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>group</strong> (<em>int</em>) &#8211; the group index. Legal values are between 0 and 31 (inclusive).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Application Layer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../library.html">Library Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../library.html#core-objects">Core Objects</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../library.html#forces">Forces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#integrators">Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.openmm.CustomGBForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

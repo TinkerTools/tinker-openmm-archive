@@ -1,0 +1,22 @@
+AmoebaPiTorsionForce
+============================
+
+.. autodoxyclass:: OpenMM::AmoebaPiTorsionForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaPiTorsionForce::AmoebaPiTorsionForce
+      ~OpenMM::AmoebaPiTorsionForce::getNumPiTorsions
+      ~OpenMM::AmoebaPiTorsionForce::addPiTorsion
+      ~OpenMM::AmoebaPiTorsionForce::getPiTorsionParameters
+      ~OpenMM::AmoebaPiTorsionForce::setPiTorsionParameters
+      ~OpenMM::AmoebaPiTorsionForce::updateParametersInContext
+      ~OpenMM::AmoebaPiTorsionForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::AmoebaPiTorsionForce::usesPeriodicBoundaryConditions
+   
+
+   

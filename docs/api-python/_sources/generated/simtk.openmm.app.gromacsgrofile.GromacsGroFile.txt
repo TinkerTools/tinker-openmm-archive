@@ -1,0 +1,26 @@
+GromacsGroFile
+==============================================
+
+.. currentmodule:: simtk.openmm.app.gromacsgrofile
+
+.. autoclass:: GromacsGroFile
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GromacsGroFile.__init__
+      ~GromacsGroFile.getNumFrames
+      ~GromacsGroFile.getPeriodicBoxVectors
+      ~GromacsGroFile.getPositions
+      ~GromacsGroFile.getUnitCellDimensions
+   
+   
+
+   
+   
+   

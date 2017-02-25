@@ -1,0 +1,28 @@
+Platform
+================
+
+.. autodoxyclass:: OpenMM::Platform
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::Platform::~Platform
+      ~OpenMM::Platform::getName
+      ~OpenMM::Platform::getSpeed
+      ~OpenMM::Platform::supportsDoublePrecision
+      ~OpenMM::Platform::getPropertyNames
+      ~OpenMM::Platform::getPropertyValue
+      ~OpenMM::Platform::setPropertyValue
+      ~OpenMM::Platform::getPropertyDefaultValue
+      ~OpenMM::Platform::setPropertyDefaultValue
+      ~OpenMM::Platform::contextCreated
+      ~OpenMM::Platform::contextDestroyed
+      ~OpenMM::Platform::registerKernelFactory
+      ~OpenMM::Platform::supportsKernels
+      ~OpenMM::Platform::createKernel
+   
+
+   

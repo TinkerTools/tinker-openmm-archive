@@ -1,0 +1,9 @@
+XmlSerializer
+=====================
+
+.. autodoxyclass:: OpenMM::XmlSerializer
+   :members:
+
+   
+
+   

@@ -1,0 +1,41 @@
+Platform
+============================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: Platform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Platform.__init__
+      ~Platform.findPlatform
+      ~Platform.getDefaultPluginsDirectory
+      ~Platform.getName
+      ~Platform.getNumPlatforms
+      ~Platform.getOpenMMVersion
+      ~Platform.getPlatform
+      ~Platform.getPlatformByName
+      ~Platform.getPluginLoadFailures
+      ~Platform.getPropertyDefaultValue
+      ~Platform.getPropertyNames
+      ~Platform.getPropertyValue
+      ~Platform.getSpeed
+      ~Platform.loadPluginLibrary
+      ~Platform.loadPluginsFromDirectory
+      ~Platform.registerPlatform
+      ~Platform.setPropertyDefaultValue
+      ~Platform.setPropertyValue
+      ~Platform.supportsDoublePrecision
+      ~Platform.supportsKernels
+   
+   
+
+   
+   
+   

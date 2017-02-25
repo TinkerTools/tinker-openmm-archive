@@ -1,0 +1,581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SerializationNode &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="serializationnode">
+<h1>SerializationNode<a class="headerlink" href="#serializationnode" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM17SerializationNodeE">
+<span id="OpenMM::SerializationNode"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">SerializationNode</code><a class="headerlink" href="#_CPPv2N6OpenMM17SerializationNodeE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code></a> stores information about an object during serialization or deserialization.</p>
+<p>When an object is serialized, its <a class="reference internal" href="OpenMM.SerializationProxy.html#_CPPv2N6OpenMM18SerializationProxyE" title="OpenMM::SerializationProxy"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationProxy</span></code></a> is first called to copy information about the object into a <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code></a>. That information can then be written to the output stream in the desired format.</p>
+<p>When an object is deserialized, the input stream is read and the information is stored into a <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code></a>. The appropriate <a class="reference internal" href="OpenMM.SerializationProxy.html#_CPPv2N6OpenMM18SerializationProxyE" title="OpenMM::SerializationProxy"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationProxy</span></code></a> is then called to reconstruct the object.</p>
+<p>SerializationNodes are arranged in a tree. There will often be a one-to-one correspondence between objects and SerializationNodes, but that need not always be true. A proxy is free to create whatever child nodes it wants and store information in them using whatever organization is most convenient.</p>
+<p>Each <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code></a> can store an arbitrary set of &#8220;properties&#8221;, represented as key-value pairs. The key is always a string, while the value may be a string, an int, or a double. If a value is specified using one data type and then accessed as a different data type, the node will attempt to convert the value in an appropriate way. For example, it is always reasonable to call <a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode17getStringPropertyERKNSt6stringE" title="OpenMM::SerializationNode::getStringProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">getStringProperty()</span></code></a> to access a property as a string. Similarly, you can use <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNode17setStringPropertyERKNSt6stringERKNSt6stringE" title="OpenMM::SerializationNode::setStringProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">setStringProperty()</span></code></a> to specify a property and then access it using <a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode14getIntPropertyERKNSt6stringE" title="OpenMM::SerializationNode::getIntProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">getIntProperty()</span></code></a>. This will produce the expected result if the original value was, in fact, the string representation of an int, but if the original string was non-numeric, the result is undefined.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode7getNameEv" title="OpenMM::SerializationNode::getName"><code class="xref cpp cpp-any docutils literal"><span class="pre">getName</span></code></a></td>
+<td>Get the name of this <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNode7setNameERKNSt6stringE" title="OpenMM::SerializationNode::setName"><code class="xref cpp cpp-any docutils literal"><span class="pre">setName</span></code></a></td>
+<td>Set the name of this <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode11getChildrenEv" title="OpenMM::SerializationNode::getChildren"><code class="xref cpp cpp-any docutils literal"><span class="pre">getChildren</span></code></a></td>
+<td>Get a reference to this node&#8217;s child nodes.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode11getChildrenEv" title="OpenMM::SerializationNode::getChildren"><code class="xref cpp cpp-any docutils literal"><span class="pre">getChildren</span></code></a></td>
+<td>Get a reference to this node&#8217;s child nodes.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode12getChildNodeERKNSt6stringE" title="OpenMM::SerializationNode::getChildNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">getChildNode</span></code></a></td>
+<td>Get a reference to the child node with a particular name.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode12getChildNodeERKNSt6stringE" title="OpenMM::SerializationNode::getChildNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">getChildNode</span></code></a></td>
+<td>Get a reference to the child node with a particular name.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode13getPropertiesEv" title="OpenMM::SerializationNode::getProperties"><code class="xref cpp cpp-any docutils literal"><span class="pre">getProperties</span></code></a></td>
+<td>Get a map containing all of this node&#8217;s properties.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode11hasPropertyERKNSt6stringE" title="OpenMM::SerializationNode::hasProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">hasProperty</span></code></a></td>
+<td>Determine whether this node has a property with a particular node.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode17getStringPropertyERKNSt6stringE" title="OpenMM::SerializationNode::getStringProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">getStringProperty</span></code></a></td>
+<td>Get the property with a particular name, specified as a string.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode17getStringPropertyERKNSt6stringE" title="OpenMM::SerializationNode::getStringProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">getStringProperty</span></code></a></td>
+<td>Get the property with a particular name, specified as a string.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNode17setStringPropertyERKNSt6stringERKNSt6stringE" title="OpenMM::SerializationNode::setStringProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">setStringProperty</span></code></a></td>
+<td>Set the value of a property, specified as a string.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode14getIntPropertyERKNSt6stringE" title="OpenMM::SerializationNode::getIntProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">getIntProperty</span></code></a></td>
+<td>Get the property with a particular name, specified as an int.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode14getIntPropertyERKNSt6stringE" title="OpenMM::SerializationNode::getIntProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">getIntProperty</span></code></a></td>
+<td>Get the property with a particular name, specified as an int.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNode14setIntPropertyERKNSt6stringEi" title="OpenMM::SerializationNode::setIntProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">setIntProperty</span></code></a></td>
+<td>Set the value of a property, specified as an int.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode15getBoolPropertyERKNSt6stringE" title="OpenMM::SerializationNode::getBoolProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">getBoolProperty</span></code></a></td>
+<td>Get the property with a particular name, specified as an bool.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode15getBoolPropertyERKNSt6stringE" title="OpenMM::SerializationNode::getBoolProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">getBoolProperty</span></code></a></td>
+<td>Get the property with a particular name, specified as a bool.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNode15setBoolPropertyERKNSt6stringEb" title="OpenMM::SerializationNode::setBoolProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">setBoolProperty</span></code></a></td>
+<td>Set the value of a property, specified as a bool.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode17getDoublePropertyERKNSt6stringE" title="OpenMM::SerializationNode::getDoubleProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">getDoubleProperty</span></code></a></td>
+<td>Get the property with a particular name, specified as a double.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode17getDoublePropertyERKNSt6stringE" title="OpenMM::SerializationNode::getDoubleProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">getDoubleProperty</span></code></a></td>
+<td>Get the property with a particular name, specified as a double.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNode17setDoublePropertyERKNSt6stringEd" title="OpenMM::SerializationNode::setDoubleProperty"><code class="xref cpp cpp-any docutils literal"><span class="pre">setDoubleProperty</span></code></a></td>
+<td>Set the value of a property, specified as a double.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNode15createChildNodeERKNSt6stringE" title="OpenMM::SerializationNode::createChildNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">createChildNode</span></code></a></td>
+<td>Create a new child node</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNode15createChildNodeERKNSt6stringE" title="OpenMM::SerializationNode::createChildNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">createChildNode</span></code></a></td>
+<td>Create a new child node by serializing an object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM17SerializationNode12decodeObjectEv" title="OpenMM::SerializationNode::decodeObject"><code class="xref cpp cpp-any docutils literal"><span class="pre">decodeObject</span></code></a></td>
+<td>Reconstruct an object based on the information stored in this node.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode7getNameEv">
+<span id="OpenMM::SerializationNode::getNameC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode7getNameEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of this <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM17SerializationNode7setNameERKNSt6stringE">
+<span id="OpenMM::SerializationNode::setName__ssCR"></span>void <code class="descclassname"></code><code class="descname">setName</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM17SerializationNode7setNameERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of this <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the new name of the <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationNode</span></code></a></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode11getChildrenEv">
+<span id="OpenMM::SerializationNode::getChildrenC"></span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode">SerializationNode</a>&gt; &amp;<code class="descclassname"></code><code class="descname">getChildren</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode11getChildrenEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a reference to this node&#8217;s child nodes.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM17SerializationNode11getChildrenEv">
+<span id="OpenMM::SerializationNode::getChildren"></span>std::vector&lt;<a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode">SerializationNode</a>&gt; &amp;<code class="descclassname"></code><code class="descname">getChildren</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM17SerializationNode11getChildrenEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a reference to this node&#8217;s child nodes.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode12getChildNodeERKNSt6stringE">
+<span id="OpenMM::SerializationNode::getChildNode__ssCRC"></span><em class="property">const</em> <a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode">SerializationNode</a> &amp;<code class="descclassname"></code><code class="descname">getChildNode</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode12getChildNodeERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a reference to the child node with a particular name. If there is no child with the specified name, this throws an exception.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>the</strong> &#8211; name of the child node to get</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM17SerializationNode12getChildNodeERKNSt6stringE">
+<span id="OpenMM::SerializationNode::getChildNode__ssCR"></span><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode">SerializationNode</a> &amp;<code class="descclassname"></code><code class="descname">getChildNode</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM17SerializationNode12getChildNodeERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a reference to the child node with a particular name. If there is no child with the specified name, this throws an exception.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>the</strong> &#8211; name of the child node to get</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode13getPropertiesEv">
+<span id="OpenMM::SerializationNode::getPropertiesC"></span><em class="property">const</em> std::map&lt;std::string, std::string&gt; &amp;<code class="descclassname"></code><code class="descname">getProperties</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode13getPropertiesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a map containing all of this node&#8217;s properties.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode11hasPropertyERKNSt6stringE">
+<span id="OpenMM::SerializationNode::hasProperty__ssCRC"></span>bool <code class="descclassname"></code><code class="descname">hasProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode11hasPropertyERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine whether this node has a property with a particular node.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to check for</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode17getStringPropertyERKNSt6stringE">
+<span id="OpenMM::SerializationNode::getStringProperty__ssCRC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getStringProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode17getStringPropertyERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the property with a particular name, specified as a string. If there is no property with the specified name, an exception is thrown.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to get</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode17getStringPropertyERKNSt6stringERKNSt6stringE">
+<span id="OpenMM::SerializationNode::getStringProperty__ssCR.ssCRC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getStringProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, <em class="property">const</em> std::string &amp;<em>defaultValue</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode17getStringPropertyERKNSt6stringERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the property with a particular name, specified as a string. If there is no property with the specified name, a default value is returned instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to get</li>
+<li><strong>defaultValue</strong> &#8211; the value to return if the specified property does not exist</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM17SerializationNode17setStringPropertyERKNSt6stringERKNSt6stringE">
+<span id="OpenMM::SerializationNode::setStringProperty__ssCR.ssCR"></span><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode">SerializationNode</a> &amp;<code class="descclassname"></code><code class="descname">setStringProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, <em class="property">const</em> std::string &amp;<em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM17SerializationNode17setStringPropertyERKNSt6stringERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a property, specified as a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to set</li>
+<li><strong>value</strong> &#8211; the value to set for the property</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode14getIntPropertyERKNSt6stringE">
+<span id="OpenMM::SerializationNode::getIntProperty__ssCRC"></span>int <code class="descclassname"></code><code class="descname">getIntProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode14getIntPropertyERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the property with a particular name, specified as an int. If there is no property with the specified name, an exception is thrown.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to get</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode14getIntPropertyERKNSt6stringEi">
+<span id="OpenMM::SerializationNode::getIntProperty__ssCR.iC"></span>int <code class="descclassname"></code><code class="descname">getIntProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, int <em>defaultValue</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode14getIntPropertyERKNSt6stringEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the property with a particular name, specified as an int. If there is no property with the specified name, a default value is returned instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to get</li>
+<li><strong>defaultValue</strong> &#8211; the value to return if the specified property does not exist</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM17SerializationNode14setIntPropertyERKNSt6stringEi">
+<span id="OpenMM::SerializationNode::setIntProperty__ssCR.i"></span><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode">SerializationNode</a> &amp;<code class="descclassname"></code><code class="descname">setIntProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, int <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM17SerializationNode14setIntPropertyERKNSt6stringEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a property, specified as an int.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to set</li>
+<li><strong>value</strong> &#8211; the value to set for the property</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode15getBoolPropertyERKNSt6stringE">
+<span id="OpenMM::SerializationNode::getBoolProperty__ssCRC"></span>bool <code class="descclassname"></code><code class="descname">getBoolProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode15getBoolPropertyERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the property with a particular name, specified as an bool. If there is no property with the specified name, an exception is thrown.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to get</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode15getBoolPropertyERKNSt6stringEb">
+<span id="OpenMM::SerializationNode::getBoolProperty__ssCR.bC"></span>bool <code class="descclassname"></code><code class="descname">getBoolProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, bool <em>defaultValue</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode15getBoolPropertyERKNSt6stringEb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the property with a particular name, specified as a bool. If there is no property with the specified name, a default value is returned instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to get</li>
+<li><strong>defaultValue</strong> &#8211; the value to return if the specified property does not exist</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM17SerializationNode15setBoolPropertyERKNSt6stringEb">
+<span id="OpenMM::SerializationNode::setBoolProperty__ssCR.b"></span><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode">SerializationNode</a> &amp;<code class="descclassname"></code><code class="descname">setBoolProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, bool <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM17SerializationNode15setBoolPropertyERKNSt6stringEb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a property, specified as a bool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to set</li>
+<li><strong>value</strong> &#8211; the value to set for the property</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode17getDoublePropertyERKNSt6stringE">
+<span id="OpenMM::SerializationNode::getDoubleProperty__ssCRC"></span>double <code class="descclassname"></code><code class="descname">getDoubleProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode17getDoublePropertyERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the property with a particular name, specified as a double. If there is no property with the specified name, an exception is thrown.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to get</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM17SerializationNode17getDoublePropertyERKNSt6stringEd">
+<span id="OpenMM::SerializationNode::getDoubleProperty__ssCR.doubleC"></span>double <code class="descclassname"></code><code class="descname">getDoubleProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, double <em>defaultValue</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode17getDoublePropertyERKNSt6stringEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the property with a particular name, specified as a double. If there is no property with the specified name, a default value is returned instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to get</li>
+<li><strong>defaultValue</strong> &#8211; the value to return if the specified property does not exist</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM17SerializationNode17setDoublePropertyERKNSt6stringEd">
+<span id="OpenMM::SerializationNode::setDoubleProperty__ssCR.double"></span><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode">SerializationNode</a> &amp;<code class="descclassname"></code><code class="descname">setDoubleProperty</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, double <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM17SerializationNode17setDoublePropertyERKNSt6stringEd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a property, specified as a double.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the property to set</li>
+<li><strong>value</strong> &#8211; the value to set for the property</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM17SerializationNode15createChildNodeERKNSt6stringE">
+<span id="OpenMM::SerializationNode::createChildNode__ssCR"></span><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode">SerializationNode</a> &amp;<code class="descclassname"></code><code class="descname">createChildNode</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM17SerializationNode15createChildNodeERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new child node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the new node to create</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a reference to the newly created node</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descname">template &lt;class T&gt;</code></dt>
+<dt id="_CPPv2N6OpenMM17SerializationNode15createChildNodeERKNSt6stringEPK1T">
+<span id="OpenMM::SerializationNode::createChildNode__ssCR.TCP"></span><a class="reference internal" href="#_CPPv2N6OpenMM17SerializationNodeE" title="OpenMM::SerializationNode">SerializationNode</a> &amp;<code class="descclassname"></code><code class="descname">createChildNode</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, <em class="property">const</em> T *<em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM17SerializationNode15createChildNodeERKNSt6stringEPK1T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new child node by serializing an object. A <a class="reference internal" href="OpenMM.SerializationProxy.html#_CPPv2N6OpenMM18SerializationProxyE" title="OpenMM::SerializationProxy"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationProxy</span></code></a> is automatically selected based on the object&#8217;s type, then invoked to populate the newly created node.</p>
+<p>Note that, while this method is templatized based on the type of object being serialized, the typeid() operator is used to select the proxy. This means the template argument may be a base class, and the correct proxies will still be selected for objects of different subclasses.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the new node to create</li>
+<li><strong>object</strong> &#8211; a pointer to the object to serialize</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a reference to the newly created node</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descname">template &lt;class T&gt;</code></dt>
+<dt id="_CPPv2NK6OpenMM17SerializationNode12decodeObjectEv">
+<span id="OpenMM::SerializationNode::decodeObjectC"></span>T *<code class="descclassname"></code><code class="descname">decodeObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM17SerializationNode12decodeObjectEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reconstruct an object based on the information stored in this node. A <a class="reference internal" href="OpenMM.SerializationProxy.html#_CPPv2N6OpenMM18SerializationProxyE" title="OpenMM::SerializationProxy"><code class="xref cpp cpp-any docutils literal"><span class="pre">SerializationProxy</span></code></a> is automatically selected based on the information stored in the node, then it is invoked to create the object.</p>
+<p>The template parameter may be either the actual type of the object, or any base class to which it may be cast.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a pointer to the newly created object. The caller assumes ownership of the object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.SerializationNode.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,33 @@
+CustomExternalForce
+===========================
+
+.. autodoxyclass:: OpenMM::CustomExternalForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CustomExternalForce::CustomExternalForce
+      ~OpenMM::CustomExternalForce::getNumParticles
+      ~OpenMM::CustomExternalForce::getNumPerParticleParameters
+      ~OpenMM::CustomExternalForce::getNumGlobalParameters
+      ~OpenMM::CustomExternalForce::getEnergyFunction
+      ~OpenMM::CustomExternalForce::setEnergyFunction
+      ~OpenMM::CustomExternalForce::addPerParticleParameter
+      ~OpenMM::CustomExternalForce::getPerParticleParameterName
+      ~OpenMM::CustomExternalForce::setPerParticleParameterName
+      ~OpenMM::CustomExternalForce::addGlobalParameter
+      ~OpenMM::CustomExternalForce::getGlobalParameterName
+      ~OpenMM::CustomExternalForce::setGlobalParameterName
+      ~OpenMM::CustomExternalForce::getGlobalParameterDefaultValue
+      ~OpenMM::CustomExternalForce::setGlobalParameterDefaultValue
+      ~OpenMM::CustomExternalForce::addParticle
+      ~OpenMM::CustomExternalForce::getParticleParameters
+      ~OpenMM::CustomExternalForce::setParticleParameters
+      ~OpenMM::CustomExternalForce::updateParametersInContext
+      ~OpenMM::CustomExternalForce::usesPeriodicBoundaryConditions
+   
+
+   

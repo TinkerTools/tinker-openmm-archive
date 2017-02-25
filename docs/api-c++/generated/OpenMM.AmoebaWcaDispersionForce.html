@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>AmoebaWcaDispersionForce &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="amoebawcadispersionforce">
+<h1>AmoebaWcaDispersionForce<a class="headerlink" href="#amoebawcadispersionforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForceE">
+<span id="OpenMM::AmoebaWcaDispersionForce"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">AmoebaWcaDispersionForce</code><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForceE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements a nonbonded interaction between pairs of particles typically used along with <a class="reference internal" href="OpenMM.AmoebaGeneralizedKirkwoodForce.html#_CPPv2N6OpenMM30AmoebaGeneralizedKirkwoodForceE" title="OpenMM::AmoebaGeneralizedKirkwoodForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaGeneralizedKirkwoodForce</span></code></a> as part of an implicit solvent model.</p>
+<p>To use it, create an <a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce24AmoebaWcaDispersionForceEv" title="OpenMM::AmoebaWcaDispersionForce::AmoebaWcaDispersionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaWcaDispersionForce</span></code></a> object then call <a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce11addParticleEdd" title="OpenMM::AmoebaWcaDispersionForce::addParticle"><code class="xref cpp cpp-any docutils literal"><span class="pre">addParticle()</span></code></a> once for each particle. After a particle has been added, you can modify its force field parameters by calling <a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce21setParticleParametersEidd" title="OpenMM::AmoebaWcaDispersionForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters()</span></code></a>. This will have no effect on Contexts that already exist unless you call <a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce25updateParametersInContextER7Context" title="OpenMM::AmoebaWcaDispersionForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a>.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce24AmoebaWcaDispersionForceEv" title="OpenMM::AmoebaWcaDispersionForce::AmoebaWcaDispersionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaWcaDispersionForce</span></code></a></td>
+<td>Create an <a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce24AmoebaWcaDispersionForceEv" title="OpenMM::AmoebaWcaDispersionForce::AmoebaWcaDispersionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaWcaDispersionForce</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce15getNumParticlesEv" title="OpenMM::AmoebaWcaDispersionForce::getNumParticles"><code class="xref cpp cpp-any docutils literal"><span class="pre">getNumParticles</span></code></a></td>
+<td>Get the number of particles</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce21setParticleParametersEidd" title="OpenMM::AmoebaWcaDispersionForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters</span></code></a></td>
+<td>Set the force field parameters for a WCA dispersion particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce21getParticleParametersEiRdRd" title="OpenMM::AmoebaWcaDispersionForce::getParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">getParticleParameters</span></code></a></td>
+<td>Get the force field parameters for a WCA dispersion particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce11addParticleEdd" title="OpenMM::AmoebaWcaDispersionForce::addParticle"><code class="xref cpp cpp-any docutils literal"><span class="pre">addParticle</span></code></a></td>
+<td>Set the force field parameters for a WCA dispersion particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce25updateParametersInContextER7Context" title="OpenMM::AmoebaWcaDispersionForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext</span></code></a></td>
+<td>Update the per-particle parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce7getEpsoEv" title="OpenMM::AmoebaWcaDispersionForce::getEpso"><code class="xref cpp cpp-any docutils literal"><span class="pre">getEpso</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce7getEpshEv" title="OpenMM::AmoebaWcaDispersionForce::getEpsh"><code class="xref cpp cpp-any docutils literal"><span class="pre">getEpsh</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getRminoEv" title="OpenMM::AmoebaWcaDispersionForce::getRmino"><code class="xref cpp cpp-any docutils literal"><span class="pre">getRmino</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getRminhEv" title="OpenMM::AmoebaWcaDispersionForce::getRminh"><code class="xref cpp cpp-any docutils literal"><span class="pre">getRminh</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce9getAwaterEv" title="OpenMM::AmoebaWcaDispersionForce::getAwater"><code class="xref cpp cpp-any docutils literal"><span class="pre">getAwater</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getShctdEv" title="OpenMM::AmoebaWcaDispersionForce::getShctd"><code class="xref cpp cpp-any docutils literal"><span class="pre">getShctd</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce10getDispoffEv" title="OpenMM::AmoebaWcaDispersionForce::getDispoff"><code class="xref cpp cpp-any docutils literal"><span class="pre">getDispoff</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getSlevyEv" title="OpenMM::AmoebaWcaDispersionForce::getSlevy"><code class="xref cpp cpp-any docutils literal"><span class="pre">getSlevy</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce7setEpsoEd" title="OpenMM::AmoebaWcaDispersionForce::setEpso"><code class="xref cpp cpp-any docutils literal"><span class="pre">setEpso</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce7setEpshEd" title="OpenMM::AmoebaWcaDispersionForce::setEpsh"><code class="xref cpp cpp-any docutils literal"><span class="pre">setEpsh</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setRminoEd" title="OpenMM::AmoebaWcaDispersionForce::setRmino"><code class="xref cpp cpp-any docutils literal"><span class="pre">setRmino</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setRminhEd" title="OpenMM::AmoebaWcaDispersionForce::setRminh"><code class="xref cpp cpp-any docutils literal"><span class="pre">setRminh</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce9setAwaterEd" title="OpenMM::AmoebaWcaDispersionForce::setAwater"><code class="xref cpp cpp-any docutils literal"><span class="pre">setAwater</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setShctdEd" title="OpenMM::AmoebaWcaDispersionForce::setShctd"><code class="xref cpp cpp-any docutils literal"><span class="pre">setShctd</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce10setDispoffEd" title="OpenMM::AmoebaWcaDispersionForce::setDispoff"><code class="xref cpp cpp-any docutils literal"><span class="pre">setDispoff</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setSlevyEd" title="OpenMM::AmoebaWcaDispersionForce::setSlevy"><code class="xref cpp cpp-any docutils literal"><span class="pre">setSlevy</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce30usesPeriodicBoundaryConditionsEv" title="OpenMM::AmoebaWcaDispersionForce::usesPeriodicBoundaryConditions"><code class="xref cpp cpp-any docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a></td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce24AmoebaWcaDispersionForceEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::AmoebaWcaDispersionForce"></span><code class="descclassname"></code><code class="descname">AmoebaWcaDispersionForce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce24AmoebaWcaDispersionForceEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an <a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce24AmoebaWcaDispersionForceEv" title="OpenMM::AmoebaWcaDispersionForce::AmoebaWcaDispersionForce"><code class="xref cpp cpp-any docutils literal"><span class="pre">AmoebaWcaDispersionForce</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce15getNumParticlesEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::getNumParticlesC"></span>int <code class="descclassname"></code><code class="descname">getNumParticles</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce15getNumParticlesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce21setParticleParametersEidd">
+<span id="OpenMM::AmoebaWcaDispersionForce::setParticleParameters__i.double.double"></span>void <code class="descclassname"></code><code class="descname">setParticleParameters</code><span class="sig-paren">(</span>int <em>particleIndex</em>, double <em>radius</em>, double <em>epsilon</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce21setParticleParametersEidd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force field parameters for a WCA dispersion particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particleIndex</strong> &#8211; the particle index</li>
+<li><strong>radius</strong> &#8211; radius</li>
+<li><strong>epsilon</strong> &#8211; epsilon</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce21getParticleParametersEiRdRd">
+<span id="OpenMM::AmoebaWcaDispersionForce::getParticleParameters__i.doubleR.doubleRC"></span>void <code class="descclassname"></code><code class="descname">getParticleParameters</code><span class="sig-paren">(</span>int <em>particleIndex</em>, double &amp;<em>radius</em>, double &amp;<em>epsilon</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce21getParticleParametersEiRdRd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force field parameters for a WCA dispersion particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>particleIndex</strong> &#8211; the particle index</li>
+<li><strong>radius</strong> &#8211; [out] radius</li>
+<li><strong>epsilon</strong> &#8211; [out] epsilon</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce11addParticleEdd">
+<span id="OpenMM::AmoebaWcaDispersionForce::addParticle__double.double"></span>int <code class="descclassname"></code><code class="descname">addParticle</code><span class="sig-paren">(</span>double <em>radius</em>, double <em>epsilon</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce11addParticleEdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force field parameters for a WCA dispersion particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>radius</strong> &#8211; radius</li>
+<li><strong>epsilon</strong> &#8211; epsilon</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">index of added particle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce25updateParametersInContextER7Context">
+<span id="OpenMM::AmoebaWcaDispersionForce::updateParametersInContext__ContextR"></span>void <code class="descclassname"></code><code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce25updateParametersInContextER7Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the per-particle parameters in a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> to match those stored in this <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> object. This method provides an efficient method to update certain parameters in an existing <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> without needing to reinitialize it. Simply call <a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce21setParticleParametersEidd" title="OpenMM::AmoebaWcaDispersionForce::setParticleParameters"><code class="xref cpp cpp-any docutils literal"><span class="pre">setParticleParameters()</span></code></a> to modify this object&#8217;s parameters, then call <a class="reference internal" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce25updateParametersInContextER7Context" title="OpenMM::AmoebaWcaDispersionForce::updateParametersInContext"><code class="xref cpp cpp-any docutils literal"><span class="pre">updateParametersInContext()</span></code></a> to copy them over to the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<p>The only information this method updates is the values of per-particle parameters. All other aspects of the <a class="reference internal" href="OpenMM.Force.html#_CPPv2N6OpenMM5ForceE" title="OpenMM::Force"><code class="xref cpp cpp-any docutils literal"><span class="pre">Force</span></code></a> are unaffected and can only be changed by reinitializing the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce7getEpsoEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::getEpsoC"></span>double <code class="descclassname"></code><code class="descname">getEpso</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce7getEpsoEv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce7getEpshEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::getEpshC"></span>double <code class="descclassname"></code><code class="descname">getEpsh</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce7getEpshEv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getRminoEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::getRminoC"></span>double <code class="descclassname"></code><code class="descname">getRmino</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getRminoEv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getRminhEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::getRminhC"></span>double <code class="descclassname"></code><code class="descname">getRminh</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getRminhEv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce9getAwaterEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::getAwaterC"></span>double <code class="descclassname"></code><code class="descname">getAwater</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce9getAwaterEv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getShctdEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::getShctdC"></span>double <code class="descclassname"></code><code class="descname">getShctd</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getShctdEv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce10getDispoffEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::getDispoffC"></span>double <code class="descclassname"></code><code class="descname">getDispoff</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce10getDispoffEv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getSlevyEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::getSlevyC"></span>double <code class="descclassname"></code><code class="descname">getSlevy</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce8getSlevyEv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce7setEpsoEd">
+<span id="OpenMM::AmoebaWcaDispersionForce::setEpso__double"></span>void <code class="descclassname"></code><code class="descname">setEpso</code><span class="sig-paren">(</span>double <em>inputValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce7setEpsoEd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce7setEpshEd">
+<span id="OpenMM::AmoebaWcaDispersionForce::setEpsh__double"></span>void <code class="descclassname"></code><code class="descname">setEpsh</code><span class="sig-paren">(</span>double <em>inputValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce7setEpshEd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setRminoEd">
+<span id="OpenMM::AmoebaWcaDispersionForce::setRmino__double"></span>void <code class="descclassname"></code><code class="descname">setRmino</code><span class="sig-paren">(</span>double <em>inputValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setRminoEd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setRminhEd">
+<span id="OpenMM::AmoebaWcaDispersionForce::setRminh__double"></span>void <code class="descclassname"></code><code class="descname">setRminh</code><span class="sig-paren">(</span>double <em>inputValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setRminhEd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce9setAwaterEd">
+<span id="OpenMM::AmoebaWcaDispersionForce::setAwater__double"></span>void <code class="descclassname"></code><code class="descname">setAwater</code><span class="sig-paren">(</span>double <em>inputValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce9setAwaterEd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setShctdEd">
+<span id="OpenMM::AmoebaWcaDispersionForce::setShctd__double"></span>void <code class="descclassname"></code><code class="descname">setShctd</code><span class="sig-paren">(</span>double <em>inputValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setShctdEd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce10setDispoffEd">
+<span id="OpenMM::AmoebaWcaDispersionForce::setDispoff__double"></span>void <code class="descclassname"></code><code class="descname">setDispoff</code><span class="sig-paren">(</span>double <em>inputValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce10setDispoffEd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setSlevyEd">
+<span id="OpenMM::AmoebaWcaDispersionForce::setSlevy__double"></span>void <code class="descclassname"></code><code class="descname">setSlevy</code><span class="sig-paren">(</span>double <em>inputValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM24AmoebaWcaDispersionForce8setSlevyEd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM24AmoebaWcaDispersionForce30usesPeriodicBoundaryConditionsEv">
+<span id="OpenMM::AmoebaWcaDispersionForce::usesPeriodicBoundaryConditionsC"></span>bool <code class="descclassname"></code><code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM24AmoebaWcaDispersionForce30usesPeriodicBoundaryConditionsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if nonbondedMethod uses PBC and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.AmoebaWcaDispersionForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

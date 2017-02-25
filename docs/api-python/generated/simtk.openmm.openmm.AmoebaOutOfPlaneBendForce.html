@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>AmoebaOutOfPlaneBendForce &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Library Layer" href="../library.html" />
+    <link rel="next" title="AmoebaPiTorsionForce" href="simtk.openmm.openmm.AmoebaPiTorsionForce.html" />
+    <link rel="prev" title="AmoebaMultipoleForce" href="simtk.openmm.openmm.AmoebaMultipoleForce.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="amoebaoutofplanebendforce">
+<h1>AmoebaOutOfPlaneBendForce<a class="headerlink" href="#amoebaoutofplanebendforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce">
+<em class="property">class </em><code class="descclassname">simtk.openmm.openmm.</code><code class="descname">AmoebaOutOfPlaneBendForce</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements the Amoeba out-of-plane bend interaction.</p>
+<p>To use it, create an OutOfPlaneBendForce object then call addOutOfPlaneBend() once for each outOfPlaneBend. After an out-of-plane bend has been added, you can modify its force field parameters by calling setOutOfPlaneBendParameters(). This will have no effect on Contexts that already exist unless you call updateParametersInContext().</p>
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; AmoebaOutOfPlaneBendForce<a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>__init__(self, other) -&gt; AmoebaOutOfPlaneBendForce</p>
+<p>Create an AmoebaOutOfPlaneBendForce.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.__init__" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>((self)&nbsp;-&gt;&nbsp;AmoebaOutOfPlaneBendForce)</td>
+<td>__init__(self, other) -&gt; AmoebaOutOfPlaneBendForce</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.addOutOfPlaneBend" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.addOutOfPlaneBend"><code class="xref py py-obj docutils literal"><span class="pre">addOutOfPlaneBend</span></code></a>((self,&nbsp;particle1,&nbsp;...)</td>
+<td>Add an out-of-plane bend term to the force field.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendCubic" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendCubic"><code class="xref py py-obj docutils literal"><span class="pre">getAmoebaGlobalOutOfPlaneBendCubic</span></code></a>(...)</td>
+<td>Get the global cubic term</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendPentic" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendPentic"><code class="xref py py-obj docutils literal"><span class="pre">getAmoebaGlobalOutOfPlaneBendPentic</span></code></a>(...)</td>
+<td>Get the global pentic term</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendQuartic" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendQuartic"><code class="xref py py-obj docutils literal"><span class="pre">getAmoebaGlobalOutOfPlaneBendQuartic</span></code></a>(...)</td>
+<td>Get the global quartic term</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendSextic" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendSextic"><code class="xref py py-obj docutils literal"><span class="pre">getAmoebaGlobalOutOfPlaneBendSextic</span></code></a>(...)</td>
+<td>Get the global sextic term</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getForceGroup" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">getForceGroup</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the force group this Force belongs to.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getNumOutOfPlaneBends" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getNumOutOfPlaneBends"><code class="xref py py-obj docutils literal"><span class="pre">getNumOutOfPlaneBends</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of out-of-plane bend terms in the potential function</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getOutOfPlaneBendParameters" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getOutOfPlaneBendParameters"><code class="xref py py-obj docutils literal"><span class="pre">getOutOfPlaneBendParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the force field parameters for an out-of-plane bend term.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendCubic" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendCubic"><code class="xref py py-obj docutils literal"><span class="pre">setAmoebaGlobalOutOfPlaneBendCubic</span></code></a>(self,&nbsp;cubicK)</td>
+<td>Set the global cubic term</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendPentic" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendPentic"><code class="xref py py-obj docutils literal"><span class="pre">setAmoebaGlobalOutOfPlaneBendPentic</span></code></a>(self,&nbsp;...)</td>
+<td>Set the global pentic term</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendQuartic" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendQuartic"><code class="xref py py-obj docutils literal"><span class="pre">setAmoebaGlobalOutOfPlaneBendQuartic</span></code></a>(self,&nbsp;...)</td>
+<td>Set the global cubic term</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendSextic" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendSextic"><code class="xref py py-obj docutils literal"><span class="pre">setAmoebaGlobalOutOfPlaneBendSextic</span></code></a>(self,&nbsp;...)</td>
+<td>Set the global sextic term</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setForceGroup" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">setForceGroup</span></code></a>(self,&nbsp;group)</td>
+<td>Set the force group this Force belongs to.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setOutOfPlaneBendParameters" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setOutOfPlaneBendParameters"><code class="xref py py-obj docutils literal"><span class="pre">setOutOfPlaneBendParameters</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the force field parameters for an out-of-plane bend term.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setUsesPeriodicBoundaryConditions" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setUsesPeriodicBoundaryConditions"><code class="xref py py-obj docutils literal"><span class="pre">setUsesPeriodicBoundaryConditions</span></code></a>(self,&nbsp;periodic)</td>
+<td>Set whether this force should apply periodic boundary conditions when calculating displacements.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.updateParametersInContext" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.updateParametersInContext"><code class="xref py py-obj docutils literal"><span class="pre">updateParametersInContext</span></code></a>(self,&nbsp;context)</td>
+<td>Update the per-bend term parameters in a Context to match those stored in this Force object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.usesPeriodicBoundaryConditions" title="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.usesPeriodicBoundaryConditions"><code class="xref py py-obj docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a>((self)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getNumOutOfPlaneBends">
+<code class="descname">getNumOutOfPlaneBends</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getNumOutOfPlaneBends" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of out-of-plane bend terms in the potential function</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendCubic">
+<code class="descname">setAmoebaGlobalOutOfPlaneBendCubic</code><span class="sig-paren">(</span><em>self</em>, <em>cubicK</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendCubic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global cubic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cubicK</strong> (<em>double</em>) &#8211; the cubic force constant for the angle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendCubic">
+<code class="descname">getAmoebaGlobalOutOfPlaneBendCubic</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendCubic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global cubic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">global cubicK term</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendQuartic">
+<code class="descname">setAmoebaGlobalOutOfPlaneBendQuartic</code><span class="sig-paren">(</span><em>self</em>, <em>quarticK</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendQuartic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global cubic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>quarticK</strong> (<em>double</em>) &#8211; the quartic force constant for the angle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendQuartic">
+<code class="descname">getAmoebaGlobalOutOfPlaneBendQuartic</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendQuartic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global quartic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">global quartic term</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendPentic">
+<code class="descname">setAmoebaGlobalOutOfPlaneBendPentic</code><span class="sig-paren">(</span><em>self</em>, <em>penticK</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendPentic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global pentic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>penticK</strong> (<em>double</em>) &#8211; the pentic force constant for the angle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendPentic">
+<code class="descname">getAmoebaGlobalOutOfPlaneBendPentic</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendPentic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global pentic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">global penticK term</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendSextic">
+<code class="descname">setAmoebaGlobalOutOfPlaneBendSextic</code><span class="sig-paren">(</span><em>self</em>, <em>sexticK</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setAmoebaGlobalOutOfPlaneBendSextic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global sextic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sexticK</strong> (<em>double</em>) &#8211; the sextic force constant for the angle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendSextic">
+<code class="descname">getAmoebaGlobalOutOfPlaneBendSextic</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getAmoebaGlobalOutOfPlaneBendSextic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global sextic term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">global sexticK term</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.addOutOfPlaneBend">
+<code class="descname">addOutOfPlaneBend</code><span class="sig-paren">(</span><em>self</em>, <em>particle1</em>, <em>particle2</em>, <em>particle3</em>, <em>particle4</em>, <em>k</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.addOutOfPlaneBend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an out-of-plane bend term to the force field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>particle1</strong> (<em>int</em>) &#8211; the index of the first particle connected by the outOfPlaneBend</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211; the index of the second particle connected by the outOfPlaneBend</li>
+<li><strong>particle3</strong> (<em>int</em>) &#8211; the index of the third particle connected by the outOfPlaneBend</li>
+<li><strong>particle4</strong> (<em>int</em>) &#8211; the index of the fourth particle connected by the outOfPlaneBend</li>
+<li><strong>k</strong> (<em>double</em>) &#8211; the force constant for the out-of-plane bend</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the out-of-plane bend that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getOutOfPlaneBendParameters">
+<code class="descname">getOutOfPlaneBendParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getOutOfPlaneBendParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force field parameters for an out-of-plane bend term.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the outOfPlaneBend for which to get parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>particle1</strong> (<em>int</em>) &#8211;
+the index of the first particle connected by the outOfPlaneBend</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211;
+the index of the second particle connected by the outOfPlaneBend</li>
+<li><strong>particle3</strong> (<em>int</em>) &#8211;
+the index of the third particle connected by the outOfPlaneBend</li>
+<li><strong>particle4</strong> (<em>int</em>) &#8211;
+the index of the fourth particle connected by the outOfPlaneBend</li>
+<li><strong>k</strong> (<em>double</em>) &#8211;
+the force constant for the out-of-plane bend</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setOutOfPlaneBendParameters">
+<code class="descname">setOutOfPlaneBendParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>particle1</em>, <em>particle2</em>, <em>particle3</em>, <em>particle4</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setOutOfPlaneBendParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force field parameters for an out-of-plane bend term.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the outOfPlaneBend for which to set parameters</li>
+<li><strong>particle1</strong> (<em>int</em>) &#8211; the index of the first particle connected by the outOfPlaneBend</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211; the index of the second particle connected by the outOfPlaneBend</li>
+<li><strong>particle3</strong> (<em>int</em>) &#8211; the index of the third particle connected by the outOfPlaneBend</li>
+<li><strong>particle4</strong> (<em>int</em>) &#8211; the index of the fourth particle connected by the outOfPlaneBend</li>
+<li><strong>k</strong> (<em>double</em>) &#8211; the force constant for the out-of-plane bend</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.updateParametersInContext">
+<code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.updateParametersInContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the per-bend term parameters in a Context to match those stored in this Force object. This method provides an efficient method to update certain parameters in an existing Context without needing to reinitialize it. Simply call setOutOfPlaneBendParameters() to modify this object&#8217;s parameters, then call updateParametersInContext() to copy them over to the Context.</p>
+<p>The only information this method updates is the values of per-bend term parameters. The set of particles involved in a term cannot be changed, nor can new terms be added.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setUsesPeriodicBoundaryConditions">
+<code class="descname">setUsesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><em>self</em>, <em>periodic</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setUsesPeriodicBoundaryConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether this force should apply periodic boundary conditions when calculating displacements. Usually this is not appropriate for bonded forces, but there are situations when it can be useful.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.usesPeriodicBoundaryConditions">
+<code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.usesPeriodicBoundaryConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if force uses PBC and false otherwise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.__copy__">
+<code class="descname">__copy__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; Force<a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.__copy__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getForceGroup">
+<code class="descname">getForceGroup</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.getForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force group this Force belongs to.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setForceGroup">
+<code class="descname">setForceGroup</code><span class="sig-paren">(</span><em>self</em>, <em>group</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.setForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force group this Force belongs to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>group</strong> (<em>int</em>) &#8211; the group index. Legal values are between 0 and 31 (inclusive).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Application Layer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../library.html">Library Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../library.html#core-objects">Core Objects</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../library.html#forces">Forces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#integrators">Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

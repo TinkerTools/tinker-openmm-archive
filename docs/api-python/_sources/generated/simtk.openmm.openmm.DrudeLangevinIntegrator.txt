@@ -1,0 +1,39 @@
+DrudeLangevinIntegrator
+===========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: DrudeLangevinIntegrator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DrudeLangevinIntegrator.__init__
+      ~DrudeLangevinIntegrator.getConstraintTolerance
+      ~DrudeLangevinIntegrator.getDrudeFriction
+      ~DrudeLangevinIntegrator.getDrudeTemperature
+      ~DrudeLangevinIntegrator.getFriction
+      ~DrudeLangevinIntegrator.getMaxDrudeDistance
+      ~DrudeLangevinIntegrator.getRandomNumberSeed
+      ~DrudeLangevinIntegrator.getStepSize
+      ~DrudeLangevinIntegrator.getTemperature
+      ~DrudeLangevinIntegrator.setConstraintTolerance
+      ~DrudeLangevinIntegrator.setDrudeFriction
+      ~DrudeLangevinIntegrator.setDrudeTemperature
+      ~DrudeLangevinIntegrator.setFriction
+      ~DrudeLangevinIntegrator.setMaxDrudeDistance
+      ~DrudeLangevinIntegrator.setRandomNumberSeed
+      ~DrudeLangevinIntegrator.setStepSize
+      ~DrudeLangevinIntegrator.setTemperature
+      ~DrudeLangevinIntegrator.step
+   
+   
+
+   
+   
+   

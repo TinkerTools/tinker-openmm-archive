@@ -1,0 +1,40 @@
+Topology
+==================================
+
+.. currentmodule:: simtk.openmm.app.topology
+
+.. autoclass:: Topology
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Topology.__init__
+      ~Topology.addAtom
+      ~Topology.addBond
+      ~Topology.addChain
+      ~Topology.addResidue
+      ~Topology.atoms
+      ~Topology.bonds
+      ~Topology.chains
+      ~Topology.createDisulfideBonds
+      ~Topology.createStandardBonds
+      ~Topology.getNumAtoms
+      ~Topology.getNumChains
+      ~Topology.getNumResidues
+      ~Topology.getPeriodicBoxVectors
+      ~Topology.getUnitCellDimensions
+      ~Topology.loadBondDefinitions
+      ~Topology.residues
+      ~Topology.setPeriodicBoxVectors
+      ~Topology.setUnitCellDimensions
+   
+   
+
+   
+   
+   

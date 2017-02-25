@@ -1,0 +1,25 @@
+Force
+=========================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: Force
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Force.__init__
+      ~Force.getForceGroup
+      ~Force.setForceGroup
+      ~Force.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

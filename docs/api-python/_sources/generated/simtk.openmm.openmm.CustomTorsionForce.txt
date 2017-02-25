@@ -1,0 +1,46 @@
+CustomTorsionForce
+======================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: CustomTorsionForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CustomTorsionForce.__init__
+      ~CustomTorsionForce.addEnergyParameterDerivative
+      ~CustomTorsionForce.addGlobalParameter
+      ~CustomTorsionForce.addPerTorsionParameter
+      ~CustomTorsionForce.addTorsion
+      ~CustomTorsionForce.getEnergyFunction
+      ~CustomTorsionForce.getEnergyParameterDerivativeName
+      ~CustomTorsionForce.getForceGroup
+      ~CustomTorsionForce.getGlobalParameterDefaultValue
+      ~CustomTorsionForce.getGlobalParameterName
+      ~CustomTorsionForce.getNumEnergyParameterDerivatives
+      ~CustomTorsionForce.getNumGlobalParameters
+      ~CustomTorsionForce.getNumPerTorsionParameters
+      ~CustomTorsionForce.getNumTorsions
+      ~CustomTorsionForce.getPerTorsionParameterName
+      ~CustomTorsionForce.getTorsionParameters
+      ~CustomTorsionForce.setEnergyFunction
+      ~CustomTorsionForce.setForceGroup
+      ~CustomTorsionForce.setGlobalParameterDefaultValue
+      ~CustomTorsionForce.setGlobalParameterName
+      ~CustomTorsionForce.setPerTorsionParameterName
+      ~CustomTorsionForce.setTorsionParameters
+      ~CustomTorsionForce.setUsesPeriodicBoundaryConditions
+      ~CustomTorsionForce.updateParametersInContext
+      ~CustomTorsionForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   

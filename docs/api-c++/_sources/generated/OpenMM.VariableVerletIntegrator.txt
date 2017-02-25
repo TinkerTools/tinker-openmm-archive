@@ -1,0 +1,19 @@
+VariableVerletIntegrator
+================================
+
+.. autodoxyclass:: OpenMM::VariableVerletIntegrator
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::VariableVerletIntegrator::VariableVerletIntegrator
+      ~OpenMM::VariableVerletIntegrator::getErrorTolerance
+      ~OpenMM::VariableVerletIntegrator::setErrorTolerance
+      ~OpenMM::VariableVerletIntegrator::step
+      ~OpenMM::VariableVerletIntegrator::stepTo
+   
+
+   

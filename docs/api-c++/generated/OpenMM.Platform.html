@@ -1,0 +1,513 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Platform &mdash; OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '@OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM @OPENMM_MAJOR_VERSION@.@OPENMM_MINOR_VERSION@ documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="platform">
+<h1>Platform<a class="headerlink" href="#platform" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6OpenMM8PlatformE">
+<span id="OpenMM::Platform"></span><em class="property">class </em><code class="descclassname">OpenMM::</code><code class="descname">Platform</code><a class="headerlink" href="#_CPPv2N6OpenMM8PlatformE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> defines an implementation of all the kernels needed to perform some calculation. More precisely, a <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> object acts as a registry for a set of KernelFactory objects which together implement the kernels. The <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> class, in turn, provides a static registry of all available <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> objects.</p>
+<p>To get a <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> object, call</p>
+<div class="highlight-C++"><div class="highlight"><pre><span></span><span class="n">Platform</span><span class="o">&amp;</span> <span class="n">platform</span> <span class="o">=</span> <span class="n">Platform</span><span class="o">::</span><span class="n">findPlatform</span><span class="p">(</span><span class="n">kernelNames</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>passing in the names of all kernels that will be required for the calculation you plan to perform. It will return the fastest available <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> which provides implementations of all the specified kernels. You can then call <a class="reference internal" href="#_CPPv2NK6OpenMM8Platform12createKernelERKNSt6stringER11ContextImpl" title="OpenMM::Platform::createKernel"><code class="xref cpp cpp-any docutils literal"><span class="pre">createKernel()</span></code></a> to construct particular kernels as needed.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM8PlatformD0Ev" title="OpenMM::Platform::~Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">~Platform</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform7getNameEv" title="OpenMM::Platform::getName"><code class="xref cpp cpp-any docutils literal"><span class="pre">getName</span></code></a></td>
+<td>Get the name of this platform.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform8getSpeedEv" title="OpenMM::Platform::getSpeed"><code class="xref cpp cpp-any docutils literal"><span class="pre">getSpeed</span></code></a></td>
+<td>Get an estimate of how fast this <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> class is.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform23supportsDoublePrecisionEv" title="OpenMM::Platform::supportsDoublePrecision"><code class="xref cpp cpp-any docutils literal"><span class="pre">supportsDoublePrecision</span></code></a></td>
+<td>Get whether this <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> supports double precision arithmetic.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform16getPropertyNamesEv" title="OpenMM::Platform::getPropertyNames"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPropertyNames</span></code></a></td>
+<td>Get the names of all Platform-specific properties this <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> supports.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform16getPropertyValueERK7ContextRKNSt6stringE" title="OpenMM::Platform::getPropertyValue"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPropertyValue</span></code></a></td>
+<td>Get the value of a Platform-specific property for a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform16setPropertyValueER7ContextRKNSt6stringERKNSt6stringE" title="OpenMM::Platform::setPropertyValue"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPropertyValue</span></code></a></td>
+<td>Set the value of a Platform-specific property for a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform23getPropertyDefaultValueERKNSt6stringE" title="OpenMM::Platform::getPropertyDefaultValue"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPropertyDefaultValue</span></code></a></td>
+<td>Get the default value of a Platform-specific property.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2N6OpenMM8Platform23setPropertyDefaultValueERKNSt6stringERKNSt6stringE" title="OpenMM::Platform::setPropertyDefaultValue"><code class="xref cpp cpp-any docutils literal"><span class="pre">setPropertyDefaultValue</span></code></a></td>
+<td>Set the default value of a Platform-specific property.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform14contextCreatedER11ContextImplRKNSt3mapINSt6stringENSt6stringEEE" title="OpenMM::Platform::contextCreated"><code class="xref cpp cpp-any docutils literal"><span class="pre">contextCreated</span></code></a></td>
+<td>This is called whenever a new <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> is created.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform16contextDestroyedER11ContextImpl" title="OpenMM::Platform::contextDestroyed"><code class="xref cpp cpp-any docutils literal"><span class="pre">contextDestroyed</span></code></a></td>
+<td>This is called whenever a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> is deleted.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2N6OpenMM8Platform21registerKernelFactoryERKNSt6stringEP13KernelFactory" title="OpenMM::Platform::registerKernelFactory"><code class="xref cpp cpp-any docutils literal"><span class="pre">registerKernelFactory</span></code></a></td>
+<td>Register a KernelFactory which should be used to create Kernels with a particular name.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform15supportsKernelsERKNSt6vectorINSt6stringEEE" title="OpenMM::Platform::supportsKernels"><code class="xref cpp cpp-any docutils literal"><span class="pre">supportsKernels</span></code></a></td>
+<td>Determine whether this Platforms provides implementations of a set of kernels.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#_CPPv2NK6OpenMM8Platform12createKernelERKNSt6stringER11ContextImpl" title="OpenMM::Platform::createKernel"><code class="xref cpp cpp-any docutils literal"><span class="pre">createKernel</span></code></a></td>
+<td>Create a Kernel object.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8PlatformD0Ev">
+<span id="OpenMM::Platform::~Platform"></span><code class="descclassname"></code><code class="descname">~Platform</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8PlatformD0Ev" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform7getNameEv">
+<span id="OpenMM::Platform::getNameC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv2NK6OpenMM8Platform7getNameEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of this platform. This should be a unique identifier which can be used to recognized it.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform8getSpeedEv">
+<span id="OpenMM::Platform::getSpeedC"></span>double <code class="descclassname"></code><code class="descname">getSpeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv2NK6OpenMM8Platform8getSpeedEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an estimate of how fast this <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> class is. This need not be precise. It only is expected to return an order or magnitude estimate of the relative performance of different <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> classes. An unoptimized reference implementation should return 1.0, and all other Platforms should return a larger value that is an estimate of how many times faster they are than the reference implementation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform23supportsDoublePrecisionEv">
+<span id="OpenMM::Platform::supportsDoublePrecisionC"></span>bool <code class="descclassname"></code><code class="descname">supportsDoublePrecision</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv2NK6OpenMM8Platform23supportsDoublePrecisionEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether this <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> supports double precision arithmetic. If this returns false, the platform is permitted to represent double precision values internally as single precision.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method is not well defined, and is too simplistic to describe the actual behavior of some Platforms, such as ones that offer multiple precision modes. It will be removed in a future release.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform16getPropertyNamesEv">
+<span id="OpenMM::Platform::getPropertyNamesC"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="descclassname"></code><code class="descname">getPropertyNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM8Platform16getPropertyNamesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the names of all Platform-specific properties this <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> supports.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform16getPropertyValueERK7ContextRKNSt6stringE">
+<span id="OpenMM::Platform::getPropertyValue__ContextCR.ssCRC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getPropertyValue</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em>, <em class="property">const</em> std::string &amp;<em>property</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM8Platform16getPropertyValueERK7ContextRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of a Platform-specific property for a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>context</strong> &#8211; the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> for which to get the property</li>
+<li><strong>property</strong> &#8211; the name of the property to get</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the value of the property</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform16setPropertyValueER7ContextRKNSt6stringERKNSt6stringE">
+<span id="OpenMM::Platform::setPropertyValue__ContextR.ssCR.ssCRC"></span>void <code class="descclassname"></code><code class="descname">setPropertyValue</code><span class="sig-paren">(</span><a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context">Context</a> &amp;<em>context</em>, <em class="property">const</em> std::string &amp;<em>property</em>, <em class="property">const</em> std::string &amp;<em>value</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM8Platform16setPropertyValueER7ContextRKNSt6stringERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of a Platform-specific property for a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>context</strong> &#8211; the <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> for which to set the property</li>
+<li><strong>property</strong> &#8211; the name of the property to set</li>
+<li><strong>value</strong> &#8211; the value to set for the property</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform23getPropertyDefaultValueERKNSt6stringE">
+<span id="OpenMM::Platform::getPropertyDefaultValue__ssCRC"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getPropertyDefaultValue</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>property</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM8Platform23getPropertyDefaultValueERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default value of a Platform-specific property. This is the value that will be used for newly created Contexts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>property</strong> &#8211; the name of the property to get</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the default value of the property</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform23setPropertyDefaultValueERKNSt6stringERKNSt6stringE">
+<span id="OpenMM::Platform::setPropertyDefaultValue__ssCR.ssCR"></span>void <code class="descclassname"></code><code class="descname">setPropertyDefaultValue</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>property</em>, <em class="property">const</em> std::string &amp;<em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform23setPropertyDefaultValueERKNSt6stringERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default value of a Platform-specific property. This is the value that will be used for newly created Contexts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>property</strong> &#8211; the name of the property to set</li>
+<li><strong>value</strong> &#8211; the value to set for the property</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform14contextCreatedER11ContextImplRKNSt3mapINSt6stringENSt6stringEEE">
+<span id="OpenMM::Platform::contextCreated__ContextImplR.std::map:ss.ss:CRC"></span>void <code class="descclassname"></code><code class="descname">contextCreated</code><span class="sig-paren">(</span>ContextImpl &amp;<em>context</em>, <em class="property">const</em> std::map&lt;std::string, std::string&gt; &amp;<em>properties</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM8Platform14contextCreatedER11ContextImplRKNSt3mapINSt6stringENSt6stringEEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is called whenever a new <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> is created. It gives the <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> a chance to initialize the context and store platform-specific data in it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>context</strong> &#8211; the newly created context</li>
+<li><strong>properties</strong> &#8211; a set of values for platform-specific properties. Keys are the property names.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform16contextDestroyedER11ContextImpl">
+<span id="OpenMM::Platform::contextDestroyed__ContextImplRC"></span>void <code class="descclassname"></code><code class="descname">contextDestroyed</code><span class="sig-paren">(</span>ContextImpl &amp;<em>context</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM8Platform16contextDestroyedER11ContextImpl" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is called whenever a <a class="reference internal" href="OpenMM.Context.html#_CPPv2N6OpenMM7ContextE" title="OpenMM::Context"><code class="xref cpp cpp-any docutils literal"><span class="pre">Context</span></code></a> is deleted. It gives the <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> a chance to clean up any platform-specific data that was stored in it.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform21registerKernelFactoryERKNSt6stringEP13KernelFactory">
+<span id="OpenMM::Platform::registerKernelFactory__ssCR.KernelFactoryP"></span>void <code class="descclassname"></code><code class="descname">registerKernelFactory</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, KernelFactory *<em>factory</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform21registerKernelFactoryERKNSt6stringEP13KernelFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a KernelFactory which should be used to create Kernels with a particular name. The <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> takes over ownership of the factory, and will delete it when the <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> itself is deleted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the kernel name for which the factory should be used</li>
+<li><strong>factory</strong> &#8211; the factory to use for creating Kernels with the specified name</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform15supportsKernelsERKNSt6vectorINSt6stringEEE">
+<span id="OpenMM::Platform::supportsKernels__std::vector:ss:CRC"></span>bool <code class="descclassname"></code><code class="descname">supportsKernels</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>kernelNames</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM8Platform15supportsKernelsERKNSt6vectorINSt6stringEEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine whether this Platforms provides implementations of a set of kernels.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>kernelNames</strong> &#8211; the names of the kernels of interests</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if this <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> provides implementations of all the kernels in the list, false if there are any which it does not support</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6OpenMM8Platform12createKernelERKNSt6stringER11ContextImpl">
+<span id="OpenMM::Platform::createKernel__ssCR.ContextImplRC"></span>Kernel <code class="descclassname"></code><code class="descname">createKernel</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, ContextImpl &amp;<em>context</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6OpenMM8Platform12createKernelERKNSt6stringER11ContextImpl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Kernel object. If you call this method multiple times for different contexts with the same name, the returned Kernels are independent and do not interact with each other. This means that it is possible to have multiple simulations in progress at one time without them interfering.</p>
+<p>If no KernelFactory has been registered for the specified name, this will throw an exception.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>name</strong> &#8211; the name of the Kernel to get</li>
+<li><strong>context</strong> &#8211; the context for which to create a Kernel</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a newly created Kernel object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform16registerPlatformEP8Platform">
+<span id="OpenMM::Platform::registerPlatform__PlatformP"></span>void <code class="descclassname"></code><code class="descname">registerPlatform</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform">Platform</a> *<em>platform</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform16registerPlatformEP8Platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a new <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform15getNumPlatformsEv">
+<span id="OpenMM::Platform::getNumPlatforms"></span>int <code class="descclassname"></code><code class="descname">getNumPlatforms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform15getNumPlatformsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of Platforms that have been registered.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform11getPlatformEi">
+<span id="OpenMM::Platform::getPlatform__i"></span><a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform">Platform</a> &amp;<code class="descclassname"></code><code class="descname">getPlatform</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform11getPlatformEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a registered <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> by index.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform21getPluginLoadFailuresEv">
+<span id="OpenMM::Platform::getPluginLoadFailures"></span>std::vector&lt;std::string&gt; <code class="descclassname"></code><code class="descname">getPluginLoadFailures</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform21getPluginLoadFailuresEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get any failures caused during the last call to loadPluginsFromDirectory</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform17getPlatformByNameERKNSt6stringE">
+<span id="OpenMM::Platform::getPlatformByName__ssCR"></span><a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform">Platform</a> &amp;<code class="descclassname"></code><code class="descname">getPlatformByName</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform17getPlatformByNameERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the registered <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> with a particular name. If no <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> with that name has been registered, this throws an exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform12findPlatformERKNSt6vectorINSt6stringEEE">
+<span id="OpenMM::Platform::findPlatform__std::vector:ss:CR"></span><a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform">Platform</a> &amp;<code class="descclassname"></code><code class="descname">findPlatform</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>kernelNames</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform12findPlatformERKNSt6vectorINSt6stringEEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> which can be used to perform a calculation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>kernelNames</strong> &#8211; the names of all kernels which will be needed for the calculation</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the fastest registered <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> which supports all of the requested kernels. If no <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> exists which supports all of them, this will throw an exception.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform17loadPluginLibraryERKNSt6stringE">
+<span id="OpenMM::Platform::loadPluginLibrary__ssCR"></span>void <code class="descclassname"></code><code class="descname">loadPluginLibrary</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform17loadPluginLibraryERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a dynamic library (DLL) which contains an OpenMM plugin. Typically, each <a class="reference internal" href="#_CPPv2N6OpenMM8PlatformE" title="OpenMM::Platform"><code class="xref cpp cpp-any docutils literal"><span class="pre">Platform</span></code></a> is distributed as a separate dynamic library. This method can then be called at runtime to load each available library. Each library should contain an initializer function to register any Platforms and KernelFactories that it contains.</p>
+<p>If the file does not exist or cannot be loaded, an exception is thrown.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>file</strong> &#8211; the path to the dynamic library file. This is interpreted using the operating system&#8217;s rules for loading libraries. Typically it may be either an absolute path or relative to a set of standard locations.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform24loadPluginsFromDirectoryERKNSt6stringE">
+<span id="OpenMM::Platform::loadPluginsFromDirectory__ssCR"></span>std::vector&lt;std::string&gt; <code class="descclassname"></code><code class="descname">loadPluginsFromDirectory</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform24loadPluginsFromDirectoryERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load multiple dynamic libraries (DLLs) which contain OpenMM plugins from a single directory. This method loops over every file contained in the specified directory and calls <a class="reference internal" href="#_CPPv2N6OpenMM8Platform17loadPluginLibraryERKNSt6stringE" title="OpenMM::Platform::loadPluginLibrary"><code class="xref cpp cpp-any docutils literal"><span class="pre">loadPluginLibrary()</span></code></a> for each one. If an error occurs while trying to load a particular file, that file is simply ignored. You can retrieve a list of all such errors by calling <a class="reference internal" href="#_CPPv2N6OpenMM8Platform21getPluginLoadFailuresEv" title="OpenMM::Platform::getPluginLoadFailures"><code class="xref cpp cpp-any docutils literal"><span class="pre">getPluginLoadFailures()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>directory</strong> &#8211; the path to the directory containing libraries to load</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the names of all files which were successfully loaded as libraries</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform26getDefaultPluginsDirectoryEv">
+<span id="OpenMM::Platform::getDefaultPluginsDirectory"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getDefaultPluginsDirectory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform26getDefaultPluginsDirectoryEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default directory from which to load plugins. If the environment variable OPENMM_PLUGIN_DIR is set, this returns its value. Otherwise, it returns a platform specific default location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the path to the default plugin directory</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6OpenMM8Platform16getOpenMMVersionEv">
+<span id="OpenMM::Platform::getOpenMMVersion"></span><em class="property">const</em> std::string &amp;<code class="descclassname"></code><code class="descname">getOpenMMVersion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6OpenMM8Platform16getOpenMMVersionEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string containing the version number of the OpenMM library.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Core Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id2">Forces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id3">Integrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html#id4">Extras</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/OpenMM.Platform.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

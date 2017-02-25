@@ -1,0 +1,27 @@
+ScaledUnit
+==========================
+
+.. currentmodule:: simtk.unit.unit
+
+.. autoclass:: ScaledUnit
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaledUnit.__init__
+      ~ScaledUnit.conversion_factor_to
+      ~ScaledUnit.get_conversion_factor_to_base_units
+      ~ScaledUnit.get_dimension_tuple
+      ~ScaledUnit.iter_base_dimensions
+      ~ScaledUnit.iter_base_units
+   
+   
+
+   
+   
+   

@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PDBxFile &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Application Layer" href="../app.html" />
+    <link rel="next" title="Topology" href="simtk.openmm.app.topology.Topology.html" />
+    <link rel="prev" title="PDBFile" href="simtk.openmm.app.pdbfile.PDBFile.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pdbxfile">
+<h1>PDBxFile<a class="headerlink" href="#pdbxfile" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.app.pdbxfile.PDBxFile">
+<em class="property">class </em><code class="descclassname">simtk.openmm.app.pdbxfile.</code><code class="descname">PDBxFile</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbxfile.PDBxFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>PDBxFile parses a PDBx/mmCIF file and constructs a Topology and a set of atom positions from it.</p>
+<dl class="method">
+<dt id="simtk.openmm.app.pdbxfile.PDBxFile.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbxfile.PDBxFile.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a PDBx/mmCIF file.</p>
+<p>The atom positions and Topology can be retrieved by calling
+getPositions() and getTopology().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>string</em>) &#8211; the name of the file to load.  Alternatively you can pass an open
+file object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.pdbxfile.PDBxFile.__init__" title="simtk.openmm.app.pdbxfile.PDBxFile.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>(file)</td>
+<td>Load a PDBx/mmCIF file.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.pdbxfile.PDBxFile.getNumFrames" title="simtk.openmm.app.pdbxfile.PDBxFile.getNumFrames"><code class="xref py py-obj docutils literal"><span class="pre">getNumFrames</span></code></a>()</td>
+<td>Get the number of frames stored in the file.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.pdbxfile.PDBxFile.getPositions" title="simtk.openmm.app.pdbxfile.PDBxFile.getPositions"><code class="xref py py-obj docutils literal"><span class="pre">getPositions</span></code></a>([asNumpy,&nbsp;frame])</td>
+<td>Get the atomic positions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.pdbxfile.PDBxFile.getTopology" title="simtk.openmm.app.pdbxfile.PDBxFile.getTopology"><code class="xref py py-obj docutils literal"><span class="pre">getTopology</span></code></a>()</td>
+<td>Get the Topology of the model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.pdbxfile.PDBxFile.writeFile" title="simtk.openmm.app.pdbxfile.PDBxFile.writeFile"><code class="xref py py-obj docutils literal"><span class="pre">writeFile</span></code></a>(topology,&nbsp;positions[,&nbsp;file,&nbsp;...])</td>
+<td>Write a PDBx/mmCIF file containing a single model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.pdbxfile.PDBxFile.writeHeader" title="simtk.openmm.app.pdbxfile.PDBxFile.writeHeader"><code class="xref py py-obj docutils literal"><span class="pre">writeHeader</span></code></a>(topology[,&nbsp;file,&nbsp;entry])</td>
+<td>Write out the header for a PDBx/mmCIF file.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.pdbxfile.PDBxFile.writeModel" title="simtk.openmm.app.pdbxfile.PDBxFile.writeModel"><code class="xref py py-obj docutils literal"><span class="pre">writeModel</span></code></a>(topology,&nbsp;positions[,&nbsp;file,&nbsp;...])</td>
+<td>Write out a model to a PDBx/mmCIF file.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.app.pdbxfile.PDBxFile.getTopology">
+<code class="descname">getTopology</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbxfile.PDBxFile.getTopology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Topology of the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.pdbxfile.PDBxFile.getNumFrames">
+<code class="descname">getNumFrames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbxfile.PDBxFile.getNumFrames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of frames stored in the file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.pdbxfile.PDBxFile.getPositions">
+<code class="descname">getPositions</code><span class="sig-paren">(</span><em>asNumpy=False</em>, <em>frame=0</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbxfile.PDBxFile.getPositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the atomic positions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>asNumpy</strong> (<em>bool=False</em>) &#8211; if true, the values are returned as a numpy array instead of a list
+of Vec3s</li>
+<li><strong>frame</strong> (<em>int=0</em>) &#8211; the index of the frame for which to get positions</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="simtk.openmm.app.pdbxfile.PDBxFile.writeFile">
+<em class="property">static </em><code class="descname">writeFile</code><span class="sig-paren">(</span><em>topology</em>, <em>positions</em>, <em>file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='UTF-8'&gt;</em>, <em>keepIds=False</em>, <em>entry=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbxfile.PDBxFile.writeFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a PDBx/mmCIF file containing a single model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology defining the model to write</li>
+<li><strong>positions</strong> (<em>list</em>) &#8211; The list of atomic positions to write</li>
+<li><strong>file</strong> (<em>file=stdout</em>) &#8211; A file to write to</li>
+<li><strong>keepIds</strong> (<em>bool=False</em>) &#8211; If True, keep the residue and chain IDs specified in the Topology
+rather than generating new ones.  Warning: It is up to the caller to
+make sure these are valid IDs that satisfy the requirements of the
+PDBx/mmCIF format.  Otherwise, the output file will be invalid.</li>
+<li><strong>entry</strong> (<em>str=None</em>) &#8211; The entry ID to assign to the CIF file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="simtk.openmm.app.pdbxfile.PDBxFile.writeHeader">
+<em class="property">static </em><code class="descname">writeHeader</code><span class="sig-paren">(</span><em>topology</em>, <em>file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='UTF-8'&gt;</em>, <em>entry=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbxfile.PDBxFile.writeHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out the header for a PDBx/mmCIF file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology defining the molecular system being written</li>
+<li><strong>file</strong> (<em>file=stdout</em>) &#8211; A file to write the file to</li>
+<li><strong>entry</strong> (<em>str=None</em>) &#8211; The entry ID to assign to the CIF file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="simtk.openmm.app.pdbxfile.PDBxFile.writeModel">
+<em class="property">static </em><code class="descname">writeModel</code><span class="sig-paren">(</span><em>topology</em>, <em>positions</em>, <em>file=&lt;_io.TextIOWrapper name='&lt;stdout&gt;' mode='w' encoding='UTF-8'&gt;</em>, <em>modelIndex=1</em>, <em>keepIds=False</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.pdbxfile.PDBxFile.writeModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out a model to a PDBx/mmCIF file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>topology</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Topology.html#simtk.openmm.app.topology.Topology" title="simtk.openmm.app.topology.Topology"><em>Topology</em></a>) &#8211; The Topology defining the model to write</li>
+<li><strong>positions</strong> (<em>list</em>) &#8211; The list of atomic positions to write</li>
+<li><strong>file</strong> (<em>file=stdout</em>) &#8211; A file to write the model to</li>
+<li><strong>modelIndex</strong> (<em>int=1</em>) &#8211; The model number of this frame</li>
+<li><strong>keepIds</strong> (<em>bool=False</em>) &#8211; If True, keep the residue and chain IDs specified in the Topology
+rather than generating new ones.  Warning: It is up to the caller to
+make sure these are valid IDs that satisfy the requirements of the
+PDBx/mmCIF format.  Otherwise, the output file will be invalid.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../app.html">Application Layer</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../app.html#loaders-and-setup">Loaders and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#representation-and-manipulation">Representation and Manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#reporting-output">Reporting Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#extras">Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#units">Units</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library Layer</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.app.pdbxfile.PDBxFile.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

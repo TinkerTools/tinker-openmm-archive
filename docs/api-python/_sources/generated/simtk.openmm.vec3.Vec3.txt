@@ -1,0 +1,23 @@
+Vec3
+======================
+
+.. currentmodule:: simtk.openmm.vec3
+
+.. autoclass:: Vec3
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Vec3.count
+      ~Vec3.index
+   
+   
+
+   
+   
+   

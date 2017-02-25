@@ -1,0 +1,963 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>AmoebaMultipoleForce &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Library Layer" href="../library.html" />
+    <link rel="next" title="AmoebaOutOfPlaneBendForce" href="simtk.openmm.openmm.AmoebaOutOfPlaneBendForce.html" />
+    <link rel="prev" title="AmoebaInPlaneAngleForce" href="simtk.openmm.openmm.AmoebaInPlaneAngleForce.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="amoebamultipoleforce">
+<h1>AmoebaMultipoleForce<a class="headerlink" href="#amoebamultipoleforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce">
+<em class="property">class </em><code class="descclassname">simtk.openmm.openmm.</code><code class="descname">AmoebaMultipoleForce</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements the Amoeba multipole interaction.</p>
+<p>To use it, create an AmoebaMultipoleForce object then call addMultipole() once for each atom. After an entry has been added, you can modify its force field parameters by calling setMultipoleParameters(). This will have no effect on Contexts that already exist unless you call updateParametersInContext().</p>
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; AmoebaMultipoleForce<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>__init__(self, other) -&gt; AmoebaMultipoleForce</p>
+<p>Create an AmoebaMultipoleForce.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.__init__" title="simtk.openmm.openmm.AmoebaMultipoleForce.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>((self)&nbsp;-&gt;&nbsp;AmoebaMultipoleForce)</td>
+<td>__init__(self, other) -&gt; AmoebaMultipoleForce</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.addMultipole" title="simtk.openmm.openmm.AmoebaMultipoleForce.addMultipole"><code class="xref py py-obj docutils literal"><span class="pre">addMultipole</span></code></a>((self,&nbsp;charge,&nbsp;molecularDipole,&nbsp;...)</td>
+<td>Add multipole-related info for a particle</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getAEwald" title="simtk.openmm.openmm.AmoebaMultipoleForce.getAEwald"><code class="xref py py-obj docutils literal"><span class="pre">getAEwald</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the Ewald alpha parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getCovalentMap" title="simtk.openmm.openmm.AmoebaMultipoleForce.getCovalentMap"><code class="xref py py-obj docutils literal"><span class="pre">getCovalentMap</span></code></a>(self,&nbsp;index,&nbsp;typeId)</td>
+<td>Get the CovalentMap for an atom</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getCovalentMaps" title="simtk.openmm.openmm.AmoebaMultipoleForce.getCovalentMaps"><code class="xref py py-obj docutils literal"><span class="pre">getCovalentMaps</span></code></a>(self,&nbsp;index)</td>
+<td>Get the CovalentMap for an atom</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getCutoffDistance" title="simtk.openmm.openmm.AmoebaMultipoleForce.getCutoffDistance"><code class="xref py py-obj docutils literal"><span class="pre">getCutoffDistance</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getElectrostaticPotential" title="simtk.openmm.openmm.AmoebaMultipoleForce.getElectrostaticPotential"><code class="xref py py-obj docutils literal"><span class="pre">getElectrostaticPotential</span></code></a>(self,&nbsp;inputGrid,&nbsp;...)</td>
+<td>Get the electrostatic potential.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getEwaldErrorTolerance" title="simtk.openmm.openmm.AmoebaMultipoleForce.getEwaldErrorTolerance"><code class="xref py py-obj docutils literal"><span class="pre">getEwaldErrorTolerance</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the error tolerance for Ewald summation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getExtrapolationCoefficients" title="simtk.openmm.openmm.AmoebaMultipoleForce.getExtrapolationCoefficients"><code class="xref py py-obj docutils literal"><span class="pre">getExtrapolationCoefficients</span></code></a>((self)&nbsp;-&gt;&nbsp;vectord)</td>
+<td>Get the coefficients for the mu_0, mu_1, mu_2, ..., mu_n terms in the extrapolation algorithm for induced dipoles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getForceGroup" title="simtk.openmm.openmm.AmoebaMultipoleForce.getForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">getForceGroup</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the force group this Force belongs to.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getInducedDipoles" title="simtk.openmm.openmm.AmoebaMultipoleForce.getInducedDipoles"><code class="xref py py-obj docutils literal"><span class="pre">getInducedDipoles</span></code></a>(self,&nbsp;context)</td>
+<td>Get the induced dipole moments of all particles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getLabFramePermanentDipoles" title="simtk.openmm.openmm.AmoebaMultipoleForce.getLabFramePermanentDipoles"><code class="xref py py-obj docutils literal"><span class="pre">getLabFramePermanentDipoles</span></code></a>(self,&nbsp;context)</td>
+<td>Get the fixed dipole moments of all particles in the global reference frame.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getMultipoleParameters" title="simtk.openmm.openmm.AmoebaMultipoleForce.getMultipoleParameters"><code class="xref py py-obj docutils literal"><span class="pre">getMultipoleParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the multipole parameters for a particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getMutualInducedMaxIterations" title="simtk.openmm.openmm.AmoebaMultipoleForce.getMutualInducedMaxIterations"><code class="xref py py-obj docutils literal"><span class="pre">getMutualInducedMaxIterations</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the max number of iterations to be used in calculating the mutual induced dipoles</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getMutualInducedTargetEpsilon" title="simtk.openmm.openmm.AmoebaMultipoleForce.getMutualInducedTargetEpsilon"><code class="xref py py-obj docutils literal"><span class="pre">getMutualInducedTargetEpsilon</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the target epsilon to be used to test for convergence of iterative method used in calculating the mutual induced dipoles</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getNonbondedMethod" title="simtk.openmm.openmm.AmoebaMultipoleForce.getNonbondedMethod"><code class="xref py py-obj docutils literal"><span class="pre">getNonbondedMethod</span></code></a>(...)</td>
+<td>Get the method used for handling long-range nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getNumMultipoles" title="simtk.openmm.openmm.AmoebaMultipoleForce.getNumMultipoles"><code class="xref py py-obj docutils literal"><span class="pre">getNumMultipoles</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of particles in the potential function</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getPMEParameters" title="simtk.openmm.openmm.AmoebaMultipoleForce.getPMEParameters"><code class="xref py py-obj docutils literal"><span class="pre">getPMEParameters</span></code></a>(self)</td>
+<td>Get the parameters to use for PME calculations.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getPMEParametersInContext" title="simtk.openmm.openmm.AmoebaMultipoleForce.getPMEParametersInContext"><code class="xref py py-obj docutils literal"><span class="pre">getPMEParametersInContext</span></code></a>(self,&nbsp;context)</td>
+<td>Get the parameters being used for PME in a particular Context.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getPmeBSplineOrder" title="simtk.openmm.openmm.AmoebaMultipoleForce.getPmeBSplineOrder"><code class="xref py py-obj docutils literal"><span class="pre">getPmeBSplineOrder</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the B-spline order to use for PME charge spreading</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getPmeGridDimensions" title="simtk.openmm.openmm.AmoebaMultipoleForce.getPmeGridDimensions"><code class="xref py py-obj docutils literal"><span class="pre">getPmeGridDimensions</span></code></a>(self)</td>
+<td>Get the PME grid dimensions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getPolarizationType" title="simtk.openmm.openmm.AmoebaMultipoleForce.getPolarizationType"><code class="xref py py-obj docutils literal"><span class="pre">getPolarizationType</span></code></a>(...)</td>
+<td>Get polarization type</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getSystemMultipoleMoments" title="simtk.openmm.openmm.AmoebaMultipoleForce.getSystemMultipoleMoments"><code class="xref py py-obj docutils literal"><span class="pre">getSystemMultipoleMoments</span></code></a>(self,&nbsp;context)</td>
+<td>Get the system multipole moments.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getTotalDipoles" title="simtk.openmm.openmm.AmoebaMultipoleForce.getTotalDipoles"><code class="xref py py-obj docutils literal"><span class="pre">getTotalDipoles</span></code></a>(self,&nbsp;context)</td>
+<td>Get the total dipole moments (fixed plus induced) of all particles.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setAEwald" title="simtk.openmm.openmm.AmoebaMultipoleForce.setAEwald"><code class="xref py py-obj docutils literal"><span class="pre">setAEwald</span></code></a>(self,&nbsp;aewald)</td>
+<td>Set the Ewald alpha parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setCovalentMap" title="simtk.openmm.openmm.AmoebaMultipoleForce.setCovalentMap"><code class="xref py py-obj docutils literal"><span class="pre">setCovalentMap</span></code></a>(self,&nbsp;index,&nbsp;typeId,&nbsp;...)</td>
+<td>Set the CovalentMap for an atom</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setCutoffDistance" title="simtk.openmm.openmm.AmoebaMultipoleForce.setCutoffDistance"><code class="xref py py-obj docutils literal"><span class="pre">setCutoffDistance</span></code></a>(self,&nbsp;distance)</td>
+<td>Set the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setEwaldErrorTolerance" title="simtk.openmm.openmm.AmoebaMultipoleForce.setEwaldErrorTolerance"><code class="xref py py-obj docutils literal"><span class="pre">setEwaldErrorTolerance</span></code></a>(self,&nbsp;tol)</td>
+<td>Get the error tolerance for Ewald summation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setExtrapolationCoefficients" title="simtk.openmm.openmm.AmoebaMultipoleForce.setExtrapolationCoefficients"><code class="xref py py-obj docutils literal"><span class="pre">setExtrapolationCoefficients</span></code></a>(self,&nbsp;coefficients)</td>
+<td>Set the coefficients for the mu_0, mu_1, mu_2, ..., mu_n terms in the extrapolation algorithm for induced dipoles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setForceGroup" title="simtk.openmm.openmm.AmoebaMultipoleForce.setForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">setForceGroup</span></code></a>(self,&nbsp;group)</td>
+<td>Set the force group this Force belongs to.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setMultipoleParameters" title="simtk.openmm.openmm.AmoebaMultipoleForce.setMultipoleParameters"><code class="xref py py-obj docutils literal"><span class="pre">setMultipoleParameters</span></code></a>(self,&nbsp;index,&nbsp;charge,&nbsp;...)</td>
+<td>Set the multipole parameters for a particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setMutualInducedMaxIterations" title="simtk.openmm.openmm.AmoebaMultipoleForce.setMutualInducedMaxIterations"><code class="xref py py-obj docutils literal"><span class="pre">setMutualInducedMaxIterations</span></code></a>(self,&nbsp;...)</td>
+<td>Set the max number of iterations to be used in calculating the mutual induced dipoles</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setMutualInducedTargetEpsilon" title="simtk.openmm.openmm.AmoebaMultipoleForce.setMutualInducedTargetEpsilon"><code class="xref py py-obj docutils literal"><span class="pre">setMutualInducedTargetEpsilon</span></code></a>(self,&nbsp;...)</td>
+<td>Set the target epsilon to be used to test for convergence of iterative method used in calculating the mutual induced dipoles</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setNonbondedMethod" title="simtk.openmm.openmm.AmoebaMultipoleForce.setNonbondedMethod"><code class="xref py py-obj docutils literal"><span class="pre">setNonbondedMethod</span></code></a>(self,&nbsp;method)</td>
+<td>Set the method used for handling long-range nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setPMEParameters" title="simtk.openmm.openmm.AmoebaMultipoleForce.setPMEParameters"><code class="xref py py-obj docutils literal"><span class="pre">setPMEParameters</span></code></a>(self,&nbsp;alpha,&nbsp;nx,&nbsp;ny,&nbsp;nz)</td>
+<td>Set the parameters to use for PME calculations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setPmeGridDimensions" title="simtk.openmm.openmm.AmoebaMultipoleForce.setPmeGridDimensions"><code class="xref py py-obj docutils literal"><span class="pre">setPmeGridDimensions</span></code></a>(self,&nbsp;gridDimension)</td>
+<td>Set the PME grid dimensions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setPolarizationType" title="simtk.openmm.openmm.AmoebaMultipoleForce.setPolarizationType"><code class="xref py py-obj docutils literal"><span class="pre">setPolarizationType</span></code></a>(self,&nbsp;type)</td>
+<td>Set the polarization type</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.updateParametersInContext" title="simtk.openmm.openmm.AmoebaMultipoleForce.updateParametersInContext"><code class="xref py py-obj docutils literal"><span class="pre">updateParametersInContext</span></code></a>(self,&nbsp;context)</td>
+<td>Update the multipole parameters in a Context to match those stored in this Force object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.AmoebaMultipoleForce.usesPeriodicBoundaryConditions" title="simtk.openmm.openmm.AmoebaMultipoleForce.usesPeriodicBoundaryConditions"><code class="xref py py-obj docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a>((self)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Bisector</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Covalent12</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Covalent13</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Covalent14</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Covalent15</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">CovalentEnd</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Direct</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Extrapolated</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">LastAxisTypeIndex</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Mutual</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">NoAxisType</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">NoCutoff</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PME</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">PolarizationCovalent11</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PolarizationCovalent12</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">PolarizationCovalent13</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PolarizationCovalent14</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ThreeFold</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ZBisect</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ZOnly</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ZThenX</span></code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getNumMultipoles">
+<code class="descname">getNumMultipoles</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getNumMultipoles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles in the potential function</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getNonbondedMethod">
+<code class="descname">getNonbondedMethod</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; OpenMM::AmoebaMultipoleForce::NonbondedMethod<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getNonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the method used for handling long-range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setNonbondedMethod">
+<code class="descname">setNonbondedMethod</code><span class="sig-paren">(</span><em>self</em>, <em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setNonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the method used for handling long-range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getPolarizationType">
+<code class="descname">getPolarizationType</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; OpenMM::AmoebaMultipoleForce::PolarizationType<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getPolarizationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get polarization type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setPolarizationType">
+<code class="descname">setPolarizationType</code><span class="sig-paren">(</span><em>self</em>, <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setPolarizationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the polarization type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getCutoffDistance">
+<code class="descname">getCutoffDistance</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getCutoffDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the cutoff distance, measured in nm</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setCutoffDistance">
+<code class="descname">setCutoffDistance</code><span class="sig-paren">(</span><em>self</em>, <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setCutoffDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>distance</strong> (<em>double</em>) &#8211; the cutoff distance, measured in nm</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getPMEParameters">
+<code class="descname">getPMEParameters</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getPMEParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters to use for PME calculations. If alpha is 0 (the default), these parameters are ignored and instead their values are chosen based on the Ewald error tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>alpha</strong> (<em>double</em>) &#8211;
+the separation parameter</li>
+<li><strong>nx</strong> (<em>int</em>) &#8211;
+the number of grid points along the X axis</li>
+<li><strong>ny</strong> (<em>int</em>) &#8211;
+the number of grid points along the Y axis</li>
+<li><strong>nz</strong> (<em>int</em>) &#8211;
+the number of grid points along the Z axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setPMEParameters">
+<code class="descname">setPMEParameters</code><span class="sig-paren">(</span><em>self</em>, <em>alpha</em>, <em>nx</em>, <em>ny</em>, <em>nz</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setPMEParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parameters to use for PME calculations. If alpha is 0 (the default), these parameters are ignored and instead their values are chosen based on the Ewald error tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>alpha</strong> (<em>double</em>) &#8211; the separation parameter</li>
+<li><strong>nx</strong> (<em>int</em>) &#8211; the number of grid points along the X axis</li>
+<li><strong>ny</strong> (<em>int</em>) &#8211; the number of grid points along the Y axis</li>
+<li><strong>nz</strong> (<em>int</em>) &#8211; the number of grid points along the Z axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getAEwald">
+<code class="descname">getAEwald</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getAEwald" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Ewald alpha parameter. If this is 0 (the default), a value is chosen automatically based on the Ewald error tolerance.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use getPMEParameters() instead.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the Ewald alpha parameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setAEwald">
+<code class="descname">setAEwald</code><span class="sig-paren">(</span><em>self</em>, <em>aewald</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setAEwald" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the Ewald alpha parameter. If this is 0 (the default), a value is chosen automatically based on the Ewald error tolerance.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use setPMEParameters() instead.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>aewald</strong> (<em>double</em>) &#8211; alpha parameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getPmeBSplineOrder">
+<code class="descname">getPmeBSplineOrder</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getPmeBSplineOrder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the B-spline order to use for PME charge spreading</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the B-spline order</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getPmeGridDimensions">
+<code class="descname">getPmeGridDimensions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getPmeGridDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the PME grid dimensions. If Ewald alpha is 0 (the default), this is ignored and grid dimensions are chosen automatically based on the Ewald error tolerance.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use getPMEParameters() instead.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the PME grid dimensions</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setPmeGridDimensions">
+<code class="descname">setPmeGridDimensions</code><span class="sig-paren">(</span><em>self</em>, <em>gridDimension</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setPmeGridDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the PME grid dimensions. If Ewald alpha is 0 (the default), this is ignored and grid dimensions are chosen automatically based on the Ewald error tolerance.</p>
+<div class="admonition-deprecated admonition">
+<p class="first admonition-title">Deprecated</p>
+<p class="last">This method exists only for backward compatibility. Use setPMEParameters() instead.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>gridDimension</strong> (<em>vector&lt; int &gt;</em>) &#8211; the PME grid dimensions</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getPMEParametersInContext">
+<code class="descname">getPMEParametersInContext</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getPMEParametersInContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters being used for PME in a particular Context. Because some platforms have restrictions on the allowed grid sizes, the values that are actually used may be slightly different from those specified with setPmeGridDimensions(), or the standard values calculated based on the Ewald error tolerance. See the manual for details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>context</strong> (<a class="reference internal" href="simtk.openmm.openmm.Context.html#simtk.openmm.openmm.Context" title="simtk.openmm.openmm.Context"><em>Context</em></a>) &#8211; the Context for which to get the parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>alpha</strong> (<em>double</em>) &#8211;
+the separation parameter</li>
+<li><strong>nx</strong> (<em>int</em>) &#8211;
+the number of grid points along the X axis</li>
+<li><strong>ny</strong> (<em>int</em>) &#8211;
+the number of grid points along the Y axis</li>
+<li><strong>nz</strong> (<em>int</em>) &#8211;
+the number of grid points along the Z axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.addMultipole">
+<code class="descname">addMultipole</code><span class="sig-paren">(</span><em>self</em>, <em>charge</em>, <em>molecularDipole</em>, <em>molecularQuadrupole</em>, <em>axisType</em>, <em>multipoleAtomZ</em>, <em>multipoleAtomX</em>, <em>multipoleAtomY</em>, <em>thole</em>, <em>dampingFactor</em>, <em>polarity</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.addMultipole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add multipole-related info for a particle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>charge</strong> (<em>double</em>) &#8211; the particle&#8217;s charge</li>
+<li><strong>molecularDipole</strong> (<em>vector&lt; double &gt;</em>) &#8211; the particle&#8217;s molecular dipole (vector of size 3)</li>
+<li><strong>molecularQuadrupole</strong> (<em>vector&lt; double &gt;</em>) &#8211; the particle&#8217;s molecular quadrupole (vector of size 9)</li>
+<li><strong>axisType</strong> (<em>int</em>) &#8211; the particle&#8217;s axis type</li>
+<li><strong>multipoleAtomZ</strong> (<em>int</em>) &#8211; index of first atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomX</strong> (<em>int</em>) &#8211; index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomY</strong> (<em>int</em>) &#8211; index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>thole</strong> (<em>double</em>) &#8211; Thole parameter</li>
+<li><strong>dampingFactor</strong> (<em>double</em>) &#8211; dampingFactor parameter</li>
+<li><strong>polarity</strong> (<em>double</em>) &#8211; polarity parameter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the particle that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getMultipoleParameters">
+<code class="descname">getMultipoleParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getMultipoleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the multipole parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the atom for which to get parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>charge</strong> (<em>double</em>) &#8211;
+the particle&#8217;s charge</li>
+<li><strong>molecularDipole</strong> (<em>vector&lt; double &gt;</em>) &#8211;
+the particle&#8217;s molecular dipole (vector of size 3)</li>
+<li><strong>molecularQuadrupole</strong> (<em>vector&lt; double &gt;</em>) &#8211;
+the particle&#8217;s molecular quadrupole (vector of size 9)</li>
+<li><strong>axisType</strong> (<em>int</em>) &#8211;
+the particle&#8217;s axis type</li>
+<li><strong>multipoleAtomZ</strong> (<em>int</em>) &#8211;
+index of first atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomX</strong> (<em>int</em>) &#8211;
+index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomY</strong> (<em>int</em>) &#8211;
+index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>thole</strong> (<em>double</em>) &#8211;
+Thole parameter</li>
+<li><strong>dampingFactor</strong> (<em>double</em>) &#8211;
+dampingFactor parameter</li>
+<li><strong>polarity</strong> (<em>double</em>) &#8211;
+polarity parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setMultipoleParameters">
+<code class="descname">setMultipoleParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>charge</em>, <em>molecularDipole</em>, <em>molecularQuadrupole</em>, <em>axisType</em>, <em>multipoleAtomZ</em>, <em>multipoleAtomX</em>, <em>multipoleAtomY</em>, <em>thole</em>, <em>dampingFactor</em>, <em>polarity</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setMultipoleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the multipole parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the atom for which to set parameters</li>
+<li><strong>charge</strong> (<em>double</em>) &#8211; the particle&#8217;s charge</li>
+<li><strong>molecularDipole</strong> (<em>vector&lt; double &gt;</em>) &#8211; the particle&#8217;s molecular dipole (vector of size 3)</li>
+<li><strong>molecularQuadrupole</strong> (<em>vector&lt; double &gt;</em>) &#8211; the particle&#8217;s molecular quadrupole (vector of size 9)</li>
+<li><strong>axisType</strong> (<em>int</em>) &#8211; the particle&#8217;s axis type</li>
+<li><strong>multipoleAtomZ</strong> (<em>int</em>) &#8211; index of first atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomX</strong> (<em>int</em>) &#8211; index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>multipoleAtomY</strong> (<em>int</em>) &#8211; index of second atom used in constructing lab&lt;-&gt;molecular frames</li>
+<li><strong>thole</strong> (<em>double</em>) &#8211; thole parameter</li>
+<li><strong>dampingFactor</strong> (<em>double</em>) &#8211; damping factor parameter</li>
+<li><strong>polarity</strong> (<em>double</em>) &#8211; polarity parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setCovalentMap">
+<code class="descname">setCovalentMap</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>typeId</em>, <em>covalentAtoms</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setCovalentMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the CovalentMap for an atom</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the atom for which to set parameters</li>
+<li><strong>typeId</strong> (<em>CovalentType</em>) &#8211; CovalentTypes type</li>
+<li><strong>covalentAtoms</strong> (<em>vector&lt; int &gt;</em>) &#8211; vector of covalent atoms associated w/ the specfied CovalentType</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getCovalentMap">
+<code class="descname">getCovalentMap</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>typeId</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getCovalentMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the CovalentMap for an atom</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the atom for which to set parameters</li>
+<li><strong>typeId</strong> (<em>CovalentType</em>) &#8211; CovalentTypes type</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>covalentAtoms</strong> &#8211;
+output vector of covalent atoms associated w/ the specfied CovalentType</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">vector&lt; int &gt;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getCovalentMaps">
+<code class="descname">getCovalentMaps</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getCovalentMaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the CovalentMap for an atom</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the atom for which to set parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>covalentLists</strong> &#8211;
+output vector of covalent lists of atoms</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">vector&lt; std::vector&lt; int &gt; &gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getMutualInducedMaxIterations">
+<code class="descname">getMutualInducedMaxIterations</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getMutualInducedMaxIterations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the max number of iterations to be used in calculating the mutual induced dipoles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">max number of iterations</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setMutualInducedMaxIterations">
+<code class="descname">setMutualInducedMaxIterations</code><span class="sig-paren">(</span><em>self</em>, <em>inputMutualInducedMaxIterations</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setMutualInducedMaxIterations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the max number of iterations to be used in calculating the mutual induced dipoles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inputMutualInducedMaxIterations</strong> (<em>int</em>) &#8211; number of iterations</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getMutualInducedTargetEpsilon">
+<code class="descname">getMutualInducedTargetEpsilon</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getMutualInducedTargetEpsilon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the target epsilon to be used to test for convergence of iterative method used in calculating the mutual induced dipoles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">target epsilon</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setMutualInducedTargetEpsilon">
+<code class="descname">setMutualInducedTargetEpsilon</code><span class="sig-paren">(</span><em>self</em>, <em>inputMutualInducedTargetEpsilon</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setMutualInducedTargetEpsilon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the target epsilon to be used to test for convergence of iterative method used in calculating the mutual induced dipoles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inputMutualInducedTargetEpsilon</strong> (<em>double</em>) &#8211; target epsilon</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setExtrapolationCoefficients">
+<code class="descname">setExtrapolationCoefficients</code><span class="sig-paren">(</span><em>self</em>, <em>coefficients</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setExtrapolationCoefficients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the coefficients for the mu_0, mu_1, mu_2, ..., mu_n terms in the extrapolation algorithm for induced dipoles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coefficients</strong> (<em>vector&lt; double &gt;</em>) &#8211; a vector whose mth entry specifies the coefficient for mu_m. The length of this vector determines how many iterations are performed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getExtrapolationCoefficients">
+<code class="descname">getExtrapolationCoefficients</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; vectord<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getExtrapolationCoefficients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the coefficients for the mu_0, mu_1, mu_2, ..., mu_n terms in the extrapolation algorithm for induced dipoles. In this release, the default values for the coefficients are [-0.154, 0.017, 0.658, 0.474], but be aware that those may change in a future release.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getEwaldErrorTolerance">
+<code class="descname">getEwaldErrorTolerance</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getEwaldErrorTolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error tolerance for Ewald summation. This corresponds to the fractional error in the forces which is acceptable. This value is used to select the grid dimensions and separation (alpha) parameter so that the average error level will be less than the tolerance. There is not a rigorous guarantee that all forces on all atoms will be less than the tolerance, however.</p>
+<p>This can be overridden by explicitly setting an alpha parameter and grid dimensions to use.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setEwaldErrorTolerance">
+<code class="descname">setEwaldErrorTolerance</code><span class="sig-paren">(</span><em>self</em>, <em>tol</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setEwaldErrorTolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error tolerance for Ewald summation. This corresponds to the fractional error in the forces which is acceptable. This value is used to select the grid dimensions and separation (alpha) parameter so that the average error level will be less than the tolerance. There is not a rigorous guarantee that all forces on all atoms will be less than the tolerance, however.</p>
+<p>This can be overridden by explicitly setting an alpha parameter and grid dimensions to use.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getLabFramePermanentDipoles">
+<code class="descname">getLabFramePermanentDipoles</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getLabFramePermanentDipoles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the fixed dipole moments of all particles in the global reference frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>context</strong> (<a class="reference internal" href="simtk.openmm.openmm.Context.html#simtk.openmm.openmm.Context" title="simtk.openmm.openmm.Context"><em>Context</em></a>) &#8211; the Context for which to get the fixed dipoles</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dipoles</strong> &#8211;
+the fixed dipole moment of particle i is stored into the i&#8217;th element</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">vector&lt; Vec3 &gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getInducedDipoles">
+<code class="descname">getInducedDipoles</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getInducedDipoles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the induced dipole moments of all particles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>context</strong> (<a class="reference internal" href="simtk.openmm.openmm.Context.html#simtk.openmm.openmm.Context" title="simtk.openmm.openmm.Context"><em>Context</em></a>) &#8211; the Context for which to get the induced dipoles</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dipoles</strong> &#8211;
+the induced dipole moment of particle i is stored into the i&#8217;th element</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">vector&lt; Vec3 &gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getTotalDipoles">
+<code class="descname">getTotalDipoles</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getTotalDipoles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the total dipole moments (fixed plus induced) of all particles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>context</strong> (<a class="reference internal" href="simtk.openmm.openmm.Context.html#simtk.openmm.openmm.Context" title="simtk.openmm.openmm.Context"><em>Context</em></a>) &#8211; the Context for which to get the total dipoles</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dipoles</strong> &#8211;
+the total dipole moment of particle i is stored into the i&#8217;th element</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">vector&lt; Vec3 &gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getElectrostaticPotential">
+<code class="descname">getElectrostaticPotential</code><span class="sig-paren">(</span><em>self</em>, <em>inputGrid</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getElectrostaticPotential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the electrostatic potential.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>inputGrid</strong> (<em>vector&lt; Vec3 &gt;</em>) &#8211; input grid points over which the potential is to be evaluated</li>
+<li><strong>context</strong> (<a class="reference internal" href="simtk.openmm.openmm.Context.html#simtk.openmm.openmm.Context" title="simtk.openmm.openmm.Context"><em>Context</em></a>) &#8211; context</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>outputElectrostaticPotential</strong> &#8211;
+output potential</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">vector&lt; double &gt;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getSystemMultipoleMoments">
+<code class="descname">getSystemMultipoleMoments</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getSystemMultipoleMoments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the system multipole moments.</p>
+<p>This method is most useful for non-periodic systems. When called for a periodic system, only the &lt;i&gt;lowest nonvanishing moment&lt;/i&gt; has a well defined value. This means that if the system has a net nonzero charge, the dipole and quadrupole moments are not well defined and should be ignored. If the net charge is zero, the dipole moment is well defined (and really represents a dipole density), but the quadrupole moment is still undefined and should be ignored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>context</strong> (<a class="reference internal" href="simtk.openmm.openmm.Context.html#simtk.openmm.openmm.Context" title="simtk.openmm.openmm.Context"><em>Context</em></a>) &#8211; context</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>outputMultipoleMoments</strong> &#8211;
+(charge, dipole_x, dipole_y, dipole_z, quadrupole_xx, quadrupole_xy, quadrupole_xz, quadrupole_yx, quadrupole_yy, quadrupole_yz, quadrupole_zx, quadrupole_zy, quadrupole_zz)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">vector&lt; double &gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.updateParametersInContext">
+<code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.updateParametersInContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the multipole parameters in a Context to match those stored in this Force object. This method provides an efficient method to update certain parameters in an existing Context without needing to reinitialize it. Simply call setMultipoleParameters() to modify this object&#8217;s parameters, then call updateParametersInContext() to copy them over to the Context.</p>
+<p>This method has several limitations. The only information it updates is the parameters of multipoles. All other aspects of the Force (the nonbonded method, the cutoff distance, etc.) are unaffected and can only be changed by reinitializing the Context. Furthermore, this method cannot be used to add new multipoles, only to change the parameters of existing ones.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.usesPeriodicBoundaryConditions">
+<code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.usesPeriodicBoundaryConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if nonbondedMethod uses PBC and false otherwise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.__copy__">
+<code class="descname">__copy__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; Force<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.__copy__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.getForceGroup">
+<code class="descname">getForceGroup</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.getForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force group this Force belongs to.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.AmoebaMultipoleForce.setForceGroup">
+<code class="descname">setForceGroup</code><span class="sig-paren">(</span><em>self</em>, <em>group</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.AmoebaMultipoleForce.setForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force group this Force belongs to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>group</strong> (<em>int</em>) &#8211; the group index. Legal values are between 0 and 31 (inclusive).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Application Layer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../library.html">Library Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../library.html#core-objects">Core Objects</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../library.html#forces">Forces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#integrators">Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.openmm.AmoebaMultipoleForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

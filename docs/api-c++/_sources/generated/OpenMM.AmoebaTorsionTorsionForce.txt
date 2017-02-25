@@ -1,0 +1,24 @@
+AmoebaTorsionTorsionForce
+=================================
+
+.. autodoxyclass:: OpenMM::AmoebaTorsionTorsionForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::AmoebaTorsionTorsionForce::AmoebaTorsionTorsionForce
+      ~OpenMM::AmoebaTorsionTorsionForce::getNumTorsionTorsions
+      ~OpenMM::AmoebaTorsionTorsionForce::getNumTorsionTorsionGrids
+      ~OpenMM::AmoebaTorsionTorsionForce::addTorsionTorsion
+      ~OpenMM::AmoebaTorsionTorsionForce::getTorsionTorsionParameters
+      ~OpenMM::AmoebaTorsionTorsionForce::setTorsionTorsionParameters
+      ~OpenMM::AmoebaTorsionTorsionForce::getTorsionTorsionGrid
+      ~OpenMM::AmoebaTorsionTorsionForce::setTorsionTorsionGrid
+      ~OpenMM::AmoebaTorsionTorsionForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::AmoebaTorsionTorsionForce::usesPeriodicBoundaryConditions
+   
+
+   

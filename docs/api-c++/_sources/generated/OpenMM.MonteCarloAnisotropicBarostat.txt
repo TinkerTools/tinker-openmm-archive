@@ -1,0 +1,27 @@
+MonteCarloAnisotropicBarostat
+=====================================
+
+.. autodoxyclass:: OpenMM::MonteCarloAnisotropicBarostat
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::MonteCarloAnisotropicBarostat::MonteCarloAnisotropicBarostat
+      ~OpenMM::MonteCarloAnisotropicBarostat::getDefaultPressure
+      ~OpenMM::MonteCarloAnisotropicBarostat::setDefaultPressure
+      ~OpenMM::MonteCarloAnisotropicBarostat::getScaleX
+      ~OpenMM::MonteCarloAnisotropicBarostat::getScaleY
+      ~OpenMM::MonteCarloAnisotropicBarostat::getScaleZ
+      ~OpenMM::MonteCarloAnisotropicBarostat::getFrequency
+      ~OpenMM::MonteCarloAnisotropicBarostat::setFrequency
+      ~OpenMM::MonteCarloAnisotropicBarostat::getDefaultTemperature
+      ~OpenMM::MonteCarloAnisotropicBarostat::setDefaultTemperature
+      ~OpenMM::MonteCarloAnisotropicBarostat::getRandomNumberSeed
+      ~OpenMM::MonteCarloAnisotropicBarostat::setRandomNumberSeed
+      ~OpenMM::MonteCarloAnisotropicBarostat::usesPeriodicBoundaryConditions
+   
+
+   

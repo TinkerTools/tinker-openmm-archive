@@ -1,0 +1,37 @@
+CustomAngleForce
+========================
+
+.. autodoxyclass:: OpenMM::CustomAngleForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CustomAngleForce::CustomAngleForce
+      ~OpenMM::CustomAngleForce::getNumAngles
+      ~OpenMM::CustomAngleForce::getNumPerAngleParameters
+      ~OpenMM::CustomAngleForce::getNumGlobalParameters
+      ~OpenMM::CustomAngleForce::getNumEnergyParameterDerivatives
+      ~OpenMM::CustomAngleForce::getEnergyFunction
+      ~OpenMM::CustomAngleForce::setEnergyFunction
+      ~OpenMM::CustomAngleForce::addPerAngleParameter
+      ~OpenMM::CustomAngleForce::getPerAngleParameterName
+      ~OpenMM::CustomAngleForce::setPerAngleParameterName
+      ~OpenMM::CustomAngleForce::addGlobalParameter
+      ~OpenMM::CustomAngleForce::getGlobalParameterName
+      ~OpenMM::CustomAngleForce::setGlobalParameterName
+      ~OpenMM::CustomAngleForce::getGlobalParameterDefaultValue
+      ~OpenMM::CustomAngleForce::setGlobalParameterDefaultValue
+      ~OpenMM::CustomAngleForce::addEnergyParameterDerivative
+      ~OpenMM::CustomAngleForce::getEnergyParameterDerivativeName
+      ~OpenMM::CustomAngleForce::addAngle
+      ~OpenMM::CustomAngleForce::getAngleParameters
+      ~OpenMM::CustomAngleForce::setAngleParameters
+      ~OpenMM::CustomAngleForce::updateParametersInContext
+      ~OpenMM::CustomAngleForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::CustomAngleForce::usesPeriodicBoundaryConditions
+   
+
+   

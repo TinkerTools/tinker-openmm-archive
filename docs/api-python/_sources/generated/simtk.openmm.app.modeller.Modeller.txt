@@ -1,0 +1,32 @@
+Modeller
+==================================
+
+.. currentmodule:: simtk.openmm.app.modeller
+
+.. autoclass:: Modeller
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Modeller.__init__
+      ~Modeller.add
+      ~Modeller.addExtraParticles
+      ~Modeller.addHydrogens
+      ~Modeller.addSolvent
+      ~Modeller.convertWater
+      ~Modeller.delete
+      ~Modeller.deleteWater
+      ~Modeller.getPositions
+      ~Modeller.getTopology
+      ~Modeller.loadHydrogenDefinitions
+   
+   
+
+   
+   
+   

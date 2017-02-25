@@ -1,0 +1,387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CharmmParameterSet &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Application Layer" href="../app.html" />
+    <link rel="next" title="CharmmPsfFile" href="simtk.openmm.app.charmmpsffile.CharmmPsfFile.html" />
+    <link rel="prev" title="CharmmCrdFile" href="simtk.openmm.app.charmmcrdfiles.CharmmCrdFile.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="charmmparameterset">
+<h1>CharmmParameterSet<a class="headerlink" href="#charmmparameterset" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.app.charmmparameterset.CharmmParameterSet">
+<em class="property">class </em><code class="descclassname">simtk.openmm.app.charmmparameterset.</code><code class="descname">CharmmParameterSet</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores a parameter set defined by CHARMM files. It stores the equivalent of
+the information found in the MASS section of the CHARMM topology file
+(TOP/RTF) and all of the information in the parameter files (PAR)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filenames</strong> (<em>List of topology, parameter, and stream files to load into the parameter set.</em>) &#8211; <p>The following file type suffixes are recognized. Unrecognized file types raise a TypeError
+* .rtf, .top &#8211; Residue topology file
+* .par, .prm &#8211; Parameter file
+* .str &#8211; Stream file
+* .inp &#8211; If &#8220;par&#8221; is in the file name, it is a parameter file. If</p>
+<blockquote>
+<div>&#8220;top&#8221; is in the file name, it is a topology file. Otherwise,
+raise TypeError</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt>
+<code class="descname">All type lists are dictionaries whose keys are tuples (with however</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">many elements are needed to define that type of parameter). The types</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">that can be in any order are SORTED.</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">- atom_types_str</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">- atom_types_int</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">- atom_types_tuple</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">- bond_types</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">- angle_types</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">- urey_bradley_types</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">- dihedral_types</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">- improper_types</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">- cmap_types</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">- nbfix_types</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">The dihedral types can be multiterm, so the values for each dict key is</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">actually a list of DihedralType instances. The atom_types are dicts that</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">match the name (str), number (int), or (name, number) tuple (tuple) to</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">the atom type. The tuple is guaranteed to be the most robust, although</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">when only the integer or string is available the other dictionaries are</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="simtk.openmm.app.charmmparameterset.CharmmParameterSet.helpful">
+<code class="descname">helpful</code><a class="headerlink" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.helpful" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="n">CharmmParameterSet</span><span class="p">(</span><span class="s1">&#39;charmm22.top&#39;</span><span class="p">,</span> <span class="s1">&#39;charmm22.par&#39;</span><span class="p">,</span> <span class="s1">&#39;file.str&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="simtk.openmm.app.charmmparameterset.CharmmParameterSet.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.__init__" title="simtk.openmm.app.charmmparameterset.CharmmParameterSet.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>(*args,&nbsp;**kwargs)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.condense" title="simtk.openmm.app.charmmparameterset.CharmmParameterSet.condense"><code class="xref py py-obj docutils literal"><span class="pre">condense</span></code></a>()</td>
+<td>This function goes through each of the parameter type dicts and eliminates duplicate types.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.loadSet" title="simtk.openmm.app.charmmparameterset.CharmmParameterSet.loadSet"><code class="xref py py-obj docutils literal"><span class="pre">loadSet</span></code></a>([tfile,&nbsp;pfile,&nbsp;sfiles,&nbsp;permissive])</td>
+<td>Instantiates a CharmmParameterSet from a Topology file and a Parameter</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.readParameterFile" title="simtk.openmm.app.charmmparameterset.CharmmParameterSet.readParameterFile"><code class="xref py py-obj docutils literal"><span class="pre">readParameterFile</span></code></a>(pfile[,&nbsp;permissive])</td>
+<td>Reads all of the parameters from a parameter file.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.readStreamFile" title="simtk.openmm.app.charmmparameterset.CharmmParameterSet.readStreamFile"><code class="xref py py-obj docutils literal"><span class="pre">readStreamFile</span></code></a>(sfile)</td>
+<td>Reads RTF and PAR sections from a stream file and dispatches the</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.readTopologyFile" title="simtk.openmm.app.charmmparameterset.CharmmParameterSet.readTopologyFile"><code class="xref py py-obj docutils literal"><span class="pre">readTopologyFile</span></code></a>(tfile)</td>
+<td>Reads _only_ the atom type definitions from a topology file.</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="simtk.openmm.app.charmmparameterset.CharmmParameterSet.loadSet">
+<em class="property">classmethod </em><code class="descname">loadSet</code><span class="sig-paren">(</span><em>tfile=None</em>, <em>pfile=None</em>, <em>sfiles=[]</em>, <em>permissive=False</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.loadSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a CharmmParameterSet from a Topology file and a Parameter
+file (or just a Parameter file if it has all information)</p>
+<dl class="docutils">
+<dt>tfile <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Name of the Topology (RTF/TOP) file</dd>
+<dt>pfile <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Name of the Parameter (PAR) file</dd>
+<dt>sfiles <span class="classifier-delimiter">:</span> <span class="classifier">list of str</span></dt>
+<dd>List or tuple of stream (STR) file names.</dd>
+<dt>permissive <span class="classifier-delimiter">:</span> <span class="classifier">bool=False</span></dt>
+<dd>Accept non-bonbded parameters for undefined atom types</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">New CharmmParameterSet populated with the parameters found in the
+provided files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet" title="simtk.openmm.app.charmmparameterset.CharmmParameterSet">CharmmParameterSet</a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The RTF file is read first (if provided), followed by the PAR file,
+followed by the list of stream files (in the order they are
+provided). Parameters in each stream file will overwrite those that
+came before (or simply append to the existing set if they are
+different)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.charmmparameterset.CharmmParameterSet.readParameterFile">
+<code class="descname">readParameterFile</code><span class="sig-paren">(</span><em>pfile</em>, <em>permissive=False</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.readParameterFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads all of the parameters from a parameter file. Versions 36 and later
+of the CHARMM force field files have an ATOMS section defining all of
+the atom types.  Older versions need to load this information from the
+RTF/TOP files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pfile</strong> (<em>str</em>) &#8211; Name of the CHARMM PARameter file to read</li>
+<li><strong>permissive</strong> (<em>bool</em>) &#8211; Accept non-bonbded parameters for undefined atom types (default:
+False).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The atom types must all be loaded by the end of this routine. Either
+supply a PAR file with atom definitions in them or read in a RTF/TOP
+file first. Failure to do so will result in a raised RuntimeError.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.charmmparameterset.CharmmParameterSet.readTopologyFile">
+<code class="descname">readTopologyFile</code><span class="sig-paren">(</span><em>tfile</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.readTopologyFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads _only_ the atom type definitions from a topology file. This is
+unnecessary for versions 36 and later of the CHARMM force field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tfile</strong> (<em>str</em>) &#8211; : Name of the CHARMM TOPology file to read</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The CHARMM TOPology file is also called a Residue Topology File</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.charmmparameterset.CharmmParameterSet.readStreamFile">
+<code class="descname">readStreamFile</code><span class="sig-paren">(</span><em>sfile</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.readStreamFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads RTF and PAR sections from a stream file and dispatches the
+sections to readTopologyFile or readParameterFile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sfile</strong> (<em>str or CharmmStreamFile</em>) &#8211; Stream file to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.charmmparameterset.CharmmParameterSet.condense">
+<code class="descname">condense</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.charmmparameterset.CharmmParameterSet.condense" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function goes through each of the parameter type dicts and
+eliminates duplicate types. After calling this function, every unique
+bond, angle, dihedral, improper, or cmap type will pair with EVERY key
+in the type mapping dictionaries that points to the equivalent type</p>
+<p class="rubric">Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="n">CharmmParameterSet</span><span class="p">(</span><span class="s1">&#39;charmm.prm&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">condense</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../app.html">Application Layer</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../app.html#loaders-and-setup">Loaders and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#representation-and-manipulation">Representation and Manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#reporting-output">Reporting Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#extras">Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#units">Units</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library Layer</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.app.charmmparameterset.CharmmParameterSet.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,26 @@
+CMAPTorsionForce
+========================
+
+.. autodoxyclass:: OpenMM::CMAPTorsionForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CMAPTorsionForce::CMAPTorsionForce
+      ~OpenMM::CMAPTorsionForce::getNumMaps
+      ~OpenMM::CMAPTorsionForce::getNumTorsions
+      ~OpenMM::CMAPTorsionForce::addMap
+      ~OpenMM::CMAPTorsionForce::getMapParameters
+      ~OpenMM::CMAPTorsionForce::setMapParameters
+      ~OpenMM::CMAPTorsionForce::addTorsion
+      ~OpenMM::CMAPTorsionForce::getTorsionParameters
+      ~OpenMM::CMAPTorsionForce::setTorsionParameters
+      ~OpenMM::CMAPTorsionForce::updateParametersInContext
+      ~OpenMM::CMAPTorsionForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::CMAPTorsionForce::usesPeriodicBoundaryConditions
+   
+
+   

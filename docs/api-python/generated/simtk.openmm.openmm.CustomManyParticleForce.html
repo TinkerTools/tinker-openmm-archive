@@ -1,0 +1,899 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CustomManyParticleForce &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Library Layer" href="../library.html" />
+    <link rel="next" title="CustomNonbondedForce" href="simtk.openmm.openmm.CustomNonbondedForce.html" />
+    <link rel="prev" title="CustomHbondForce" href="simtk.openmm.openmm.CustomHbondForce.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="custommanyparticleforce">
+<h1>CustomManyParticleForce<a class="headerlink" href="#custommanyparticleforce" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce">
+<em class="property">class </em><code class="descclassname">simtk.openmm.openmm.</code><code class="descname">CustomManyParticleForce</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class supports a wide variety of nonbonded N-particle interactions, where N is user specified. The interaction energy is determined by an arbitrary, user specified algebraic expression that is evaluated for every possible set of N particles in the system. It may depend on the positions of the individual particles, the distances between pairs of particles, the angles formed by sets of three particles, and the dihedral angles formed by sets of four particles.</p>
+<p>Be aware that the cost of evaluating an N-particle interaction increases very rapidly with N. Values larger than N=3 are rarely used.</p>
+<p>We refer to a set of particles for which the energy is being evaluated as p1, p2, p3, etc. The energy expression may depend on the following variables and functions:</p>
+<blockquote>
+<div><ul class="simple">
+<li>x1, y1, z1, x2, y2, z2, etc.: The x, y, and z coordinates of the particle positions. For example, x1 is the x coordinate of particle p1, and y3 is the y coordinate of particle p3.</li>
+<li>distance(p1, p2): the distance between particles p1 and p2 (where &#8220;p1&#8221; and &#8220;p2&#8221; may be replaced by the names of whichever particles you want to calculate the distance between).</li>
+<li>angle(p1, p2, p3): the angle formed by the three specified particles.</li>
+<li>dihedral(p1, p2, p3, p4): the dihedral angle formed by the four specified particles.</li>
+<li>arbitrary global and per-particle parameters that you define.</li>
+</ul>
+</div></blockquote>
+<p>To use this class, create a CustomManyParticleForce object, passing an algebraic expression to the constructor that defines the interaction energy of each set of particles. Then call addPerParticleParameter() to define per-particle parameters, and addGlobalParameter() to define global parameters. The values of per-particle parameters are specified as part of the system definition, while values of global parameters may be modified during a simulation by calling Context::setParameter().</p>
+<p>Next, call addParticle() once for each particle in the System to set the values of its per-particle parameters. The number of particles for which you set parameters must be exactly equal to the number of particles in the System, or else an exception will be thrown when you try to create a Context. After a particle has been added, you can modify its parameters by calling setParticleParameters(). This will have no effect on Contexts that already exist unless you call updateParametersInContext().</p>
+<p>Multi-particle interactions can be very expensive to evaluate, so they are usually used with a cutoff distance. The exact interpretation of the cutoff depends on the permutation mode, as discussed below.</p>
+<p>CustomManyParticleForce also lets you specify &#8220;exclusions&#8221;, particular pairs of particles whose interactions should be omitted from force and energy calculations. This is most often used for particles that are bonded to each other. If you specify a pair of particles as an exclusion, _all_ sets that include those two particles will be omitted.</p>
+<p>As an example, the following code creates a CustomManyParticleForce that implements an Axilrod-Teller potential. This is an interaction between three particles that depends on all three distances and angles formed by the particles.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">CustomManyParticleForce</span><span class="o">*</span> <span class="n">force</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomManyParticleForce</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span>
+    <span class="s">&quot;C*(1+3*cos(theta1)*cos(theta2)*cos(theta3))/(r12*r13*r23)^3;&quot;</span>
+    <span class="s">&quot;theta1=angle(p1,p2,p3); theta2=angle(p2,p3,p1); theta3=angle(p3,p1,p2);&quot;</span>
+    <span class="s">&quot;r12=distance(p1,p2); r13=distance(p1,p3); r23=distance(p2,p3)&quot;</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">setPermutationMode</span><span class="p">(</span><span class="n">CustomManyParticleForce</span><span class="o">::</span><span class="n">SinglePermutation</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This force depends on one parameter, C. The following code defines it as a global parameter:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">force</span><span class="o">-&gt;</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s">&quot;C&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Notice that the expression is symmetric with respect to the particles. It only depends on the products cos(theta1)*cos(theta2)*cos(theta3) and r12*r13*r23, both of which are unchanged if the labels p1, p2, and p3 are permuted. This is required because we specified SinglePermutation as the permutation mode. (This is the default, so we did not really need to set it, but doing so makes the example clearer.) In this mode, the expression is only evaluated once for each set of particles. No guarantee is made about which particle will be identified as p1, p2, etc. Therefore, the energy _must_ be symmetric with respect to exchange of particles. Otherwise, the results would be undefined because permuting the labels would change the energy.</p>
+<p>Not all many-particle interactions work this way. Another common pattern is for the expression to describe an interaction between one central particle and other nearby particles. An example of this is the 3-particle piece of the Stillinger-Weber potential:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">CustomManyParticleForce</span><span class="o">*</span> <span class="n">force</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomManyParticleForce</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span>
+    <span class="s">&quot;L*eps*(cos(theta1)+1/3)^2*exp(sigma*gamma/(r12-a*sigma))*exp(sigma*gamma/(r13-a*sigma));&quot;</span>
+    <span class="s">&quot;r12 = distance(p1,p2); r13 = distance(p1,p3); theta1 = angle(p3,p1,p2)&quot;</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">setPermutationMode</span><span class="p">(</span><span class="n">CustomManyParticleForce</span><span class="o">::</span><span class="n">UniqueCentralParticle</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When the permutation mode is set to UniqueCentralParticle, particle p1 is treated as the central particle. For a set of N particles, the expression is evaluated N times, once with each particle as p1. The expression can therefore treat p1 differently from the other particles. Notice that it is still symmetric with respect to p2 and p3, however. There is no guarantee about how those labels will be assigned to particles.</p>
+<p>Distance cutoffs are applied in different ways depending on the permutation mode. In SinglePermutation mode, every particle in the set must be within the cutoff distance of every other particle. If _any_ two particles are further apart than the cutoff distance, the interaction is skipped. In UniqueCentralParticle mode, each particle must be within the cutoff distance of the central particle, but not necessarily of all the other particles. The cutoff may therefore exclude a subset of the permutations of a set of particles.</p>
+<p>Another common situation is that some particles are fundamentally different from others, causing the expression to be inherently non-symmetric. An example would be a water model that involves three particles, two of which _must_ be hydrogen and one of which _must_ be oxygen. Cases like this can be implemented using particle types.</p>
+<p>A particle type is an integer that you specify when you call addParticle(). (If you omit the argument, it defaults to 0.) For the water model, you could specify 0 for all oxygen atoms and 1 for all hydrogen atoms. You can then call setTypeFilter() to specify the list of allowed types for each of the N particles involved in an interaction:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">set</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">oxygenTypes</span><span class="p">,</span> <span class="n">hydrogenTypes</span><span class="p">;</span>
+<span class="n">oxygenTypes</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">hydrogenTypes</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">setTypeFilter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">oxygenTypes</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">setTypeFilter</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">hydrogenTypes</span><span class="p">);</span>
+<span class="n">force</span><span class="o">-&gt;</span><span class="n">setTypeFilter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">hydrogenTypes</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This specifies that of the three particles in an interaction, p1 must be oxygen while p2 and p3 must be hydrogen. The energy expression will only be evaluated for triplets of particles that satisfy those requirements. It will still only be evaluated once for each triplet, so it must still be symmetric with respect to p2 and p3.</p>
+<p>Expressions may involve the operators + (add), - (subtract), * (multiply), / (divide), and ^ (power), and the following functions: sqrt, exp, log, sin, cos, sec, csc, tan, cot, asin, acos, atan, sinh, cosh, tanh, erf, erfc, min, max, abs, floor, ceil, step, delta, select. All trigonometric functions are defined in radians, and log is the natural logarithm. step(x) = 0 if x is less than 0, 1 otherwise. delta(x) = 1 if x is 0, 0 otherwise. select(x,y,z) = z if x = 0, y otherwise. The names of per-particle parameters have the suffix &#8220;1&#8221;, &#8220;2&#8221;, etc. appended to them to indicate the values for the multiple interacting particles. For example, if you define a per-particle parameter called &#8220;charge&#8221;, then the variable &#8220;charge2&#8221; is the charge of particle p2. As seen above, the expression may also involve intermediate quantities that are defined following the main expression, using &#8221;;&#8221; as a separator.</p>
+<p>In addition, you can call addTabulatedFunction() to define a new function based on tabulated values. You specify the function by creating a TabulatedFunction object. That function can then appear in the expression.</p>
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>self</em>, <em>particlesPerSet</em>, <em>energy</em><span class="sig-paren">)</span> &rarr; CustomManyParticleForce<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>__init__(self, other) -&gt; CustomManyParticleForce</p>
+<p>Create a CustomManyParticleForce.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>particlesPerSet</strong> (<em>int</em>) &#8211; the number of particles in each set for which the energy is evaluated</li>
+<li><strong>energy</strong> (<em>string</em>) &#8211; an algebraic expression giving the interaction energy of each triplet as a function of particle positions, inter-particle distances, angles, and any global and per-particle parameters</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.__init__" title="simtk.openmm.openmm.CustomManyParticleForce.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>((self,&nbsp;particlesPerSet,&nbsp;...)</td>
+<td>__init__(self, other) -&gt; CustomManyParticleForce</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.addExclusion" title="simtk.openmm.openmm.CustomManyParticleForce.addExclusion"><code class="xref py py-obj docutils literal"><span class="pre">addExclusion</span></code></a>((self,&nbsp;particle1,&nbsp;particle2)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a particle pair to the list of interactions that should be excluded.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.addGlobalParameter" title="simtk.openmm.openmm.CustomManyParticleForce.addGlobalParameter"><code class="xref py py-obj docutils literal"><span class="pre">addGlobalParameter</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Add a new global parameter that the interaction may depend on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.addParticle" title="simtk.openmm.openmm.CustomManyParticleForce.addParticle"><code class="xref py py-obj docutils literal"><span class="pre">addParticle</span></code></a>((self,&nbsp;parameters[,&nbsp;type])</td>
+<td>addParticle(self, parameters) -&gt; int</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.addPerParticleParameter" title="simtk.openmm.openmm.CustomManyParticleForce.addPerParticleParameter"><code class="xref py py-obj docutils literal"><span class="pre">addPerParticleParameter</span></code></a>((self,&nbsp;name)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a new per-particle parameter that the interaction may depend on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.addTabulatedFunction" title="simtk.openmm.openmm.CustomManyParticleForce.addTabulatedFunction"><code class="xref py py-obj docutils literal"><span class="pre">addTabulatedFunction</span></code></a>((self,&nbsp;name,&nbsp;...)</td>
+<td>Add a tabulated function that may appear in the energy expression.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.createExclusionsFromBonds" title="simtk.openmm.openmm.CustomManyParticleForce.createExclusionsFromBonds"><code class="xref py py-obj docutils literal"><span class="pre">createExclusionsFromBonds</span></code></a>(self,&nbsp;bonds,&nbsp;...)</td>
+<td>Identify exclusions based on the molecular topology.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getCutoffDistance" title="simtk.openmm.openmm.CustomManyParticleForce.getCutoffDistance"><code class="xref py py-obj docutils literal"><span class="pre">getCutoffDistance</span></code></a>((self)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getEnergyFunction" title="simtk.openmm.openmm.CustomManyParticleForce.getEnergyFunction"><code class="xref py py-obj docutils literal"><span class="pre">getEnergyFunction</span></code></a>((self)&nbsp;-&gt;&nbsp;std::string&nbsp;const&nbsp;&amp;)</td>
+<td>Get the algebraic expression that gives the interaction energy of each bond</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getExclusionParticles" title="simtk.openmm.openmm.CustomManyParticleForce.getExclusionParticles"><code class="xref py py-obj docutils literal"><span class="pre">getExclusionParticles</span></code></a>(self,&nbsp;index)</td>
+<td>Get the particles in a pair whose interaction should be excluded.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getForceGroup" title="simtk.openmm.openmm.CustomManyParticleForce.getForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">getForceGroup</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the force group this Force belongs to.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getGlobalParameterDefaultValue" title="simtk.openmm.openmm.CustomManyParticleForce.getGlobalParameterDefaultValue"><code class="xref py py-obj docutils literal"><span class="pre">getGlobalParameterDefaultValue</span></code></a>((self,&nbsp;...)</td>
+<td>Get the default value of a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getGlobalParameterName" title="simtk.openmm.openmm.CustomManyParticleForce.getGlobalParameterName"><code class="xref py py-obj docutils literal"><span class="pre">getGlobalParameterName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getNonbondedMethod" title="simtk.openmm.openmm.CustomManyParticleForce.getNonbondedMethod"><code class="xref py py-obj docutils literal"><span class="pre">getNonbondedMethod</span></code></a>(...)</td>
+<td>Get the method used for handling long range nonbonded interactions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumExclusions" title="simtk.openmm.openmm.CustomManyParticleForce.getNumExclusions"><code class="xref py py-obj docutils literal"><span class="pre">getNumExclusions</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of particle pairs whose interactions should be excluded.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumGlobalParameters" title="simtk.openmm.openmm.CustomManyParticleForce.getNumGlobalParameters"><code class="xref py py-obj docutils literal"><span class="pre">getNumGlobalParameters</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of global parameters that the interaction depends on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumParticles" title="simtk.openmm.openmm.CustomManyParticleForce.getNumParticles"><code class="xref py py-obj docutils literal"><span class="pre">getNumParticles</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of particles for which force field parameters have been defined.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumParticlesPerSet" title="simtk.openmm.openmm.CustomManyParticleForce.getNumParticlesPerSet"><code class="xref py py-obj docutils literal"><span class="pre">getNumParticlesPerSet</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of particles in each set for which the energy is evaluated</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumPerParticleParameters" title="simtk.openmm.openmm.CustomManyParticleForce.getNumPerParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">getNumPerParticleParameters</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of per-particle parameters that the interaction depends on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumTabulatedFunctions" title="simtk.openmm.openmm.CustomManyParticleForce.getNumTabulatedFunctions"><code class="xref py py-obj docutils literal"><span class="pre">getNumTabulatedFunctions</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of tabulated functions that have been defined.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getParticleParameters" title="simtk.openmm.openmm.CustomManyParticleForce.getParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">getParticleParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the nonbonded force parameters for a particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getPerParticleParameterName" title="simtk.openmm.openmm.CustomManyParticleForce.getPerParticleParameterName"><code class="xref py py-obj docutils literal"><span class="pre">getPerParticleParameterName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a per-particle parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getPermutationMode" title="simtk.openmm.openmm.CustomManyParticleForce.getPermutationMode"><code class="xref py py-obj docutils literal"><span class="pre">getPermutationMode</span></code></a>(...)</td>
+<td>Get the mode that selects which permutations of a set of particles to evaluate the interaction for.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getTabulatedFunction" title="simtk.openmm.openmm.CustomManyParticleForce.getTabulatedFunction"><code class="xref py py-obj docutils literal"><span class="pre">getTabulatedFunction</span></code></a>((self,&nbsp;...)</td>
+<td>getTabulatedFunction(self, index) -&gt; TabulatedFunction</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getTabulatedFunctionName" title="simtk.openmm.openmm.CustomManyParticleForce.getTabulatedFunctionName"><code class="xref py py-obj docutils literal"><span class="pre">getTabulatedFunctionName</span></code></a>((self,&nbsp;...)</td>
+<td>Get the name of a tabulated function that may appear in the energy expression.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.getTypeFilter" title="simtk.openmm.openmm.CustomManyParticleForce.getTypeFilter"><code class="xref py py-obj docutils literal"><span class="pre">getTypeFilter</span></code></a>(self,&nbsp;index)</td>
+<td>Get the allowed particle types for one of the particles involved in the interaction.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setCutoffDistance" title="simtk.openmm.openmm.CustomManyParticleForce.setCutoffDistance"><code class="xref py py-obj docutils literal"><span class="pre">setCutoffDistance</span></code></a>(self,&nbsp;distance)</td>
+<td>Set the cutoff distance (in nm) being used for nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setEnergyFunction" title="simtk.openmm.openmm.CustomManyParticleForce.setEnergyFunction"><code class="xref py py-obj docutils literal"><span class="pre">setEnergyFunction</span></code></a>(self,&nbsp;energy)</td>
+<td>Set the algebraic expression that gives the interaction energy of each bond</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setExclusionParticles" title="simtk.openmm.openmm.CustomManyParticleForce.setExclusionParticles"><code class="xref py py-obj docutils literal"><span class="pre">setExclusionParticles</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the particles in a pair whose interaction should be excluded.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setForceGroup" title="simtk.openmm.openmm.CustomManyParticleForce.setForceGroup"><code class="xref py py-obj docutils literal"><span class="pre">setForceGroup</span></code></a>(self,&nbsp;group)</td>
+<td>Set the force group this Force belongs to.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setGlobalParameterDefaultValue" title="simtk.openmm.openmm.CustomManyParticleForce.setGlobalParameterDefaultValue"><code class="xref py py-obj docutils literal"><span class="pre">setGlobalParameterDefaultValue</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the default value of a global parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setGlobalParameterName" title="simtk.openmm.openmm.CustomManyParticleForce.setGlobalParameterName"><code class="xref py py-obj docutils literal"><span class="pre">setGlobalParameterName</span></code></a>(self,&nbsp;index,&nbsp;name)</td>
+<td>Set the name of a global parameter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setNonbondedMethod" title="simtk.openmm.openmm.CustomManyParticleForce.setNonbondedMethod"><code class="xref py py-obj docutils literal"><span class="pre">setNonbondedMethod</span></code></a>(self,&nbsp;method)</td>
+<td>Set the method used for handling long range nonbonded interactions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setParticleParameters" title="simtk.openmm.openmm.CustomManyParticleForce.setParticleParameters"><code class="xref py py-obj docutils literal"><span class="pre">setParticleParameters</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the nonbonded force parameters for a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setPerParticleParameterName" title="simtk.openmm.openmm.CustomManyParticleForce.setPerParticleParameterName"><code class="xref py py-obj docutils literal"><span class="pre">setPerParticleParameterName</span></code></a>(self,&nbsp;index,&nbsp;name)</td>
+<td>Set the name of a per-particle parameter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setPermutationMode" title="simtk.openmm.openmm.CustomManyParticleForce.setPermutationMode"><code class="xref py py-obj docutils literal"><span class="pre">setPermutationMode</span></code></a>(self,&nbsp;mode)</td>
+<td>Set the mode that selects which permutations of a set of particles to evaluate the interaction for.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.setTypeFilter" title="simtk.openmm.openmm.CustomManyParticleForce.setTypeFilter"><code class="xref py py-obj docutils literal"><span class="pre">setTypeFilter</span></code></a>(self,&nbsp;index,&nbsp;types)</td>
+<td>Set the allowed particle types for one of the particles involved in the interaction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.updateParametersInContext" title="simtk.openmm.openmm.CustomManyParticleForce.updateParametersInContext"><code class="xref py py-obj docutils literal"><span class="pre">updateParametersInContext</span></code></a>(self,&nbsp;context)</td>
+<td>Update the per-particle parameters in a Context to match those stored in this Force object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.CustomManyParticleForce.usesPeriodicBoundaryConditions" title="simtk.openmm.openmm.CustomManyParticleForce.usesPeriodicBoundaryConditions"><code class="xref py py-obj docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a>((self)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Returns whether or not this force makes use of periodic boundary conditions.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">CutoffNonPeriodic</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">CutoffPeriodic</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">NoCutoff</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">SinglePermutation</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">UniqueCentralParticle</span></code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getNumParticlesPerSet">
+<code class="descname">getNumParticlesPerSet</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumParticlesPerSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles in each set for which the energy is evaluated</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getNumParticles">
+<code class="descname">getNumParticles</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles for which force field parameters have been defined.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getNumExclusions">
+<code class="descname">getNumExclusions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumExclusions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particle pairs whose interactions should be excluded.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getNumPerParticleParameters">
+<code class="descname">getNumPerParticleParameters</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumPerParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of per-particle parameters that the interaction depends on.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getNumGlobalParameters">
+<code class="descname">getNumGlobalParameters</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumGlobalParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of global parameters that the interaction depends on.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getNumTabulatedFunctions">
+<code class="descname">getNumTabulatedFunctions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getNumTabulatedFunctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of tabulated functions that have been defined.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getEnergyFunction">
+<code class="descname">getEnergyFunction</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getEnergyFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the algebraic expression that gives the interaction energy of each bond</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setEnergyFunction">
+<code class="descname">setEnergyFunction</code><span class="sig-paren">(</span><em>self</em>, <em>energy</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setEnergyFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the algebraic expression that gives the interaction energy of each bond</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getNonbondedMethod">
+<code class="descname">getNonbondedMethod</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; OpenMM::CustomManyParticleForce::NonbondedMethod<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getNonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the method used for handling long range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setNonbondedMethod">
+<code class="descname">setNonbondedMethod</code><span class="sig-paren">(</span><em>self</em>, <em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setNonbondedMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the method used for handling long range nonbonded interactions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getPermutationMode">
+<code class="descname">getPermutationMode</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; OpenMM::CustomManyParticleForce::PermutationMode<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getPermutationMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the mode that selects which permutations of a set of particles to evaluate the interaction for.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setPermutationMode">
+<code class="descname">setPermutationMode</code><span class="sig-paren">(</span><em>self</em>, <em>mode</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setPermutationMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the mode that selects which permutations of a set of particles to evaluate the interaction for.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getCutoffDistance">
+<code class="descname">getCutoffDistance</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getCutoffDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the cutoff distance, measured in nm</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setCutoffDistance">
+<code class="descname">setCutoffDistance</code><span class="sig-paren">(</span><em>self</em>, <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setCutoffDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cutoff distance (in nm) being used for nonbonded interactions. If the NonbondedMethod in use is NoCutoff, this value will have no effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>distance</strong> (<em>double</em>) &#8211; the cutoff distance, measured in nm</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.addPerParticleParameter">
+<code class="descname">addPerParticleParameter</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.addPerParticleParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new per-particle parameter that the interaction may depend on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the index of the parameter that was added</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getPerParticleParameterName">
+<code class="descname">getPerParticleParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getPerParticleParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a per-particle parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to get the name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setPerParticleParameterName">
+<code class="descname">setPerParticleParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setPerParticleParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of a per-particle parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to set the name</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.addGlobalParameter">
+<code class="descname">addGlobalParameter</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>defaultValue</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.addGlobalParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new global parameter that the interaction may depend on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</li>
+<li><strong>defaultValue</strong> (<em>double</em>) &#8211; the default value of the parameter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the parameter that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getGlobalParameterName">
+<code class="descname">getGlobalParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getGlobalParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to get the name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parameter name</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setGlobalParameterName">
+<code class="descname">setGlobalParameterName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setGlobalParameterName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to set the name</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getGlobalParameterDefaultValue">
+<code class="descname">getGlobalParameterDefaultValue</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getGlobalParameterDefaultValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default value of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to get the default value</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parameter default value</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setGlobalParameterDefaultValue">
+<code class="descname">setGlobalParameterDefaultValue</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>defaultValue</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setGlobalParameterDefaultValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default value of a global parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the parameter for which to set the default value</li>
+<li><strong>defaultValue</strong> (<em>double</em>) &#8211; the default value of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.addParticle">
+<code class="descname">addParticle</code><span class="sig-paren">(</span><em>self</em>, <em>parameters</em>, <em>type=0</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.addParticle" title="Permalink to this definition">¶</a></dt>
+<dd><p>addParticle(self, parameters) -&gt; int
+addParticle(self) -&gt; int</p>
+<p>Add the nonbonded force parameters for a particle. This should be called once for each particle in the System. When it is called for the i&#8217;th time, it specifies the parameters for the i&#8217;th particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parameters</strong> (<em>vector&lt; double &gt;</em>) &#8211; the list of parameters for the new particle</li>
+<li><strong>type</strong> (<em>int</em>) &#8211; the type of the new particle</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the particle that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getParticleParameters">
+<code class="descname">getParticleParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the nonbonded force parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the particle for which to get parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>parameters</strong> (<em>vector&lt; double &gt;</em>) &#8211;
+the list of parameters for the specified particle</li>
+<li><strong>type</strong> (<em>int</em>) &#8211;
+the type of the specified particle</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setParticleParameters">
+<code class="descname">setParticleParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>parameters</em>, <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setParticleParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the nonbonded force parameters for a particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the particle for which to set parameters</li>
+<li><strong>parameters</strong> (<em>vector&lt; double &gt;</em>) &#8211; the list of parameters for the specified particle</li>
+<li><strong>type</strong> (<em>int</em>) &#8211; the type of the specified particle</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.addExclusion">
+<code class="descname">addExclusion</code><span class="sig-paren">(</span><em>self</em>, <em>particle1</em>, <em>particle2</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.addExclusion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a particle pair to the list of interactions that should be excluded.</p>
+<p>In many cases, you can use createExclusionsFromBonds() rather than adding each exclusion explicitly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>particle1</strong> (<em>int</em>) &#8211; the index of the first particle in the pair</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211; the index of the second particle in the pair</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the exclusion that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getExclusionParticles">
+<code class="descname">getExclusionParticles</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getExclusionParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the particles in a pair whose interaction should be excluded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the exclusion for which to get particle indices</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>particle1</strong> (<em>int</em>) &#8211;
+the index of the first particle in the pair</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211;
+the index of the second particle in the pair</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setExclusionParticles">
+<code class="descname">setExclusionParticles</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>particle1</em>, <em>particle2</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setExclusionParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the particles in a pair whose interaction should be excluded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the exclusion for which to set particle indices</li>
+<li><strong>particle1</strong> (<em>int</em>) &#8211; the index of the first particle in the pair</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211; the index of the second particle in the pair</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.createExclusionsFromBonds">
+<code class="descname">createExclusionsFromBonds</code><span class="sig-paren">(</span><em>self</em>, <em>bonds</em>, <em>bondCutoff</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.createExclusionsFromBonds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identify exclusions based on the molecular topology. Particles which are separated by up to a specified number of bonds are added as exclusions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>bonds</strong> (<em>vector&lt; std::pair&lt; int, int &gt; &gt;</em>) &#8211; the set of bonds based on which to construct exclusions. Each element specifies the indices of two particles that are bonded to each other.</li>
+<li><strong>bondCutoff</strong> (<em>int</em>) &#8211; pairs of particles that are separated by this many bonds or fewer are added to the list of exclusions</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getTypeFilter">
+<code class="descname">getTypeFilter</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getTypeFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the allowed particle types for one of the particles involved in the interaction. If this an empty set (the default), no filter is applied and all interactions are evaluated regardless of the type of the specified particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the particle within the interaction (between 0 and getNumParticlesPerSet())</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>types</strong> &#8211;
+the allowed types for the specified particle</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">set&lt; int &gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setTypeFilter">
+<code class="descname">setTypeFilter</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>types</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setTypeFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the allowed particle types for one of the particles involved in the interaction. If this an empty set (the default), no filter is applied and all interactions are evaluated regardless of the type of the specified particle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the particle within the interaction (between 0 and getNumParticlesPerSet())</li>
+<li><strong>types</strong> (<em>set&lt; int &gt;</em>) &#8211; the allowed types for the specified particle</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.addTabulatedFunction">
+<code class="descname">addTabulatedFunction</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>function</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.addTabulatedFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a tabulated function that may appear in the energy expression.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the function as it appears in expressions</li>
+<li><strong>function</strong> (<em>TabulatedFunction *</em>) &#8211; a TabulatedFunction object defining the function. The TabulatedFunction should have been created on the heap with the &#8220;new&#8221; operator. The Force takes over ownership of it, and deletes it when the Force itself is deleted.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the function that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getTabulatedFunction">
+<code class="descname">getTabulatedFunction</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; TabulatedFunction<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getTabulatedFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>getTabulatedFunction(self, index) -&gt; TabulatedFunction</p>
+<p>Get a reference to a tabulated function that may appear in the energy expression.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the function to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the TabulatedFunction object defining the function</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="simtk.openmm.openmm.TabulatedFunction.html#simtk.openmm.openmm.TabulatedFunction" title="simtk.openmm.openmm.TabulatedFunction">TabulatedFunction</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getTabulatedFunctionName">
+<code class="descname">getTabulatedFunctionName</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; std::string const &amp;<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getTabulatedFunctionName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a tabulated function that may appear in the energy expression.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the function to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the name of the function as it appears in expressions</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.updateParametersInContext">
+<code class="descname">updateParametersInContext</code><span class="sig-paren">(</span><em>self</em>, <em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.updateParametersInContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the per-particle parameters in a Context to match those stored in this Force object. This method provides an efficient method to update certain parameters in an existing Context without needing to reinitialize it. Simply call setParticleParameters() to modify this object&#8217;s parameters, then call updateParametersInContext() to copy them over to the Context.</p>
+<p>This method has several limitations. The only information it updates is the values of per-particle parameters. All other aspects of the Force (the energy function, nonbonded method, cutoff distance, etc.) are unaffected and can only be changed by reinitializing the Context. Also, this method cannot be used to add new particles, only to change the parameters of existing ones.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.usesPeriodicBoundaryConditions">
+<code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.usesPeriodicBoundaryConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not this force makes use of periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if force uses PBC and false otherwise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.__copy__">
+<code class="descname">__copy__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; Force<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.__copy__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.getForceGroup">
+<code class="descname">getForceGroup</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.getForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the force group this Force belongs to.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.CustomManyParticleForce.setForceGroup">
+<code class="descname">setForceGroup</code><span class="sig-paren">(</span><em>self</em>, <em>group</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.CustomManyParticleForce.setForceGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the force group this Force belongs to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>group</strong> (<em>int</em>) &#8211; the group index. Legal values are between 0 and 31 (inclusive).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Application Layer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../library.html">Library Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../library.html#core-objects">Core Objects</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../library.html#forces">Forces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#integrators">Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.openmm.CustomManyParticleForce.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

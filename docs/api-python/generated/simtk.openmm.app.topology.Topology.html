@@ -1,0 +1,407 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Topology &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Application Layer" href="../app.html" />
+    <link rel="next" title="Chain" href="simtk.openmm.app.topology.Chain.html" />
+    <link rel="prev" title="PDBxFile" href="simtk.openmm.app.pdbxfile.PDBxFile.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="topology">
+<h1>Topology<a class="headerlink" href="#topology" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.app.topology.Topology">
+<em class="property">class </em><code class="descclassname">simtk.openmm.app.topology.</code><code class="descname">Topology</code><a class="headerlink" href="#simtk.openmm.app.topology.Topology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Topology stores the topological information about a system.</p>
+<p>The structure of a Topology object is similar to that of a PDB file.  It consists of a set of Chains
+(often but not always corresponding to polymer chains).  Each Chain contains a set of Residues,
+and each Residue contains a set of Atoms.  In addition, the Topology stores a list of which atom
+pairs are bonded to each other, and the dimensions of the crystallographic unit cell.</p>
+<p>Atom and residue names should follow the PDB 3.0 nomenclature for all molecules for which one exists.</p>
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Topology object</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.__init__" title="simtk.openmm.app.topology.Topology.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>()</td>
+<td>Create a new Topology object</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.addAtom" title="simtk.openmm.app.topology.Topology.addAtom"><code class="xref py py-obj docutils literal"><span class="pre">addAtom</span></code></a>(name,&nbsp;element,&nbsp;residue[,&nbsp;id])</td>
+<td>Create a new Atom and add it to the Topology.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.addBond" title="simtk.openmm.app.topology.Topology.addBond"><code class="xref py py-obj docutils literal"><span class="pre">addBond</span></code></a>(atom1,&nbsp;atom2[,&nbsp;type,&nbsp;order])</td>
+<td>Create a new bond and add it to the Topology.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.addChain" title="simtk.openmm.app.topology.Topology.addChain"><code class="xref py py-obj docutils literal"><span class="pre">addChain</span></code></a>([id])</td>
+<td>Create a new Chain and add it to the Topology.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.addResidue" title="simtk.openmm.app.topology.Topology.addResidue"><code class="xref py py-obj docutils literal"><span class="pre">addResidue</span></code></a>(name,&nbsp;chain[,&nbsp;id])</td>
+<td>Create a new Residue and add it to the Topology.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.atoms" title="simtk.openmm.app.topology.Topology.atoms"><code class="xref py py-obj docutils literal"><span class="pre">atoms</span></code></a>()</td>
+<td>Iterate over all Atoms in the Topology.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.bonds" title="simtk.openmm.app.topology.Topology.bonds"><code class="xref py py-obj docutils literal"><span class="pre">bonds</span></code></a>()</td>
+<td>Iterate over all bonds (each represented as a tuple of two Atoms) in the Topology.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.chains" title="simtk.openmm.app.topology.Topology.chains"><code class="xref py py-obj docutils literal"><span class="pre">chains</span></code></a>()</td>
+<td>Iterate over all Chains in the Topology.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.createDisulfideBonds" title="simtk.openmm.app.topology.Topology.createDisulfideBonds"><code class="xref py py-obj docutils literal"><span class="pre">createDisulfideBonds</span></code></a>(positions)</td>
+<td>Identify disulfide bonds based on proximity and add them to the Topology.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.createStandardBonds" title="simtk.openmm.app.topology.Topology.createStandardBonds"><code class="xref py py-obj docutils literal"><span class="pre">createStandardBonds</span></code></a>()</td>
+<td>Create bonds based on the atom and residue names for all standard residue types.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.getNumAtoms" title="simtk.openmm.app.topology.Topology.getNumAtoms"><code class="xref py py-obj docutils literal"><span class="pre">getNumAtoms</span></code></a>()</td>
+<td>Return the number of atoms in the Topology.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.getNumChains" title="simtk.openmm.app.topology.Topology.getNumChains"><code class="xref py py-obj docutils literal"><span class="pre">getNumChains</span></code></a>()</td>
+<td>Return the number of chains in the Topology.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.getNumResidues" title="simtk.openmm.app.topology.Topology.getNumResidues"><code class="xref py py-obj docutils literal"><span class="pre">getNumResidues</span></code></a>()</td>
+<td>Return the number of residues in the Topology.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.getPeriodicBoxVectors" title="simtk.openmm.app.topology.Topology.getPeriodicBoxVectors"><code class="xref py py-obj docutils literal"><span class="pre">getPeriodicBoxVectors</span></code></a>()</td>
+<td>Get the vectors defining the periodic box.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.getUnitCellDimensions" title="simtk.openmm.app.topology.Topology.getUnitCellDimensions"><code class="xref py py-obj docutils literal"><span class="pre">getUnitCellDimensions</span></code></a>()</td>
+<td>Get the dimensions of the crystallographic unit cell.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.loadBondDefinitions" title="simtk.openmm.app.topology.Topology.loadBondDefinitions"><code class="xref py py-obj docutils literal"><span class="pre">loadBondDefinitions</span></code></a>(file)</td>
+<td>Load an XML file containing definitions of bonds that should be used by createStandardBonds().</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.residues" title="simtk.openmm.app.topology.Topology.residues"><code class="xref py py-obj docutils literal"><span class="pre">residues</span></code></a>()</td>
+<td>Iterate over all Residues in the Topology.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.setPeriodicBoxVectors" title="simtk.openmm.app.topology.Topology.setPeriodicBoxVectors"><code class="xref py py-obj docutils literal"><span class="pre">setPeriodicBoxVectors</span></code></a>(vectors)</td>
+<td>Set the vectors defining the periodic box.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.app.topology.Topology.setUnitCellDimensions" title="simtk.openmm.app.topology.Topology.setUnitCellDimensions"><code class="xref py py-obj docutils literal"><span class="pre">setUnitCellDimensions</span></code></a>(dimensions)</td>
+<td>Set the dimensions of the crystallographic unit cell.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.getNumAtoms">
+<code class="descname">getNumAtoms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.getNumAtoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of atoms in the Topology.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.getNumResidues">
+<code class="descname">getNumResidues</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.getNumResidues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of residues in the Topology.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.getNumChains">
+<code class="descname">getNumChains</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.getNumChains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of chains in the Topology.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.addChain">
+<code class="descname">addChain</code><span class="sig-paren">(</span><em>id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.addChain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Chain and add it to the Topology.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>string=None</em>) &#8211; An optional identifier for the chain.  If this is omitted, an id is
+generated based on the chain index.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the newly created Chain</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="simtk.openmm.app.topology.Chain.html#simtk.openmm.app.topology.Chain" title="simtk.openmm.app.topology.Chain">Chain</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.addResidue">
+<code class="descname">addResidue</code><span class="sig-paren">(</span><em>name</em>, <em>chain</em>, <em>id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.addResidue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Residue and add it to the Topology.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; The name of the residue to add</li>
+<li><strong>chain</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Chain.html#simtk.openmm.app.topology.Chain" title="simtk.openmm.app.topology.Chain"><em>Chain</em></a>) &#8211; The Chain to add it to</li>
+<li><strong>id</strong> (<em>string=None</em>) &#8211; An optional identifier for the residue.  If this is omitted, an id
+is generated based on the residue index.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the newly created Residue</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="simtk.openmm.app.topology.Residue.html#simtk.openmm.app.topology.Residue" title="simtk.openmm.app.topology.Residue">Residue</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.addAtom">
+<code class="descname">addAtom</code><span class="sig-paren">(</span><em>name</em>, <em>element</em>, <em>residue</em>, <em>id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.addAtom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Atom and add it to the Topology.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; The name of the atom to add</li>
+<li><strong>element</strong> (<a class="reference internal" href="simtk.openmm.app.element.Element.html#simtk.openmm.app.element.Element" title="simtk.openmm.app.element.Element"><em>Element</em></a>) &#8211; The element of the atom to add</li>
+<li><strong>residue</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Residue.html#simtk.openmm.app.topology.Residue" title="simtk.openmm.app.topology.Residue"><em>Residue</em></a>) &#8211; The Residue to add it to</li>
+<li><strong>id</strong> (<em>string=None</em>) &#8211; An optional identifier for the atom.  If this is omitted, an id is
+generated based on the atom index.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the newly created Atom</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="simtk.openmm.app.topology.Atom.html#simtk.openmm.app.topology.Atom" title="simtk.openmm.app.topology.Atom">Atom</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.addBond">
+<code class="descname">addBond</code><span class="sig-paren">(</span><em>atom1</em>, <em>atom2</em>, <em>type=None</em>, <em>order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.addBond" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new bond and add it to the Topology.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>atom1</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Atom.html#simtk.openmm.app.topology.Atom" title="simtk.openmm.app.topology.Atom"><em>Atom</em></a>) &#8211; The first Atom connected by the bond</li>
+<li><strong>atom2</strong> (<a class="reference internal" href="simtk.openmm.app.topology.Atom.html#simtk.openmm.app.topology.Atom" title="simtk.openmm.app.topology.Atom"><em>Atom</em></a>) &#8211; The second Atom connected by the bond</li>
+<li><strong>type</strong> (<em>object=None</em>) &#8211; The type of bond to add.  Allowed values are None, Single, Double, Triple,
+Aromatic, or Amide.</li>
+<li><strong>order</strong> (<em>int=None</em>) &#8211; The bond order, or None if it is not specified</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.chains">
+<code class="descname">chains</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.chains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all Chains in the Topology.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.residues">
+<code class="descname">residues</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.residues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all Residues in the Topology.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.atoms">
+<code class="descname">atoms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.atoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all Atoms in the Topology.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.bonds">
+<code class="descname">bonds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.bonds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all bonds (each represented as a tuple of two Atoms) in the Topology.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.getPeriodicBoxVectors">
+<code class="descname">getPeriodicBoxVectors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.getPeriodicBoxVectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the vectors defining the periodic box.</p>
+<p>The return value may be None if this Topology does not represent a periodic structure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.setPeriodicBoxVectors">
+<code class="descname">setPeriodicBoxVectors</code><span class="sig-paren">(</span><em>vectors</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.setPeriodicBoxVectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the vectors defining the periodic box.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.getUnitCellDimensions">
+<code class="descname">getUnitCellDimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.getUnitCellDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dimensions of the crystallographic unit cell.</p>
+<p>The return value may be None if this Topology does not represent a periodic structure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.setUnitCellDimensions">
+<code class="descname">setUnitCellDimensions</code><span class="sig-paren">(</span><em>dimensions</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.setUnitCellDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the dimensions of the crystallographic unit cell.</p>
+<p>This method is an alternative to setPeriodicBoxVectors() for the case of a rectangular box.  It sets
+the box vectors to be orthogonal to each other and to have the specified lengths.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="simtk.openmm.app.topology.Topology.loadBondDefinitions">
+<em class="property">static </em><code class="descname">loadBondDefinitions</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.loadBondDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an XML file containing definitions of bonds that should be used by createStandardBonds().</p>
+<p>The built in residues.xml file containing definitions for standard amino acids and nucleotides is loaded automatically.
+This method can be used to load additional definitions for other residue types.  They will then be used in subsequent
+calls to createStandardBonds().  This is a static method, so it affects subsequent calls on all Topology objects.
+Also note that PDBFile calls createStandardBonds() automatically when a file is loaded, so the newly loaded definitions
+will be used for any PDB file loaded after this is called.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.createStandardBonds">
+<code class="descname">createStandardBonds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.createStandardBonds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create bonds based on the atom and residue names for all standard residue types.</p>
+<p>Definitions for standard amino acids and nucleotides are built in.  You can call loadBondDefinitions() to load
+additional definitions for other residue types.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.app.topology.Topology.createDisulfideBonds">
+<code class="descname">createDisulfideBonds</code><span class="sig-paren">(</span><em>positions</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.app.topology.Topology.createDisulfideBonds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identify disulfide bonds based on proximity and add them to the
+Topology.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>positions</strong> (<em>list</em>) &#8211; The list of atomic positions based on which to identify bonded atoms</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../app.html">Application Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../app.html#loaders-and-setup">Loaders and Setup</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../app.html#representation-and-manipulation">Representation and Manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#reporting-output">Reporting Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#extras">Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#units">Units</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library Layer</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.app.topology.Topology.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

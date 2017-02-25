@@ -1,0 +1,86 @@
+AmoebaMultipoleForce
+========================================
+
+.. currentmodule:: simtk.openmm.openmm
+
+.. autoclass:: AmoebaMultipoleForce
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AmoebaMultipoleForce.__init__
+      ~AmoebaMultipoleForce.addMultipole
+      ~AmoebaMultipoleForce.getAEwald
+      ~AmoebaMultipoleForce.getCovalentMap
+      ~AmoebaMultipoleForce.getCovalentMaps
+      ~AmoebaMultipoleForce.getCutoffDistance
+      ~AmoebaMultipoleForce.getElectrostaticPotential
+      ~AmoebaMultipoleForce.getEwaldErrorTolerance
+      ~AmoebaMultipoleForce.getExtrapolationCoefficients
+      ~AmoebaMultipoleForce.getForceGroup
+      ~AmoebaMultipoleForce.getInducedDipoles
+      ~AmoebaMultipoleForce.getLabFramePermanentDipoles
+      ~AmoebaMultipoleForce.getMultipoleParameters
+      ~AmoebaMultipoleForce.getMutualInducedMaxIterations
+      ~AmoebaMultipoleForce.getMutualInducedTargetEpsilon
+      ~AmoebaMultipoleForce.getNonbondedMethod
+      ~AmoebaMultipoleForce.getNumMultipoles
+      ~AmoebaMultipoleForce.getPMEParameters
+      ~AmoebaMultipoleForce.getPMEParametersInContext
+      ~AmoebaMultipoleForce.getPmeBSplineOrder
+      ~AmoebaMultipoleForce.getPmeGridDimensions
+      ~AmoebaMultipoleForce.getPolarizationType
+      ~AmoebaMultipoleForce.getSystemMultipoleMoments
+      ~AmoebaMultipoleForce.getTotalDipoles
+      ~AmoebaMultipoleForce.setAEwald
+      ~AmoebaMultipoleForce.setCovalentMap
+      ~AmoebaMultipoleForce.setCutoffDistance
+      ~AmoebaMultipoleForce.setEwaldErrorTolerance
+      ~AmoebaMultipoleForce.setExtrapolationCoefficients
+      ~AmoebaMultipoleForce.setForceGroup
+      ~AmoebaMultipoleForce.setMultipoleParameters
+      ~AmoebaMultipoleForce.setMutualInducedMaxIterations
+      ~AmoebaMultipoleForce.setMutualInducedTargetEpsilon
+      ~AmoebaMultipoleForce.setNonbondedMethod
+      ~AmoebaMultipoleForce.setPMEParameters
+      ~AmoebaMultipoleForce.setPmeGridDimensions
+      ~AmoebaMultipoleForce.setPolarizationType
+      ~AmoebaMultipoleForce.updateParametersInContext
+      ~AmoebaMultipoleForce.usesPeriodicBoundaryConditions
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AmoebaMultipoleForce.Bisector
+      ~AmoebaMultipoleForce.Covalent12
+      ~AmoebaMultipoleForce.Covalent13
+      ~AmoebaMultipoleForce.Covalent14
+      ~AmoebaMultipoleForce.Covalent15
+      ~AmoebaMultipoleForce.CovalentEnd
+      ~AmoebaMultipoleForce.Direct
+      ~AmoebaMultipoleForce.Extrapolated
+      ~AmoebaMultipoleForce.LastAxisTypeIndex
+      ~AmoebaMultipoleForce.Mutual
+      ~AmoebaMultipoleForce.NoAxisType
+      ~AmoebaMultipoleForce.NoCutoff
+      ~AmoebaMultipoleForce.PME
+      ~AmoebaMultipoleForce.PolarizationCovalent11
+      ~AmoebaMultipoleForce.PolarizationCovalent12
+      ~AmoebaMultipoleForce.PolarizationCovalent13
+      ~AmoebaMultipoleForce.PolarizationCovalent14
+      ~AmoebaMultipoleForce.ThreeFold
+      ~AmoebaMultipoleForce.ZBisect
+      ~AmoebaMultipoleForce.ZOnly
+      ~AmoebaMultipoleForce.ZThenX
+   
+   

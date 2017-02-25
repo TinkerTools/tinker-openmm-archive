@@ -1,0 +1,35 @@
+GBSAOBCForce
+====================
+
+.. autodoxyclass:: OpenMM::GBSAOBCForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::GBSAOBCForce::GBSAOBCForce
+      ~OpenMM::GBSAOBCForce::getNumParticles
+      ~OpenMM::GBSAOBCForce::addParticle
+      ~OpenMM::GBSAOBCForce::getParticleParameters
+      ~OpenMM::GBSAOBCForce::setParticleParameters
+      ~OpenMM::GBSAOBCForce::getSolventDielectric
+      ~OpenMM::GBSAOBCForce::setSolventDielectric
+      ~OpenMM::GBSAOBCForce::getSoluteDielectric
+      ~OpenMM::GBSAOBCForce::setSoluteDielectric
+      ~OpenMM::GBSAOBCForce::getSurfaceAreaEnergy
+      ~OpenMM::GBSAOBCForce::setSurfaceAreaEnergy
+      ~OpenMM::GBSAOBCForce::getNonbondedMethod
+      ~OpenMM::GBSAOBCForce::setNonbondedMethod
+      ~OpenMM::GBSAOBCForce::getCutoffDistance
+      ~OpenMM::GBSAOBCForce::setCutoffDistance
+      ~OpenMM::GBSAOBCForce::updateParametersInContext
+      ~OpenMM::GBSAOBCForce::usesPeriodicBoundaryConditions
+   
+
+   
+   
+   .. autodoxyenum:: NonbondedMethod
+   
+   

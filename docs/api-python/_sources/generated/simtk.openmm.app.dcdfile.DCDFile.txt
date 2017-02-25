@@ -1,0 +1,23 @@
+DCDFile
+================================
+
+.. currentmodule:: simtk.openmm.app.dcdfile
+
+.. autoclass:: DCDFile
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DCDFile.__init__
+      ~DCDFile.writeModel
+   
+   
+
+   
+   
+   

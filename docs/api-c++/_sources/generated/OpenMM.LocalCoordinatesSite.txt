@@ -1,0 +1,19 @@
+LocalCoordinatesSite
+============================
+
+.. autodoxyclass:: OpenMM::LocalCoordinatesSite
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::LocalCoordinatesSite::LocalCoordinatesSite
+      ~OpenMM::LocalCoordinatesSite::getOriginWeights
+      ~OpenMM::LocalCoordinatesSite::getXWeights
+      ~OpenMM::LocalCoordinatesSite::getYWeights
+      ~OpenMM::LocalCoordinatesSite::getLocalPosition
+   
+
+   

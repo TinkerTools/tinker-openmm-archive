@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Unit &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Application Layer" href="../app.html" />
+    <link rel="next" title="UnitSystem" href="simtk.unit.unit.UnitSystem.html" />
+    <link rel="prev" title="SiPrefix" href="simtk.unit.prefix.SiPrefix.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="unit">
+<h1>Unit<a class="headerlink" href="#unit" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.unit.unit.Unit">
+<em class="property">class </em><code class="descclassname">simtk.unit.unit.</code><code class="descname">Unit</code><span class="sig-paren">(</span><em>base_or_scaled_units</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Physical unit such as meter or ampere.</p>
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>base_or_scaled_units</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Unit.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>self</strong> (<a class="reference internal" href="#simtk.unit.unit.Unit" title="simtk.unit.unit.Unit"><em>Unit</em></a>) &#8211; The newly created Unit.</li>
+<li><strong>base_or_scaled_units</strong> (<em>dict</em>) &#8211; Keys are BaseUnits or ScaledUnits.  Values are exponents (numbers).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.unit.unit.Unit.__init__" title="simtk.unit.unit.Unit.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>(base_or_scaled_units)</td>
+<td>Create a new Unit.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.unit.unit.Unit.conversion_factor_to" title="simtk.unit.unit.Unit.conversion_factor_to"><code class="xref py py-obj docutils literal"><span class="pre">conversion_factor_to</span></code></a>(other)</td>
+<td>Returns conversion factor for computing all of the common dimensions between self and other from self base units to other base units.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.unit.unit.Unit.create_unit" title="simtk.unit.unit.Unit.create_unit"><code class="xref py py-obj docutils literal"><span class="pre">create_unit</span></code></a>(scale,&nbsp;name,&nbsp;symbol)</td>
+<td>Convenience method for creating a new simple unit from another simple unit.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.unit.unit.Unit.get_conversion_factor_to_base_units" title="simtk.unit.unit.Unit.get_conversion_factor_to_base_units"><code class="xref py py-obj docutils literal"><span class="pre">get_conversion_factor_to_base_units</span></code></a>()</td>
+<td>There may be ScaleUnit components to this Unit.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.unit.unit.Unit.get_name" title="simtk.unit.unit.Unit.get_name"><code class="xref py py-obj docutils literal"><span class="pre">get_name</span></code></a>()</td>
+<td>Returns a unit name (string) for this Unit, composed of its various BaseUnit symbols.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.unit.unit.Unit.get_symbol" title="simtk.unit.unit.Unit.get_symbol"><code class="xref py py-obj docutils literal"><span class="pre">get_symbol</span></code></a>()</td>
+<td>Returns a unit symbol (string) for this Unit, composed of its various BaseUnit symbols.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.unit.unit.Unit.in_unit_system" title="simtk.unit.unit.Unit.in_unit_system"><code class="xref py py-obj docutils literal"><span class="pre">in_unit_system</span></code></a>(system)</td>
+<td>Returns a new Unit with the same dimensions as this one, expressed in a particular unit system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.unit.unit.Unit.is_compatible" title="simtk.unit.unit.Unit.is_compatible"><code class="xref py py-obj docutils literal"><span class="pre">is_compatible</span></code></a>(other)</td>
+<td>Returns True if two Units share the same dimension.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.unit.unit.Unit.is_dimensionless" title="simtk.unit.unit.Unit.is_dimensionless"><code class="xref py py-obj docutils literal"><span class="pre">is_dimensionless</span></code></a>()</td>
+<td>Returns True if this Unit has no dimensions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.unit.unit.Unit.iter_all_base_units" title="simtk.unit.unit.Unit.iter_all_base_units"><code class="xref py py-obj docutils literal"><span class="pre">iter_all_base_units</span></code></a>()</td>
+<td>Yields (BaseUnit, exponent) tuples comprising this unit, including those BaseUnits found within ScaledUnits.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.unit.unit.Unit.iter_base_dimensions" title="simtk.unit.unit.Unit.iter_base_dimensions"><code class="xref py py-obj docutils literal"><span class="pre">iter_base_dimensions</span></code></a>()</td>
+<td>Yields (BaseDimension, exponent) tuples comprising this unit.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">iter_base_or_scaled_units</span></code>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">iter_scaled_units</span></code>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.unit.unit.Unit.iter_top_base_units" title="simtk.unit.unit.Unit.iter_top_base_units"><code class="xref py py-obj docutils literal"><span class="pre">iter_top_base_units</span></code></a>()</td>
+<td>Yields (BaseUnit, exponent) tuples in this Unit, excluding those within BaseUnits.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.unit.unit.Unit.sqrt" title="simtk.unit.unit.Unit.sqrt"><code class="xref py py-obj docutils literal"><span class="pre">sqrt</span></code></a>()</td>
+<td>Returns square root of a unit.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.create_unit">
+<code class="descname">create_unit</code><span class="sig-paren">(</span><em>scale</em>, <em>name</em>, <em>symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.create_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method for creating a new simple unit from another simple unit.
+Both units must consist of a single BaseUnit.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.iter_base_dimensions">
+<code class="descname">iter_base_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.iter_base_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yields (BaseDimension, exponent) tuples comprising this unit.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.iter_all_base_units">
+<code class="descname">iter_all_base_units</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.iter_all_base_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yields (BaseUnit, exponent) tuples comprising this unit, including those BaseUnits
+found within ScaledUnits.</p>
+<p>There might be multiple BaseUnits with the same dimension.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.iter_top_base_units">
+<code class="descname">iter_top_base_units</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.iter_top_base_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yields (BaseUnit, exponent) tuples in this Unit, excluding those within BaseUnits.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.get_conversion_factor_to_base_units">
+<code class="descname">get_conversion_factor_to_base_units</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.get_conversion_factor_to_base_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>There may be ScaleUnit components to this Unit.
+Returns conversion factor to the set of BaseUnits returned by iter_all_base_units().</p>
+<p>Units comprised of only BaseUnits return 1.0</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.__lt__">
+<code class="descname">__lt__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.__lt__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare two Units.</p>
+<p>Raises a TypeError if the units have different dimensions.</p>
+<p>Returns True if self &lt; other, False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.__hash__">
+<code class="descname">__hash__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.__hash__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute a hash code for this object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.__truediv__">
+<code class="descname">__truediv__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.__truediv__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divide a Unit by another object.</p>
+<p>Returns a composite Unit if other is another Unit.</p>
+<p>Returns a Quantity otherwise.  UNLESS other is a Quantity AND
+the resulting unit type is dimensionless, in which case the underlying
+value type of the Quantity is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.__div__">
+<code class="descname">__div__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.__div__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divide a Unit by another object.</p>
+<p>Returns a composite Unit if other is another Unit.</p>
+<p>Returns a Quantity otherwise.  UNLESS other is a Quantity AND
+the resulting unit type is dimensionless, in which case the underlying
+value type of the Quantity is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.__pow__">
+<code class="descname">__pow__</code><span class="sig-paren">(</span><em>exponent</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.__pow__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise a Unit to a power.</p>
+<p>Returns a new Unit with different exponents on the BaseUnits.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.sqrt">
+<code class="descname">sqrt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.sqrt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns square root of a unit.</p>
+<p>Raises ArithmeticError if component exponents are not even.
+This behavior can be changed if you present a reasonable real life case to me.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the human-readable name of this unit</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.__repr__">
+<code class="descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a unit name (string) for this Unit, composed of its various
+BaseUnit symbols.  e.g. &#8216;kilogram meter**2 second**-1&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.is_compatible">
+<code class="descname">is_compatible</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.is_compatible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if two Units share the same dimension.
+Returns False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.is_dimensionless">
+<code class="descname">is_dimensionless</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.is_dimensionless" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if this Unit has no dimensions.
+Returns False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.conversion_factor_to">
+<code class="descname">conversion_factor_to</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.conversion_factor_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns conversion factor for computing all of the common dimensions
+between self and other from self base units to other base units.</p>
+<p>The two units need not share all of the same dimensions.  In case they
+do not, the conversion factor applies only to the BaseUnits of self
+that correspond to different BaseUnits in other.</p>
+<p>This method requires strict compatibility between the two units.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.in_unit_system">
+<code class="descname">in_unit_system</code><span class="sig-paren">(</span><em>system</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.in_unit_system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new Unit with the same dimensions as this one, expressed in a particular unit system.</p>
+<p>Strips off any ScaledUnits in the Unit, leaving only BaseUnits.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>system</strong> (<em>a dictionary of (BaseDimension, BaseUnit) pairs</em>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.get_symbol">
+<code class="descname">get_symbol</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.get_symbol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a unit symbol (string) for this Unit, composed of its various
+BaseUnit symbols.  e.g. &#8216;kg m**2 s**-1&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.unit.unit.Unit.get_name">
+<code class="descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.unit.unit.Unit.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a unit name (string) for this Unit, composed of its various
+BaseUnit symbols.  e.g. &#8216;kilogram meter**2 secon**-1&#8217;.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../app.html">Application Layer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../app.html#loaders-and-setup">Loaders and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#representation-and-manipulation">Representation and Manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#reporting-output">Reporting Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app.html#extras">Extras</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../app.html#units">Units</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library Layer</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.unit.unit.Unit.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

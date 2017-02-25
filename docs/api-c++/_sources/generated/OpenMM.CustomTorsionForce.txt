@@ -1,0 +1,37 @@
+CustomTorsionForce
+==========================
+
+.. autodoxyclass:: OpenMM::CustomTorsionForce
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::CustomTorsionForce::CustomTorsionForce
+      ~OpenMM::CustomTorsionForce::getNumTorsions
+      ~OpenMM::CustomTorsionForce::getNumPerTorsionParameters
+      ~OpenMM::CustomTorsionForce::getNumGlobalParameters
+      ~OpenMM::CustomTorsionForce::getNumEnergyParameterDerivatives
+      ~OpenMM::CustomTorsionForce::getEnergyFunction
+      ~OpenMM::CustomTorsionForce::setEnergyFunction
+      ~OpenMM::CustomTorsionForce::addPerTorsionParameter
+      ~OpenMM::CustomTorsionForce::getPerTorsionParameterName
+      ~OpenMM::CustomTorsionForce::setPerTorsionParameterName
+      ~OpenMM::CustomTorsionForce::addGlobalParameter
+      ~OpenMM::CustomTorsionForce::getGlobalParameterName
+      ~OpenMM::CustomTorsionForce::setGlobalParameterName
+      ~OpenMM::CustomTorsionForce::getGlobalParameterDefaultValue
+      ~OpenMM::CustomTorsionForce::setGlobalParameterDefaultValue
+      ~OpenMM::CustomTorsionForce::addEnergyParameterDerivative
+      ~OpenMM::CustomTorsionForce::getEnergyParameterDerivativeName
+      ~OpenMM::CustomTorsionForce::addTorsion
+      ~OpenMM::CustomTorsionForce::getTorsionParameters
+      ~OpenMM::CustomTorsionForce::setTorsionParameters
+      ~OpenMM::CustomTorsionForce::updateParametersInContext
+      ~OpenMM::CustomTorsionForce::setUsesPeriodicBoundaryConditions
+      ~OpenMM::CustomTorsionForce::usesPeriodicBoundaryConditions
+   
+
+   

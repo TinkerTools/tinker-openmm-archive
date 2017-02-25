@@ -1,0 +1,23 @@
+AmberPrmtopFile
+================================================
+
+.. currentmodule:: simtk.openmm.app.amberprmtopfile
+
+.. autoclass:: AmberPrmtopFile
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AmberPrmtopFile.__init__
+      ~AmberPrmtopFile.createSystem
+   
+   
+
+   
+   
+   

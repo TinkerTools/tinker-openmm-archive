@@ -1,0 +1,526 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>System &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Library Layer" href="../library.html" />
+    <link rel="next" title="Context" href="simtk.openmm.openmm.Context.html" />
+    <link rel="prev" title="XmlSerializer" href="simtk.openmm.openmm.XmlSerializer.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="system">
+<h1>System<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.openmm.System">
+<em class="property">class </em><code class="descclassname">simtk.openmm.openmm.</code><code class="descname">System</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.System" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents a molecular system. The definition of a System involves four elements:</p>
+<p>The particles and constraints are defined directly by the System object, while forces are defined by objects that extend the Force class. After creating a System, call addParticle() once for each particle, addConstraint() for each constraint, and addForce() for each Force.</p>
+<p>In addition, particles may be designated as &#8220;virtual sites&#8221;. These are particles whose positions are computed automatically based on the positions of other particles. To define a virtual site, call setVirtualSite(), passing in a VirtualSite object that defines the rules for computing its position.</p>
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; System<a class="headerlink" href="#simtk.openmm.openmm.System.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>__init__(self, other) -&gt; System</p>
+<p>Create a new System.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.__init__" title="simtk.openmm.openmm.System.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>((self)&nbsp;-&gt;&nbsp;System)</td>
+<td>__init__(self, other) -&gt; System</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.System.addConstraint" title="simtk.openmm.openmm.System.addConstraint"><code class="xref py py-obj docutils literal"><span class="pre">addConstraint</span></code></a>((self,&nbsp;particle1,&nbsp;particle2,&nbsp;...)</td>
+<td>Add a constraint to the System.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.addForce" title="simtk.openmm.openmm.System.addForce"><code class="xref py py-obj docutils literal"><span class="pre">addForce</span></code></a>((self,&nbsp;force)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a Force to the System.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.System.addParticle" title="simtk.openmm.openmm.System.addParticle"><code class="xref py py-obj docutils literal"><span class="pre">addParticle</span></code></a>((self,&nbsp;mass)&nbsp;-&gt;&nbsp;int)</td>
+<td>Add a particle to the System.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.getConstraintParameters" title="simtk.openmm.openmm.System.getConstraintParameters"><code class="xref py py-obj docutils literal"><span class="pre">getConstraintParameters</span></code></a>(self,&nbsp;index)</td>
+<td>Get the parameters defining a distance constraint.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.System.getDefaultPeriodicBoxVectors" title="simtk.openmm.openmm.System.getDefaultPeriodicBoxVectors"><code class="xref py py-obj docutils literal"><span class="pre">getDefaultPeriodicBoxVectors</span></code></a>(self)</td>
+<td>Get the default values of the vectors defining the axes of the periodic box (measured in nm).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.getForce" title="simtk.openmm.openmm.System.getForce"><code class="xref py py-obj docutils literal"><span class="pre">getForce</span></code></a>((self,&nbsp;index)&nbsp;-&gt;&nbsp;Force)</td>
+<td>getForce(self, index) -&gt; Force</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.System.getForces" title="simtk.openmm.openmm.System.getForces"><code class="xref py py-obj docutils literal"><span class="pre">getForces</span></code></a>()</td>
+<td>Get the list of Forces in this System</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.getNumConstraints" title="simtk.openmm.openmm.System.getNumConstraints"><code class="xref py py-obj docutils literal"><span class="pre">getNumConstraints</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of distance constraints in this System.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.System.getNumForces" title="simtk.openmm.openmm.System.getNumForces"><code class="xref py py-obj docutils literal"><span class="pre">getNumForces</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of Force objects that have been added to the System.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.getNumParticles" title="simtk.openmm.openmm.System.getNumParticles"><code class="xref py py-obj docutils literal"><span class="pre">getNumParticles</span></code></a>((self)&nbsp;-&gt;&nbsp;int)</td>
+<td>Get the number of particles in this System.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.System.getParticleMass" title="simtk.openmm.openmm.System.getParticleMass"><code class="xref py py-obj docutils literal"><span class="pre">getParticleMass</span></code></a>((self,&nbsp;index)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the mass (in atomic mass units) of a particle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.getVirtualSite" title="simtk.openmm.openmm.System.getVirtualSite"><code class="xref py py-obj docutils literal"><span class="pre">getVirtualSite</span></code></a>((self,&nbsp;index)&nbsp;-&gt;&nbsp;VirtualSite)</td>
+<td>Get VirtualSite object for a particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.System.isVirtualSite" title="simtk.openmm.openmm.System.isVirtualSite"><code class="xref py py-obj docutils literal"><span class="pre">isVirtualSite</span></code></a>((self,&nbsp;index)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Get whether a particle is a VirtualSite.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.removeConstraint" title="simtk.openmm.openmm.System.removeConstraint"><code class="xref py py-obj docutils literal"><span class="pre">removeConstraint</span></code></a>(self,&nbsp;index)</td>
+<td>Remove a constraint from the System.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.System.removeForce" title="simtk.openmm.openmm.System.removeForce"><code class="xref py py-obj docutils literal"><span class="pre">removeForce</span></code></a>(self,&nbsp;index)</td>
+<td>Remove a Force from the System.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.setConstraintParameters" title="simtk.openmm.openmm.System.setConstraintParameters"><code class="xref py py-obj docutils literal"><span class="pre">setConstraintParameters</span></code></a>(self,&nbsp;index,&nbsp;...)</td>
+<td>Set the parameters defining a distance constraint.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.System.setDefaultPeriodicBoxVectors" title="simtk.openmm.openmm.System.setDefaultPeriodicBoxVectors"><code class="xref py py-obj docutils literal"><span class="pre">setDefaultPeriodicBoxVectors</span></code></a>(self,&nbsp;a,&nbsp;b,&nbsp;c)</td>
+<td>Set the default values of the vectors defining the axes of the periodic box (measured in nm).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.setParticleMass" title="simtk.openmm.openmm.System.setParticleMass"><code class="xref py py-obj docutils literal"><span class="pre">setParticleMass</span></code></a>(self,&nbsp;index,&nbsp;mass)</td>
+<td>Set the mass (in atomic mass units) of a particle.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.System.setVirtualSite" title="simtk.openmm.openmm.System.setVirtualSite"><code class="xref py py-obj docutils literal"><span class="pre">setVirtualSite</span></code></a>(self,&nbsp;index,&nbsp;virtualSite)</td>
+<td>Set a particle to be a virtual site.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.System.usesPeriodicBoundaryConditions" title="simtk.openmm.openmm.System.usesPeriodicBoundaryConditions"><code class="xref py py-obj docutils literal"><span class="pre">usesPeriodicBoundaryConditions</span></code></a>((self)&nbsp;-&gt;&nbsp;bool)</td>
+<td>Returns whether or not any forces in this System use periodic boundaries.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.getNumParticles">
+<code class="descname">getNumParticles</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.System.getNumParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of particles in this System.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.addParticle">
+<code class="descname">addParticle</code><span class="sig-paren">(</span><em>self</em>, <em>mass</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.System.addParticle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a particle to the System. If the mass is 0, Integrators will ignore the particle and not modify its position or velocity. This is most often used for virtual sites, but can also be used as a way to prevent a particle from moving.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mass</strong> (<em>double</em>) &#8211; the mass of the particle (in atomic mass units)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the index of the particle that was added</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.getParticleMass">
+<code class="descname">getParticleMass</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.System.getParticleMass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the mass (in atomic mass units) of a particle. If the mass is 0, Integrators will ignore the particle and not modify its position or velocity. This is most often used for virtual sites, but can also be used as a way to prevent a particle from moving.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the particle for which to get the mass</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.setParticleMass">
+<code class="descname">setParticleMass</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>mass</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.System.setParticleMass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the mass (in atomic mass units) of a particle. If the mass is 0, Integrators will ignore the particle and not modify its position or velocity. This is most often used for virtual sites, but can also be used as a way to prevent a particle from moving.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the particle for which to set the mass</li>
+<li><strong>mass</strong> (<em>double</em>) &#8211; the mass of the particle</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.setVirtualSite">
+<code class="descname">setVirtualSite</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>virtualSite</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.System.setVirtualSite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a particle to be a virtual site. The VirtualSite object should have been created on the heap with the &#8220;new&#8221; operator. The System takes over ownership of it, and deletes it when the System itself is deleted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the particle that should be treated as a virtual site</li>
+<li><strong>virtualSite</strong> (<em>VirtualSite *</em>) &#8211; a pointer to the VirtualSite object describing it</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.isVirtualSite">
+<code class="descname">isVirtualSite</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.System.isVirtualSite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether a particle is a VirtualSite.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the particle to check</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.getVirtualSite">
+<code class="descname">getVirtualSite</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; VirtualSite<a class="headerlink" href="#simtk.openmm.openmm.System.getVirtualSite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get VirtualSite object for a particle. If the particle is not a virtual site, this throws an exception.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the particle to get</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.getNumConstraints">
+<code class="descname">getNumConstraints</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.System.getNumConstraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of distance constraints in this System.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.addConstraint">
+<code class="descname">addConstraint</code><span class="sig-paren">(</span><em>self</em>, <em>particle1</em>, <em>particle2</em>, <em>distance</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.System.addConstraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a constraint to the System. Particles whose mass is 0 cannot participate in constraints.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>particle1</strong> (<em>int</em>) &#8211; the index of the first particle involved in the constraint</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211; the index of the second particle involved in the constraint</li>
+<li><strong>distance</strong> (<em>double</em>) &#8211; the required distance between the two particles, measured in nm</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the index of the constraint that was added</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.getConstraintParameters">
+<code class="descname">getConstraintParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.System.getConstraintParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters defining a distance constraint.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the constraint for which to get parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>particle1</strong> (<em>int</em>) &#8211;
+the index of the first particle involved in the constraint</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211;
+the index of the second particle involved in the constraint</li>
+<li><strong>distance</strong> (<em>double</em>) &#8211;
+the required distance between the two particles, measured in nm</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.setConstraintParameters">
+<code class="descname">setConstraintParameters</code><span class="sig-paren">(</span><em>self</em>, <em>index</em>, <em>particle1</em>, <em>particle2</em>, <em>distance</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.System.setConstraintParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parameters defining a distance constraint. Particles whose mass is 0 cannot participate in constraints.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>int</em>) &#8211; the index of the constraint for which to set parameters</li>
+<li><strong>particle1</strong> (<em>int</em>) &#8211; the index of the first particle involved in the constraint</li>
+<li><strong>particle2</strong> (<em>int</em>) &#8211; the index of the second particle involved in the constraint</li>
+<li><strong>distance</strong> (<em>double</em>) &#8211; the required distance between the two particles, measured in nm</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.removeConstraint">
+<code class="descname">removeConstraint</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.System.removeConstraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a constraint from the System.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the constraint to remove</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.addForce">
+<code class="descname">addForce</code><span class="sig-paren">(</span><em>self</em>, <em>force</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.System.addForce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a Force to the System. The Force should have been created on the heap with the &#8220;new&#8221; operator. The System takes over ownership of it, and deletes the Force when the System itself is deleted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>force</strong> (<em>Force *</em>) &#8211; a pointer to the Force object to be added</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the index within the System of the Force that was added</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.getNumForces">
+<code class="descname">getNumForces</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#simtk.openmm.openmm.System.getNumForces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of Force objects that have been added to the System.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.getForce">
+<code class="descname">getForce</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span> &rarr; Force<a class="headerlink" href="#simtk.openmm.openmm.System.getForce" title="Permalink to this definition">¶</a></dt>
+<dd><p>getForce(self, index) -&gt; Force</p>
+<p>Get a writable reference to one of the Forces in this System.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the Force to get</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.removeForce">
+<code class="descname">removeForce</code><span class="sig-paren">(</span><em>self</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.System.removeForce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a Force from the System. The memory associated with the removed Force object is deleted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) &#8211; the index of the Force to remove</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.getDefaultPeriodicBoxVectors">
+<code class="descname">getDefaultPeriodicBoxVectors</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.System.getDefaultPeriodicBoxVectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default values of the vectors defining the axes of the periodic box (measured in nm). Any newly created Context will have its box vectors set to these. They will affect any Force added to the System that uses periodic boundary conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>a</strong> (<em>Vec3</em>) &#8211;
+the vector defining the first edge of the periodic box</li>
+<li><strong>b</strong> (<em>Vec3</em>) &#8211;
+the vector defining the second edge of the periodic box</li>
+<li><strong>c</strong> (<em>Vec3</em>) &#8211;
+the vector defining the third edge of the periodic box</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.setDefaultPeriodicBoxVectors">
+<code class="descname">setDefaultPeriodicBoxVectors</code><span class="sig-paren">(</span><em>self</em>, <em>a</em>, <em>b</em>, <em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.System.setDefaultPeriodicBoxVectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default values of the vectors defining the axes of the periodic box (measured in nm). Any newly created Context will have its box vectors set to these. They will affect any Force added to the System that uses periodic boundary conditions.</p>
+<p>Triclinic boxes are supported, but the vectors must satisfy certain requirements. In particular, a must point in the x direction, b must point &#8220;mostly&#8221; in the y direction, and c must point &#8220;mostly&#8221; in the z direction. See the documentation for details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>a</strong> (<a class="reference internal" href="simtk.openmm.vec3.Vec3.html#simtk.openmm.vec3.Vec3" title="simtk.openmm.vec3.Vec3"><em>Vec3</em></a>) &#8211; the vector defining the first edge of the periodic box</li>
+<li><strong>b</strong> (<a class="reference internal" href="simtk.openmm.vec3.Vec3.html#simtk.openmm.vec3.Vec3" title="simtk.openmm.vec3.Vec3"><em>Vec3</em></a>) &#8211; the vector defining the second edge of the periodic box</li>
+<li><strong>c</strong> (<a class="reference internal" href="simtk.openmm.vec3.Vec3.html#simtk.openmm.vec3.Vec3" title="simtk.openmm.vec3.Vec3"><em>Vec3</em></a>) &#8211; the vector defining the third edge of the periodic box</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.usesPeriodicBoundaryConditions">
+<code class="descname">usesPeriodicBoundaryConditions</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; bool<a class="headerlink" href="#simtk.openmm.openmm.System.usesPeriodicBoundaryConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not any forces in this System use periodic boundaries.</p>
+<p>If a force in this System does not implement usesPeriodicBoundaryConditions a OpenMM::OpenMMException is thrown</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">true if at least one force uses PBC and false otherwise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.getForces">
+<code class="descname">getForces</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.System.getForces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of Forces in this System</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.System.__copy__">
+<code class="descname">__copy__</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; System<a class="headerlink" href="#simtk.openmm.openmm.System.__copy__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Application Layer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../library.html">Library Layer</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../library.html#core-objects">Core Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#forces">Forces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#integrators">Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.openmm.System.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

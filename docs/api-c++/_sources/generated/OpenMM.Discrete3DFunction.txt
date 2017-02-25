@@ -1,0 +1,18 @@
+Discrete3DFunction
+==========================
+
+.. autodoxyclass:: OpenMM::Discrete3DFunction
+   :members:
+
+   
+   .. rubric:: Methods
+
+   .. autodoxysummary::
+   
+      ~OpenMM::Discrete3DFunction::Discrete3DFunction
+      ~OpenMM::Discrete3DFunction::getFunctionParameters
+      ~OpenMM::Discrete3DFunction::setFunctionParameters
+      ~OpenMM::Discrete3DFunction::Copy
+   
+
+   

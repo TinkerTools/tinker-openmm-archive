@@ -1,0 +1,490 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Context &mdash; OpenMM 7.1.0.dev-9567ddb documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/searchbox.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.0.dev-9567ddb',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.6.0/lunr.min.js"></script>
+    <script type="text/javascript" src="../_static/js/searchbox.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="OpenMM 7.1.0.dev-9567ddb documentation" href="../index.html" />
+    <link rel="up" title="Library Layer" href="../library.html" />
+    <link rel="next" title="Platform" href="simtk.openmm.openmm.Platform.html" />
+    <link rel="prev" title="System" href="simtk.openmm.openmm.System.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="context">
+<h1>Context<a class="headerlink" href="#context" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="simtk.openmm.openmm.Context">
+<em class="property">class </em><code class="descclassname">simtk.openmm.openmm.</code><code class="descname">Context</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Context stores the complete state of a simulation. More specifically, it includes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The current time</li>
+<li>The position of each particle</li>
+<li>The velocity of each particle</li>
+<li>The values of configurable parameters defined by Force objects in the System</li>
+</ul>
+</div></blockquote>
+<p>You can retrieve a snapshot of the current state at any time by calling getState(). This allows you to record the state of the simulation at various points, either for analysis or for checkpointing. getState() can also be used to retrieve the current forces on each particle and the current energy of the System.</p>
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>self</em>, <em>system</em>, <em>integrator</em><span class="sig-paren">)</span> &rarr; Context<a class="headerlink" href="#simtk.openmm.openmm.Context.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>__init__(self, system, integrator, platform) -&gt; Context
+__init__(self, system, integrator, platform, properties) -&gt; Context
+__init__(self, other) -&gt; Context</p>
+<p>Construct a new Context in which to run a simulation, explicitly specifying what Platform should be used to perform calculations and the values of platform-specific properties.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>system</strong> (<a class="reference internal" href="simtk.openmm.openmm.System.html#simtk.openmm.openmm.System" title="simtk.openmm.openmm.System"><em>System</em></a>) &#8211; the System which will be simulated</li>
+<li><strong>integrator</strong> (<a class="reference internal" href="simtk.openmm.openmm.Integrator.html#simtk.openmm.openmm.Integrator" title="simtk.openmm.openmm.Integrator"><em>Integrator</em></a>) &#8211; the Integrator which will be used to simulate the System</li>
+<li><strong>platform</strong> (<a class="reference internal" href="simtk.openmm.openmm.Platform.html#simtk.openmm.openmm.Platform" title="simtk.openmm.openmm.Platform"><em>Platform</em></a>) &#8211; the Platform to use for calculations</li>
+<li><strong>properties</strong> (<em>map&lt; std::string, std::string &gt;</em>) &#8211; a set of values for platform-specific properties. Keys are the property names.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.__init__" title="simtk.openmm.openmm.Context.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>((self,&nbsp;system,&nbsp;integrator)&nbsp;-&gt;&nbsp;Context)</td>
+<td>__init__(self, system, integrator, platform) -&gt; Context</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.applyConstraints" title="simtk.openmm.openmm.Context.applyConstraints"><code class="xref py py-obj docutils literal"><span class="pre">applyConstraints</span></code></a>(self,&nbsp;tol)</td>
+<td>Update the positions of particles so that all distance constraints are satisfied.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.applyVelocityConstraints" title="simtk.openmm.openmm.Context.applyVelocityConstraints"><code class="xref py py-obj docutils literal"><span class="pre">applyVelocityConstraints</span></code></a>(self,&nbsp;tol)</td>
+<td>Update the velocities of particles so the net velocity of each constrained distance is zero.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.computeVirtualSites" title="simtk.openmm.openmm.Context.computeVirtualSites"><code class="xref py py-obj docutils literal"><span class="pre">computeVirtualSites</span></code></a>(self)</td>
+<td>Recompute the locations of all virtual sites.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.createCheckpoint" title="simtk.openmm.openmm.Context.createCheckpoint"><code class="xref py py-obj docutils literal"><span class="pre">createCheckpoint</span></code></a>((self)&nbsp;-&gt;&nbsp;std::string)</td>
+<td>Create a checkpoint recording the current state of the Context.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.getIntegrator" title="simtk.openmm.openmm.Context.getIntegrator"><code class="xref py py-obj docutils literal"><span class="pre">getIntegrator</span></code></a>((self)&nbsp;-&gt;&nbsp;Integrator)</td>
+<td>getIntegrator(self) -&gt; Integrator</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.getMolecules" title="simtk.openmm.openmm.Context.getMolecules"><code class="xref py py-obj docutils literal"><span class="pre">getMolecules</span></code></a>((self)&nbsp;-&gt;&nbsp;vectorii)</td>
+<td>Get a description of how the particles in the system are grouped into molecules.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.getParameter" title="simtk.openmm.openmm.Context.getParameter"><code class="xref py py-obj docutils literal"><span class="pre">getParameter</span></code></a>((self,&nbsp;name)&nbsp;-&gt;&nbsp;double)</td>
+<td>Get the value of an adjustable parameter defined by a Force object in the System.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.getParameters" title="simtk.openmm.openmm.Context.getParameters"><code class="xref py py-obj docutils literal"><span class="pre">getParameters</span></code></a>((self)&nbsp;-&gt;&nbsp;mapstringdouble)</td>
+<td>Get all adjustable parameters that have been defined by Force objects in the System, along with their current values.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.getPlatform" title="simtk.openmm.openmm.Context.getPlatform"><code class="xref py py-obj docutils literal"><span class="pre">getPlatform</span></code></a>((self)&nbsp;-&gt;&nbsp;Platform)</td>
+<td>getPlatform(self) -&gt; Platform</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.getState" title="simtk.openmm.openmm.Context.getState"><code class="xref py py-obj docutils literal"><span class="pre">getState</span></code></a>([getPositions,&nbsp;getVelocities,&nbsp;...])</td>
+<td>Get a State object recording the current state information stored in this context.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.getSystem" title="simtk.openmm.openmm.Context.getSystem"><code class="xref py py-obj docutils literal"><span class="pre">getSystem</span></code></a>((self)&nbsp;-&gt;&nbsp;System)</td>
+<td>Get System being simulated in this context.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.loadCheckpoint" title="simtk.openmm.openmm.Context.loadCheckpoint"><code class="xref py py-obj docutils literal"><span class="pre">loadCheckpoint</span></code></a>(self,&nbsp;checkpoint)</td>
+<td>Load a checkpoint that was written by createCheckpoint().</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.reinitialize" title="simtk.openmm.openmm.Context.reinitialize"><code class="xref py py-obj docutils literal"><span class="pre">reinitialize</span></code></a>(self)</td>
+<td>When a Context is created, it may cache information about the System being simulated and the Force objects contained in it.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.setParameter" title="simtk.openmm.openmm.Context.setParameter"><code class="xref py py-obj docutils literal"><span class="pre">setParameter</span></code></a>(self,&nbsp;name,&nbsp;value)</td>
+<td>Set the value of an adjustable parameter defined by a Force object in the System.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.setPeriodicBoxVectors" title="simtk.openmm.openmm.Context.setPeriodicBoxVectors"><code class="xref py py-obj docutils literal"><span class="pre">setPeriodicBoxVectors</span></code></a>(self,&nbsp;a,&nbsp;b,&nbsp;c)</td>
+<td>Set the vectors defining the axes of the periodic box (measured in nm).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.setPositions" title="simtk.openmm.openmm.Context.setPositions"><code class="xref py py-obj docutils literal"><span class="pre">setPositions</span></code></a>(self,&nbsp;positions)</td>
+<td>Set the positions of all particles in the System (measured in nm).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.setState" title="simtk.openmm.openmm.Context.setState"><code class="xref py py-obj docutils literal"><span class="pre">setState</span></code></a>(Context&nbsp;self,&nbsp;State&nbsp;state)</td>
+<td>Copy information from a State object into this Context.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.setTime" title="simtk.openmm.openmm.Context.setTime"><code class="xref py py-obj docutils literal"><span class="pre">setTime</span></code></a>(self,&nbsp;time)</td>
+<td>Set the current time of the simulation (in picoseconds).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.setVelocities" title="simtk.openmm.openmm.Context.setVelocities"><code class="xref py py-obj docutils literal"><span class="pre">setVelocities</span></code></a>(self,&nbsp;velocities)</td>
+<td>Set the velocities of all particles in the System (measured in nm/picosecond).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#simtk.openmm.openmm.Context.setVelocitiesToTemperature" title="simtk.openmm.openmm.Context.setVelocitiesToTemperature"><code class="xref py py-obj docutils literal"><span class="pre">setVelocitiesToTemperature</span></code></a>(self,&nbsp;...)</td>
+<td>setVelocitiesToTemperature(self, temperature)</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.getSystem">
+<code class="descname">getSystem</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; System<a class="headerlink" href="#simtk.openmm.openmm.Context.getSystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get System being simulated in this context.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.getIntegrator">
+<code class="descname">getIntegrator</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; Integrator<a class="headerlink" href="#simtk.openmm.openmm.Context.getIntegrator" title="Permalink to this definition">¶</a></dt>
+<dd><p>getIntegrator(self) -&gt; Integrator</p>
+<p>Get Integrator being used to by this context.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.getPlatform">
+<code class="descname">getPlatform</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; Platform<a class="headerlink" href="#simtk.openmm.openmm.Context.getPlatform" title="Permalink to this definition">¶</a></dt>
+<dd><p>getPlatform(self) -&gt; Platform</p>
+<p>Get the Platform being used for calculations.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.setTime">
+<code class="descname">setTime</code><span class="sig-paren">(</span><em>self</em>, <em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.setTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current time of the simulation (in picoseconds).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.setPositions">
+<code class="descname">setPositions</code><span class="sig-paren">(</span><em>self</em>, <em>positions</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.setPositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the positions of all particles in the System (measured in nm). This method simply sets the positions without checking to see whether they satisfy distance constraints. If you want constraints to be enforced, call applyConstraints() after setting the positions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>positions</strong> (<em>vector&lt; Vec3 &gt;</em>) &#8211; a vector whose length equals the number of particles in the System. The i&#8217;th element contains the position of the i&#8217;th particle.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.setVelocities">
+<code class="descname">setVelocities</code><span class="sig-paren">(</span><em>self</em>, <em>velocities</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.setVelocities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the velocities of all particles in the System (measured in nm/picosecond).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>velocities</strong> (<em>vector&lt; Vec3 &gt;</em>) &#8211; a vector whose length equals the number of particles in the System. The i&#8217;th element contains the velocity of the i&#8217;th particle.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.setVelocitiesToTemperature">
+<code class="descname">setVelocitiesToTemperature</code><span class="sig-paren">(</span><em>self</em>, <em>temperature</em>, <em>randomSeed</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.setVelocitiesToTemperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>setVelocitiesToTemperature(self, temperature)</p>
+<p>Set the velocities of all particles in the System to random values chosen from a Boltzmann distribution at a given temperature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>temperature</strong> (<em>double</em>) &#8211; the temperature for which to select the velocities (measured in Kelvin)</li>
+<li><strong>randomSeed</strong> (<em>int</em>) &#8211; the random number seed to use when selecting velocities</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.getParameters">
+<code class="descname">getParameters</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; mapstringdouble<a class="headerlink" href="#simtk.openmm.openmm.Context.getParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all adjustable parameters that have been defined by Force objects in the System, along with their current values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.getParameter">
+<code class="descname">getParameter</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span> &rarr; double<a class="headerlink" href="#simtk.openmm.openmm.Context.getParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of an adjustable parameter defined by a Force object in the System.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter to get</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.setParameter">
+<code class="descname">setParameter</code><span class="sig-paren">(</span><em>self</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.setParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of an adjustable parameter defined by a Force object in the System.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; the name of the parameter to set</li>
+<li><strong>value</strong> (<em>double</em>) &#8211; the value of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.setPeriodicBoxVectors">
+<code class="descname">setPeriodicBoxVectors</code><span class="sig-paren">(</span><em>self</em>, <em>a</em>, <em>b</em>, <em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.setPeriodicBoxVectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the vectors defining the axes of the periodic box (measured in nm). They will affect any Force that uses periodic boundary conditions.</p>
+<p>Triclinic boxes are supported, but the vectors must satisfy certain requirements. In particular, a must point in the x direction, b must point &#8220;mostly&#8221; in the y direction, and c must point &#8220;mostly&#8221; in the z direction. See the documentation for details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>a</strong> (<a class="reference internal" href="simtk.openmm.vec3.Vec3.html#simtk.openmm.vec3.Vec3" title="simtk.openmm.vec3.Vec3"><em>Vec3</em></a>) &#8211; the vector defining the first edge of the periodic box</li>
+<li><strong>b</strong> (<a class="reference internal" href="simtk.openmm.vec3.Vec3.html#simtk.openmm.vec3.Vec3" title="simtk.openmm.vec3.Vec3"><em>Vec3</em></a>) &#8211; the vector defining the second edge of the periodic box</li>
+<li><strong>c</strong> (<a class="reference internal" href="simtk.openmm.vec3.Vec3.html#simtk.openmm.vec3.Vec3" title="simtk.openmm.vec3.Vec3"><em>Vec3</em></a>) &#8211; the vector defining the third edge of the periodic box</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.applyConstraints">
+<code class="descname">applyConstraints</code><span class="sig-paren">(</span><em>self</em>, <em>tol</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.applyConstraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the positions of particles so that all distance constraints are satisfied. This also recomputes the locations of all virtual sites.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tol</strong> (<em>double</em>) &#8211; the distance tolerance within which constraints must be satisfied.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.applyVelocityConstraints">
+<code class="descname">applyVelocityConstraints</code><span class="sig-paren">(</span><em>self</em>, <em>tol</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.applyVelocityConstraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the velocities of particles so the net velocity of each constrained distance is zero.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tol</strong> (<em>double</em>) &#8211; the velocity tolerance within which constraints must be satisfied.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.computeVirtualSites">
+<code class="descname">computeVirtualSites</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.computeVirtualSites" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recompute the locations of all virtual sites. There is rarely a reason to call this, since virtual sites are also updated by applyConstraints(). This is only for the rare situations when you want to enforce virtual sites but &lt;i&gt;not&lt;/i&gt; constraints.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.reinitialize">
+<code class="descname">reinitialize</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.reinitialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>When a Context is created, it may cache information about the System being simulated and the Force objects contained in it. This means that, if the System or Forces are then modified, the Context might not see all of the changes. Call reinitialize() to force the Context to rebuild its internal representation of the System and pick up any changes that have been made.</p>
+<p>This is an expensive operation, so you should try to avoid calling it too frequently.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.getMolecules">
+<code class="descname">getMolecules</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; vectorii<a class="headerlink" href="#simtk.openmm.openmm.Context.getMolecules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a description of how the particles in the system are grouped into molecules. Two particles are in the same molecule if they are connected by constraints or bonds, where every Force object can define bonds in whatever way are appropriate to that force.</p>
+<p>Each element lists the indices of all particles in a single molecule. Every particle is guaranteed to belong to exactly one molecule.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.getState">
+<code class="descname">getState</code><span class="sig-paren">(</span><em>getPositions=False</em>, <em>getVelocities=False</em>, <em>getForces=False</em>, <em>getEnergy=False</em>, <em>getParameters=False</em>, <em>getParameterDerivatives=False</em>, <em>enforcePeriodicBox=False</em>, <em>groups=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.getState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a State object recording the current state information stored in this context.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>getPositions</strong> (<em>bool=False</em>) &#8211; whether to store particle positions in the State</li>
+<li><strong>getVelocities</strong> (<em>bool=False</em>) &#8211; whether to store particle velocities in the State</li>
+<li><strong>getForces</strong> (<em>bool=False</em>) &#8211; whether to store the forces acting on particles in the State</li>
+<li><strong>getEnergy</strong> (<em>bool=False</em>) &#8211; whether to store potential and kinetic energy in the State</li>
+<li><strong>getParameters</strong> (<em>bool=False</em>) &#8211; whether to store context parameters in the State</li>
+<li><strong>getParameterDerivatives</strong> (<em>bool=False</em>) &#8211; whether to store parameter derivatives in the State</li>
+<li><strong>enforcePeriodicBox</strong> (<em>bool=False</em>) &#8211; if false, the position of each particle will be whatever position
+is stored in the Context, regardless of periodic boundary conditions.
+If true, particle positions will be translated so the center of
+every molecule lies in the same periodic box.</li>
+<li><strong>groups</strong> (<em>set={0,1,2,...,31}</em>) &#8211; a set of indices for which force groups to include when computing
+forces and energies. The default value includes all groups. groups
+can also be passed as an unsigned integer interpreted as a bitmask,
+in which case group i will be included if (groups&amp;(1&lt;&lt;i)) != 0.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.setState">
+<code class="descname">setState</code><span class="sig-paren">(</span><em>Context self</em>, <em>State state</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.setState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy information from a State object into this Context.  This restores the Context to
+approximately the same state it was in when the State was created.  If the State does not include
+a piece of information (e.g. positions or velocities), that aspect of the Context is
+left unchanged.</p>
+<p>Even when all possible information is included in the State, the effect of calling this method
+is still less complete than loadCheckpoint().  For example, it does not restore the internal
+states of random number generators.  On the other hand, it has the advantage of not being hardware
+specific.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.createCheckpoint">
+<code class="descname">createCheckpoint</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span> &rarr; std::string<a class="headerlink" href="#simtk.openmm.openmm.Context.createCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a checkpoint recording the current state of the Context.
+This should be treated as an opaque block of binary data.  See loadCheckpoint() for more details.</p>
+<p>Returns: a string containing the checkpoint data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simtk.openmm.openmm.Context.loadCheckpoint">
+<code class="descname">loadCheckpoint</code><span class="sig-paren">(</span><em>self</em>, <em>checkpoint</em><span class="sig-paren">)</span><a class="headerlink" href="#simtk.openmm.openmm.Context.loadCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a checkpoint that was written by createCheckpoint().</p>
+<p>A checkpoint contains not only publicly visible data such as the particle positions and
+velocities, but also internal data such as the states of random number generators.  Ideally,
+loading a checkpoint should restore the Context to an identical state to when it was written,
+such that continuing the simulation will produce an identical trajectory.  This is not strictly
+guaranteed to be true, however, and should not be relied on.  For most purposes, however, the
+internal state should be close enough to be reasonably considered equivalent.</p>
+<p>A checkpoint contains data that is highly specific to the Context from which it was created.
+It depends on the details of the System, the Platform being used, and the hardware and software
+of the computer it was created on.  If you try to load it on a computer with different hardware,
+or for a System that is different in any way, loading is likely to fail.  Checkpoints created
+with different versions of OpenMM are also often incompatible.  If a checkpoint cannot be loaded,
+that is signaled by throwing an exception.</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd><ul class="first last simple">
+<li>checkpoint (string) the checkpoint data to load</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">High performance molecular simulation on GPUs</p>
+
+
+
+
+
+
+<script type="text/javascript">
+var Search = {
+    store : null,
+    setIndex : function (data) {
+        this.store = data.store;
+    },
+};
+</script>
+
+<script src="../searchindex.js" type="text/javascript"></script>
+
+<form class="search" action="" method="get">
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+  <input type="hidden" id="ls_lunrsearch-highlight" value="true" />
+  <input type="text" class="search-field" id="ls_search-field" name="q" placeholder="Search API" />
+  <ul class="results" id="ls_search-results"></ul>
+</form><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Application Layer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../library.html">Library Layer</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../library.html#core-objects">Core Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#forces">Forces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#integrators">Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library.html#extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stanford University and the Authors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/generated/simtk.openmm.openmm.Context.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
