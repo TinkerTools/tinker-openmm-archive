@@ -59,7 +59,6 @@ extern "C" {
 #include "OpenMMCWrapper.h"
 #include "AmoebaOpenMMCWrapper.h"
 #include "OpenMM.h"
-#include "/users/mh43854/newmerger3/openmm/serialization/include/openmm/serialization/XmlSerializer.h"
 using namespace OpenMM;
 
 typedef struct OpenMMData_s OpenMMData;
@@ -4989,12 +4988,6 @@ int openmm_test_ (void) {
    infoMask += OpenMM_State_Energy;
 
    state = OpenMM_Context_getState (context, infoMask, 0);
-   ofstream statexml;
-   statexml.open("/users/mh43854/state.xml");
-   statexml<<OpenMM_XmlSerializer_serializeState(state);
-     ofstream systemxml;            
-   systemxml.open("/users/mh43854/system.xml");
-   systemxml<<OpenMM_XmlSerializer_serializeSystem(system);
 
    openMMForces = OpenMM_State_getForces (state);
    openMMPotentialEnergy = OpenMM_State_getPotentialEnergy(state)
