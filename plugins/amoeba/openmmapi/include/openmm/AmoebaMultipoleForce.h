@@ -89,8 +89,12 @@ public:
          * to set the coefficients used for the extrapolation.  The default coefficients used in this release are
          * [-0.154, 0.017, 0.658, 0.474], but be aware that those may change in a future release.
          */
-        Extrapolated = 2
+        Extrapolated = 2,
 
+        /**
+         * Truncated Conjugate Gradient Method
+         */
+        TCG = 3
     };
 
     enum MultipoleAxisTypes { ZThenX = 0, Bisector = 1, ZBisect = 2, ThreeFold = 3, ZOnly = 4, NoAxisType = 5, LastAxisTypeIndex = 6 };
@@ -353,6 +357,28 @@ public:
     const std::vector<double>& getExtrapolationCoefficients() const;
 
     /**
+     * Set the TCG-related options.
+     * @param order  TCG order, should either be 1 or 2
+     * @param nab    number of mutual induced dipole components
+     * @param prec   flag to allow conjugate gradient preconditioner
+     * @param peek   flag to allow use of a final TCG peek step
+     * @param guess  flag to allow use of direct induced dipole as initial CG guess
+     * @param omega  value of acceleration factor for TCG peek step
+     */
+    void setTCGOptions(int order, int nab, int prec, int peek, int guess, double omega);
+
+    /**
+     * Get the TCG-related options.
+     * @param order  TCG order, should either be 1 or 2
+     * @param nab    number of mutual induced dipole components
+     * @param prec   flag to allow conjugate gradient preconditioner
+     * @param peek   flag to allow use of a final TCG peek step
+     * @param guess  flag to allow use of direct induced dipole as initial CG guess
+     * @param omega  value of acceleration factor for TCG peek step
+     */
+    void getTCGOptions(int& order, int& nab, int& prec, int& peek, int& guess, double& omega) const;
+
+    /**
      * Get the error tolerance for Ewald summation.  This corresponds to the fractional error in the forces
      * which is acceptable.  This value is used to select the grid dimensions and separation (alpha)
      * parameter so that the average error level will be less than the tolerance.  There is not a
@@ -452,6 +478,8 @@ private:
     int pmeBSplineOrder, nx, ny, nz;
     int mutualInducedMaxIterations;
     std::vector<double> extrapolationCoefficients;
+    int tcgorder, tcgnab, tcgprec, tcgpeek, tcgguess;
+    double tcgomega;
 
     double mutualInducedTargetEpsilon;
     double scalingDistanceCutoff;

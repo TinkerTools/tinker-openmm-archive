@@ -45,6 +45,13 @@ AmoebaMultipoleForce::AmoebaMultipoleForce() : nonbondedMethod(NoCutoff), polari
     extrapolationCoefficients.push_back(0.017);
     extrapolationCoefficients.push_back(0.658);
     extrapolationCoefficients.push_back(0.474);
+
+    tcgorder = 2;
+    tcgnab = 2;
+    tcgprec = 1;
+    tcgpeek = 1;
+    tcgguess = 0;
+    tcgomega = 1.0;
 }
 
 AmoebaMultipoleForce::NonbondedMethod AmoebaMultipoleForce::getNonbondedMethod() const {
@@ -65,6 +72,24 @@ void AmoebaMultipoleForce::setPolarizationType(AmoebaMultipoleForce::Polarizatio
 
 void AmoebaMultipoleForce::setExtrapolationCoefficients(const std::vector<double> &coefficients) {
     extrapolationCoefficients = coefficients;
+}
+
+void AmoebaMultipoleForce::setTCGOptions(int order, int nab, int prec, int peek, int guess, double omega) {
+    tcgorder = order;
+    tcgnab = nab;
+    tcgprec = prec;
+    tcgpeek = peek;
+    tcgguess = guess;
+    tcgomega = omega;
+}
+
+void AmoebaMultipoleForce::getTCGOptions(int& order, int& nab, int& prec, int& peek, int& guess, double& omega) const {
+    order = tcgorder;
+    nab = tcgnab;
+    prec = tcgprec;
+    peek = tcgpeek;
+    guess = tcgguess;
+    omega = tcgomega;
 }
 
 const std::vector<double> & AmoebaMultipoleForce::getExtrapolationCoefficients() const {
