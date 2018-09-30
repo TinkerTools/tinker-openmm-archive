@@ -812,6 +812,54 @@ private:
     const AmoebaMultipoleForce& force;
 };
 
+class CudaArrayRef {
+protected:
+    CudaContext* context;
+    CUdeviceptr pointer;
+    int size, elementSize;
+    bool ownsMemory;
+    std::string name;
+
+public:
+    CudaArrayRef()
+        : context(NULL)
+        , pointer(0)
+        , size(0)
+        , elementSize(0)
+        , ownsMemory(false)
+        , name() {}
+
+    CudaArrayRef(CudaContext& icontext, CudaArray* array, int numOffsetElements,
+        int newSize, std::string newName = "")
+        : context(&icontext)
+        , pointer(array->getDevicePointer() + numOffsetElements * array->getElementSize())
+        , size(newSize)
+        , elementSize(array->getElementSize())
+        , ownsMemory(true)
+        , name(newName == "" ? (array->getName() + "Ref") : newName) {}
+
+    void bind(CudaContext& icontext, CudaArray* array, int numOffsetElements,
+        int newSize, std::string newName = "") {
+        context = &icontext;
+        pointer = array->getDevicePointer() + numOffsetElements * array->getElementSize();
+        size = newSize;
+        elementSize = array->getElementSize();
+        ownsMemory = true;
+        name = (newName == "" ? (array->getName() + "Ref") : newName);
+    }
+
+    ~CudaArrayRef() {}
+
+    CudaArray* asCudaArrayPointer() {
+        return reinterpret_cast<CudaArray*>(this);
+    }
+
+    CudaArray& asCudaArrayReference() {
+        return *asCudaArrayPointer();
+    }
+};
+static_assert(sizeof(CudaArrayRef) == sizeof(CudaArray), "");
+
 CudaCalcAmoebaMultipoleForceKernel::CudaCalcAmoebaMultipoleForceKernel(std::string name, const Platform& platform, CudaContext& cu, const System& system) :
         CalcAmoebaMultipoleForceKernel(name, platform), cu(cu), system(system), hasInitializedScaleFactors(false), hasInitializedFFT(false), multipolesAreValid(false), hasCreatedEvent(false),
         multipoleParticles(NULL), molecularDipoles(NULL), molecularQuadrupoles(NULL), labFrameDipoles(NULL), labFrameQuadrupoles(NULL), sphericalDipoles(NULL), sphericalQuadrupoles(NULL),
@@ -820,7 +868,11 @@ CudaCalcAmoebaMultipoleForceKernel::CudaCalcAmoebaMultipoleForceKernel(std::stri
         prevDipolesGkPolar(NULL), prevErrors(NULL), diisMatrix(NULL), polarizability(NULL), extrapolatedDipole(NULL), extrapolatedDipolePolar(NULL),
         extrapolatedDipoleGk(NULL), extrapolatedDipoleGkPolar(NULL), inducedDipoleFieldGradient(NULL), inducedDipoleFieldGradientPolar(NULL),
         inducedDipoleFieldGradientGk(NULL), inducedDipoleFieldGradientGkPolar(NULL), extrapolatedDipoleFieldGradient(NULL), extrapolatedDipoleFieldGradientPolar(NULL),
-        extrapolatedDipoleFieldGradientGk(NULL), extrapolatedDipoleFieldGradientGkPolar(NULL), covalentFlags(NULL), polarizationGroupFlags(NULL),
+        extrapolatedDipoleFieldGradientGk(NULL), extrapolatedDipoleFieldGradientGkPolar(NULL),
+        tcgEnergyBuffer(NULL), tcgUIndt(NULL), tcgUInpt(NULL), tcgUAD(NULL), tcgUAP(NULL), tcgUBD(NULL), tcgUBP(NULL),
+        tcgUADFieldGradient(NULL), tcgUAPFieldGradient(NULL), tcgUBDFieldGradient(NULL), tcgUBPFieldGradient(NULL),
+        tcgWorkspace(NULL), tcgWorkspacePolar(NULL),
+        covalentFlags(NULL), polarizationGroupFlags(NULL),
         pmeGrid(NULL), pmeBsplineModuliX(NULL), pmeBsplineModuliY(NULL), pmeBsplineModuliZ(NULL), pmeIgrid(NULL), pmePhi(NULL),
         pmePhid(NULL), pmePhip(NULL), pmePhidp(NULL), pmeCphi(NULL), lastPositions(NULL), sort(NULL), gkKernel(NULL) {
 }
@@ -901,6 +953,32 @@ CudaCalcAmoebaMultipoleForceKernel::~CudaCalcAmoebaMultipoleForceKernel() {
         delete extrapolatedDipoleFieldGradientGk;
     if (extrapolatedDipoleFieldGradientGkPolar != NULL)
         delete extrapolatedDipoleFieldGradientGkPolar;
+    if (tcgEnergyBuffer != NULL)
+        delete tcgEnergyBuffer;
+    if (tcgUIndt != NULL)
+        delete tcgUIndt;
+    if (tcgUInpt != NULL)
+        delete tcgUInpt;
+    if (tcgUAD != NULL)
+        delete tcgUAD;
+    if (tcgUAP != NULL)
+        delete tcgUAP;
+    if (tcgUBD != NULL)
+        delete tcgUBD;
+    if (tcgUBP != NULL)
+        delete tcgUBP;
+    if (tcgUADFieldGradient != NULL)
+        delete tcgUADFieldGradient;
+    if (tcgUAPFieldGradient != NULL)
+        delete tcgUAPFieldGradient;
+    if (tcgUBDFieldGradient != NULL)
+        delete tcgUBDFieldGradient;
+    if (tcgUBPFieldGradient != NULL)
+        delete tcgUBPFieldGradient;
+    if (tcgWorkspace != NULL)
+        delete tcgWorkspace;
+    if (tcgWorkspacePolar != NULL)
+        delete tcgWorkspacePolar;
     if (polarizability != NULL)
         delete polarizability;
     if (covalentFlags != NULL)
@@ -1170,6 +1248,9 @@ void CudaCalcAmoebaMultipoleForceKernel::initialize(const System& system, const 
         defines["USE_CUTOFF"] = "";
         defines["USE_PERIODIC"] = "";
         defines["CUTOFF_SQUARED"] = cu.doubleToString(force.getCutoffDistance()*force.getCutoffDistance());
+        defines["GRID_SIZE_X"] = cu.intToString(gridSizeX);
+        defines["GRID_SIZE_Y"] = cu.intToString(gridSizeY);
+        defines["GRID_SIZE_Z"] = cu.intToString(gridSizeZ);
     }
     if (gk != NULL) {
         defines["USE_GK"] = "";
@@ -1219,6 +1300,91 @@ void CudaCalcAmoebaMultipoleForceKernel::initialize(const System& system, const 
         iterateExtrapolatedKernel = cu.getKernel(module, "iterateExtrapolatedDipoles");
         computeExtrapolatedKernel = cu.getKernel(module, "computeExtrapolatedDipoles");
         addExtrapolatedGradientKernel = cu.getKernel(module, "addExtrapolatedFieldGradientToForce");
+        if (polarizationType == AmoebaMultipoleForce::TCG) {
+            force.getTCGOptions(tcgorder, tcgprec, tcgpeek, tcgguess, tcgomega, tcgversion, tcgnab);
+            defines["TCG_POLARIZATION"] = "";
+            defines["M_TCGORDER"] = cu.intToString(tcgorder);
+            defines["M_TCGPREC"] = tcgprec ? "1" : "0";
+            defines["M_TCGPEEK"] = tcgpeek ? "1" : "0";
+            defines["M_TCGGUESS"] = tcgguess ? "1" : "0";
+            defines["M_TCGOMEGA"] = cu.doubleToString(tcgomega);
+            defines["M_TCGNAB"] = cu.intToString(tcgnab);
+
+            // tcgEnergyBuffer cannot be allocated here because its size depends on cu.getEnergyBuffer()
+            tcgUIndt = new CudaArray(cu, 3*paddedNumAtoms, elementSize, "tcgUIndt");
+            tcgUInpt = new CudaArray(cu, 3*paddedNumAtoms, elementSize, "tcgUInpt");
+            tcgUAD = new CudaArray(cu, 3*paddedNumAtoms*tcgnab, elementSize, "tcgUAD");
+            tcgUAP = new CudaArray(cu, 3*paddedNumAtoms*tcgnab, elementSize, "tcgUAP");
+            tcgUBD = new CudaArray(cu, 3*paddedNumAtoms*tcgnab, elementSize, "tcgUBD");
+            tcgUBP = new CudaArray(cu, 3*paddedNumAtoms*tcgnab, elementSize, "tcgUBP");
+            tcgUADFieldGradient = new CudaArray(cu, 6*paddedNumAtoms*tcgnab, sizeof(long long), "tcgUADFieldGradient");
+            tcgUAPFieldGradient = new CudaArray(cu, 6*paddedNumAtoms*tcgnab, sizeof(long long), "tcgUAPFieldGradient");
+            tcgUBDFieldGradient = new CudaArray(cu, 6*paddedNumAtoms*tcgnab, sizeof(long long), "tcgUBDFieldGradient");
+            tcgUBPFieldGradient = new CudaArray(cu, 6*paddedNumAtoms*tcgnab, sizeof(long long), "tcgUBPFieldGradient");
+            // tcgWorkspace/Polar will be allocated later.
+
+            // sizeof(TCGPoleData) + atomIndices + skipTiles
+            double tcgMultipoleMemory = 24*elementSize+2*sizeof(float)+2*sizeof(int);
+            tcgMultipoleThreads = min(maxThreads, cu.computeThreadBlockSize(tcgMultipoleMemory));
+            // sizeof(AtomData0) + atomIndices + skipTiles
+            double tcgInducedFieldMemory = 15*elementSize+2*sizeof(float)+2*sizeof(int);
+            tcgInducedFieldThreads = min(maxThreads, cu.computeThreadBlockSize(tcgInducedFieldMemory));
+            // sizeof(AtomData1) + atomIndices + skipTiles
+            double tcgInducedFieldGradientMemory = 27*elementSize+2*sizeof(float)+2*sizeof(int);
+            tcgInducedFieldGradientThreads = min(maxThreads, cu.computeThreadBlockSize(tcgInducedFieldGradientMemory));
+            defines["MPOLE_THREAD_BLOCK_SIZE"] = cu.intToString(tcgMultipoleThreads);
+            defines["THREAD_BLOCK_SIZE_0"] = cu.intToString(tcgInducedFieldThreads);
+            defines["THREAD_BLOCK_SIZE_1"] = cu.intToString(tcgInducedFieldGradientThreads);
+
+            // The workload in tcgInduce kernel is not very massive compared to
+            // the (fixed/induced) (field and/or gradient) calculation.
+            // In most cases, only vector-vector dot product and elementwise arithmetic are needed.
+            // Let's set DOT_PRODUCT_THREAD_BLOCK_SIZE to default_n_threads_per_block,
+            // which is CudaContext::ThreadBlockSize.
+            // This number should be small enough that it not exceed the maximum
+            // static __shared__ memory allowed for each thread block.
+
+            tcgDotProductThreads = CudaContext::ThreadBlockSize;
+            defines["DOT_PRODUCT_THREAD_BLOCK_SIZE"] = cu.intToString(tcgDotProductThreads);
+
+            // If cuda compute capability < 6.0, atomicAdd(double*, double) is unavailable
+            // and should be implemented on our own.
+            if (cu.getUseDoublePrecision()) {
+                defines["TCG_USE_DOUBLE_PRECISION"] = "";
+            }
+
+            // Generate TCG CUDA module.
+            CUmodule tcgModule = cu.createModule(CudaKernelSources::vectorOps
+                +CudaAmoebaKernelSources::sphericalMultipoles
+                +CudaAmoebaKernelSources::tcgInduce
+                +CudaAmoebaKernelSources::tcgForce, defines);
+
+            tcgDotProduct6Kernel = cu.getKernel(tcgModule, "tcgDotProduct6");
+            tcgAlphaQuadratic6Kernel = cu.getKernel(tcgModule, "tcgAlphaQuadratic6");
+            tcgAlphaQuadratic7Kernel = cu.getKernel(tcgModule, "tcgAlphaQuadratic7");
+            if (tcgversion == 4) {
+                tcgInduce1Kernel = cu.getKernel(tcgModule, "tcgInduce1D1");
+                tcgInduce2Kernel = cu.getKernel(tcgModule, "tcgInduce1D2");
+                tcgWorkspace = new CudaArray(cu, 5*3*paddedNumAtoms, elementSize, "tcgWorkspace");
+                tcgWorkspacePolar = new CudaArray(cu, 5*3*paddedNumAtoms, elementSize, "tcgWorkspacePolar");
+            }
+
+            tcgFieldLongLongToRealKernel = cu.getKernel(tcgModule, "tcgFieldLongLongToReal");
+            tcgInvAlphaPlusTuKernel = cu.getKernel(tcgModule, "tcgInvAlphaPlusTu");
+            tcgAlpha22Kernel = cu.getKernel(tcgModule, "tcgAlpha22");
+            tcgTAlphaPart3Kernel = cu.getKernel(tcgModule, "tcgTAlphaPart3");
+
+            tcgSelfAndRealSpaceKernel = cu.getKernel(tcgModule, "tcgSelfAndRealSpace");
+
+            tcgInducedFieldKernel = cu.getKernel(tcgModule, "tcgUField0");
+            tcgInducedFieldGradientKernel = cu.getKernel(tcgModule, "tcgUField1");
+
+            tcgRecordPmeInducedFieldKernel = cu.getKernel(tcgModule, "tcgRecordPmeInducedField0");
+            tcgRecordPmeInducedFieldGradientKernel = cu.getKernel(tcgModule, "tcgRecordPmeInducedField1");
+
+            tcgAddMutualForceKernel = cu.getKernel(tcgModule, "tcgAddMutualForce");
+            tcgPolarizationEnergyKernel = cu.getKernel(tcgModule, "tcgPolarizationEnergy");
+        }
     }
     stringstream electrostaticsSource;
     electrostaticsSource << CudaKernelSources::vectorOps;
@@ -1613,6 +1779,7 @@ double CudaCalcAmoebaMultipoleForceKernel::execute(ContextImpl& context, bool in
             &maxTiles, &nb.getBlockCenters().getDevicePointer(), &nb.getInteractingAtoms().getDevicePointer(),
             &labFrameDipoles->getDevicePointer(), &labFrameQuadrupoles->getDevicePointer(), &dampingAndThole->getDevicePointer()};
         cu.executeKernel(computeFixedFieldKernel, computeFixedFieldArgs, numForceThreadBlocks*fixedFieldThreads, fixedFieldThreads);
+if (polarizationType != AmoebaMultipoleForce::TCG) {
         void* recordInducedDipolesArgs[] = {&field->getDevicePointer(), &fieldPolar->getDevicePointer(),
             &inducedDipole->getDevicePointer(), &inducedDipolePolar->getDevicePointer(), &polarizability->getDevicePointer()};
         cu.executeKernel(recordInducedDipolesKernel, recordInducedDipolesArgs, cu.getNumAtoms());
@@ -1670,6 +1837,56 @@ double CudaCalcAmoebaMultipoleForceKernel::execute(ContextImpl& context, bool in
             &inducedDipole->getDevicePointer(), &inducedDipolePolar->getDevicePointer(), &pmePhi->getDevicePointer(), &pmePhid->getDevicePointer(),
             &pmePhip->getDevicePointer(), &pmePhidp->getDevicePointer(), &pmeCphi->getDevicePointer(), recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
         cu.executeKernel(pmeInducedForceKernel, pmeInducedForceArgs, cu.getNumAtoms());
+} else if (polarizationType == AmoebaMultipoleForce::TCG) {
+        // Calculate TCG intermediates.
+        tcgInduce(recipBoxVectorPointer);
+
+        // Use the exisiting code to calculate real space + self multipole-multipole force and energy,
+        // and real space + self multipole-induced dipole force (no energy).
+        void* SelfAndRealSpaceArgs[] = {&cu.getForce().getDevicePointer(), &torque->getDevicePointer(), &cu.getEnergyBuffer().getDevicePointer(),
+            &cu.getPosq().getDevicePointer(), &covalentFlags->getDevicePointer(), &polarizationGroupFlags->getDevicePointer(),
+            &nb.getExclusionTiles().getDevicePointer(), &startTileIndex, &numTileIndices,
+            &nb.getInteractingTiles().getDevicePointer(), &nb.getInteractionCount().getDevicePointer(),
+            cu.getPeriodicBoxSizePointer(), cu.getInvPeriodicBoxSizePointer(), cu.getPeriodicBoxVecXPointer(), cu.getPeriodicBoxVecYPointer(), cu.getPeriodicBoxVecZPointer(),
+            &maxTiles, &nb.getBlockCenters().getDevicePointer(), &nb.getInteractingAtoms().getDevicePointer(),
+            &sphericalDipoles->getDevicePointer(), &sphericalQuadrupoles->getDevicePointer(),
+            &inducedDipole->getDevicePointer(), &inducedDipolePolar->getDevicePointer(), &dampingAndThole->getDevicePointer()};
+        cu.executeKernel(tcgSelfAndRealSpaceKernel, SelfAndRealSpaceArgs, numForceThreadBlocks*tcgMultipoleThreads, tcgMultipoleThreads);
+
+        // Use the exisiting code to calculate the reciprocal space multipole-induced dipole force (no energy).
+        // Because different induced dipoles are used for the polarization force and energy,
+        // a pseudo energy buffer should be passed to the execution kernel in order not to contaminate the real energy buffer.
+        CudaArray* localEnergyBuffer = &cu.getEnergyBuffer();
+        localEnergyBuffer = tcgEnergyBuffer;
+        cu.clearBuffer(*pmeGrid);
+        void* pmeSpreadInducedDipolesArgs[] = {&cu.getPosq().getDevicePointer(), &inducedDipole->getDevicePointer(), &inducedDipolePolar->getDevicePointer(),
+            &pmeGrid->getDevicePointer(), cu.getPeriodicBoxVecXPointer(), cu.getPeriodicBoxVecYPointer(), cu.getPeriodicBoxVecZPointer(),
+            recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(pmeSpreadInducedDipolesKernel, pmeSpreadInducedDipolesArgs, cu.getNumAtoms());
+        if (cu.getUseDoublePrecision())
+            cu.executeKernel(pmeFinishSpreadChargeKernel, finishSpreadArgs, pmeGrid->getSize());
+        if (cu.getUseDoublePrecision())
+            cufftExecZ2Z(fft, (double2*) pmeGrid->getDevicePointer(), (double2*) pmeGrid->getDevicePointer(), CUFFT_FORWARD);
+        else
+            cufftExecC2C(fft, (float2*) pmeGrid->getDevicePointer(), (float2*) pmeGrid->getDevicePointer(), CUFFT_FORWARD);
+        cu.executeKernel(pmeConvolutionKernel, pmeConvolutionArgs, gridSizeX*gridSizeY*gridSizeZ, 256);
+        if (cu.getUseDoublePrecision())
+            cufftExecZ2Z(fft, (double2*) pmeGrid->getDevicePointer(), (double2*) pmeGrid->getDevicePointer(), CUFFT_INVERSE);
+        else
+            cufftExecC2C(fft, (float2*) pmeGrid->getDevicePointer(), (float2*) pmeGrid->getDevicePointer(), CUFFT_INVERSE);
+        void* pmeInducedPotentialArgs[] = {&pmeGrid->getDevicePointer(), &pmePhid->getDevicePointer(), &pmePhip->getDevicePointer(),
+            &pmePhidp->getDevicePointer(), &cu.getPosq().getDevicePointer(), cu.getPeriodicBoxVecXPointer(), cu.getPeriodicBoxVecYPointer(),
+            cu.getPeriodicBoxVecZPointer(), recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(pmeInducedPotentialKernel, pmeInducedPotentialArgs, cu.getNumAtoms());
+        void* pmeTransformInducedPotentialArgs[] = {&pmePhidp->getDevicePointer(), &pmeCphi->getDevicePointer(), recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(pmeTransformPotentialKernel, pmeTransformInducedPotentialArgs, cu.getNumAtoms());
+        void* pmeInducedForceArgs[] = {&cu.getPosq().getDevicePointer(), &cu.getForce().getDevicePointer(), &torque->getDevicePointer(),
+            &localEnergyBuffer->getDevicePointer(), &labFrameDipoles->getDevicePointer(), &labFrameQuadrupoles->getDevicePointer(),
+            &fracDipoles->getDevicePointer(), &fracQuadrupoles->getDevicePointer(),
+            &inducedDipole->getDevicePointer(), &inducedDipolePolar->getDevicePointer(), &pmePhi->getDevicePointer(), &pmePhid->getDevicePointer(),
+            &pmePhip->getDevicePointer(), &pmePhidp->getDevicePointer(), &pmeCphi->getDevicePointer(), recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(pmeInducedForceKernel, pmeInducedForceArgs, cu.getNumAtoms());
+}
     }
 
     // If using extrapolated polarization, add in force contributions from µ(m) T µ(n).
@@ -1687,6 +1904,23 @@ double CudaCalcAmoebaMultipoleForceKernel::execute(ContextImpl& context, bool in
                 &extrapolatedDipoleFieldGradientGk->getDevicePointer(), &extrapolatedDipoleFieldGradientGkPolar->getDevicePointer()};
             cu.executeKernel(addExtrapolatedGradientKernel, extrapolatedArgs, numMultipoles);
         }
+    } else if (polarizationType == AmoebaMultipoleForce::TCG) {
+
+        // Add TCG mutual force.
+
+        void* tcgMutualForceArgs[] = {&cu.getForce().getDevicePointer(),
+            &tcgUAD->getDevicePointer(), &tcgUAP->getDevicePointer(),
+            &tcgUBD->getDevicePointer(), &tcgUBP->getDevicePointer(),
+            &tcgUADFieldGradient->getDevicePointer(), &tcgUAPFieldGradient->getDevicePointer(),
+            &tcgUBDFieldGradient->getDevicePointer(), &tcgUBPFieldGradient->getDevicePointer()};
+        cu.executeKernel(tcgAddMutualForceKernel, tcgMutualForceArgs, cu.getNumAtoms());
+
+        // Add polarization energy (mu dot permanent field) to the energy buffer.
+
+        void* polarEnergyArgs[] = {&cu.getEnergyBuffer().getDevicePointer(),
+            &field->getDevicePointer(), &fieldPolar->getDevicePointer(),
+            &tcgUIndt->getDevicePointer(), &tcgUInpt->getDevicePointer()};
+        cu.executeKernel(tcgPolarizationEnergyKernel, polarEnergyArgs, cu.getNumAtoms());
     }
 
     // Map torques to force.
@@ -1918,6 +2152,451 @@ void CudaCalcAmoebaMultipoleForceKernel::computeExtrapolatedDipoles(void** recip
         cu.executeKernel(computeExtrapolatedKernel, computeArgs, extrapolatedDipole->getSize());
     }
     computeInducedField(recipBoxVectorPointer);
+}
+
+void CudaCalcAmoebaMultipoleForceKernel::tcgUField0(CudaArray* uind_, CudaArray* uinp_,
+    CudaArray* field_, CudaArray* fieldp_, void** recipBoxVectorPointer) {
+    CudaNonbondedUtilities& nb = cu.getNonbondedUtilities();
+    int startTileIndex = nb.getStartTileIndex();
+    int numTileIndices = nb.getNumTiles();
+    int numForceThreadBlocks = nb.getNumForceThreadBlocks();
+    unsigned int maxTiles = 0;
+    vector<void*> computeInducedFieldArgs;
+    computeInducedFieldArgs.push_back(&field_->getDevicePointer());
+    computeInducedFieldArgs.push_back(&fieldp_->getDevicePointer());
+    computeInducedFieldArgs.push_back(&cu.getPosq().getDevicePointer());
+    computeInducedFieldArgs.push_back(&nb.getExclusionTiles().getDevicePointer());
+    computeInducedFieldArgs.push_back(&uind_->getDevicePointer());
+    computeInducedFieldArgs.push_back(&uinp_->getDevicePointer());
+    computeInducedFieldArgs.push_back(&startTileIndex);
+    computeInducedFieldArgs.push_back(&numTileIndices);
+    if (pmeGrid != NULL) {
+        computeInducedFieldArgs.push_back(&nb.getInteractingTiles().getDevicePointer());
+        computeInducedFieldArgs.push_back(&nb.getInteractionCount().getDevicePointer());
+        computeInducedFieldArgs.push_back(cu.getPeriodicBoxSizePointer());
+        computeInducedFieldArgs.push_back(cu.getInvPeriodicBoxSizePointer());
+        computeInducedFieldArgs.push_back(cu.getPeriodicBoxVecXPointer());
+        computeInducedFieldArgs.push_back(cu.getPeriodicBoxVecYPointer());
+        computeInducedFieldArgs.push_back(cu.getPeriodicBoxVecZPointer());
+        computeInducedFieldArgs.push_back(&maxTiles);
+        computeInducedFieldArgs.push_back(&nb.getBlockCenters().getDevicePointer());
+        computeInducedFieldArgs.push_back(&nb.getInteractingAtoms().getDevicePointer());
+    }
+    computeInducedFieldArgs.push_back(&dampingAndThole->getDevicePointer());
+
+    cu.clearBuffer(*field_);
+    cu.clearBuffer(*fieldp_);
+
+    if (pmeGrid == NULL)
+        cu.executeKernel(tcgInducedFieldKernel, &computeInducedFieldArgs[0],
+            numForceThreadBlocks*tcgInducedFieldThreads, tcgInducedFieldThreads);
+    else {
+        // real space field
+        maxTiles = nb.getInteractingTiles().getSize();
+        cu.executeKernel(tcgInducedFieldKernel, &computeInducedFieldArgs[0],
+            numForceThreadBlocks*tcgInducedFieldThreads, tcgInducedFieldThreads);
+
+        // reciprocal space field
+        // and self field
+        cu.clearBuffer(*pmeGrid);
+        void* pmeSpreadInducedDipolesArgs[] = {&cu.getPosq().getDevicePointer(),
+            &uind_->getDevicePointer(), &uinp_->getDevicePointer(), &pmeGrid->getDevicePointer(),
+            cu.getPeriodicBoxVecXPointer(), cu.getPeriodicBoxVecYPointer(), cu.getPeriodicBoxVecZPointer(),
+            recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(pmeSpreadInducedDipolesKernel, pmeSpreadInducedDipolesArgs, cu.getNumAtoms());
+        if (cu.getUseDoublePrecision()) {
+            void* finishSpreadArgs[] = {&pmeGrid->getDevicePointer()};
+            cu.executeKernel(pmeFinishSpreadChargeKernel, finishSpreadArgs, pmeGrid->getSize());
+        }
+        if (cu.getUseDoublePrecision())
+            cufftExecZ2Z(fft, (double2*) pmeGrid->getDevicePointer(), (double2*) pmeGrid->getDevicePointer(), CUFFT_FORWARD);
+        else
+            cufftExecC2C(fft, (float2*) pmeGrid->getDevicePointer(), (float2*) pmeGrid->getDevicePointer(), CUFFT_FORWARD);
+        void* pmeConvolutionArgs[] = {&pmeGrid->getDevicePointer(),
+            &pmeBsplineModuliX->getDevicePointer(), &pmeBsplineModuliY->getDevicePointer(), &pmeBsplineModuliZ->getDevicePointer(),
+            cu.getPeriodicBoxSizePointer(), recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(pmeConvolutionKernel, pmeConvolutionArgs, gridSizeX*gridSizeY*gridSizeZ, 256);
+        if (cu.getUseDoublePrecision())
+            cufftExecZ2Z(fft, (double2*) pmeGrid->getDevicePointer(), (double2*) pmeGrid->getDevicePointer(), CUFFT_INVERSE);
+        else
+            cufftExecC2C(fft, (float2*) pmeGrid->getDevicePointer(), (float2*) pmeGrid->getDevicePointer(), CUFFT_INVERSE);
+        void* pmeInducedPotentialArgs[] = {&pmeGrid->getDevicePointer(),
+            &pmePhid->getDevicePointer(), &pmePhip->getDevicePointer(), &pmePhidp->getDevicePointer(),
+            &cu.getPosq().getDevicePointer(),
+            cu.getPeriodicBoxVecXPointer(), cu.getPeriodicBoxVecYPointer(), cu.getPeriodicBoxVecZPointer(),
+            recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(pmeInducedPotentialKernel, pmeInducedPotentialArgs, cu.getNumAtoms());
+        void* pmeRecordInducedFieldDipolesArgs[] = {&pmePhid->getDevicePointer(), &pmePhip->getDevicePointer(),
+            &field_->getDevicePointer(), &fieldp_->getDevicePointer(),
+            &uind_->getDevicePointer(), &uinp_->getDevicePointer(),
+            recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(tcgRecordPmeInducedFieldKernel, pmeRecordInducedFieldDipolesArgs, cu.getNumAtoms());
+    }
+}
+
+void CudaCalcAmoebaMultipoleForceKernel::tcgUField1(CudaArray* uind_, CudaArray* uinp_,
+    CudaArray* field_, CudaArray* fieldp_, CudaArray* dfield_, CudaArray* dfieldp_, void** recipBoxVectorPointer) {
+    CudaNonbondedUtilities& nb = cu.getNonbondedUtilities();
+    int startTileIndex = nb.getStartTileIndex();
+    int numTileIndices = nb.getNumTiles();
+    int numForceThreadBlocks = nb.getNumForceThreadBlocks();
+    unsigned int maxTiles = 0;
+    vector<void*> computeInducedFieldArgs;
+    computeInducedFieldArgs.push_back(&field_->getDevicePointer());
+    computeInducedFieldArgs.push_back(&fieldp_->getDevicePointer());
+    computeInducedFieldArgs.push_back(&cu.getPosq().getDevicePointer());
+    computeInducedFieldArgs.push_back(&nb.getExclusionTiles().getDevicePointer());
+    computeInducedFieldArgs.push_back(&uind_->getDevicePointer());
+    computeInducedFieldArgs.push_back(&uinp_->getDevicePointer());
+    computeInducedFieldArgs.push_back(&startTileIndex);
+    computeInducedFieldArgs.push_back(&numTileIndices);
+    computeInducedFieldArgs.push_back(&dfield_->getDevicePointer());
+    computeInducedFieldArgs.push_back(&dfieldp_->getDevicePointer());
+    if (pmeGrid != NULL) {
+        computeInducedFieldArgs.push_back(&nb.getInteractingTiles().getDevicePointer());
+        computeInducedFieldArgs.push_back(&nb.getInteractionCount().getDevicePointer());
+        computeInducedFieldArgs.push_back(cu.getPeriodicBoxSizePointer());
+        computeInducedFieldArgs.push_back(cu.getInvPeriodicBoxSizePointer());
+        computeInducedFieldArgs.push_back(cu.getPeriodicBoxVecXPointer());
+        computeInducedFieldArgs.push_back(cu.getPeriodicBoxVecYPointer());
+        computeInducedFieldArgs.push_back(cu.getPeriodicBoxVecZPointer());
+        computeInducedFieldArgs.push_back(&maxTiles);
+        computeInducedFieldArgs.push_back(&nb.getBlockCenters().getDevicePointer());
+        computeInducedFieldArgs.push_back(&nb.getInteractingAtoms().getDevicePointer());
+    }
+    computeInducedFieldArgs.push_back(&dampingAndThole->getDevicePointer());
+
+    cu.clearBuffer(*field_);
+    cu.clearBuffer(*fieldp_);
+    cu.clearBuffer(*dfield_);
+    cu.clearBuffer(*dfieldp_);
+
+    if (pmeGrid == NULL)
+        cu.executeKernel(tcgInducedFieldGradientKernel, &computeInducedFieldArgs[0],
+            numForceThreadBlocks*tcgInducedFieldGradientThreads, tcgInducedFieldGradientThreads);
+    else {
+        // real space field + real space field gradient
+        maxTiles = nb.getInteractingTiles().getSize();
+        cu.executeKernel(tcgInducedFieldGradientKernel, &computeInducedFieldArgs[0],
+            numForceThreadBlocks*tcgInducedFieldGradientThreads, tcgInducedFieldGradientThreads);
+
+        // reciprocal space field + reciprocal space field gradient
+        // and self field
+        cu.clearBuffer(*pmeGrid);
+        void* pmeSpreadInducedDipolesArgs[] = {&cu.getPosq().getDevicePointer(),
+            &uind_->getDevicePointer(), &uinp_->getDevicePointer(), &pmeGrid->getDevicePointer(),
+            cu.getPeriodicBoxVecXPointer(), cu.getPeriodicBoxVecYPointer(), cu.getPeriodicBoxVecZPointer(),
+            recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(pmeSpreadInducedDipolesKernel, pmeSpreadInducedDipolesArgs, cu.getNumAtoms());
+        if (cu.getUseDoublePrecision()) {
+            void* finishSpreadArgs[] = {&pmeGrid->getDevicePointer()};
+            cu.executeKernel(pmeFinishSpreadChargeKernel, finishSpreadArgs, pmeGrid->getSize());
+        }
+        if (cu.getUseDoublePrecision())
+            cufftExecZ2Z(fft, (double2*) pmeGrid->getDevicePointer(), (double2*) pmeGrid->getDevicePointer(), CUFFT_FORWARD);
+        else
+            cufftExecC2C(fft, (float2*) pmeGrid->getDevicePointer(), (float2*) pmeGrid->getDevicePointer(), CUFFT_FORWARD);
+        void* pmeConvolutionArgs[] = {&pmeGrid->getDevicePointer(), &pmeBsplineModuliX->getDevicePointer(), &pmeBsplineModuliY->getDevicePointer(),
+            &pmeBsplineModuliZ->getDevicePointer(), cu.getPeriodicBoxSizePointer(), recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(pmeConvolutionKernel, pmeConvolutionArgs, gridSizeX*gridSizeY*gridSizeZ, 256);
+        if (cu.getUseDoublePrecision())
+            cufftExecZ2Z(fft, (double2*) pmeGrid->getDevicePointer(), (double2*) pmeGrid->getDevicePointer(), CUFFT_INVERSE);
+        else
+            cufftExecC2C(fft, (float2*) pmeGrid->getDevicePointer(), (float2*) pmeGrid->getDevicePointer(), CUFFT_INVERSE);
+        void* pmeInducedPotentialArgs[] = {&pmeGrid->getDevicePointer(),
+            &pmePhid->getDevicePointer(), &pmePhip->getDevicePointer(), &pmePhidp->getDevicePointer(),
+            &cu.getPosq().getDevicePointer(),
+            cu.getPeriodicBoxVecXPointer(), cu.getPeriodicBoxVecYPointer(), cu.getPeriodicBoxVecZPointer(),
+            recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(pmeInducedPotentialKernel, pmeInducedPotentialArgs, cu.getNumAtoms());
+        void* pmeRecordInducedFieldDipolesArgs[] = {&pmePhid->getDevicePointer(), &pmePhip->getDevicePointer(),
+            &field_->getDevicePointer(), &fieldp_->getDevicePointer(),
+            &uind_->getDevicePointer(), &uinp_->getDevicePointer(),
+            &dfield_->getDevicePointer(), &dfieldp_->getDevicePointer(),
+            recipBoxVectorPointer[0], recipBoxVectorPointer[1], recipBoxVectorPointer[2]};
+        cu.executeKernel(tcgRecordPmeInducedFieldGradientKernel, pmeRecordInducedFieldDipolesArgs, cu.getNumAtoms());
+    }
+}
+
+/**
+ * return (1/alpha + Tu).uind/p to v3d/p;
+ * if none of the optional mutual field gradients is NULL,
+ * return grad(-Tu.uind/p) as well
+ */
+void CudaCalcAmoebaMultipoleForceKernel::tcgT(CudaArray* uind_, CudaArray* uinp_,
+    CudaArray* v3d_, CudaArray* v3p_, void** recipBoxVectorPointer,
+    CudaArray* optionalMutualFieldGradient, CudaArray* optionalMutualFieldGradientPolar) {
+    if (optionalMutualFieldGradient == NULL || optionalMutualFieldGradientPolar == NULL) {
+        // apply -Tu to uind/p, save the induced field in (long long) inducedField/Polar
+        tcgUField0(uind_, uinp_, inducedField, inducedFieldPolar, recipBoxVectorPointer);
+    } else {
+        // apply -Tu to uind/p, save the induced field in (long long) inducedField/Polar,
+        // and save the induced field gradient in (long long) optionalMutualFieldGradient/Polar
+        tcgUField1(uind_, uinp_, inducedField, inducedFieldPolar,
+            optionalMutualFieldGradient, optionalMutualFieldGradientPolar, recipBoxVectorPointer);
+    }
+
+    // T = 1/alpha + Tu
+    void* args[] = {&v3d_->getDevicePointer(), &v3p_->getDevicePointer(),
+        &polarizability->getDevicePointer(),
+        &uind_->getDevicePointer(), &uinp_->getDevicePointer(),
+        &inducedField->getDevicePointer(), &inducedFieldPolar->getDevicePointer()};
+    cu.executeKernel(tcgInvAlphaPlusTuKernel, args, cu.getNumAtoms());
+}
+
+/**
+ * return (1/alpha + Tu).alpha.uind/p to v3d/p;
+ * if none of the optional mutual field gradients is NULL,
+ * return grad(-Tu.alpha.uind/p) as well
+ */
+void CudaCalcAmoebaMultipoleForceKernel::tcgTAlpha(CudaArray* uind_, CudaArray* uinp_,
+    CudaArray* v3d_, CudaArray* v3p_, void** recipBoxVectorPointer,
+    CudaArray* optionalMutualFieldGradient, CudaArray* optionalMutualFieldGradientPolar) {
+    // T.alpha.uind = (1/alpha + Tu).alpha.uind = uind + Tu.(alpha.uind)
+
+    // save alpha.uind to v3
+    void* alpha22Args[] = {&uind_->getDevicePointer(), &uinp_->getDevicePointer(),
+        &polarizability->getDevicePointer(),
+        &v3d_->getDevicePointer(), &v3p_->getDevicePointer()};
+    cu.executeKernel(tcgAlpha22Kernel, alpha22Args, cu.getNumAtoms());
+
+    if (optionalMutualFieldGradient == NULL || optionalMutualFieldGradientPolar == NULL) {
+        // apply -Tu alpha.uind, save the induced field in (long long) inducedField/Polar
+        tcgUField0(v3d_, v3p_, inducedField, inducedFieldPolar, recipBoxVectorPointer);
+    } else {
+        // apply -Tu alpha.uind, save the induced field in (long long) inducedField/Polar,
+        // and save the induced field gradient of alpha.uind in (long long) optionalMutualFieldGradient/Polar
+        tcgUField1(v3d_, v3p_, inducedField, inducedFieldPolar,
+            optionalMutualFieldGradient, optionalMutualFieldGradientPolar, recipBoxVectorPointer);
+    }
+
+    // save uind/p - (-Tu.alpha.uind/p) to v3.
+    void* part3Args[] = {&v3d_->getDevicePointer(), &v3p_->getDevicePointer(),
+        &uind_->getDevicePointer(), &uinp_->getDevicePointer(),
+        &inducedField->getDevicePointer(), &inducedFieldPolar->getDevicePointer()};
+    cu.executeKernel(tcgTAlphaPart3Kernel, part3Args, cu.getNumAtoms());
+}
+
+void CudaCalcAmoebaMultipoleForceKernel::tcgInduce(void** recipBoxVectorPointer) {
+    // Cannot reserve the device memory for the pseduo energy buffer in initialize()
+    // because cu.getEnergyBuffer() == NULL inside initialize(). Ugh.
+    if (tcgEnergyBuffer == NULL) {
+        CudaArray& arr = cu.getEnergyBuffer();
+        tcgEnergyBuffer = new CudaArray(cu, arr.getSize(), arr.getElementSize(), "tcgEnergyBuffer");
+    }
+
+    cu.clearBuffer(*inducedDipole);
+    cu.clearBuffer(*inducedDipolePolar);
+    cu.clearBuffer(*tcgUIndt);
+    cu.clearBuffer(*tcgUInpt);
+    cu.clearBuffer(*tcgUAD);
+    cu.clearBuffer(*tcgUAP);
+    cu.clearBuffer(*tcgUBD);
+    cu.clearBuffer(*tcgUBP);
+
+    if (tcgversion == 4) {
+        tcgInduce1D(recipBoxVectorPointer);
+    }
+}
+
+template<unsigned N>
+struct TCGRealPointerPack {
+    void* ptr[N];
+};
+
+void CudaCalcAmoebaMultipoleForceKernel::tcgInduce1D(void** recipBoxVectorPointer) {
+    int numAtoms = cu.getNumAtoms();
+    int paddedNumAtoms = cu.getPaddedNumAtoms();
+    int elementSize = sizeof(float);
+    if (cu.getUseDoublePrecision()) {
+        elementSize = sizeof(double);
+    }
+
+    // uad = udir; uap = udirp
+    CudaArrayRef udir                  (cu, tcgUAD,            0*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgudir");
+    CudaArrayRef udirp                 (cu, tcgUAP,            0*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgudirp");
+
+    // must be consistent with the initialization in void tcgInduce1d(...) of file tcgInduce.cu
+    CudaArrayRef r0[]   = {CudaArrayRef(cu, tcgWorkspace,      0*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgr0"),
+                           CudaArrayRef(cu, tcgWorkspacePolar, 0*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgr0Polar")};
+    CudaArrayRef P1[]   = {CudaArrayRef(cu, tcgWorkspace,      1*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgP1"),
+                           CudaArrayRef(cu, tcgWorkspacePolar, 1*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgP1Polar")};
+    CudaArrayRef r1[]   = {CudaArrayRef(cu, tcgWorkspace,      2*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgr1"),
+                           CudaArrayRef(cu, tcgWorkspacePolar, 2*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgr1Polar")};
+    CudaArrayRef t2m0[] = {CudaArrayRef(cu, tcgWorkspace,      3*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgt2m0"),
+                           CudaArrayRef(cu, tcgWorkspacePolar, 3*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgt2m0Polar")};
+    CudaArrayRef t3m0[] = {CudaArrayRef(cu, tcgWorkspace,      4*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgt3m0"),
+                           CudaArrayRef(cu, tcgWorkspacePolar, 4*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgt3m0Polar")};
+
+    // get the electrostatic field due to permanent multipoles
+    // because mu0 = 0, r0 = permField - T.mu0 = permField
+    void* r0Args[] = {&field->getDevicePointer(), &fieldPolar->getDevicePointer(),
+        &r0[0].asCudaArrayPointer()->getDevicePointer(),
+        &r0[1].asCudaArrayPointer()->getDevicePointer()};
+    cu.executeKernel(tcgFieldLongLongToRealKernel, r0Args, numAtoms);
+
+    // udir = alpha.E = alpha.r0
+    // m0 = M.r0 = alpha.E = udir
+    void* m0Args[] = {
+        &r0[0].asCudaArrayPointer()->getDevicePointer(),
+        &r0[1].asCudaArrayPointer()->getDevicePointer(),
+        &polarizability->getDevicePointer(),
+        &udir.asCudaArrayPointer()->getDevicePointer(),
+        &udirp.asCudaArrayPointer()->getDevicePointer()};
+    cu.executeKernel(tcgAlpha22Kernel, m0Args, numAtoms);
+
+    // P1 = T.m0 = T.udir = tae
+    // P1 = T.uad/p(1)
+    CudaArrayRef uadfg_1(cu, tcgUADFieldGradient, 0*6*paddedNumAtoms, 6*paddedNumAtoms);
+    CudaArrayRef uapfg_1(cu, tcgUAPFieldGradient, 0*6*paddedNumAtoms, 6*paddedNumAtoms);
+    tcgT(udir.asCudaArrayPointer(), udirp.asCudaArrayPointer(),
+        P1[0].asCudaArrayPointer(), P1[1].asCudaArrayPointer(),
+        recipBoxVectorPointer,
+        uadfg_1.asCudaArrayPointer(), uapfg_1.asCudaArrayPointer());
+
+    // For TCG2, there are 13 scalars need to be reserved, and here
+    // we reserve space for 16 scalars and zero them out.
+    // Use tcgEnergyBuffer to store the scalar intermediates.
+    int zeroBytes = 16 * elementSize;
+    cu.clearBuffer(tcgEnergyBuffer->getDevicePointer(), zeroBytes);
+
+    // TCG1 intermediates
+    // scalar 1 - 6: n0(1), n0(2), t1(1), t1(2), sp0, spp1
+    // n0 = r0.M.r0 = r0.alpha.E = r0.udir
+    // t1 = m0.T.m0 = P1.m0
+    // cross terms
+    // sp0 = r0.M.E = r0.udir
+    // spp1 = m0.T.alpha.E = sp1
+    CUdeviceptr scalarArray1 = tcgEnergyBuffer->getDevicePointer() + elementSize * 0;
+    TCGRealPointerPack<6> aPtrArray, bPtrArray;
+
+    // scalars[0 - 5]
+    // n0 _1 _2
+    aPtrArray.ptr[0] = (void*)r0[0].asCudaArrayPointer()->getDevicePointer();
+    aPtrArray.ptr[1] = (void*)r0[1].asCudaArrayPointer()->getDevicePointer();
+    // t1 _1 _2
+    aPtrArray.ptr[2] = (void*)P1[0].asCudaArrayPointer()->getDevicePointer();
+    aPtrArray.ptr[3] = (void*)P1[1].asCudaArrayPointer()->getDevicePointer();
+    // sp0
+    aPtrArray.ptr[4] = (void*)r0[0].asCudaArrayPointer()->getDevicePointer();
+    // spp1
+    aPtrArray.ptr[5] = (void*)P1[0].asCudaArrayPointer()->getDevicePointer();
+
+    // n0 _1 _2
+    bPtrArray.ptr[0] = (void*)udir.asCudaArrayPointer()->getDevicePointer();
+    bPtrArray.ptr[1] = (void*)udirp.asCudaArrayPointer()->getDevicePointer();
+    // t1 _1 _2
+    bPtrArray.ptr[2] = (void*)udir.asCudaArrayPointer()->getDevicePointer();
+    bPtrArray.ptr[3] = (void*)udirp.asCudaArrayPointer()->getDevicePointer();
+    // sp0
+    bPtrArray.ptr[4] = (void*)udirp.asCudaArrayPointer()->getDevicePointer();
+    // spp1
+    bPtrArray.ptr[5] = (void*)udirp.asCudaArrayPointer()->getDevicePointer();
+
+    void* tcg1IntermediatesArgs[] = {&scalarArray1, &aPtrArray, &bPtrArray};
+    cu.executeKernel(tcgDotProduct6Kernel, tcg1IntermediatesArgs, numAtoms);
+
+    void* tcg1DArgs[] = {&polarizability->getDevicePointer(),
+        &inducedDipole->getDevicePointer(), &inducedDipolePolar->getDevicePointer(),
+        &tcgUIndt->getDevicePointer(), &tcgUInpt->getDevicePointer(),
+        &tcgUAD->getDevicePointer(), &tcgUAP->getDevicePointer(),
+        &tcgUBD->getDevicePointer(), &tcgUBP->getDevicePointer(),
+        &tcgWorkspace->getDevicePointer(), &tcgWorkspacePolar->getDevicePointer()
+        , &tcgEnergyBuffer->getDevicePointer()
+    };
+    cu.executeKernel(tcgInduce1Kernel, tcg1DArgs, numAtoms);
+
+    if (tcgorder >= 2) {
+        // t2m0 = T.M.T.M.r0 = T.M.P1
+        CudaArrayRef uadfg_2(cu, tcgUADFieldGradient, 1*6*paddedNumAtoms, 6*paddedNumAtoms);
+        CudaArrayRef uapfg_2(cu, tcgUAPFieldGradient, 1*6*paddedNumAtoms, 6*paddedNumAtoms);
+        tcgTAlpha(P1[0].asCudaArrayPointer(), P1[1].asCudaArrayPointer(),
+            t2m0[0].asCudaArrayPointer(), t2m0[1].asCudaArrayPointer(),
+            recipBoxVectorPointer,
+            uadfg_2.asCudaArrayPointer(), uapfg_2.asCudaArrayPointer());
+
+        // t3m0 = T.M.T.M.T.M.r0 = T.M.t2m0
+        tcgTAlpha(t2m0[0].asCudaArrayPointer(), t2m0[1].asCudaArrayPointer(),
+            t3m0[0].asCudaArrayPointer(), t3m0[1].asCudaArrayPointer(),
+            recipBoxVectorPointer);
+
+        // TCG2 intermediates
+        // scalar 7 - 12: n1(2), t9(2), np1(2)
+        // if (tcgpeek), scalar 13: spp2
+
+        // n1 = r1.M.r1
+        // t9 = r0.M.T.M.T.M.T.M.r0 = t2m0.M.P1
+        // np1 = P1.M.P1
+        // cross term
+        // spp2 = r0.M.T.M.T.alpha.E = P1.M.P1
+        CUdeviceptr scalarArray2 = tcgEnergyBuffer->getDevicePointer() + elementSize * 6;
+        if (tcgpeek) {
+            TCGRealPointerPack<7> aPtrArray2, bPtrArray2;
+            // n1_1, n1_2
+            aPtrArray2.ptr[0] = (void*)r1[0].asCudaArrayPointer()->getDevicePointer();
+            aPtrArray2.ptr[1] = (void*)r1[1].asCudaArrayPointer()->getDevicePointer();
+            // t9_1, t9_2
+            aPtrArray2.ptr[2] = (void*)t2m0[0].asCudaArrayPointer()->getDevicePointer();
+            aPtrArray2.ptr[3] = (void*)t2m0[1].asCudaArrayPointer()->getDevicePointer();
+            // np1_1, np1_2
+            aPtrArray2.ptr[4] = (void*)P1[0].asCudaArrayPointer()->getDevicePointer();
+            aPtrArray2.ptr[5] = (void*)P1[1].asCudaArrayPointer()->getDevicePointer();
+            // spp2
+            aPtrArray2.ptr[6] = (void*)P1[0].asCudaArrayPointer()->getDevicePointer();
+
+            // n1_1, n1_2
+            bPtrArray2.ptr[0] = (void*)r1[0].asCudaArrayPointer()->getDevicePointer();
+            bPtrArray2.ptr[1] = (void*)r1[1].asCudaArrayPointer()->getDevicePointer();
+            // t9_1, t9_2
+            bPtrArray2.ptr[2] = (void*)P1[0].asCudaArrayPointer()->getDevicePointer();
+            bPtrArray2.ptr[3] = (void*)P1[1].asCudaArrayPointer()->getDevicePointer();
+            // np1_1, np1_2
+            bPtrArray2.ptr[4] = (void*)P1[0].asCudaArrayPointer()->getDevicePointer();
+            bPtrArray2.ptr[5] = (void*)P1[1].asCudaArrayPointer()->getDevicePointer();
+            // spp2
+            bPtrArray2.ptr[6] = (void*)P1[1].asCudaArrayPointer()->getDevicePointer();
+
+            void* tcg2IntermediatesArgs[] = {&scalarArray2,
+                &polarizability->getDevicePointer(), &aPtrArray2, &bPtrArray2};
+            cu.executeKernel(tcgAlphaQuadratic7Kernel, tcg2IntermediatesArgs, numAtoms);
+        } else {
+            TCGRealPointerPack<6> aPtrArray2, bPtrArray2;
+            // n1_1, n1_2
+            aPtrArray2.ptr[0] = (void*)r1[0].asCudaArrayPointer()->getDevicePointer();
+            aPtrArray2.ptr[1] = (void*)r1[1].asCudaArrayPointer()->getDevicePointer();
+            // t9_1, t9_2
+            aPtrArray2.ptr[2] = (void*)t2m0[0].asCudaArrayPointer()->getDevicePointer();
+            aPtrArray2.ptr[3] = (void*)t2m0[1].asCudaArrayPointer()->getDevicePointer();
+            // np1_1, np1_2
+            aPtrArray2.ptr[4] = (void*)P1[0].asCudaArrayPointer()->getDevicePointer();
+            aPtrArray2.ptr[5] = (void*)P1[1].asCudaArrayPointer()->getDevicePointer();
+
+            // n1_1, n1_2
+            bPtrArray2.ptr[0] = (void*)r1[0].asCudaArrayPointer()->getDevicePointer();
+            bPtrArray2.ptr[1] = (void*)r1[1].asCudaArrayPointer()->getDevicePointer();
+            // t9_1, t9_2
+            bPtrArray2.ptr[2] = (void*)P1[0].asCudaArrayPointer()->getDevicePointer();
+            bPtrArray2.ptr[3] = (void*)P1[1].asCudaArrayPointer()->getDevicePointer();
+            // np1_1, np1_2
+            bPtrArray2.ptr[4] = (void*)P1[0].asCudaArrayPointer()->getDevicePointer();
+            bPtrArray2.ptr[5] = (void*)P1[1].asCudaArrayPointer()->getDevicePointer();
+
+            void* tcg2IntermediatesArgs[] = {&scalarArray2,
+                &polarizability->getDevicePointer(), &aPtrArray2, &bPtrArray2};
+            cu.executeKernel(tcgAlphaQuadratic6Kernel, tcg2IntermediatesArgs, numAtoms);
+        }
+        cu.executeKernel(tcgInduce2Kernel, tcg1DArgs, numAtoms);
+    }
+
+    // Calculate the mutual TCG induced dipole field gradients for later use.
+    for (int order = 0; order < tcgnab; ++order) {
+        CudaArrayRef ubd(cu, tcgUBD, order*3*paddedNumAtoms, 3*paddedNumAtoms);
+        CudaArrayRef ubp(cu, tcgUBP, order*3*paddedNumAtoms, 3*paddedNumAtoms);
+        CudaArrayRef ubdfg(cu, tcgUBDFieldGradient, order*6*paddedNumAtoms, 6*paddedNumAtoms);
+        CudaArrayRef ubpfg(cu, tcgUBPFieldGradient, order*6*paddedNumAtoms, 6*paddedNumAtoms);
+        tcgUField1(ubd.asCudaArrayPointer(), ubp.asCudaArrayPointer(), inducedField, inducedFieldPolar,
+            ubdfg.asCudaArrayPointer(), ubpfg.asCudaArrayPointer(), recipBoxVectorPointer);
+    }
 }
 
 void CudaCalcAmoebaMultipoleForceKernel::ensureMultipolesValid(ContextImpl& context) {

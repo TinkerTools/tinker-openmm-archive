@@ -47,7 +47,6 @@ AmoebaMultipoleForce::AmoebaMultipoleForce() : nonbondedMethod(NoCutoff), polari
     extrapolationCoefficients.push_back(0.474);
 
     tcgorder = 2;
-    tcgnab = 2;
     tcgprec = 1;
     tcgpeek = 1;
     tcgguess = 0;
@@ -74,22 +73,27 @@ void AmoebaMultipoleForce::setExtrapolationCoefficients(const std::vector<double
     extrapolationCoefficients = coefficients;
 }
 
-void AmoebaMultipoleForce::setTCGOptions(int order, int nab, int prec, int peek, int guess, double omega) {
+void AmoebaMultipoleForce::setTCGOptions(int order, int prec, int peek, int guess, double omega) {
     tcgorder = order;
-    tcgnab = nab;
     tcgprec = prec;
     tcgpeek = peek;
     tcgguess = guess;
     tcgomega = omega;
 }
 
-void AmoebaMultipoleForce::getTCGOptions(int& order, int& nab, int& prec, int& peek, int& guess, double& omega) const {
+void AmoebaMultipoleForce::getTCGOptions(int& order, int& prec, int& peek, int& guess, double& omega, int& version, int& nab) const {
     order = tcgorder;
-    nab = tcgnab;
     prec = tcgprec;
     peek = tcgpeek;
     guess = tcgguess;
     omega = tcgomega;
+
+    version = tcgguess ? (tcgprec ? 2 : 1) : (tcgprec ? 4 : 3);
+    if (tcgguess) {
+        nab = tcgorder + 1;
+    } else {
+        nab = tcgorder;
+    }
 }
 
 const std::vector<double> & AmoebaMultipoleForce::getExtrapolationCoefficients() const {
@@ -118,26 +122,26 @@ void AmoebaMultipoleForce::setPMEParameters(double alpha, int nx, int ny, int nz
     this->nz = nz;
 }
 
-double AmoebaMultipoleForce::getAEwald() const { 
-    return alpha; 
-} 
- 
-void AmoebaMultipoleForce::setAEwald(double inputAewald) { 
-    alpha = inputAewald; 
-} 
- 
-int AmoebaMultipoleForce::getPmeBSplineOrder() const { 
-    return pmeBSplineOrder; 
-} 
- 
-void AmoebaMultipoleForce::getPmeGridDimensions(std::vector<int>& gridDimension) const { 
+double AmoebaMultipoleForce::getAEwald() const {
+    return alpha;
+}
+
+void AmoebaMultipoleForce::setAEwald(double inputAewald) {
+    alpha = inputAewald;
+}
+
+int AmoebaMultipoleForce::getPmeBSplineOrder() const {
+    return pmeBSplineOrder;
+}
+
+void AmoebaMultipoleForce::getPmeGridDimensions(std::vector<int>& gridDimension) const {
     if (gridDimension.size() < 3)
         gridDimension.resize(3);
     gridDimension[0] = nx;
     gridDimension[1] = ny;
     gridDimension[2] = nz;
-} 
- 
+}
+
 void AmoebaMultipoleForce::setPmeGridDimensions(const std::vector<int>& gridDimension) {
     nx = gridDimension[0];
     ny = gridDimension[1];

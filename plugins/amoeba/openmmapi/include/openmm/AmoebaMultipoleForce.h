@@ -359,24 +359,24 @@ public:
     /**
      * Set the TCG-related options.
      * @param order  TCG order, should either be 1 or 2
-     * @param nab    number of mutual induced dipole components
      * @param prec   flag to allow conjugate gradient preconditioner
      * @param peek   flag to allow use of a final TCG peek step
      * @param guess  flag to allow use of direct induced dipole as initial CG guess
      * @param omega  value of acceleration factor for TCG peek step
      */
-    void setTCGOptions(int order, int nab, int prec, int peek, int guess, double omega);
+    void setTCGOptions(int order, int prec, int peek, int guess, double omega);
 
     /**
      * Get the TCG-related options.
      * @param order  TCG order, should either be 1 or 2
-     * @param nab    number of mutual induced dipole components
      * @param prec   flag to allow conjugate gradient preconditioner
      * @param peek   flag to allow use of a final TCG peek step
      * @param guess  flag to allow use of direct induced dipole as initial CG guess
      * @param omega  value of acceleration factor for TCG peek step
+     * @param vers   tcg version number: guess ? (prec ? 2 : 1) : (prec ? 4 : 3);
+     * @param nab    number of mutual induced dipole components
      */
-    void getTCGOptions(int& order, int& nab, int& prec, int& peek, int& guess, double& omega) const;
+    void getTCGOptions(int& order, int& prec, int& peek, int& guess, double& omega, int& vers, int& nab) const;
 
     /**
      * Get the error tolerance for Ewald summation.  This corresponds to the fractional error in the forces

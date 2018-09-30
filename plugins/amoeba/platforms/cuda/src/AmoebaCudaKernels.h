@@ -402,6 +402,21 @@ private:
     void computeInducedField(void** recipBoxVectorPointer);
     bool iterateDipolesByDIIS(int iteration);
     void computeExtrapolatedDipoles(void** recipBoxVectorPointer);
+    void tcgUField0(CudaArray* inducedDipole, CudaArray* inducedDipolePolar,
+        CudaArray* inducedDipoleField, CudaArray* inducedDipoleFieldPolar,
+        void** recipBoxVectorPointer);
+    void tcgUField1(CudaArray* inducedDipole, CudaArray* inducedDipolePolar,
+        CudaArray* inducedDipoleField, CudaArray* inducedDipoleFieldPolar,
+        CudaArray* inducedDipoleFieldGradient, CudaArray* inducedDipoleFieldGradientPolar,
+        void** recipBoxVectorPointer);
+    void tcgT(CudaArray* inducedDipole, CudaArray* inducedDipolePolar,
+        CudaArray* outputDipole, CudaArray* outputDipolePolar, void** recipBoxVectorPointer,
+        CudaArray* optionalMutualFieldGradient = NULL, CudaArray* optionalMutualFieldGradientPolar = NULL);
+    void tcgTAlpha(CudaArray* inducedDipole, CudaArray* inducedDipolePolar,
+        CudaArray* outputDipole, CudaArray* outputDipolePolar, void** recipBoxVectorPointer,
+        CudaArray* optionalMutualFieldGradient = NULL, CudaArray* optionalMutualFieldGradientPolar = NULL);
+    void tcgInduce(void** recipBoxVectorPointer);
+    void tcgInduce1D(void** recipBoxVectorPointer);
     void ensureMultipolesValid(ContextImpl& context);
     template <class T, class T4, class M4> void computeSystemMultipoleMoments(ContextImpl& context, std::vector<double>& outputMultipoleMoments);
     int numMultipoles, maxInducedIterations, maxExtrapolationOrder;
@@ -409,6 +424,10 @@ private:
     int gridSizeX, gridSizeY, gridSizeZ;
     double alpha, inducedEpsilon;
     bool usePME, hasQuadrupoles, hasInitializedScaleFactors, hasInitializedFFT, multipolesAreValid, hasCreatedEvent;
+    int tcgorder, tcgprec, tcgpeek, tcgguess, tcgnab, tcgversion;
+    double tcgomega;
+    int tcgMultipoleThreads, tcgInducedFieldThreads, tcgInducedFieldGradientThreads;
+    int tcgDotProductThreads;
     AmoebaMultipoleForce::PolarizationType polarizationType;
     CudaContext& cu;
     const System& system;
@@ -451,6 +470,19 @@ private:
     CudaArray* extrapolatedDipoleFieldGradientPolar;
     CudaArray* extrapolatedDipoleFieldGradientGk;
     CudaArray* extrapolatedDipoleFieldGradientGkPolar;
+    CudaArray* tcgEnergyBuffer;
+    CudaArray* tcgUIndt;
+    CudaArray* tcgUInpt;
+    CudaArray* tcgUAD;
+    CudaArray* tcgUAP;
+    CudaArray* tcgUBD;
+    CudaArray* tcgUBP;
+    CudaArray* tcgUADFieldGradient;
+    CudaArray* tcgUAPFieldGradient;
+    CudaArray* tcgUBDFieldGradient;
+    CudaArray* tcgUBPFieldGradient;
+    CudaArray* tcgWorkspace;
+    CudaArray* tcgWorkspacePolar;
     CudaArray* polarizability;
     CudaArray* covalentFlags;
     CudaArray* polarizationGroupFlags;
@@ -474,6 +506,14 @@ private:
     CUfunction recordDIISDipolesKernel, buildMatrixKernel, solveMatrixKernel;
     CUfunction initExtrapolatedKernel, iterateExtrapolatedKernel, computeExtrapolatedKernel, addExtrapolatedGradientKernel;
     CUfunction pmeTransformMultipolesKernel, pmeTransformPotentialKernel;
+    CUfunction tcgDotProduct6Kernel;
+    CUfunction tcgAlphaQuadratic6Kernel, tcgAlphaQuadratic7Kernel;
+    CUfunction tcgInduce1Kernel, tcgInduce2Kernel;
+    CUfunction tcgFieldLongLongToRealKernel, tcgInvAlphaPlusTuKernel, tcgAlpha22Kernel, tcgTAlphaPart3Kernel;
+    CUfunction tcgSelfAndRealSpaceKernel;
+    CUfunction tcgInducedFieldKernel, tcgInducedFieldGradientKernel;
+    CUfunction tcgRecordPmeInducedFieldKernel, tcgRecordPmeInducedFieldGradientKernel;
+    CUfunction tcgAddMutualForceKernel, tcgPolarizationEnergyKernel;
     CUevent syncEvent;
     CudaCalcAmoebaGeneralizedKirkwoodForceKernel* gkKernel;
     static const int PmeOrder = 5;
