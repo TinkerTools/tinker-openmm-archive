@@ -97,6 +97,16 @@ public:
         TCG = 3
     };
 
+    enum TCGType {
+        TCG_uninitialized = -1,
+        TCG_a = 0, ///< use direst guess, use diag. preconditioner
+        TCG_b = 1, ///< use direct guess, no preconditioner
+        TCG_c = 2, ///< zero guess, use diag. preconditioner
+        TCG_d = 3, ///< zero guess, no preconditioner
+        TCG_ax = 4, ///< d/p cross a version
+        TCG_cx = 5 ///< d/p cross c version
+    };
+
     enum MultipoleAxisTypes { ZThenX = 0, Bisector = 1, ZBisect = 2, ThreeFold = 3, ZOnly = 4, NoAxisType = 5, LastAxisTypeIndex = 6 };
 
     enum CovalentType {
@@ -359,24 +369,22 @@ public:
     /**
      * Set the TCG-related options.
      * @param order  TCG order, should either be 1 or 2
-     * @param prec   flag to allow conjugate gradient preconditioner
-     * @param peek   flag to allow use of a final TCG peek step
-     * @param guess  flag to allow use of direct induced dipole as initial CG guess
+     * @param prec   flag to allow use of a diagonal preconditioner
+     * @param guess  flag to use initial TCG based on direct field
      * @param omega  value of acceleration factor for TCG peek step
      */
-    void setTCGOptions(int order, int prec, int peek, int guess, double omega);
+    void setTCGOptions(int order, int prec, int guess, double omega);
 
     /**
      * Get the TCG-related options.
      * @param order  TCG order, should either be 1 or 2
-     * @param prec   flag to allow conjugate gradient preconditioner
-     * @param peek   flag to allow use of a final TCG peek step
-     * @param guess  flag to allow use of direct induced dipole as initial CG guess
+     * @param prec   flag to allow use of a diagonal preconditioner
+     * @param guess  flag to use initial TCG based on direct field
      * @param omega  value of acceleration factor for TCG peek step
-     * @param vers   tcg version number: guess ? (prec ? 2 : 1) : (prec ? 4 : 3);
      * @param nab    number of mutual induced dipole components
+     * @return       corresponding TCGType
      */
-    void getTCGOptions(int& order, int& prec, int& peek, int& guess, double& omega, int& vers, int& nab) const;
+    TCGType getTCGOptions(int& order, int& prec, int& guess, double& omega, int& nab) const;
 
     /**
      * Get the error tolerance for Ewald summation.  This corresponds to the fractional error in the forces
@@ -478,8 +486,10 @@ private:
     int pmeBSplineOrder, nx, ny, nz;
     int mutualInducedMaxIterations;
     std::vector<double> extrapolationCoefficients;
-    int tcgorder, tcgnab, tcgprec, tcgpeek, tcgguess;
+
+    int tcgorder, tcgnab;
     double tcgomega;
+    TCGType tcgType;
 
     double mutualInducedTargetEpsilon;
     double scalingDistanceCutoff;

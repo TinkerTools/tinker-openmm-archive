@@ -232,7 +232,7 @@ TCG_ALPHA_QUADRATIC_N(7)
  * real tcgoega = M_TCGOMEGA
  */
 
-extern "C" __global__ void tcgInduce1D1(const float* __restrict__ polarity, real* __restrict__ uind,
+extern "C" __global__ void tcgInduce1C1(const float* __restrict__ polarity, real* __restrict__ uind,
   real* __restrict__ uinp, real* __restrict__ uindt, real* __restrict__ uinpt, real* __restrict__ uad,
   real* __restrict__ uap, real* __restrict__ ubd, real* __restrict__ ubp, real* __restrict__ workspace,
   real* __restrict__ workPolar, const real* __restrict__ scalars)
@@ -373,7 +373,7 @@ extern "C" __global__ void tcgInduce1D1(const float* __restrict__ polarity, real
   }
 }
 
-extern "C" __global__ void tcgInduce1D2(const float* __restrict__ polarity, real* __restrict__ uind,
+extern "C" __global__ void tcgInduce1C2(const float* __restrict__ polarity, real* __restrict__ uind,
   real* __restrict__ uinp, real* __restrict__ uindt, real* __restrict__ uinpt, real* __restrict__ uad,
   real* __restrict__ uap, real* __restrict__ ubd, real* __restrict__ ubp, real* __restrict__ workspace,
   real* __restrict__ workPolar, const real* __restrict__ scalars)

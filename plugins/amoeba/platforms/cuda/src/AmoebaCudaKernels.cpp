@@ -1301,13 +1301,13 @@ void CudaCalcAmoebaMultipoleForceKernel::initialize(const System& system, const 
         computeExtrapolatedKernel = cu.getKernel(module, "computeExtrapolatedDipoles");
         addExtrapolatedGradientKernel = cu.getKernel(module, "addExtrapolatedFieldGradientToForce");
         if (polarizationType == AmoebaMultipoleForce::TCG) {
-            force.getTCGOptions(tcgorder, tcgprec, tcgpeek, tcgguess, tcgomega, tcgversion, tcgnab);
+            tcgversion = force.getTCGOptions(tcgorder, tcgprec, tcgguess, tcgomega, tcgnab);
             defines["TCG_POLARIZATION"] = "";
             defines["M_TCGORDER"] = cu.intToString(tcgorder);
             defines["M_TCGPREC"] = tcgprec ? "1" : "0";
-            defines["M_TCGPEEK"] = tcgpeek ? "1" : "0";
             defines["M_TCGGUESS"] = tcgguess ? "1" : "0";
             defines["M_TCGOMEGA"] = cu.doubleToString(tcgomega);
+            defines["M_TCGPEEK"] = (tcgomega != 0.0) ? "1" : "0";
             defines["M_TCGNAB"] = cu.intToString(tcgnab);
 
             // tcgEnergyBuffer cannot be allocated here because its size depends on cu.getEnergyBuffer()
@@ -1362,9 +1362,9 @@ void CudaCalcAmoebaMultipoleForceKernel::initialize(const System& system, const 
             tcgDotProduct6Kernel = cu.getKernel(tcgModule, "tcgDotProduct6");
             tcgAlphaQuadratic6Kernel = cu.getKernel(tcgModule, "tcgAlphaQuadratic6");
             tcgAlphaQuadratic7Kernel = cu.getKernel(tcgModule, "tcgAlphaQuadratic7");
-            if (tcgversion == 4) {
-                tcgInduce1Kernel = cu.getKernel(tcgModule, "tcgInduce1D1");
-                tcgInduce2Kernel = cu.getKernel(tcgModule, "tcgInduce1D2");
+            if (tcgversion == AmoebaMultipoleForce::TCG_c) {
+                tcgInduce1Kernel = cu.getKernel(tcgModule, "tcgInduce1C1");
+                tcgInduce2Kernel = cu.getKernel(tcgModule, "tcgInduce1C2");
                 tcgWorkspace = new CudaArray(cu, 5*3*paddedNumAtoms, elementSize, "tcgWorkspace");
                 tcgWorkspacePolar = new CudaArray(cu, 5*3*paddedNumAtoms, elementSize, "tcgWorkspacePolar");
             }
@@ -2394,8 +2394,8 @@ void CudaCalcAmoebaMultipoleForceKernel::tcgInduce(void** recipBoxVectorPointer)
     cu.clearBuffer(*tcgUBD);
     cu.clearBuffer(*tcgUBP);
 
-    if (tcgversion == 4) {
-        tcgInduce1D(recipBoxVectorPointer);
+    if (tcgversion == AmoebaMultipoleForce::TCG_c) {
+        tcgInduce1C(recipBoxVectorPointer);
     }
 }
 
@@ -2404,7 +2404,7 @@ struct TCGRealPointerPack {
     void* ptr[N];
 };
 
-void CudaCalcAmoebaMultipoleForceKernel::tcgInduce1D(void** recipBoxVectorPointer) {
+void CudaCalcAmoebaMultipoleForceKernel::tcgInduce1C(void** recipBoxVectorPointer) {
     int numAtoms = cu.getNumAtoms();
     int paddedNumAtoms = cu.getPaddedNumAtoms();
     int elementSize = sizeof(float);
@@ -2416,7 +2416,7 @@ void CudaCalcAmoebaMultipoleForceKernel::tcgInduce1D(void** recipBoxVectorPointe
     CudaArrayRef udir                  (cu, tcgUAD,            0*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgudir");
     CudaArrayRef udirp                 (cu, tcgUAP,            0*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgudirp");
 
-    // must be consistent with the initialization in void tcgInduce1d(...) of file tcgInduce.cu
+    // must be consistent with the initialization in void tcgInduce1c(...) of file tcgInduce.cu
     CudaArrayRef r0[]   = {CudaArrayRef(cu, tcgWorkspace,      0*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgr0"),
                            CudaArrayRef(cu, tcgWorkspacePolar, 0*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgr0Polar")};
     CudaArrayRef P1[]   = {CudaArrayRef(cu, tcgWorkspace,      1*3*paddedNumAtoms, 3*paddedNumAtoms, "tcgP1"),
@@ -2530,7 +2530,7 @@ void CudaCalcAmoebaMultipoleForceKernel::tcgInduce1D(void** recipBoxVectorPointe
         // cross term
         // spp2 = r0.M.T.M.T.alpha.E = P1.M.P1
         CUdeviceptr scalarArray2 = tcgEnergyBuffer->getDevicePointer() + elementSize * 6;
-        if (tcgpeek) {
+        if (tcgomega != 0.0) {
             TCGRealPointerPack<7> aPtrArray2, bPtrArray2;
             // n1_1, n1_2
             aPtrArray2.ptr[0] = (void*)r1[0].asCudaArrayPointer()->getDevicePointer();

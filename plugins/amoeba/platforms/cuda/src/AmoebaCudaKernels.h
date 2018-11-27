@@ -416,7 +416,7 @@ private:
         CudaArray* outputDipole, CudaArray* outputDipolePolar, void** recipBoxVectorPointer,
         CudaArray* optionalMutualFieldGradient = NULL, CudaArray* optionalMutualFieldGradientPolar = NULL);
     void tcgInduce(void** recipBoxVectorPointer);
-    void tcgInduce1D(void** recipBoxVectorPointer);
+    void tcgInduce1C(void** recipBoxVectorPointer);
     void ensureMultipolesValid(ContextImpl& context);
     template <class T, class T4, class M4> void computeSystemMultipoleMoments(ContextImpl& context, std::vector<double>& outputMultipoleMoments);
     int numMultipoles, maxInducedIterations, maxExtrapolationOrder;
@@ -424,8 +424,9 @@ private:
     int gridSizeX, gridSizeY, gridSizeZ;
     double alpha, inducedEpsilon;
     bool usePME, hasQuadrupoles, hasInitializedScaleFactors, hasInitializedFFT, multipolesAreValid, hasCreatedEvent;
-    int tcgorder, tcgprec, tcgpeek, tcgguess, tcgnab, tcgversion;
+    int tcgorder, tcgprec, tcgguess, tcgnab;
     double tcgomega;
+    AmoebaMultipoleForce::TCGType tcgversion;
     int tcgMultipoleThreads, tcgInducedFieldThreads, tcgInducedFieldGradientThreads;
     int tcgDotProductThreads;
     AmoebaMultipoleForce::PolarizationType polarizationType;

@@ -45,12 +45,6 @@ AmoebaMultipoleForce::AmoebaMultipoleForce() : nonbondedMethod(NoCutoff), polari
     extrapolationCoefficients.push_back(0.017);
     extrapolationCoefficients.push_back(0.658);
     extrapolationCoefficients.push_back(0.474);
-
-    tcgorder = 2;
-    tcgprec = 1;
-    tcgpeek = 1;
-    tcgguess = 0;
-    tcgomega = 1.0;
 }
 
 AmoebaMultipoleForce::NonbondedMethod AmoebaMultipoleForce::getNonbondedMethod() const {
@@ -73,27 +67,58 @@ void AmoebaMultipoleForce::setExtrapolationCoefficients(const std::vector<double
     extrapolationCoefficients = coefficients;
 }
 
-void AmoebaMultipoleForce::setTCGOptions(int order, int prec, int peek, int guess, double omega) {
+void AmoebaMultipoleForce::setTCGOptions(int order, int prec, int guess, double omega) {
     tcgorder = order;
-    tcgprec = prec;
-    tcgpeek = peek;
-    tcgguess = guess;
+    if (guess) {
+        tcgnab = tcgorder + 1;
+    } else {
+        tcgnab = tcgorder;
+    }
     tcgomega = omega;
+    tcgType = TCG_uninitialized;
+    if (guess) {
+        if (prec) {
+            // tcgType = TCG_a;
+            tcgType = TCG_ax;
+        } else {
+            tcgType = TCG_b;
+        }
+    } else {
+        if (prec) {
+            // tcgType = TCG_c;
+            tcgType = TCG_cx;
+        } else {
+            tcgType = TCG_d;
+        }
+    }
 }
 
-void AmoebaMultipoleForce::getTCGOptions(int& order, int& prec, int& peek, int& guess, double& omega, int& version, int& nab) const {
+AmoebaMultipoleForce::TCGType AmoebaMultipoleForce::getTCGOptions(int& order, int& prec, int& guess, double& omega, int& nab) const {
     order = tcgorder;
-    prec = tcgprec;
-    peek = tcgpeek;
-    guess = tcgguess;
+    nab = tcgnab;
     omega = tcgomega;
-
-    version = tcgguess ? (tcgprec ? 2 : 1) : (tcgprec ? 4 : 3);
-    if (tcgguess) {
-        nab = tcgorder + 1;
-    } else {
-        nab = tcgorder;
+    switch (tcgType) {
+        case TCG_a:
+        case TCG_ax:
+            guess = 1;
+            prec = 1;
+            break;
+        case TCG_b:
+            guess = 1;
+            prec = 0;
+            break;
+        case TCG_c:
+        case TCG_cx:
+            guess = 0;
+            prec = 1;
+            break;
+        // case TCG_d:
+        default:
+            guess = 0;
+            prec = 0;
+            break;
     }
+    return tcgType;
 }
 
 const std::vector<double> & AmoebaMultipoleForce::getExtrapolationCoefficients() const {
