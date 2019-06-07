@@ -1,0 +1,19 @@
+extern "C" __global__ void scaleVelocity(double* __restrict__ Velscale, mixed4* __restrict__ velm, int numAtoms){
+	mixed4 velocity;
+	for (int index = blockIdx.x*blockDim.x+threadIdx.x; index < numAtoms; index += blockDim.x*gridDim.x) {
+	velocity=velm[index];
+ 	velocity.x*=(mixed)Velscale[0];
+	velocity.y*=(mixed)Velscale[0];
+	velocity.z*=(mixed)Velscale[0];
+        velm[index]=velocity;
+     }
+}extern "C" __global__ void scalePos(double* __restrict__ Posscale, real4* __restrict__ posq, int numAtoms){
+	real4 pos;
+	for (int index = blockIdx.x*blockDim.x+threadIdx.x; index < numAtoms; index += blockDim.x*gridDim.x) {
+	pos=posq[index];
+ 	pos.x*=(mixed)Posscale[0];
+	pos.y*=(mixed)Posscale[0];
+	pos.z*=(mixed)Posscale[0];
+        posq[index]=pos;
+     }
+}
