@@ -230,3 +230,23 @@ real3 force2 = make_real3(-dedxib-dedxib2, -dedyib-dedyib2, -dedzib-dedzib2);
 real3 force3 = make_real3(-dedxic-dedxic2, -dedyic-dedyic2, -dedzic-dedzic2);
 real3 force4 = make_real3(-dedxid-dedxid2, -dedyid-dedyid2, -dedzid-dedzid2);
 real3 force5 = make_real3(-dedxie2, -dedyie2, -dedzie2);
+#if USES_VIRIAL
+real virxx = cb.x*(dedxic+dedxid) - ba.x*dedxia + dc.x*dedxid;
+real virxy = cb.y*(dedxic+dedxid) - ba.y*dedxia + dc.y*dedxid;
+real virxz = cb.z*(dedxic+dedxid) - ba.z*dedxia + dc.z*dedxid;
+real viryy = cb.y*(dedyic+dedyid) - ba.y*dedyia + dc.y*dedyid;
+real virzy = cb.z*(dedyic+dedyid) - ba.z*dedyia + dc.z*dedyid;
+real virzz = cb.z*(dedzic+dedzid) - ba.z*dedzia + dc.z*dedzid;
+real vxx2 = dc.x*(dedxid2+dedxie2) - cb.x*dedxib2 + ed.x*dedxie2;
+real vxy2 = dc.y*(dedxid2+dedxie2) - cb.y*dedxib2 + ed.y*dedxie2;
+real vxz2 = dc.z*(dedxid2+dedxie2) - cb.z*dedxib2 + ed.z*dedxie2;
+real vyy2 = dc.y*(dedyid2+dedyie2) - cb.y*dedyib2 + ed.y*dedyie2;
+real vzy2 = dc.z*(dedyid2+dedyie2) - cb.z*dedyib2 + ed.z*dedyie2;
+real vzz2 = dc.z*(dedzid2+dedzie2) - cb.z*dedzib2 + ed.z*dedzie2;
+vxx+= virxx+vxx2;
+vxy+= virxy+vxy2;
+vxz+= virxz+vxz2;
+vyy+= viryy+vyy2;
+vyz+= virzy+vzy2;
+vzz+= virzz+vzz2;
+#endif

@@ -77,3 +77,11 @@ energy += dt*drkk;
 real3 force1 = make_real3(-frc1*dt*ddrdxia-ddtdxia*drkk, -frc1*dt*ddrdyia-ddtdyia*drkk, -frc1*dt*ddrdzia-ddtdzia*drkk);
 real3 force3 = make_real3(-frc2*dt*ddrdxic-ddtdxic*drkk, -frc2*dt*ddrdyic-ddtdyic*drkk, -frc2*dt*ddrdzic-ddtdzic*drkk);
 real3 force2 = make_real3(-force1.x-force3.x, -force1.y-force3.y, -force1.z-force3.z);
+#if USES_VIRIAL
+vxx-= ab.x*force1.x + cb.x*force3.x;
+vxy-= ab.y*force1.x + cb.y*force3.x;
+vxz-= ab.z*force1.x + cb.z*force3.x;
+vyy-= ab.y*force1.y + cb.y*force3.y;
+vyz-= ab.z*force1.y + cb.z*force3.y;
+vzz-= ab.z*force1.z + cb.z*force3.z;
+#endif

@@ -48,7 +48,7 @@ public:
     /**
      * Create a CMMotionRemover.
      */
-    explicit CMMotionRemover(int frequency = 1);
+    explicit CMMotionRemover(int frequency = 1, bool UseUpdateContext=true);
     /**
      * Get the frequency (in time steps) at which center of mass motion should be removed
      */
@@ -70,10 +70,14 @@ public:
     bool usesPeriodicBoundaryConditions() const {
         return false;
     }
+    bool getUseUpdateContext() const {
+	return UseUpdateContext;
+    }
 protected:
     ForceImpl* createImpl() const;
 private:
     int frequency;
+    bool UseUpdateContext;
 };
 
 } // namespace OpenMM

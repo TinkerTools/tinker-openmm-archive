@@ -330,8 +330,8 @@ inline __device__ real normVector(real3& v) {
 /**
  * Compute the force on each particle due to the torque.
  */
-extern "C" __global__ void mapTorqueToForce(unsigned long long* __restrict__ forceBuffers, const long long* __restrict__ torqueBuffers,
-        const real4* __restrict__ posq, const int4* __restrict__ multipoleParticles) {
+extern "C" __global__ void mapTorqueToForce(unsigned long long* __restrict__ forceBuffers, const long long* __restrict__ torqueBuffers, const float* __restrict selfTorque,
+        const real4* __restrict__ posq, float* __restrict__ virial, const int4* __restrict__ multipoleParticles) {
     const int U = 0;
     const int V = 1;
     const int W = 2;
@@ -359,7 +359,8 @@ extern "C" __global__ void mapTorqueToForce(unsigned long long* __restrict__ for
     real angles[LastVectorIndex][2];
 
     for (int atom = blockIdx.x*blockDim.x + threadIdx.x; atom < NUM_ATOMS; atom += gridDim.x*blockDim.x) {
-        int4 particles = multipoleParticles[atom];
+	real3 forcesNoSelf[4];
+	int4 particles = multipoleParticles[atom];
         int axisAtom = particles.z;
         int axisType = particles.w;
 
@@ -412,7 +413,14 @@ extern "C" __global__ void mapTorqueToForce(unsigned long long* __restrict__ for
             angles[VW][1] = SQRT(1 - angles[VW][0]*angles[VW][0]);
 
             real dphi[3];
-            real3 torque = make_real3(torqueScale*torqueBuffers[atom], torqueScale*torqueBuffers[atom+PADDED_NUM_ATOMS], torqueScale*torqueBuffers[atom+PADDED_NUM_ATOMS*2]);
+            real dphiNoSelf[3];
+	    real3 torque = make_real3(torqueScale*torqueBuffers[atom], torqueScale*torqueBuffers[atom+PADDED_NUM_ATOMS], torqueScale*torqueBuffers[atom+PADDED_NUM_ATOMS*2]);
+#ifdef USES_VIRIAL
+	    real3 torqueNoSelf= make_real3(torqueScale*torqueBuffers[atom]-selfTorque[atom], torqueScale*torqueBuffers[atom+PADDED_NUM_ATOMS]-selfTorque[atom+PADDED_NUM_ATOMS], torqueScale*torqueBuffers[atom+PADDED_NUM_ATOMS*2]-selfTorque[atom+PADDED_NUM_ATOMS*2]);
+	    dphiNoSelf[U]= -dot(vector[U], torqueNoSelf);
+	    dphiNoSelf[V]= -dot(vector[V], torqueNoSelf);
+            dphiNoSelf[W]= -dot(vector[W], torqueNoSelf);
+#endif
             dphi[U] = -dot(vector[U], torque);
             dphi[V] = -dot(vector[V], torque);
             dphi[W] = -dot(vector[W], torque);
@@ -424,17 +432,52 @@ extern "C" __global__ void mapTorqueToForce(unsigned long long* __restrict__ for
                 real factor2 = dphi[W]/(norms[U]);
                 real factor3 = -dphi[U]/(norms[V]*angles[UV][1]);
                 real factor4 = 0;
+#ifdef USES_VIRIAL
+		real factor1NoSelf = dphiNoSelf[V]/(norms[U]*angles[UV][1]);
+                real factor2NoSelf = dphiNoSelf[W]/(norms[U]);
+                real factor3NoSelf = -dphiNoSelf[U]/(norms[V]*angles[UV][1]);
+                real factor4NoSelf = 0;
+#endif
                 if (axisType == 1) {
                     factor2 *= 0.5f;
-                    factor4 = 0.5f*dphi[W]/(norms[V]);
-                }
+#ifdef USES_VIRIAL
+		    factor2NoSelf *= 0.5f;
+                    factor4NoSelf = 0.5f*dphiNoSelf[W]/(norms[V]);
+#endif 
+                   factor4 = 0.5f*dphi[W]/(norms[V]);
+		}
                 forces[Z] = vector[UV]*factor1 + factor2*vector[UW];
                 forces[X] = vector[UV]*factor3 + factor4*vector[VW];
                 forces[I] = -(forces[X]+forces[Z]);
                 forces[Y] = make_real3(0);
-            }
+#ifdef USES_VIRIAL
+	        forcesNoSelf[Z] = vector[UV]*factor1NoSelf + factor2NoSelf*vector[UW];
+                forcesNoSelf[X] = vector[UV]*factor3NoSelf + factor4NoSelf*vector[VW];
+                forcesNoSelf[I] = -(forcesNoSelf[X]+forcesNoSelf[Z]);
+                forcesNoSelf[Y] = make_real3(0);
+		real4 disToX=posq[atom]-posq[particles.x];
+		real4 disToZ=posq[atom]-posq[axisAtom];
+		real4 disToY=posq[atom]-posq[particles.y];
+		real vxx= disToX.x*forcesNoSelf[X].x+disToY.x*forcesNoSelf[Y].x+disToZ.x*forcesNoSelf[Z].x;
+		real vxy= 0.5f*(disToX.y*forcesNoSelf[X].x+disToY.y*forcesNoSelf[Y].x+disToZ.y*forcesNoSelf[Z].x+disToX.x*forcesNoSelf[X].y+disToY.x*forcesNoSelf[Y].y+disToZ.x*forcesNoSelf[Z].y);
+		real vxz= 0.5f*(disToX.z*forcesNoSelf[X].x+disToY.z*forcesNoSelf[Y].x+disToZ.z*forcesNoSelf[Z].x+ disToX.x*forcesNoSelf[X].z+disToY.x*forcesNoSelf[Y].z+disToZ.x*forcesNoSelf[Z].z);
+		real vyy= disToX.y*forcesNoSelf[X].y+disToY.y*forcesNoSelf[Y].y+disToZ.y*forcesNoSelf[Z].y;
+		real vyz= 0.5f*(disToX.z*forcesNoSelf[X].y+disToY.z*forcesNoSelf[Y].y+disToZ.z*forcesNoSelf[Z].y+disToX.y*forcesNoSelf[X].z+disToY.y*forcesNoSelf[Y].z+disToZ.y*forcesNoSelf[Z].z);
+		real vzz= disToX.z*forcesNoSelf[X].z+disToY.z*forcesNoSelf[Y].z+disToZ.z*forcesNoSelf[Z].z;
+		atomicAdd(&virial[0],(float)vxx);
+                atomicAdd(&virial[1],(float)vxy); 
+	 	atomicAdd(&virial[2],(float)vxz);
+	 	atomicAdd(&virial[3],(float)vxy);
+	 	atomicAdd(&virial[4],(float)vyy);
+	 	atomicAdd(&virial[5],(float)vyz);
+	 	atomicAdd(&virial[6],(float)vxz);
+		atomicAdd(&virial[7],(float)vyz);
+		atomicAdd(&virial[8],(float)vzz);
+#endif
+           }
             else if (axisType == 2) {
-                // z-bisect
+        	printf("axistype2");       
+	 // z-bisect
 
                 vector[R] = vector[V] + vector[W];
 
@@ -485,10 +528,11 @@ extern "C" __global__ void mapTorqueToForce(unsigned long long* __restrict__ for
                 forces[X] = (angles[VS][1]*vector[S] - angles[VS][0]*t1)*factor3;
                 forces[Y] = (angles[WS][1]*vector[S] - angles[WS][0]*t2)*factor4;
                 forces[I] = -(forces[X] + forces[Y] + forces[Z]);
-            }
+                printf("type2");
+	    }
             else if (axisType == 3) {
                 // 3-fold
-
+		printf("type3");
                 forces[Z] = (vector[UW]*dphi[W]/(norms[U]*angles[UW][1]) +
                             vector[UV]*dphi[V]/(norms[U]*angles[UV][1]) -
                             vector[UW]*dphi[U]/(norms[U]*angles[UW][1]) -
@@ -506,6 +550,7 @@ extern "C" __global__ void mapTorqueToForce(unsigned long long* __restrict__ for
                 forces[I] = -(forces[X] + forces[Y] + forces[Z]);
             }
             else if (axisType == 4) {
+		printf("type4");
                 // z-only
 
                 forces[Z] = vector[UV]*dphi[V]/(norms[U]*angles[UV][1]) + vector[UW]*dphi[W]/norms[U];

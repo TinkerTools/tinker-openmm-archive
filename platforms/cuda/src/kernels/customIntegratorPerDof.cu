@@ -47,6 +47,30 @@ extern "C" __global__ void computePerDof(real4* __restrict__ posq, real4* __rest
 #endif
         double4 velocity = convertToDouble4(velm[index]);
         double4 f = make_double4(forceScale*force[index], forceScale*force[index+PADDED_NUM_ATOMS], forceScale*force[index+PADDED_NUM_ATOMS*2], 0.0);
+	double mass = 1.0/velocity.w;
+        if (velocity.w != 0.0) {
+            int gaussianIndex = gaussianBaseIndex;
+            int uniformIndex = 0;
+            COMPUTE_STEP
+        }
+        index += blockDim.x*gridDim.x;
+    }
+}extern "C" __global__ void computePerDofNoForce(real4* __restrict__ posq, real4* __restrict__ posqCorrection, mixed4* __restrict__ posDelta,
+        mixed4* __restrict__ velm, const long long* __restrict__ force, const mixed2* __restrict__ dt, const mixed* __restrict__ globals,
+        mixed* __restrict__ sum, const float4* __restrict__ gaussianValues, unsigned int gaussianBaseIndex, const float4* __restrict__ uniformValues,
+        const mixed energy, mixed* __restrict__ energyParamDerivs
+        PARAMETER_ARGUMENTS) {
+    mixed stepSize = dt[0].y;
+    int index = blockIdx.x*blockDim.x+threadIdx.x;
+    const double forceScale = 1.0/0xFFFFFFFF;
+    while (index < NUM_ATOMS) {
+#ifdef LOAD_POS_AS_DELTA
+        double4 position = convertToDouble4(loadPos(posq, posqCorrection, index)+posDelta[index]);
+#else
+        double4 position = convertToDouble4(loadPos(posq, posqCorrection, index));
+#endif
+        double4 velocity = convertToDouble4(velm[index]);
+	double4 f= make_double4(0.0,0.0,0.0,0.0);
         double mass = 1.0/velocity.w;
         if (velocity.w != 0.0) {
             int gaussianIndex = gaussianBaseIndex;
@@ -56,3 +80,4 @@ extern "C" __global__ void computePerDof(real4* __restrict__ posq, real4* __rest
         index += blockDim.x*gridDim.x;
     }
 }
+

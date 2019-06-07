@@ -51,15 +51,19 @@
 #include "openmm/GBSAOBCForce.h"
 #include "openmm/HarmonicAngleForce.h"
 #include "openmm/HarmonicBondForce.h"
+#include "openmm/HooverThermostat.h"
+#include "openmm/HooverBarostat.h"
 #include "openmm/KernelImpl.h"
 #include "openmm/LangevinIntegrator.h"
 #include "openmm/MonteCarloBarostat.h"
 #include "openmm/PeriodicTorsionForce.h"
 #include "openmm/RBTorsionForce.h"
 #include "openmm/NonbondedForce.h"
+#include "openmm/NoseHoover.h"
 #include "openmm/System.h"
 #include "openmm/VariableLangevinIntegrator.h"
 #include "openmm/VariableVerletIntegrator.h"
+#include "openmm/RESPAIntegrator.h"
 #include "openmm/VerletIntegrator.h"
 #include <iosfwd>
 #include <set>
@@ -207,6 +211,10 @@ public:
      * @param stream    an input stream the checkpoint data should be read from
      */
     virtual void loadCheckpoint(ContextImpl& context, std::istream& stream) = 0;
+    virtual std::vector<float> getFastVirial(const ContextImpl& context) const=0;
+    virtual   std::vector<float> getSlowVirial(const ContextImpl& context) const=0;
+    virtual void setSlowVirial(ContextImpl& context,std::vector<float> inputSlowVirial)=0;
+    virtual void setFastVirial(ContextImpl& context,std::vector<float> inputFastVirial)=0;
 };
 
 /**
@@ -932,6 +940,38 @@ public:
      */
     virtual void copyParametersToContext(ContextImpl& context, const GayBerneForce& force) = 0;
 };
+/**
+ * This kernel is invoked by VerletIntegrator to take one time step.
+ */
+class IntegrateRESPAStepKernel : public KernelImpl {
+public:
+    static std::string Name() {
+        return "IntegrateRESPAStep";
+    }
+    IntegrateRESPAStepKernel(std::string name, const Platform& platform) : KernelImpl(name, platform) {
+    }
+    /**
+     * Initialize the kernel.
+     *
+     * @param system     the System this kernel will be applied to
+     * @param integrator the RESPAIntegrator this kernel will be used for
+     */
+    virtual void initialize(const System& system, RESPAIntegrator& integrator) = 0;
+    /**
+     * Execute the kernel.
+     *
+     * @param context    the context in which to execute this kernel
+     * @param integrator the RESPAIntegrator this kernel is being used for
+     */
+    virtual void execute(ContextImpl& context,  RESPAIntegrator& integrator) = 0;
+    /**
+     * Compute the kinetic energy.
+     *
+     * @param context    the context in which to execute this kernel
+     * @param integrator the RESPAIntegrator this kernel is being used for
+     */
+    virtual double computeKineticEnergy(ContextImpl& context,  RESPAIntegrator& integrator) = 0;
+};
 
 /**
  * This kernel is invoked by VerletIntegrator to take one time step.
@@ -965,7 +1005,35 @@ public:
      */
     virtual double computeKineticEnergy(ContextImpl& context, const VerletIntegrator& integrator) = 0;
 };
-
+class IntegrateNoseHooverKernel : public KernelImpl {
+public:
+    static std::string Name() {
+        return "IntegrateNoseHoover";
+    }
+    IntegrateNoseHooverKernel(std::string name, const Platform& platform) : KernelImpl(name, platform) {
+    }
+    /**
+     * Initialize the kernel.
+     * 
+     * @param system     the System this kernel will be applied to
+     * @param integrator the NoseHooverIntegrator this kernel will be used for
+     */
+    virtual void initialize(const System& system, const NoseHooverIntegrator& integrator) = 0;
+    /**
+     * Execute the kernel.
+     * 
+     * @param context    the context in which to execute this kernel
+     * @param integrator the NoseHooverIntegrator this kernel is being used for
+     */
+    virtual void execute(ContextImpl& context, const NoseHooverIntegrator& integrator) = 0;
+    /**
+     * Compute the kinetic energy.
+     * 
+     * @param context    the context in which to execute this kernel
+     * @param integrator the NoseHooverIntegrator this kernel is being used for
+     */
+    virtual double computeKineticEnergy(ContextImpl& context, const NoseHooverIntegrator& integrator) = 0;
+};
 /**
  * This kernel is invoked by LangevinIntegrator to take one time step.
  */
@@ -1262,6 +1330,38 @@ public:
     virtual void execute(ContextImpl& context) = 0;
 };
 
+class HooverThermostatKernel : public KernelImpl{
+public:
+    static std::string Name() {
+        return "HooverThermostat";
+    }
+    HooverThermostatKernel(std::string name, const Platform& platform) : KernelImpl(name, platform){
+    }
+    /**
+     * Initialize the kernel.
+     *
+     * @param system     the System this kernel will be applied to
+     * @param thermostat   the HooverThermostat this kernel will be used for
+     */
+    virtual void initialize(const System& system, const HooverThermostat& thermostat) = 0;
+    virtual void execute(ContextImpl& context, const HooverThermostat& thermostat) = 0;
+};
+class HooverBarostatKernel : public KernelImpl{
+public:
+    static std::string Name() {
+        return "HooverBarostat";
+    }
+    HooverBarostatKernel(std::string name, const Platform& platform) : KernelImpl(name, platform){
+    }
+    /**
+     * Initialize the kernel.
+     *
+     * @param system     the System this kernel will be applied to
+     * @param barostat   the HooverBarostat this kernel will be used for
+     */
+    virtual void initialize(const System& system, const HooverBarostat& barostat) = 0;
+    virtual void execute(ContextImpl& context, const HooverBarostat& barostat) = 0;
+};
 /**
  * This kernel performs the reciprocal space calculation for PME.  In most cases, this
  * calculation is done directly by CalcNonbondedForceKernel so this kernel is unneeded.
@@ -1269,6 +1369,7 @@ public:
  * GPU based platforms sometimes use a CPU based implementation provided by a separate
  * plugin.
  */
+
 class CalcPmeReciprocalForceKernel : public KernelImpl {
 public:
     class IO;

@@ -49,7 +49,9 @@ void CMMotionRemoverImpl::initialize(ContextImpl& context) {
 }
 
 void CMMotionRemoverImpl::updateContextState(ContextImpl& context) {
-    kernel.getAs<RemoveCMMotionKernel>().execute(context);
+    if(owner.getUseUpdateContext()){
+    	kernel.getAs<RemoveCMMotionKernel>().execute(context);
+    }
 }
 
 std::vector<std::string> CMMotionRemoverImpl::getKernelNames() {

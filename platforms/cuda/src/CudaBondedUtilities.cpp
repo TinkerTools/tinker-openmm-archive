@@ -112,7 +112,7 @@ void CudaBondedUtilities::initialize(const System& system) {
     s<<CudaKernelSources::vectorOps;
     for (int i = 0; i < (int) prefixCode.size(); i++)
         s<<prefixCode[i];
-    s<<"extern \"C\" __global__ void computeBondedForces(unsigned long long* __restrict__ forceBuffer, mixed* __restrict__ energyBuffer, const real4* __restrict__ posq, int groups, real4 periodicBoxSize, real4 invPeriodicBoxSize, real4 periodicBoxVecX, real4 periodicBoxVecY, real4 periodicBoxVecZ";
+    s<<"extern \"C\" __global__ void computeBondedForces(unsigned long long* __restrict__ forceBuffer, mixed* __restrict__ energyBuffer,  float* __restrict__ virial, const real4* __restrict__ posq, int groups, real4 periodicBoxSize, real4 invPeriodicBoxSize, real4 periodicBoxVecX, real4 periodicBoxVecY, real4 periodicBoxVecZ";
     for (int force = 0; force < numForces; force++) {
         for (int i = 0; i < (int) atomIndices[force].size(); i++) {
             int indexWidth = atomIndices[force][i]->getElementSize()/4;
@@ -126,6 +126,7 @@ void CudaBondedUtilities::initialize(const System& system) {
         s<<", mixed* __restrict__ energyParamDerivs";
     s<<") {\n";
     s<<"mixed energy = 0;\n";
+    s<<"float vxx=0.0f;\nfloat vxy=0.0f;\nfloat vxz=0.0f;\nfloat vyy=0.0f;\nfloat vyz=0.0f;\nfloat vzz=0.0f;\n";
     for (int i = 0; i < energyParameterDerivatives.size(); i++)
         s<<"mixed energyParamDeriv"<<i<<" = 0;\n";
     for (int force = 0; force < numForces; force++)
@@ -137,7 +138,10 @@ void CudaBondedUtilities::initialize(const System& system) {
         for (int index = 0; index < numDerivs; index++)
             if (allParamDerivNames[index] == energyParameterDerivatives[i])
                 s<<"energyParamDerivs[(blockIdx.x*blockDim.x+threadIdx.x)*"<<numDerivs<<"+"<<index<<"] += energyParamDeriv"<<i<<";\n";
-    s<<"}\n";
+     if(system.getUsesVirial()){
+     s<<"atomicAdd(&virial[0],vxx);\natomicAdd(&virial[1],vxy);\natomicAdd(&virial[2],vxz);\natomicAdd(&virial[3],vxy);\natomicAdd(&virial[4],vyy);\natomicAdd(&virial[5],vyz);\natomicAdd(&virial[6],vxz);\natomicAdd(&virial[7],vyz);\natomicAdd(&virial[8],vzz);\n";
+     }   
+  s<<"}\n";
     map<string, string> defines;
     defines["PADDED_NUM_ATOMS"] = context.intToString(context.getPaddedNumAtoms());
     CUmodule module = context.createModule(s.str(), defines);
@@ -182,7 +186,8 @@ void CudaBondedUtilities::computeInteractions(int groups) {
         hasInitializedKernels = true;
         kernelArgs.push_back(&context.getForce().getDevicePointer());
         kernelArgs.push_back(&context.getEnergyBuffer().getDevicePointer());
-        kernelArgs.push_back(&context.getPosq().getDevicePointer());
+        kernelArgs.push_back(&context.getFastVirialPointer()->getDevicePointer());
+	kernelArgs.push_back(&context.getPosq().getDevicePointer());
         kernelArgs.push_back(NULL);
         kernelArgs.push_back(context.getPeriodicBoxSizePointer());
         kernelArgs.push_back(context.getInvPeriodicBoxSizePointer());
@@ -199,6 +204,6 @@ void CudaBondedUtilities::computeInteractions(int groups) {
     }
     if (!hasInteractions)
         return;
-    kernelArgs[3] = &groups;
+    kernelArgs[4] = &groups;
     context.executeKernel(kernel, &kernelArgs[0], maxBonds);
 }

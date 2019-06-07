@@ -50,10 +50,14 @@ Context::Context(const System& system, Integrator& integrator, Platform& platfor
 
 Context::Context(const System& system, Integrator& integrator, Platform& platform, const map<string, string>& properties) : properties(properties) {
     impl = new ContextImpl(*this, system, integrator, &platform, properties);
+    outputfastvirial= new float[9];
+    outputslowvirial= new float[9];
 }
 
 Context::~Context() {
     delete impl;
+    delete outputfastvirial;
+    delete outputslowvirial;
 }
 
 const System& Context::getSystem() const {
@@ -262,4 +266,30 @@ const ContextImpl& Context::getImpl() const {
 
 const vector<vector<int> >& Context::getMolecules() const {
     return impl->getMolecules();
+}float*  Context::getFastVirial() const{
+	std::vector<float> data= impl->getFastVirial();
+	for( int i=0; i<9; i++){
+		outputfastvirial[i]=data[i];
+	}
+	return outputfastvirial;
+}float* Context::getSlowVirial() const{
+        std::vector<float> data= impl->getSlowVirial();
+        for( int i=0; i<9; i++){
+                outputslowvirial[i]=data[i]; 
+        }
+        return outputslowvirial;
+
+}void Context::setSlowVirial(float* inputSlowVirial){
+	vector<float> slowvirialvector;
+	for( int i=0; i<9; i++){
+                slowvirialvector.push_back(inputSlowVirial[i]);
+        }
+	impl->setSlowVirial(slowvirialvector);
+}void Context::setFastVirial(float* inputFastVirial){
+        vector<float> fastvirialvector;
+        for( int i=0; i<9; i++){
+                fastvirialvector.push_back(inputFastVirial[i]);
+        }
+        impl->setFastVirial(fastvirialvector);
 }
+

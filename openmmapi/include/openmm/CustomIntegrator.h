@@ -284,7 +284,11 @@ public:
         /**
          * End an "if" or "while" block.
          */
-        BlockEnd = 8
+        BlockEnd = 8,
+        ScaleBox=9,
+        SaveVelocity=10,
+        ResetSlowVirial=11,
+        ResetFastVirial=12
     };
     /**
      * Create a CustomIntegrator.
@@ -534,6 +538,10 @@ public:
      * @param steps   the number of time steps to take
      */
     void step(int steps);
+    int addScaleBox();
+    int addSaveVelocities();
+    int addResetSlowVirial();
+    int addResetFastVirial();
 protected:
     /**
      * This will be called by the Context when it is created.  It informs the Integrator

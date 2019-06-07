@@ -117,7 +117,8 @@ __global__ void computeBucketPositions(unsigned int numBuckets, unsigned int* __
         // Load the bucket sizes into local memory.
 
         unsigned int globalIndex = startBucket+threadIdx.x;
-        posBuffer[threadIdx.x] = (globalIndex < numBuckets ? bucketOffset[globalIndex] : 0);
+        __syncthreads();
+	posBuffer[threadIdx.x] = (globalIndex < numBuckets ? bucketOffset[globalIndex] : 0);
         __syncthreads();
 
         // Perform a parallel prefix sum.

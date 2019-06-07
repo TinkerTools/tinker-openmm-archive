@@ -197,6 +197,10 @@ public:
      * @param stream    an input stream the checkpoint data should be read from
      */
     void loadCheckpoint(ContextImpl& context, std::istream& stream);
+    std::vector<float> getSlowVirial(const ContextImpl& context) const;
+    std::vector<float> getFastVirial(const ContextImpl& context) const; 
+    void  setFastVirial(ContextImpl& context, std::vector<float> inputFastVirial);
+    void  setSlowVirial(ContextImpl& context, std::vector<float> inputSlowVirial);
 private:
     class GetPositionsTask;
     CudaContext& cu;
@@ -1204,6 +1208,93 @@ public:
 private:
     CudaContext& cu;
     CUfunction kernel1, kernel2;
+};class CudaIntegrateRESPAStepKernel : public IntegrateRESPAStepKernel {
+public:
+    CudaIntegrateRESPAStepKernel(std::string name, const Platform& platform, CudaContext& cu) : IntegrateRESPAStepKernel(name, platform), cu(cu) {
+    }
+    ~CudaIntegrateRESPAStepKernel();
+    /**
+     * Initialize the kernel.
+     *
+     * @param system     the System this kernel will be applied to
+     * @param integrator the RESPAIntegrator this kernel will be used for
+     */
+    void initialize(const System& system,  RESPAIntegrator& integrator);
+    /**
+     * Execute the kernel.
+     *
+     * @param context    the context in which to execute this kernel
+     * @param integrator the RESPAIntegrator this kernel is being used for
+     */
+    void execute(ContextImpl& context,  RESPAIntegrator& integrator);
+    /**
+     * Compute the kinetic energy.
+     * 
+     * @param context    the context in which to execute this kernel
+     * @param integrator the RESPAIntegrator this kernel is being used for
+     */
+    double computeKineticEnergy(ContextImpl& context, RESPAIntegrator& integrator);
+    void removemotion(ContextImpl& context);
+private:
+    CudaContext& cu;
+    CUfunction kernel1, kernel2,kernel3,kernel4,saveaccel,saveslowaccel,printkernel;
+    int innersteps,counter;
+    CudaArray* dtarray;
+CudaArray*  fastaccel;
+	CudaArray* slowaccel;
+    bool firststep,fasterspeed; 
+     int frequency;
+    CudaArray* cmMomentum;
+    CUfunction motionkernel1, motionkernel2;
+    CudaArray* scaleArray;
+
+};
+class CudaIntegrateNoseHooverKernel : public IntegrateNoseHooverKernel {
+public:
+    CudaIntegrateNoseHooverKernel(std::string name, const Platform& platform, CudaContext& cu) : IntegrateNoseHooverKernel(name, platform), cu(cu) {
+    }
+    ~CudaIntegrateNoseHooverKernel();
+    /**
+     * Initialize the kernel.
+     *
+     * @param system     the System this kernel will be applied to
+     * @param integrator the NoseHooverIntegrator this kernel will be used for
+     */
+    void initialize(const System& system, const NoseHooverIntegrator& integrator);
+    /**
+     * Execute the kernel.
+     *
+     * @param context    the context in which to execute this kernel
+     * @param integrator the NoseHooverIntegrator this kernel is being used for
+     */
+    void execute(ContextImpl& context,  const NoseHooverIntegrator& integrator);
+    /**
+     * Compute the kinetic energy.
+     * 
+     * @param context    the context in which to execute this kernel
+     * @param integrator the VerletIntegrator this kernel is being used for
+     */
+  double computeKineticEnergy(ContextImpl& context, const NoseHooverIntegrator& integrator);
+  void hoover(double dt,double press, double temp, int nfree, const NoseHooverIntegrator& integrator, ContextImpl& context);
+  void removemotion(ContextImpl& context);
+private:
+    CudaContext& cu;
+    CUfunction kernel1, kernel2,kernel3, kernel4, printatom;
+    CudaArray* ekin;
+    CudaArray* PolyEterm2;
+    CudaArray* sumBuffer;
+    CudaArray* dtArray;
+    double targetpress, temp,press;
+    int nfree;
+    double qnh[4];
+    double vnh[4];
+    double gnh[4];
+    double taupres;
+    double qbar,vbar,gbar;
+    int frequency,counter;
+    CudaArray* cmMomentum;
+    CUfunction motionkernel1, motionkernel2;
+    CudaArray* scaleArray;
 };
 
 /**
@@ -1235,6 +1326,7 @@ public:
      * @param integrator the LangevinIntegrator this kernel is being used for
      */
     double computeKineticEnergy(ContextImpl& context, const LangevinIntegrator& integrator);
+    void hoover(float dt, float pres);
 private:
     CudaContext& cu;
     double prevTemp, prevFriction, prevStepSize;
@@ -1393,6 +1485,7 @@ public:
      *                       On exit, this should specify whether the cached forces are valid at the
      *                       end of the step.
      */
+    double computeKineticEnergyNoForce(ContextImpl& context, CustomIntegrator& integrator, bool& forcesAreValid);
     double computeKineticEnergy(ContextImpl& context, CustomIntegrator& integrator, bool& forcesAreValid);
     /**
      * Get the values of all global variables.
@@ -1424,6 +1517,8 @@ public:
      * @param values    a vector containing the values
      */
     void setPerDofVariable(ContextImpl& context, int variable, const std::vector<Vec3>& values);
+    void scaleBox(ContextImpl& context ,CustomIntegrator& integrator);
+    void scaleCoordinates(ContextImpl& context, double scaleX, double scaleY, double scaleZ);
 private:
     class ReorderListener;
     class GlobalTarget;
@@ -1462,7 +1557,7 @@ private:
     std::vector<std::vector<CUfunction> > kernels;
     std::vector<std::vector<std::vector<void*> > > kernelArgs;
     std::vector<void*> kineticEnergyArgs;
-    CUfunction randomKernel, kineticEnergyKernel, sumKineticEnergyKernel;
+    CUfunction randomKernel, kineticEnergyKernel, kineticEnergyKernel2, sumKineticEnergyKernel, scalekernel;
     std::vector<CustomIntegrator::ComputationType> stepType;
     std::vector<CustomIntegratorUtilities::Comparison> comparisons;
     std::vector<std::vector<Lepton::CompiledExpression> > globalExpressions;
@@ -1483,6 +1578,12 @@ private:
     int gaussianVariableIndex, uniformVariableIndex, dtVariableIndex;
     std::vector<std::string> parameterNames;
     std::vector<GlobalTarget> stepTarget;
+    float Kinetic;
+    bool hasInitializedScaleKernel;
+    int numMolecules;
+    CudaArray* moleculeAtoms;
+    CudaArray* moleculeStartIndex;
+    std::vector<int> lastAtomOrder;
 };
 
 class CudaIntegrateCustomStepKernel::GlobalTarget {
@@ -1522,6 +1623,53 @@ private:
     int randomSeed;
     CudaArray* atomGroups;
     CUfunction kernel;
+};
+class CudaHooverThermostatKernel : public HooverThermostatKernel {
+public:
+    CudaHooverThermostatKernel(std::string name, const Platform& platform, CudaContext& cu) : HooverThermostatKernel(name, platform), cu(cu),
+            hasInitializedKernels(false) {
+    }
+    ~CudaHooverThermostatKernel();
+    /**
+     * Initialize the kernel.
+     *
+     * @param system     the System this kernel will be applied to
+     * @param thermostat   the Thermostat this kernel will be used for
+     */
+    void initialize(const System& system, const HooverThermostat& thermostat);
+    void execute( ContextImpl& context, const HooverThermostat& thermostat);
+private:
+    CudaContext& cu;
+    bool hasInitializedKernels;
+    CUfunction scalekernel;
+    double InnerStepSize,OuterStepSize,temperature;
+    int nfree;
+    double ThermostatStates[5];
+    double ThermalMass[5];
+    CudaArray* scalearray;
+};class CudaHooverBarostatKernel : public HooverBarostatKernel {
+public:
+    CudaHooverBarostatKernel(std::string name, const Platform& platform, CudaContext& cu) : HooverBarostatKernel(name, platform), cu(cu),
+            hasInitializedKernels(false) {
+    }
+    ~CudaHooverBarostatKernel();
+    /**
+     * Initialize the kernel.
+     *
+     * @param system     the System this kernel will be applied to
+     * @param thermostat   the Thermostat this kernel will be used for
+     */
+    void initialize(const System& system, const HooverBarostat& barostat);
+    void execute( ContextImpl& context, const HooverBarostat& barostat);
+private:
+    CudaContext& cu;
+    bool hasInitializedKernels;
+    CUfunction scaleposkernel;
+    CUfunction scalevelkernel;
+    double InnerStepSize,OuterStepSize,temperature, pressure;
+    int nfree, frequency;
+    double BarostatState;
+    CudaArray* ScaleFactor;
 };
 
 /**
@@ -1602,4 +1750,5 @@ private:
 } // namespace OpenMM
 
 #endif /*OPENMM_CUDAKERNELS_H_*/
+
 

@@ -408,7 +408,7 @@ private:
     int fixedFieldThreads, inducedFieldThreads, electrostaticsThreads;
     int gridSizeX, gridSizeY, gridSizeZ;
     double alpha, inducedEpsilon;
-    bool usePME, hasQuadrupoles, hasInitializedScaleFactors, hasInitializedFFT, multipolesAreValid, hasCreatedEvent;
+    bool usePME, hasQuadrupoles, hasInitializedScaleFactors, hasInitializedFFT, multipolesAreValid, hasCreatedEvent, UsesVirial;
     AmoebaMultipoleForce::PolarizationType polarizationType;
     CudaContext& cu;
     const System& system;
@@ -428,6 +428,7 @@ private:
     CudaArray* inducedField;
     CudaArray* inducedFieldPolar;
     CudaArray* torque;
+    CudaArray* selfTorque;
     CudaArray* dampingAndThole;
     CudaArray* inducedDipole;
     CudaArray* inducedDipolePolar;
@@ -455,6 +456,8 @@ private:
     CudaArray* covalentFlags;
     CudaArray* polarizationGroupFlags;
     CudaArray* pmeGrid;
+    CudaArray* pmeGrip;
+    CudaArray* pmeGridD;
     CudaArray* pmeBsplineModuliX;
     CudaArray* pmeBsplineModuliY;
     CudaArray* pmeBsplineModuliZ;
@@ -469,7 +472,7 @@ private:
     CudaSort* sort;
     cufftHandle fft;
     CUfunction computeMomentsKernel, recordInducedDipolesKernel, computeFixedFieldKernel, computeInducedFieldKernel, updateInducedFieldKernel, electrostaticsKernel, mapTorqueKernel;
-    CUfunction pmeSpreadFixedMultipolesKernel, pmeSpreadInducedDipolesKernel, pmeFinishSpreadChargeKernel, pmeConvolutionKernel;
+    CUfunction pmeSpreadFixedMultipolesKernel, pmeSpreadInducedDipolesKernel,pmeSpreadInducedGripDipolesKernel,pmeSpreadInducedGridDDipolesKernel, pmeFinishSpreadChargeKernel,addPmeVirialKernel, pmeConvolutionKernel;
     CUfunction pmeFixedPotentialKernel, pmeInducedPotentialKernel, pmeFixedForceKernel, pmeInducedForceKernel, pmeRecordInducedFieldDipolesKernel, computePotentialKernel;
     CUfunction recordDIISDipolesKernel, buildMatrixKernel, solveMatrixKernel;
     CUfunction initExtrapolatedKernel, iterateExtrapolatedKernel, computeExtrapolatedKernel, addExtrapolatedGradientKernel;

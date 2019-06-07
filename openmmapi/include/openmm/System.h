@@ -244,6 +244,8 @@ public:
      * @return true if at least one force uses PBC and false otherwise
      */
     bool usesPeriodicBoundaryConditions() const;
+    bool getUsesVirial() const;
+    void setUsesVirial(bool input);
 private:
     class ConstraintInfo;
     Vec3 periodicBoxVectors[3];
@@ -251,6 +253,7 @@ private:
     std::vector<ConstraintInfo> constraints;
     std::vector<Force*> forces;
     std::vector<VirtualSite*> virtualSites;
+    bool UsesVirial;
 };
 
 /**

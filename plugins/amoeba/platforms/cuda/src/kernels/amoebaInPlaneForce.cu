@@ -118,3 +118,11 @@ real3 force1 = make_real3(-dedxia, -dedyia, -dedzia);
 real3 force2 = make_real3(-dedxib, -dedyib, -dedzib);
 real3 force3 = make_real3(-dedxic, -dedyic, -dedzic);
 real3 force4 = make_real3(-dedxid, -dedyid, -dedzid);
+#if USES_VIRIAL
+vxx+= ad.x*dedxia + bd.x*dedxib + cd.x*dedxic;
+vxy+= ad.y*dedxia + bd.y*dedxib + cd.y*dedxic;
+vxz+= ad.z*dedxia + bd.z*dedxib + cd.z*dedxic;
+vyy+= ad.y*dedyia + bd.y*dedyib + cd.y*dedyic;
+vyz+= ad.z*dedyia + bd.z*dedyib + cd.z*dedyic;
+vzz+= ad.z*dedzia + bd.z*dedzib + cd.z*dedzic;
+#endif

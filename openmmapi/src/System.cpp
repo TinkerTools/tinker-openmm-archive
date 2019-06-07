@@ -153,4 +153,8 @@ bool System::usesPeriodicBoundaryConditions() const {
     }
 
     return uses_pbc;
+}bool System::getUsesVirial() const{
+	return UsesVirial;
+}void System::setUsesVirial(bool input) {
+	 UsesVirial=input;
 }

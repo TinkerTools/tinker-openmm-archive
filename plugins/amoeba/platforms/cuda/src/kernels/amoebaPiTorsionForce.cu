@@ -137,3 +137,14 @@ real3 force3 = make_real3(-dedxic, -dedyic, -dedzic);
 real3 force4 = make_real3(-dedxid, -dedyid, -dedzid);
 real3 force5 = make_real3(-dedxie, -dedyie, -dedzie);
 real3 force6 = make_real3(-dedxig, -dedyig, -dedzig);
+real vxterm = dedxid + dedxia + dedxib;
+real vyterm = dedyid + dedyia + dedyib;
+real vzterm = dedzid + dedzia + dedzib;
+#if USES_VIRIAL
+vxx += xdc*vxterm + xcp*dedxip - xqd*dedxiq;
+vxy+= ydc*vxterm + ycp*dedxip - yqd*dedxiq;
+vxz += zdc*vxterm + zcp*dedxip - zqd*dedxiq;
+vyy+= ydc*vyterm + ycp*dedyip - yqd*dedyiq;
+vyz+= zdc*vyterm + zcp*dedyip - zqd*dedyiq;
+vzz+= zdc*vzterm + zcp*dedzip - zqd*dedziq;
+#endif

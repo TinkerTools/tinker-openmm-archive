@@ -135,8 +135,17 @@ double CudaCalcForcesAndEnergyKernel::finishComputation(ContextImpl& context, bo
 }
 
 void CudaUpdateStateDataKernel::initialize(const System& system) {
+}std::vector<float> CudaUpdateStateDataKernel::getSlowVirial(const ContextImpl& context) const{
+	std::vector<float> outputdata=cu.getSlowVirial();
+	return outputdata;
+}std::vector<float> CudaUpdateStateDataKernel::getFastVirial(const ContextImpl& context) const {
+	std::vector<float> outputdata=cu.getFastVirial();
+	return outputdata;
+}void  CudaUpdateStateDataKernel::setFastVirial(ContextImpl& context, std::vector<float> inputFastVirial){
+	cu.setFastVirial(inputFastVirial);
+}void  CudaUpdateStateDataKernel::setSlowVirial(ContextImpl& context, std::vector<float> inputSlowVirial){
+        cu.setSlowVirial(inputSlowVirial);
 }
-
 double CudaUpdateStateDataKernel::getTime(const ContextImpl& context) const {
     return cu.getTime();
 }
@@ -555,6 +564,7 @@ void CudaCalcHarmonicBondForceKernel::initialize(const System& system, const Har
     replacements["APPLY_PERIODIC"] = (force.usesPeriodicBoundaryConditions() ? "1" : "0");
     replacements["COMPUTE_FORCE"] = CudaKernelSources::harmonicBondForce;
     replacements["PARAMS"] = cu.getBondedUtilities().addArgument(params->getDevicePointer(), "float2");
+    replacements["POSQ"]= cu.getBondedUtilities().addArgument(cu.getPosq().getDevicePointer(),"float4");
     cu.getBondedUtilities().addInteraction(atoms, cu.replaceStrings(CudaKernelSources::bondForce, replacements), force.getForceGroup());
     cu.addForce(new CudaHarmonicBondForceInfo(force));
 }
@@ -6464,7 +6474,324 @@ void CudaIntegrateVerletStepKernel::execute(ContextImpl& context, const VerletIn
 }
 
 double CudaIntegrateVerletStepKernel::computeKineticEnergy(ContextImpl& context, const VerletIntegrator& integrator) {
+    return cu.getIntegrationUtilities().computeKineticEnergy(0.0);
+}
+CudaIntegrateRESPAStepKernel::~CudaIntegrateRESPAStepKernel() {
+}
+
+void CudaIntegrateRESPAStepKernel::initialize(const System& system,  RESPAIntegrator& integrator) {
+    cu.getPlatformData().initializeContexts(system);
+    cu.setAsCurrent();
+    map<string, string> defines;
+    for(int i=0; i< system.getNumForces(); i++){
+	int forcegroup= system.getForce(i).getForceGroup();
+    }
+   CUmodule module = cu.createModule(CudaKernelSources::respa, defines, "");
+    kernel1 = cu.getKernel(module, "integrateRESPAPart1");
+    kernel2 = cu.getKernel(module, "integrateRESPAPart2");
+    kernel3 = cu.getKernel(module, "integrateRESPAPart3");
+    kernel4 = cu.getKernel(module, "integrateRESPAPart4");
+    printkernel= cu.getKernel(module,"printatom");
+    saveaccel= cu.getKernel(module,"saveaccel");
+    saveslowaccel=cu.getKernel(module,"saveslowaccel");
+    integrator.getinnersteps(&innersteps);
+    double dt = integrator.getStepSize();
+    dtarray=CudaArray::create<double>(cu, 2, "StepSizes");
+    vector<double> dtvec;
+    double eps =  0.00000001;
+   double dalt = 0.00025;
+   int nalt = int(dt/(dalt+eps)) + 1;
+    dalt = double(nalt);
+   double dta = dt / dalt;
+
+    dtvec.push_back(dt);
+    dtvec.push_back(0.00025);
+    //printf("innertimestep: %g       %g\n", dt, dta );
+    dtarray->upload(dtvec);
+    slowaccel=CudaArray::create<double3>(cu,3*cu.getPaddedNumAtoms(),"slowaccel");
+    fastaccel=CudaArray::create<double3>(cu,3*cu.getPaddedNumAtoms(),"fastaccel");
+    firststep=true;
+}
+void CudaIntegrateRESPAStepKernel::execute(ContextImpl& context, RESPAIntegrator& integrator) {
+    cu.setAsCurrent();
+    CudaIntegrationUtilities& integration = cu.getIntegrationUtilities();
+    int numAtoms = cu.getNumAtoms();
+    int paddedNumAtoms = cu.getPaddedNumAtoms();
+    double dt = integrator.getStepSize();
+    cu.getIntegrationUtilities().setNextStepSize(dt);
+
+   // Call the first integration kernel
+    if(firststep){
+         firststep=false;
+	context.calcForcesAndEnergy(true,false,1<<1);
+	void* saveslowaccelargs[] {&numAtoms,&paddedNumAtoms, &dtarray->getDevicePointer(), &cu.getVelm().getDevicePointer(),&cu.getForce().getDevicePointer(), &slowaccel->getDevicePointer()};
+	cu.executeKernel(saveslowaccel,saveslowaccelargs,numAtoms,128);   
+         context.calcForcesAndEnergy(true,false,1<<0);
+         void* saveaccelargs[] {&numAtoms,&paddedNumAtoms, &dtarray->getDevicePointer(), &cu.getVelm().getDevicePointer(),&cu.getForce().getDevicePointer(), &fastaccel->getDevicePointer()};
+         cu.executeKernel(saveaccel,saveaccelargs,numAtoms,128);
+   }else{
+          // void* printargs[]={&cu.getForce().getDevicePointer(),&slowaccel->getDevicePointer(),&fastaccel->getDevicePointer(),&cu.getPosq().getDevicePointer()};
+         //cu.executeKernel(printkernel,printargs,1,1);
+   context.updateContextState();
+   }
+   void* integrateargs1[]={&numAtoms,&paddedNumAtoms,  &dtarray->getDevicePointer(), &cu.getVelm().getDevicePointer(), &cu.getForce().getDevicePointer(), &slowaccel->getDevicePointer()};
+    cu.executeKernel(kernel1,integrateargs1,numAtoms,128);
+      double eps =  0.00000001;
+   double dalt = 0.00025;
+   int nalt = int(dt/(dalt+eps)) + 1; 
+        cu.ResetFastVirial();
+   for( int i=0; i<nalt;i++){
+	void* integrateargs2[]={&numAtoms,&paddedNumAtoms, &dtarray->getDevicePointer(), &cu.getVelm().getDevicePointer(), &cu.getForce().getDevicePointer(), &cu.getPosq().getDevicePointer(), &fastaccel->getDevicePointer()};
+	cu.executeKernel(kernel2,integrateargs2,numAtoms,128);
+ 	double fastenergy=context.calcForcesAndEnergy(true,false,1<<0);
+	void* integrateargs3[]={&numAtoms,&paddedNumAtoms,  &dtarray->getDevicePointer(), &cu.getVelm().getDevicePointer(), &cu.getForce().getDevicePointer(),&fastaccel->getDevicePointer(),&slowaccel->getDevicePointer()};
+	cu.executeKernel(kernel3,integrateargs3,numAtoms,128);	
+    // Apply constraints.
+    }
+         cu.ResetSlowVirial();      
+       double slowenergy=context.calcForcesAndEnergy(true,false,1<<1);
+           vector<float> SlowVirial=cu.getSlowVirial();
+        vector<float> FastVirial=cu.getFastVirial();
+       printf("%g %g %g \n",SlowVirial[0]+FastVirial[0],SlowVirial[4]+FastVirial[4],SlowVirial[8]+FastVirial[8]);
+       void*  integrateargs4[]={&numAtoms,&paddedNumAtoms,  &dtarray->getDevicePointer(), &cu.getVelm().getDevicePointer(), &cu.getForce().getDevicePointer(), &slowaccel->getDevicePointer()};
+       cu.executeKernel(kernel4,integrateargs4,numAtoms,128);
+
+     	
+    // Call the second integration kernel.
+
+
+    // Update the time and step count.
+
+    cu.setTime(cu.getTime()+dt);
+    cu.setStepCount(cu.getStepCount()+1);
+    cu.reorderAtoms();
+}
+
+double CudaIntegrateRESPAStepKernel::computeKineticEnergy(ContextImpl& context, RESPAIntegrator& integrator) {
     return cu.getIntegrationUtilities().computeKineticEnergy(0.5*integrator.getStepSize());
+}
+CudaIntegrateNoseHooverKernel::~CudaIntegrateNoseHooverKernel() {
+}
+
+void CudaIntegrateNoseHooverKernel::initialize(const System& system,  const NoseHooverIntegrator& integrator) {
+    cu.getPlatformData().initializeContexts(system);
+    cu.setAsCurrent();
+    vbar=0.0;
+    qbar=0.0;
+    taupres=2.0;
+    std::cout<<taupres<<endl;
+    double tautemp=0.2;
+    for(int i=0; i<4; i++){
+	qnh[i]=0.0;
+	gnh[i]=0.0;
+	vnh[i]=0.0;
+    }
+    int numAtoms = cu.getNumAtoms();
+    targetpress=integrator.getPressure();
+    press=targetpress;
+    temp=integrator.getTemperature();
+    double ekt=.001987204259*temp;
+    double qterm=ekt*tautemp*tautemp;
+    for(int i=0; i<4; i++){
+	qnh[i]=qterm;
+    }
+    nfree=integrator.getNfree();
+    qnh[0]*=(double)nfree;
+    qterm=ekt*taupres*taupres; 
+    qbar=(nfree+1)*qterm;
+    map<string, string> defines;
+    ekin=CudaArray::create<float3>(cu, 1, "ekin");
+    defines["SUM_BUFFER_SIZE"] = cu.intToString(3*numAtoms);
+    sumBuffer=CudaArray::create<float3>(cu, ((3*system.getNumParticles()+3)/4)*4, "sumBuffer");
+    PolyEterm2=CudaArray::create<double>(cu, 2, "PolyEterm2");
+    dtArray=CudaArray::create<double>(cu, 1, "dtarray"); 
+    defines["WORK_GROUP_SIZE"] = cu.intToString(CudaContext::ThreadBlockSize);
+    CUmodule module = cu.createModule(CudaKernelSources::nose, defines, "");
+    kernel1 = cu.getKernel(module, "integratePart1");
+    kernel2 = cu.getKernel(module, "integratePart2");
+    kernel4= cu.getKernel(module,"scaleVelocity");
+    printatom=cu.getKernel(module,"printatom");
+    frequency = 1;
+    cmMomentum = CudaArray::create<float4>(cu, (numAtoms+CudaContext::ThreadBlockSize-1)/CudaContext::ThreadBlockSize, "cmMomentum");
+    double totalMass = 0.0;
+    for (int i = 0; i < numAtoms; i++)
+        totalMass += system.getParticleMass(i);
+    defines["INVERSE_TOTAL_MASS"] = cu.doubleToString(totalMass == 0 ? 0.0 : 1.0/totalMass);
+    module = cu.createModule(CudaKernelSources::removeCM, defines);
+    motionkernel1 = cu.getKernel(module, "calcCenterOfMassMomentum");
+    motionkernel2 = cu.getKernel(module, "removeCenterOfMassMomentum");
+    scaleArray=CudaArray::create<double>(cu, 1, "Velscale");
+
+}
+void  CudaIntegrateNoseHooverKernel::hoover(double dt,double press,double temp, int nfree, const NoseHooverIntegrator& integrator, ContextImpl&  context){
+    const double ekt=.001987204259*temp;
+    const int nc = 5;
+    const int ns =3;
+    double dtc= dt/double(nc);
+    double w[3];
+    w[0]= 1.0/(2.0-pow(2.0,(1.0/3.0)));
+    w[1]= 1.0-2.0*w[0];
+    w[2]= w[0];
+    double odnf=1.0+3.0/nfree;
+    double gn1kt=(1.0+nfree)*ekt;
+    double prescon=68568.4112;
+    double dpress= (press-targetpress)/prescon;
+    double scale=1.0;
+    double ekin=cu.getIntegrationUtilities().computeKineticEnergy(0.0);
+    //cout<<"\t EKIN"<<ekin<<endl;
+    void* printargs[]={&cu.getVelm().getDevicePointer(), &cu.getPosq().getDevicePointer()};
+    //cu.executeKernel(printatom,printargs,1,1);
+    for( int k=0; k<nc; k++){
+	for(int j=0; j<ns; j++){
+	 double dts=w[j]*dtc;
+	 double dt2= 0.5*dts;
+	 double dt4= 0.25*dts;
+	 double dt8= 0.125*dts;
+	 gnh[3]=(qnh[2]*vnh[2]*vnh[2]-ekt)/qnh[3];
+	 vnh[3]=vnh[3]+gnh[3]*dt4;
+	 gnh[2]=(qnh[1]*vnh[1]*vnh[1]-ekt)/qnh[2];
+	 double expterm=exp(-vnh[3]*dt8);
+	 vnh[2]=expterm*(vnh[2]*expterm+gnh[2]*dt4);
+	 gnh[1]=(qnh[0]*vnh[0]*vnh[0]-ekt)/qnh[1];
+	 expterm= exp(-1.0*vnh[2]*dt8);
+	 vnh[1]=expterm*(vnh[1]*expterm+gnh[1]*dt4);
+	 gnh[0]=((2.0*ekin/4.184)+qbar*(vbar)*(vbar)-gn1kt)/qnh[0];
+	 expterm=exp(-vnh[1]*dt8);
+	 vnh[0]=expterm*(vnh[0]*expterm+gnh[0]*dt4);
+	 Vec3 boxVectors[3];
+	 cu.getPeriodicBoxVectors(boxVectors[0], boxVectors[1], boxVectors[2]);
+	 double volbox;
+	 volbox=boxVectors[0][0]*boxVectors[1][1]*boxVectors[2][2]*1000;
+	 gbar=(2.0*(ekin/4.184)*odnf+3.0*volbox*dpress)/qbar;
+	 expterm=exp(-1.0*vnh[0]*dt8);
+	 vbar = expterm*(vbar*expterm+gbar*dt4);
+         expterm=exp(-(vnh[0]+vbar*odnf)*dt2);
+	 scale =scale*expterm;
+	 ekin=ekin*expterm*expterm;
+	 gbar=(2.0*ekin/4.184*odnf+3.0*volbox*dpress)/qbar;
+	 expterm=exp(-vnh[0]*dt8);
+	 vbar=expterm*(vbar*expterm+gbar*dt4);
+	 gnh[0]=(2.0*ekin/4.184+qbar*vbar*vbar-gn1kt)/qnh[0];
+	 expterm=exp(-vnh[1]*dt8);
+	 vnh[0]=expterm*(vnh[0]*expterm+gnh[0]*dt4);
+	 gnh[1]=(qnh[0]*vnh[0]*vnh[0]-ekt)/qnh[1];
+	 expterm=exp(-vnh[2]*dt8);
+	 vnh[1]=expterm*(vnh[1]*expterm+gnh[1]*dt4);
+	 gnh[2]=(qnh[1]*vnh[1]*vnh[1]-ekt)/qnh[2];
+	 expterm= exp(-1.0*vnh[3]*dt8);
+	 vnh[2]=expterm*(vnh[2]*expterm+gnh[2]*dt4);
+	 gnh[3]=(qnh[2]*vnh[2]*vnh[2]-ekt)/qnh[3];
+	 vnh[3]=vnh[3]+gnh[3]*dt4;
+	}
+   }
+   counter=1;
+   int numAtoms=cu.getNumAtoms();
+   vector <double> scale_vec;
+   scale_vec.push_back(double(scale));
+   scaleArray->upload(scale_vec);
+   void* velmArgs[]={&scaleArray->getDevicePointer(), &cu.getVelm().getDevicePointer(), &numAtoms};
+   cu.executeKernel(kernel4,velmArgs,numAtoms,128);
+}
+void CudaIntegrateNoseHooverKernel::execute(ContextImpl& context, const NoseHooverIntegrator& integrator) {
+    cu.setAsCurrent();
+    CudaIntegrationUtilities& integration = cu.getIntegrationUtilities();
+    int numAtoms = cu.getNumAtoms();
+    int paddedNumAtoms = cu.getPaddedNumAtoms();
+    double dt = double(integrator.getStepSize());
+    //printf("stepsize: %g \n", dt);
+    vector<double> dt_vec;
+    dt_vec.push_back(dt);
+    dtArray->upload(dt_vec);
+    cu.getIntegrationUtilities().setNextStepSize(dt);
+    CudaIntegrateNoseHooverKernel::hoover(dt,press,temp,nfree,integrator, context);
+    //printf("vbar is :%g \n" , vbar);
+    double term = vbar *dt/2.0;
+    double term2 = term * term;
+    double expterm = exp(term);
+    //cout<<"expterm\t"<<expterm<<endl;
+    double eterm2 = expterm * expterm;
+    double e2 = 1.0 / 6.0;
+    double e4 = e2 / 20.0;
+    double e6 = e4 / 42.0;
+    double e8 = e6 / 72.0;
+    double poly = 1.0f + term2*(e2+term2*(e4+term2*(e6+term2*e8)));
+    poly = expterm * poly * dt;
+//    void* integrateArgs[] ={&dt, &numAtoms,&poly, &eterm2, &paddedNumAtoms,&cu.getVelm().getDevicePointer(), &cu.getPosq().getDevicePointer(),&cu.getForce().getDevicePointer(),&vbar};
+    vector<double> poly2;
+    poly2.push_back(poly);
+    poly2.push_back(eterm2);
+    integration.computeVirtualSites();
+    PolyEterm2->upload(poly2);
+    void* integrateArgs[] ={&numAtoms,&paddedNumAtoms,&dtArray->getDevicePointer(),&PolyEterm2->getDevicePointer(),&cu.getVelm().getDevicePointer(), &cu.getPosq().getDevicePointer(),&cu.getPosqCorrection().getDevicePointer(),&cu.getForce().getDevicePointer()};
+    cu.executeKernel(kernel1,integrateArgs,numAtoms,128);
+    double4 boxVectors;
+    Vec3 OrigXBox;
+    Vec3 OrigYBox;
+    Vec3 OrigZBox;
+    //cout<<"ETERM2\t"<<eterm2<<endl;
+    cu.getPeriodicBoxVectors(OrigXBox,OrigYBox,OrigZBox);
+    OrigXBox[0]=OrigXBox[0]*eterm2;
+    OrigYBox[1]=OrigYBox[1]*eterm2;
+    OrigZBox[2]=OrigZBox[2]*eterm2;
+    integration.applyConstraints(integrator.getConstraintTolerance());
+    cu.setPeriodicBoxVectors(OrigXBox,OrigYBox,OrigZBox);
+    context.updateContextState();  
+    cu.ResetSlowVirial();
+    cu.ResetFastVirial();
+    context.calcForcesAndEnergy(true, false);
+    void* integrateArgs2[]={&numAtoms,&paddedNumAtoms,&dtArray->getDevicePointer(),&cu.getVelm().getDevicePointer(), &cu.getPosq().getDevicePointer(),&cu.getForce().getDevicePointer()};
+    cu.executeKernel(kernel2,integrateArgs2,numAtoms,128);
+    integration.computeVirtualSites();
+    double ekin=cu.getIntegrationUtilities().computeKineticEnergy(0.0);
+    CudaIntegrateNoseHooverKernel::hoover(dt,press,temp,nfree,integrator, context);
+    double factor= 68568.411/(OrigXBox[0]*OrigYBox[1]*OrigZBox[2]*1000);
+    //printf("OrigXBox:%g Y:%g Z%g",OrigXBox[0],OrigYBox[1],OrigZBox[2]);
+    vector<float> SlowVirial=cu.getSlowVirial();
+    vector<float> FastVirial=cu.getFastVirial();
+    float virialsum=0.0f;
+    for( int i=0; i<9;i+=4){	
+	virialsum-=(SlowVirial[i]+FastVirial[i])/4.184f;
+    }printf("%g %g %g\n ", (SlowVirial[0]+FastVirial[0])/4.184f,(SlowVirial[4]+FastVirial[4])/4.184f,(SlowVirial[8]+FastVirial[8])/4.184f);
+    counter+=1;
+    //            void* printargs[]={&cu.getVelm().getDevicePointer(), &cu.getPosq().getDevicePointer()};
+    //cu.executeKernel(printatom,printargs,1,1);
+    press= factor*((double)virialsum)/3.0;
+    CudaIntegrateNoseHooverKernel::removemotion(context);
+    double ekinTwo=cu.getIntegrationUtilities().computeKineticEnergy(0);
+    printf("%g\n", factor*(2*ekinTwo/4.184f+(double)virialsum)/3.0);
+  //  cout<<"press "<<virialsum<<endl;
+    //context.updateContextState();
+    //context.calcForcesAndEnergy(true,  true);   
+    // Call the first integration kernel.
+
+//    CUdeviceptr posCorrection = (cu.getUseMixedPrecision() ? cu.getPosqCorrection().getDevicePointer() : 0);
+//    void* args1[] = {&numAtoms, &paddedNumAtoms, &cu.getIntegrationUtilities().getStepSize().getDevicePointer(), &cu.getPosq().getDevicePointer(), &posCorrection,
+//            &cu.getVelm().getDevicePointer(), &cu.getForce().getDevicePointer(), &integration.getPosDelta().getDevicePointer()};
+//    cu.executeKernel(kernel2, args1, numAtoms, 128);
+//    eterm2=CudaIntegrateNoseHooverStepKernel::hoover();
+//    vector<float> fastvirial(9);
+//    fastvirial=cu.getFastVirial();
+//    vector<float> slowvirial(9);
+//    slowvirial=cu.getSlowVirial();
+//    cu.ResetSlowVirial();
+//    cu.ResetFastVirial();
+
+    // Update the time and step count.
+
+    cu.setTime(cu.getTime()+dt);
+    cu.setStepCount(cu.getStepCount()+1);
+    cu.reorderAtoms();
+}
+
+double CudaIntegrateNoseHooverKernel::computeKineticEnergy(ContextImpl& context, const NoseHooverIntegrator& integrator) {
+    return cu.getIntegrationUtilities().computeKineticEnergy(0.5*integrator.getStepSize());
+}
+void CudaIntegrateNoseHooverKernel::removemotion(ContextImpl& context) {
+    cu.setAsCurrent();
+    int numAtoms = cu.getNumAtoms();
+    void* args[] = {&numAtoms, &cu.getVelm().getDevicePointer(), &cmMomentum->getDevicePointer()};
+    cu.executeKernel(motionkernel1, args, cu.getNumAtoms(), cu.ThreadBlockSize, cu.ThreadBlockSize*sizeof(float4));
+    cu.executeKernel(motionkernel2, args, cu.getNumAtoms(), cu.ThreadBlockSize, cu.ThreadBlockSize*sizeof(float4));
 }
 
 CudaIntegrateLangevinStepKernel::~CudaIntegrateLangevinStepKernel() {
@@ -6886,6 +7213,9 @@ void CudaIntegrateCustomStepKernel::initialize(const System& system, const Custo
     perDofValues = new CudaParameterSet(cu, integrator.getNumPerDofVariables(), 3*system.getNumParticles(), "perDofVariables", false, cu.getUseDoublePrecision() || cu.getUseMixedPrecision());
     cu.addReorderListener(new ReorderListener(cu, *perDofValues, localPerDofValuesFloat, localPerDofValuesDouble, deviceValuesAreCurrent));
     SimTKOpenMMUtilities::setRandomNumberSeed(integrator.getRandomNumberSeed());
+    CUmodule module = cu.createModule(CudaKernelSources::monteCarloBarostat);
+    scalekernel = cu.getKernel(module, "scalePositions"); 
+    hasInitializedScaleKernel=false;
 }
 
 string CudaIntegrateCustomStepKernel::createPerDofComputation(const string& variable, const Lepton::ParsedExpression& expr, int component, CustomIntegrator& integrator, const string& forceName, const string& energyName) {
@@ -7399,8 +7729,12 @@ void CudaIntegrateCustomStepKernel::execute(ContextImpl& context, CustomIntegrat
             }
             else {
                 recordChangedParameters(context);
+		cu.ResetSlowVirial();
                 energy = context.calcForcesAndEnergy(computeForce, computeEnergy, forceGroupFlags[step]);
-                energyFloat = (float) energy;
+	        vector<float> slowvirial=cu.getSlowVirial();
+                vector<float> fastvirial=cu.getFastVirial();
+                printf("fastvirial: %g %g %g, slowvirial: %g %g %g\n",fastvirial[0]/4.184f,fastvirial[4]/4.184f,fastvirial[8]/4.184f,slowvirial[0]/4.184f, slowvirial[4]/4.184f,slowvirial[8]/4.184f);
+		energyFloat = (float) energy;
                 if (needsEnergyParamDerivs) {
                     context.getEnergyParameterDerivatives(energyParamDerivs);
                     if (perDofEnergyParamDerivNames.size() > 0) {
@@ -7494,6 +7828,15 @@ void CudaIntegrateCustomStepKernel::execute(ContextImpl& context, CustomIntegrat
         else if (stepType[step] == CustomIntegrator::BlockEnd) {
             if (blockEnd[step] != -1)
                 nextStep = blockEnd[step]; // Return to the start of a while block.
+        } else if (stepType[step] == CustomIntegrator::ScaleBox) {
+                                scaleBox(context,integrator);
+        }else if (stepType[step]== CustomIntegrator::SaveVelocity){
+                bool forcesValid=true;
+                Kinetic=computeKineticEnergy(context, integrator, forcesValid);
+        }else if (stepType[step]== CustomIntegrator::ResetSlowVirial){
+                cu.ResetSlowVirial();
+        }else if (stepType[step]== CustomIntegrator::ResetFastVirial){
+                cu.ResetFastVirial();
         }
         if (invalidatesForces[step])
             forcesAreValid = false;
@@ -7669,8 +8012,63 @@ void CudaIntegrateCustomStepKernel::setPerDofVariable(ContextImpl& context, int 
                 localPerDofValuesFloat[3*i+j][variable] = (float) values[order[i]][j];
     }
     deviceValuesAreCurrent = false;
+}void CudaIntegrateCustomStepKernel::scaleBox(ContextImpl& context,CustomIntegrator& integrator){
+    Vec3 box[3];
+    context.getPeriodicBoxVectors(box[0], box[1], box[2]);
+    double volume = box[0][0]*box[1][1]*box[2][2];
+    vector<float> fastvirial(9);
+    fastvirial=cu.getFastVirial();
+    vector<float> slowvirial(9);
+    slowvirial=cu.getSlowVirial();
+    //std::cout<<"virial: "<<(slowvirial[0]+fastvirial[0])/4.184f<<"\t"<<(slowvirial[4]+fastvirial[4])/4.184f<<"\t"<<(slowvirial[8]+fastvirial[8])/4.184f<<endl;
+    cu.ResetSlowVirial();
+    cu.ResetFastVirial();
+    double innersteps= integrator.getGlobalVariableByName("NinnerSteps");
+    double compress= integrator.getGlobalVariableByName("compress");
+    double taupres= integrator.getGlobalVariableByName("taupres");
+    double targetpres=integrator.getGlobalVariableByName("targetpres");
+    double PressureConstant= 16.39; //kcal/mol/(cubic nm)
+    double factor= PressureConstant/volume;
+    bool forcesValid=true;
+    Kinetic=integrator.getGlobalVariableByName("ke");
+    double actualPressure = factor*(-1.0*(fastvirial[0]/innersteps+slowvirial[0])-(fastvirial[4]/innersteps+slowvirial[4])-(fastvirial[8]/innersteps+slowvirial[8])+2*Kinetic)/3.0;
+    //printf("actualPresure: %g\n", actualPressure);
+     float lengthScale=pow((1.0+integrator.getStepSize()*compress/taupres*(actualPressure-targetpres)),1.0/3.0);
+    if (cu.getTime()>integrator.getStepSize()){
+            scaleCoordinates(context, lengthScale, lengthScale, lengthScale);
+            context.getOwner().setPeriodicBoxVectors(box[0]*lengthScale, box[1]*lengthScale, box[2]*lengthScale);
+    }
+}void CudaIntegrateCustomStepKernel::scaleCoordinates(ContextImpl& context, double scaleX, double scaleY, double scaleZ) {
+    if(!hasInitializedScaleKernel){
+	hasInitializedScaleKernel=true;
+	vector<vector<int> > molecules = context.getMolecules();
+        numMolecules = molecules.size();
+        moleculeAtoms = CudaArray::create<int>(cu, cu.getNumAtoms(), "moleculeAtoms");
+        moleculeStartIndex = CudaArray::create<int>(cu, numMolecules+1, "moleculeStartIndex");
+        vector<int> atoms(moleculeAtoms->getSize());
+        vector<int> startIndex(moleculeStartIndex->getSize());
+        int index = 0;
+        for (int i = 0; i < numMolecules; i++) {
+            startIndex[i] = index;
+            for (int j = 0; j < (int) molecules[i].size(); j++)
+                atoms[index++] = molecules[i][j];
+        }
+        startIndex[numMolecules] = index;
+        moleculeAtoms->upload(atoms);
+        moleculeStartIndex->upload(startIndex);
+    }
+    cu.setAsCurrent();
+    float scalefX = (float) scaleX;
+    float scalefY = (float) scaleY;
+    float scalefZ = (float) scaleZ;
+    void* args[] = {&scalefX, &scalefY, &scalefZ, &numMolecules, cu.getPeriodicBoxSizePointer(), cu.getInvPeriodicBoxSizePointer(),
+                    cu.getPeriodicBoxVecXPointer(), cu.getPeriodicBoxVecYPointer(), cu.getPeriodicBoxVecZPointer(),
+                    &cu.getPosq().getDevicePointer(), &moleculeAtoms->getDevicePointer(), &moleculeStartIndex->getDevicePointer(),};
+    cu.executeKernel(scalekernel, args, cu.getNumAtoms());
+    for (int i = 0; i < (int) cu.getPosCellOffsets().size(); i++)
+        cu.getPosCellOffsets()[i] = make_int4(0, 0, 0, 0);
+    lastAtomOrder = cu.getAtomIndex();
 }
-
 CudaApplyAndersenThermostatKernel::~CudaApplyAndersenThermostatKernel() {
     cu.setAsCurrent();
     if (atomGroups != NULL)
@@ -7707,7 +8105,114 @@ void CudaApplyAndersenThermostatKernel::execute(ContextImpl& context) {
             &cu.getIntegrationUtilities().getRandom().getDevicePointer(), &randomIndex, &atomGroups->getDevicePointer()};
     cu.executeKernel(kernel, args, cu.getNumAtoms());
 }
+CudaHooverBarostatKernel::~CudaHooverBarostatKernel(){
+}
+void CudaHooverBarostatKernel::initialize(const System& system, const HooverBarostat& barostat){
+	  cu.setAsCurrent();
+          CUmodule module= cu.createModule(CudaKernelSources::hoover);
+	  scalevelkernel = cu.getKernel(module, "scaleVelocity");
+	  scaleposkernel=cu.getKernel(module,"scalePos");
+	  cu.setAsCurrent();
+          OuterStepSize=barostat.getStepSize();
+          temperature=barostat.getDefaultTemperature();
+	  pressure= barostat.getPressure();
+	  frequency=barostat.getFrequency();
+ 	  nfree= barostat.getnfree();
+	  ScaleFactor=CudaArray::create<double>(cu,1 , "ScaleFactor");
+	  BarostatState=0.0;
+}
+void CudaHooverBarostatKernel::execute(ContextImpl& context, const HooverBarostat& barostat){
+	const double boltzmann=.001987204259;
+        const double kbt=boltzmann*temperature;
+	int numAtoms=cu.getNumAtoms();
+// Tau=30ps
+         double relaxTimeFactor=barostat.gettau();
+         vector<float> SlowVirial=cu.getSlowVirial();
+         vector<float> FastVirial=cu.getFastVirial(); 
+         float virialsum=0.0f;
+         for( int i=0; i<9;i+=4){
+                virialsum-=(SlowVirial[i]+FastVirial[i]/(float)barostat.getinnersteps())/4.184f;
+         }
+	 //printf("%g %g %g", SlowVirial[0]+FastVirial[0]/(float)barostat.getinnersteps(),SlowVirial[4]+FastVirial[4]/(float)barostat.getinnersteps(),SlowVirial[8]+FastVirial[8]/(float)barostat.getinnersteps());
+	 Vec3 boxVectors[3];
+         cu.getPeriodicBoxVectors(boxVectors[0], boxVectors[1], boxVectors[2]);
+	 double volbox=boxVectors[0][0]*boxVectors[1][1]*boxVectors[2][2]*1000;
+	 double Pinst= (68568.4112/(3.0*volbox))*(virialsum+2.0*cu.getIntegrationUtilities().computeKineticEnergy(0.0)/4.184f);
+	 BarostatState= BarostatState+0.5*relaxTimeFactor*pow(3*numAtoms+1,-0.5)/kbt*(3*volbox*(Pinst-pressure)+(2.0*cu.getIntegrationUtilities().computeKineticEnergy(0.0)/4.184f/numAtoms));
+	 double posscale=exp(relaxTimeFactor*pow(3*numAtoms+1,-0.5)*BarostatState);
+	 vector<double> scalevec;
+	 scalevec.push_back(posscale);
+	 ScaleFactor->upload(scalevec);	
+	 void* posScaleargs[]={&ScaleFactor->getDevicePointer(),&cu.getPosq().getDevicePointer(),&numAtoms};
+	 cu.executeKernel(scaleposkernel,posScaleargs,numAtoms,128);
+	 double newboxvol=exp(3*relaxTimeFactor*pow(3*numAtoms+1,-0.5)*BarostatState);
+	 double scalelengths=pow(newboxvol,1.0/3.0);
+    	 Vec3 OrigXBox;
+  	 Vec3 OrigYBox;
+  	 Vec3 OrigZBox;
+ 	 cu.getPeriodicBoxVectors(OrigXBox,OrigYBox,OrigZBox);
+ 	 OrigXBox[0]=OrigXBox[0]*scalelengths;
+ 	 OrigYBox[1]=OrigYBox[1]*scalelengths;
+ 	 OrigZBox[2]=OrigZBox[2]*scalelengths;
+   	 cu.setPeriodicBoxVectors(OrigXBox,OrigYBox,OrigZBox);	
+	 double velscale=exp(-relaxTimeFactor*pow(3*numAtoms+1,-0.5)*(1+1.0/numAtoms)*BarostatState);
+	 vector<double> velscalevec;
+	 velscalevec.push_back(velscale);
+	 ScaleFactor->upload(velscalevec);
+	 void* velScaleargs[]={&ScaleFactor->getDevicePointer(),&cu.getVelm().getDevicePointer(),&numAtoms};
+	 cu.executeKernel(scalevelkernel,velScaleargs,numAtoms,128);
+         cu.getPeriodicBoxVectors(boxVectors[0], boxVectors[1], boxVectors[2]);
+	 volbox=boxVectors[0][0]*boxVectors[1][1]*boxVectors[2][2]*1000;
+	 Pinst= (68568.4112/(3.0*volbox))*(virialsum+2.0*cu.getIntegrationUtilities().computeKineticEnergy(0.0)/4.184f);
+	 BarostatState= BarostatState+0.5*relaxTimeFactor*pow(3*numAtoms+1,-0.5)/kbt*(3*volbox*(Pinst-pressure)+(2.0*cu.getIntegrationUtilities().computeKineticEnergy(0.0)/4.184f/numAtoms));
+}
+CudaHooverThermostatKernel::~CudaHooverThermostatKernel(){
+}
+void CudaHooverThermostatKernel::initialize(const System& system, const HooverThermostat& thermostat){
+	cu.setAsCurrent();
+	CUmodule module= cu.createModule(CudaKernelSources::hoover);
+    cu.setAsCurrent();
+    OuterStepSize=10.0*thermostat.getStepSize();
+    temperature=thermostat.getDefaultTemperature();
+    nfree= thermostat.getnfree();
+    const double boltzmann=.001987204259;
+    const double kbt=boltzmann*temperature;
+    const double tautemp=0.1;
+    for(int i=0; i<5; i++){
+        ThermostatStates[i]=0.0;
+        ThermalMass[i]=kbt*tautemp*tautemp;
+    }
+    ThermalMass[0]*=nfree;
+    map<string, string> defines;
+    scalekernel = cu.getKernel(module, "scaleVelocity");
+    scalearray=CudaArray::create<double>(cu, 1, "dtarray");
 
+}void CudaHooverThermostatKernel::execute(ContextImpl& context, const HooverThermostat& thermostat){
+cu.setAsCurrent();
+    CudaIntegrationUtilities& integration = cu.getIntegrationUtilities();
+    const double boltzmann=.001987204259;
+    const double kbt=boltzmann*temperature;
+    int numAtoms = cu.getNumAtoms();
+    int paddedNumAtoms = cu.getPaddedNumAtoms();
+    ThermostatStates[4]+=(0.5*OuterStepSize)*((ThermostatStates[3]*ThermostatStates[3])/(ThermalMass[3])-kbt);
+    for(int i=3; i>0; i--){
+            ThermostatStates[i]=exp(-0.5*OuterStepSize*ThermostatStates[i+1]/ThermalMass[i+1])*ThermostatStates[i]+0.5*OuterStepSize*exp(-0.25*OuterStepSize*ThermostatStates[i+1]/ThermalMass[i+1])*(ThermostatStates[i-1]*ThermostatStates[i-1]/ThermalMass[i-1]-kbt);
+   }
+   double CurTemp=(2.0*cu.getIntegrationUtilities().computeKineticEnergy(0.0))/(nfree*4.184*boltzmann);
+   ThermostatStates[0]=exp(-0.5*OuterStepSize*ThermostatStates[1]/ThermalMass[1])*ThermostatStates[0]+nfree*OuterStepSize*0.5*exp(-0.25*OuterStepSize*ThermostatStates[1]/ThermalMass[1])*(boltzmann*CurTemp-kbt);
+   vector<double> scale;
+   double scaleFactor= exp(-1.0*OuterStepSize*ThermostatStates[0]/ThermalMass[0]);
+   scale.push_back(scaleFactor);
+   scalearray->upload(scale);
+   void* VelscaleArgs[]= {&scalearray->getDevicePointer(),&cu.getVelm().getDevicePointer(),&numAtoms};
+   cu.executeKernel(scalekernel, VelscaleArgs, numAtoms, 128);
+   CurTemp=(2.0*cu.getIntegrationUtilities().computeKineticEnergy(0.0))/(nfree*4.184*boltzmann);
+   ThermostatStates[0]=exp(-0.5*ThermostatStates[1]/ThermalMass[1])*ThermostatStates[0]+nfree*OuterStepSize*0.5*exp(-0.25*OuterStepSize*ThermostatStates[1]/ThermalMass[1])*(boltzmann*CurTemp-kbt);
+   for(int i=1; i<4; i++){
+        ThermostatStates[i]=exp(-0.5*ThermostatStates[i+1]/ThermalMass[i+1])*ThermostatStates[i]+0.5*OuterStepSize*exp(-0.25*ThermostatStates[i+1]/ThermalMass[i+1])*(ThermostatStates[i-1]*ThermostatStates[i-1]/ThermalMass[i-1]-kbt);
+   }
+   ThermostatStates[4]=ThermostatStates[4]+0.5*OuterStepSize*(ThermostatStates[3]*ThermostatStates[3]/ThermalMass[3]-kbt);
+}
 CudaApplyMonteCarloBarostatKernel::~CudaApplyMonteCarloBarostatKernel() {
     cu.setAsCurrent();
     if (savedPositions != NULL)

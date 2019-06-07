@@ -112,8 +112,12 @@ KernelImpl* CudaKernelFactory::createKernelImpl(std::string name, const Platform
         return new CudaCalcCustomManyParticleForceKernel(name, platform, cu, context.getSystem());
     if (name == CalcGayBerneForceKernel::Name())
         return new CudaCalcGayBerneForceKernel(name, platform, cu);
+    if (name == IntegrateNoseHooverKernel::Name())
+        return new CudaIntegrateNoseHooverKernel(name, platform, cu);
     if (name == IntegrateVerletStepKernel::Name())
         return new CudaIntegrateVerletStepKernel(name, platform, cu);
+    if (name == IntegrateRESPAStepKernel::Name())
+        return new CudaIntegrateRESPAStepKernel(name, platform, cu);
     if (name == IntegrateLangevinStepKernel::Name())
         return new CudaIntegrateLangevinStepKernel(name, platform, cu);
     if (name == IntegrateBrownianStepKernel::Name())
@@ -128,6 +132,10 @@ KernelImpl* CudaKernelFactory::createKernelImpl(std::string name, const Platform
         return new CudaApplyAndersenThermostatKernel(name, platform, cu);
     if (name == ApplyMonteCarloBarostatKernel::Name())
         return new CudaApplyMonteCarloBarostatKernel(name, platform, cu);
+    if(name == HooverThermostatKernel::Name())
+	return new CudaHooverThermostatKernel(name,platform,cu);
+    if(name == HooverBarostatKernel::Name())
+        return new CudaHooverBarostatKernel(name,platform,cu);
     if (name == RemoveCMMotionKernel::Name())
         return new CudaRemoveCMMotionKernel(name, platform, cu);
     throw OpenMMException((std::string("Tried to create kernel with illegal kernel name '")+name+"'").c_str());

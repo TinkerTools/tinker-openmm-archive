@@ -261,6 +261,14 @@ public:
      * you should never call it.  It is exposed here because the same logic is useful to other classes too.
      */
     static std::vector<std::vector<int> > findMolecules(int numParticles, std::vector<std::vector<int> >& particleBonds);
+    void setStepUsesVirial(bool inputStepUsesVirial);
+    bool getStepUsesVirial() const;
+    std::vector<float> getFastVirial() const;
+    std::vector<float> getSlowVirial() const;
+    void setSlowVirial(std::vector<float> inputSlowVirial);
+    void setFastVirial(std::vector<float> inputFastVirial);
+
+
 private:
     friend class Context;
     Context& owner;
@@ -273,7 +281,8 @@ private:
     int lastForceGroups;
     Platform* platform;
     Kernel initializeForcesKernel, updateStateDataKernel, applyConstraintsKernel, virtualSitesKernel;
-    void* platformData;
+    void* platformData; 
+    bool StepUsesVirial;
 };
 
 } // namespace OpenMM

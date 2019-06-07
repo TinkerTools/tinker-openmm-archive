@@ -34,7 +34,7 @@
 
 using namespace OpenMM;
 
-CMMotionRemover::CMMotionRemover(int frequency) : frequency(frequency) {
+CMMotionRemover::CMMotionRemover(int frequency, bool UseUpdateContext) : frequency(frequency),UseUpdateContext(UseUpdateContext) {
 }
 
 ForceImpl* CMMotionRemover::createImpl() const {

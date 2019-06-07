@@ -191,6 +191,11 @@ public:
      * @param stream    an input stream the checkpoint data should be read from
      */
     void loadCheckpoint(ContextImpl& context, std::istream& stream);
+    std::vector<float> getFastVirial(const ContextImpl& context) const;
+    std::vector<float> getSlowVirial(const ContextImpl& context ) const;
+    void setSlowVirial(ContextImpl& context, std::vector<float> inputSlowVirial);
+    void setFastVirial(ContextImpl& context  , std::vector<float> inputFastVirial);
+
 private:
     ReferencePlatform::PlatformData& data;
 };

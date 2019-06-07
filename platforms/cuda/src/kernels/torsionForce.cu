@@ -35,3 +35,11 @@ real3 force4 = ff.w*cp1;
 real3 s = ff.y*force1 - ff.z*force4;
 real3 force2 = s-force1;
 real3 force3 = -s-force4;
+vxx += -v1.x*(force3.x+force4.x)-v0.x*force1.x+v2.x*force4.x;
+vxy+=-v1.y*(force3.x+force4.x)-v0.y*force1.x+v2.y*force4.x;
+vxz+=-v1.z*(force3.x+force4.x)-v0.z*force1.x+v2.z*force4.x;
+vyy+=-v1.y*(force3.y+force4.y)-v0.y*force1.y+v2.y*force4.y;
+vyz+=-v1.z*(force3.y+force4.y)-v0.z*force1.y+v2.z*force4.y;
+vzz+= -v1.z*(force3.z+force4.z)-v0.z*force1.z+v2.z*force4.z;
+
+

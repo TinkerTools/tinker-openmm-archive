@@ -181,6 +181,7 @@ ContextImpl::ContextImpl(Context& owner, const System& system, Integrator& integ
         forceImpls[i]->initialize(*this);
     integrator.initialize(*this);
     updateStateDataKernel.getAs<UpdateStateDataKernel>().setVelocities(*this, vector<Vec3>(numParticles));
+    StepUsesVirial=false;
 }
 
 ContextImpl::~ContextImpl() {
@@ -477,4 +478,16 @@ void ContextImpl::loadCheckpoint(istream& stream) {
 
 void ContextImpl::systemChanged() {
     integrator.stateChanged(State::Energy);
+}void ContextImpl::setStepUsesVirial(bool inputStepUsesVirial) {
+	StepUsesVirial=inputStepUsesVirial;
+}bool ContextImpl::getStepUsesVirial() const{
+	return StepUsesVirial;
+}std::vector<float> ContextImpl::getFastVirial() const{
+        return updateStateDataKernel.getAs<UpdateStateDataKernel>().getFastVirial(*this);
+}std::vector<float> ContextImpl::getSlowVirial() const{
+        return updateStateDataKernel.getAs<UpdateStateDataKernel>().getSlowVirial(*this);
+}void ContextImpl::setSlowVirial(vector<float> inputSlowVirial){
+	updateStateDataKernel.getAs<UpdateStateDataKernel>().setSlowVirial(*this,inputSlowVirial);
+}void ContextImpl::setFastVirial(vector<float> inputFastVirial){
+        updateStateDataKernel.getAs<UpdateStateDataKernel>().setFastVirial(*this,inputFastVirial);
 }

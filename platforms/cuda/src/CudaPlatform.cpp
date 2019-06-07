@@ -93,6 +93,10 @@ CudaPlatform::CudaPlatform() {
     registerKernelFactory(CalcCustomCompoundBondForceKernel::Name(), factory);
     registerKernelFactory(CalcCustomManyParticleForceKernel::Name(), factory);
     registerKernelFactory(CalcGayBerneForceKernel::Name(), factory);
+    registerKernelFactory(HooverThermostatKernel::Name(), factory);
+    registerKernelFactory(HooverBarostatKernel::Name(), factory);
+    registerKernelFactory(IntegrateNoseHooverKernel::Name(), factory);
+    registerKernelFactory(IntegrateRESPAStepKernel::Name(), factory);
     registerKernelFactory(IntegrateVerletStepKernel::Name(), factory);
     registerKernelFactory(IntegrateLangevinStepKernel::Name(), factory);
     registerKernelFactory(IntegrateBrownianStepKernel::Name(), factory);

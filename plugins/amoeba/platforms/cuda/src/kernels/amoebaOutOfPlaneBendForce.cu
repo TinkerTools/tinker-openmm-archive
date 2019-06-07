@@ -85,4 +85,12 @@ real deedzid = cb.x*ab.y - cb.y*ab.x + db.z*term;
 real3 force1 = make_real3(-dedcos*(dccdxia+deedxia), -dedcos*(dccdyia+deedyia), -dedcos*(dccdzia+deedzia));
 real3 force3 = make_real3(-dedcos*(dccdxic+deedxic), -dedcos*(dccdyic+deedyic), -dedcos*(dccdzic+deedzic));
 real3 force4 = make_real3(-dedcos*(dccdxid+deedxid), -dedcos*(dccdyid+deedyid), -dedcos*(dccdzid+deedzid));
-real3 force2 = make_real3(-force1.x-force3.x-force4.x, -force1.y-force3.y-force4.y, -force1.z-force3.z-force4.z);
+real3 force2 = make_real3(-force1.x-force3.x-force4.x, -force1.y-force3.y-force4.y, -force1.z-force3.z-force4.z);  
+#if USES_VIRIAL             
+vxx+= -1.0f*( ab.x*force1.x + cb.x*force3.x + db.x*force4.x);
+vxy+= -1.0f*(ab.y*force1.x + cb.y*force3.x + db.y*force4.x);
+vxz+= -1.0f*(ab.z*force1.x + cb.z*force3.x + db.z*force4.x);
+vyy+= -1.0f*(ab.y*force1.y + cb.y*force3.y + db.y*force4.y);
+vyz+= -1.0f*(ab.z*force1.y + cb.z*force3.y + db.z*force4.y);
+vzz+= -1.0f*(ab.z*force1.z + cb.z*force3.z + db.z*force4.z);
+#endif

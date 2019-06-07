@@ -330,6 +330,10 @@ void ReferenceUpdateStateDataKernel::loadCheckpoint(ContextImpl& context, istrea
     stream.read((char*) vectors, 3*sizeof(RealVec));
     SimTKOpenMMUtilities::loadCheckpoint(stream);
 }
+    std::vector<float> ReferenceUpdateStateDataKernel::getFastVirial(const ContextImpl& context) const{}
+    std::vector<float> ReferenceUpdateStateDataKernel::getSlowVirial(const ContextImpl& context ) const{}
+    void ReferenceUpdateStateDataKernel::setSlowVirial(ContextImpl& context, std::vector<float> inputSlowVirial){}
+    void ReferenceUpdateStateDataKernel::setFastVirial(ContextImpl& context  , std::vector<float> inputFastVirial){}
 
 void ReferenceApplyConstraintsKernel::initialize(const System& system) {
     int numParticles = system.getNumParticles();

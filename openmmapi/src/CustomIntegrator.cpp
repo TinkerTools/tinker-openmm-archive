@@ -288,4 +288,25 @@ const string& CustomIntegrator::getKineticEnergyExpression() const {
 
 void CustomIntegrator::setKineticEnergyExpression(const string& expression) {
     kineticEnergy = expression;
+}int CustomIntegrator::addScaleBox() {
+    if (owner != NULL)
+        throw OpenMMException("The integrator cannot be modified after it is bound to a context");
+    computations.push_back(ComputationInfo(ScaleBox, "", ""));
+    return computations.size()-1;
+}int CustomIntegrator::addSaveVelocities() {
+    if (owner != NULL)
+        throw OpenMMException("The integrator cannot be modified after it is bound to a context");
+    computations.push_back(ComputationInfo(SaveVelocity, "", ""));
+    return computations.size()-1;
+}int CustomIntegrator::addResetFastVirial(){
+        if (owner != NULL)
+        throw OpenMMException("The integrator cannot be modified after it is bound to a context");
+    computations.push_back(ComputationInfo(ResetSlowVirial, "", ""));
+    return computations.size()-1;
+}int CustomIntegrator::addResetSlowVirial(){
+        if (owner != NULL)
+        throw OpenMMException("The integrator cannot be modified after it is bound to a context");
+    computations.push_back(ComputationInfo(ResetFastVirial, "", ""));
+    return computations.size()-1;
 }
+

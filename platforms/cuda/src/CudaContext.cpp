@@ -374,7 +374,10 @@ CudaContext::CudaContext(const System& system, int deviceIndex, bool useBlocking
     thread = new WorkThread();
 
     // Create utilities objects.
-
+    SlowVirial = CudaArray::create<float>(*this, 9, "SlowVirial");
+    FastVirial = CudaArray::create<float>(*this, 9, "FastVirial");
+    this->ResetSlowVirial();
+    this->ResetFastVirial();
     bonded = new CudaBondedUtilities(*this);
     nonbonded = new CudaNonbondedUtilities(*this);
     integration = new CudaIntegrationUtilities(*this, system);
@@ -417,6 +420,10 @@ CudaContext::~CudaContext() {
         delete nonbonded;
     if (thread != NULL)
         delete thread;
+    if (FastVirial != NULL)
+        delete FastVirial;
+    if (SlowVirial != NULL)
+        delete SlowVirial;
     string errorMessage = "Error deleting Context";
     if (contextIsValid) {
         cuProfilerStop();
@@ -580,9 +587,9 @@ CUmodule CudaContext::createModule(const string source, const map<string, string
     for (int i = 0; i < 20; i++)
         cacheFile << setw(2) << setfill('0') << (int) hash[i];
     cacheFile << '_' << gpuArchitecture << '_' << bits;
-    CUmodule module;
-    if (cuModuleLoad(&module, cacheFile.str().c_str()) == CUDA_SUCCESS)
-        return module;
+   CUmodule module;
+    //if (cuModuleLoad(&module, cacheFile.str().c_str()) == CUDA_SUCCESS)
+    //    return module;
 
     // Select names for the various temporary files.
 
@@ -1482,4 +1489,35 @@ vector<int> CudaContext::getDevicePrecedence() {
     }
 
     return precedence;
+}
+std::vector<float> CudaContext::getFastVirial() const{
+	vector<float> output(9);
+	FastVirial->download(output);
+	return output;
+}
+void CudaContext::setFastVirial(std::vector<float> inputvirial){
+	FastVirial->upload(inputvirial);
+}
+std::vector<float> CudaContext::getSlowVirial() const{
+	vector<float> output(9);
+	SlowVirial->download(output);
+	return output;
+}
+void CudaContext::setSlowVirial(std::vector<float> inputvirial){
+        SlowVirial->upload(inputvirial);
+}
+CudaArray* CudaContext::getFastVirialPointer() const{
+	return FastVirial;
+}CudaArray* CudaContext::getSlowVirialPointer()const {
+	return SlowVirial;
+}void CudaContext::ResetSlowVirial(){
+	vector<float> zero(9);
+	for( int i=0; i< 9; i++){
+		zero[i]=0.0f;
+	}SlowVirial->upload(zero);
+}void CudaContext::ResetFastVirial(){
+	vector<float> zero(9);
+	for( int i=0; i< 9; i++){
+		zero[i]=0.0f;
+	}FastVirial->upload(zero);
 }

@@ -262,6 +262,12 @@ public:
      * belong to exactly one molecule.
      */
     const std::vector<std::vector<int> >& getMolecules() const;
+    float* getFastVirial() const;
+    float* getSlowVirial() const;
+    void setSlowVirial(float* inputSlowVirial);
+    void setFastVirial(float* inputFastVirial);
+    float* outputfastvirial;
+    float* outputslowvirial;
 private:
     friend class Force;
     friend class Platform;
