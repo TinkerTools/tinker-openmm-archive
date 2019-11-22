@@ -1,6 +1,6 @@
 # What is this branch? 
 
-This branch is the preliminary implementation of AMOEBA+CF model in OpenMM implementation.
+This branch is the preliminary implementation of AMOEBA+CF model in OpenMM. 
 
 We are currently migrating our implementation into the latest OpenMM.
 
