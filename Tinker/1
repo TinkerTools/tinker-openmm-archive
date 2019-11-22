@@ -1,0 +1,2774 @@
+action.f:c     nect     number of van der Waals energy terms computed
+action.f:      integer nebt,neat,nett,nev,nect
+active.f:     &                        ' Select Active Atoms :',
+alchemy.f:c     version (incorrectly) considers the charge energy to be
+alchemy.f:c     select interactions for perturbation energy calculation
+analysis.f:      ect = 0.0d0
+analysis.f:            deallocate (aect)
+analysis.f:         allocate (aect(n))
+analysis.f:         aect(i) = 0.0d0
+analysis.f:      if (use_ct) call ect3 
+analysis.f:c     call the electrostatic energy component routines
+analysis.f:     &          + em + ep + er + es + elf + eg + ex + ect 
+analysis.f:     &                 + aex(i) + aect(i) 
+analyze.f:c     interactions and find electrostatic and inertial properties
+analyze.f:      logical doconect
+analyze.f:     &           /,' Electrostatic Moments and Principle Axes [M]',
+analyze.f:     &           /,' Connectivity Lists for Each of the Atoms [C]')
+analyze.f:      doconect = .false.
+analyze.f:         if (letter .eq. 'C')  doconect = .true.
+analyze.f:      if (doatom .or. doparam .or. doconect) then
+analyze.f:      if (doparam .and. doconect) then
+analyze.f:c     provide connectivity lists for the individual atoms
+analyze.f:      if (doconect)  call connyze (active)
+analyze.f:c     get the various electrostatic and inertial moments
+analyze.f:c     details of electrostatic energy functional form
+analyze.f:   90    format (' Electrostatics',14x,a20)
+analyze.f:  100    format (' Electrostatics',14x,a20)
+analyze.f:  110    format (' Electrostatics',14x,a20)
+analyze.f:  120    format (' Electrostatics',14x,a20)
+analyze.f:     &                 //,10x,'Atom Number',14x,'Nelect',
+analyze.f:            write (iout,790)  i,ia,electron(j),ionize(j),repulse(j)
+analyze.f:      if (use_ct .and. (nect.ne.0.or.ect.ne.0.0d0)) then
+analyze.f:        if (abs(ect) .lt. 1.0d10) then
+analyze.f:        write (iout,fstr)  ect,nect
+analyze.f:c     ##  subroutine momyze  --  electrostatic & inertial analysis  ##
+analyze.f:   10 format (/,' Total Electric Charge :',12x,f13.5,' Electrons')
+analyze.f:   50    format (/,' Dielectric Constant :',14x,f13.3)
+analyze.f:   60    format (' Effective Total Charge :',11x,f13.5,' Electrons')
+analyze.f:   70    format (' Effective Dipole Moment :',10x,f13.3,' Debyes')
+analyze.f:     &                 //,10x,'Atom Number',14x,'Nelect',
+analyze.f:            write (iout,780)  i,ia,electron(j),ionize(j),repulse(j)
+analyze.f:c     ##  subroutine connyze  --  connected atom list analysis  ##
+analyze.f:c     "connyze" prints information onconnected atoms as lists
+analyze.f:c     generate and print the 1-2 connected atomic interactions
+analyze.f:   60    format (/,' List of 1-2 Connected Atomic Interactions :',/)
+analyze.f:c     generate and print the 1-3 connected atomic interactions
+analyze.f:   80    format (/,' List of 1-3 Connected Atomic Interactions :',/)
+analyze.f:c     generate and print the 1-4 connected atomic interactions
+analyze.f:  100    format (/,' List of 1-4 Connected Atomic Interactions :',/)
+analyze.f:c     generate and print the 1-5 connected atomic interactions
+analyze.f:  120    format (/,' List of 1-5 Connected Atomic Interactions :',/)
+analyz.f:      real*8, allocatable :: aect(:)
+anneal.f:c     set the time between trajectory snapshot coordinate dumps
+archive.f:     &        /,4x,'(4) Unfold Periodic Boundaries for a Trajectory',
+archive.f:     &        /,4x,'(5) Remove Periodic Box Size from a Trajectory')
+ascii.f:c     ##  module ascii  --  selected ASCII character code values  ##
+attach.f:c     ##  subroutine attach  --  setup of connectivity arrays  ##
+attach.f:c     "attach" generates lists of 1-3, 1-4 and 1-5 connectivities
+attach.f:c     atoms (ie, 1-2 connectivity)
+attach.f:   20       format (/,' ATTACH  --  Too many 1-3 Connected Atoms',
+attach.f:   40       format (/,' ATTACH  --  Too many 1-4 Connected Atoms',
+attach.f:   60       format (/,' ATTACH  --  Too many 1-5 Connected Atoms',
+bar.f:c     note current version takes as input the trajectory archives A
+bar.f:c     and B, originally generated for states 0 and 1, respectively;
+bar.f:c     trajectory under control of key files for both states 0 and 1;
+bar.f:c     ##  subroutine makebar  --  store trajectory potential energy  ##
+bar.f:c     get trajectory A archive and setup mechanics calculation
+bar.f:c     find the original temperature value for trajectory A
+bar.f:   20    format (/,' Enter Trajectory A Temperature in Degrees',
+bar.f:c     store filename and keywords for trajectory A and state 0
+bar.f:c     get trajectory B archive and setup mechanics calculation
+bar.f:c     find the original temperature value for trajectory B
+bar.f:   60    format (/,' Enter Trajectory B Temperature in Degrees',
+bar.f:c     store filename and keywords for trajectory B and state 1
+bar.f:c     reopen trajectory A using the parameters for state 0
+bar.f:c     find potential energies for trajectory A in state 0
+bar.f:  100 format (/,' Initial Processing for Trajectory A :',/)
+bar.f:c     reset trajectory A using the parameters for state 1
+bar.f:c     find potential energies for trajectory A in state 1
+bar.f:  120    format (/,' Potential Energy Values for Trajectory A :',
+bar.f:c     reopen trajectory B using the parameters for state 0
+bar.f:c     find potential energies for trajectory B in state 0
+bar.f:  150 format (/,' Initial Processing for Trajectory B :',/)
+bar.f:c     reset trajectory B using the parameters for state 1
+bar.f:c     find potential energies for trajectory B in state 1
+bar.f:  170    format (/,' Potential Energy Values for Trajectory B :',
+bar.f:c     set beginning and ending frame for trajectory A
+bar.f:     &              ' for Trajectory A :  ',$)
+bar.f:c     set beginning and ending frame for trajectory B
+bar.f:     &              ' for Trajectory B :  ',$)
+bar.f:c     read potential energies and volumes for trajectory A
+bar.f:c     reset the file position to the beginning of trajectory B
+bar.f:c     read potential energies and volumes for trajectory B
+bar.f:c     provide info about trajectories and number of frames
+bar.f:  260 format (/,' Simulation Trajectory A and Thermodynamic',
+bar.f:  280 format (/,' Simulation Trajectory B and Thermodynamic',
+bar.f:c     find average volumes and corrections for both trajectories
+bar.f:c     find the enthalpy directly via average potential energy
+bar.f:  440 format (' Enthalpy via Direct Estimate',8x,f12.4,
+basefile.f:c     consisting of any directory name and the base filename;
+basefile.f:c     account for home directory abbreviation in filename
+basefile.f:c     find the length of any directory name prefix
+beeman.f:c     get constraint-corrected positions and half-step velocities
+beeman.f:c     make half-step temperature and pressure corrections
+beeman.f:c     find the constraint-corrected full-step velocities
+beeman.f:c     make full-step temperature and pressure corrections
+beeman.f:c     compute statistics and save trajectory for this step
+bicubic.f:c     value and gradient along the directions of a 2D spline grid
+bicubic.f:c     University Press, 1992, Section 3.6
+bicubic.f:c     gradient and Hessian along the directions of a 2D spline grid
+bicubic.f:c     University Press, 1992, Section 3.6
+bicubic.f:c     pack a temporary vector of corner values
+born.f:c     Descreening of Solute Atomic Charges from a Dielectric Medium",
+born.f:            rborn(i) = -0.5d0 * electric / gpi
+born.f:c     get the Born radii via analytical continuum electrostatics
+born.f:c     get the "perfect" Born radii via Poisson-Boltzmann
+born.f:         term = -0.5d0 * electric * (1.0d0-1.0d0/sdie)
+born.f:c     "born1" computes derivatives of the Born radii with respect
+born.f:c     compute atomic radii modified by the dielectric offset
+born.f:            gpi = 2.0d0 * rborn(i)**2 / electric
+boxes.f:c     lvec        real space lattice vectors as matrix rows
+boxes.f:c     recip       reciprocal lattice vectors as matrix columns
+bussi.f:c     make half-step temperature correction and get pressure
+bussi.f:c     get constraint-corrected positions and half-step velocities
+bussi.f:c     find the constraint-corrected full-step velocities
+bussi.f:c     make full-step temperature correction and get pressure
+bussi.f:c     compute statistics and save trajectory for this step
+chgpot.f:c     electric   energy factor in kcal/mole for current force field
+chgpot.f:c     dielec     dielectric constant for electrostatic interactions
+chgpot.f:c     ebuffer    electrostatic buffering constant added to distance
+chgpot.f:      real*8 electric
+chkring.f:c     "chkring" tests an atom or a set of connected atoms for
+chkring.f:c     check the input atoms for sequential connectivity
+chrgflux.f:c     charge flux due to bond stectching
+cluster.f:c     get keywords to select common sets of group interactions
+cluster.f:c     use only intragroup or intergroup interactions if selected
+connect.f:c     ##  subroutine connect  --  attached atom list from Z-matrix  ##
+connect.f:c     "connect" sets up the attached atom arrays
+connect.f:      subroutine connect
+connolly.f:c     area and volume of a collection of spherical atoms; thus
+connolly.f:      real*8 vector(3)
+connolly.f:         call ranvec (vector)
+connolly.f:         axyz(1,i) = axyz(1,i) + size*vector(1)
+connolly.f:         axyz(2,i) = axyz(2,i) + size*vector(2)
+connolly.f:         axyz(3,i) = axyz(3,i) + size*vector(3)
+connolly.f:      real*8 vect1,vect2,vect3
+connolly.f:                  vect1 = abs(axyz(1,j) - axyz(1,i))
+connolly.f:                  if (vect1 .ge. sum)  goto 50
+connolly.f:                  vect2 = abs(axyz(2,j) - axyz(2,i))
+connolly.f:                  if (vect2 .ge. sum)  goto 50
+connolly.f:                  vect3 = abs(axyz(3,j) - axyz(3,i))
+connolly.f:                  if (vect3 .ge. sum)  goto 50
+connolly.f:                  d2 = vect1**2 + vect2**2 + vect3**2
+connolly.f:c     collect mutual neighbors
+connolly.f:c     altitude vector
+connolly.f:c     calculate vectors from probe to atom centers
+connolly.f:c     calculate determinant of vectors defining triangle
+connolly.f:      real*8 atvect(3)
+connolly.f:c     vector from atom to torus center
+connolly.f:               atvect(k) = t(k,it) - axyz(k,ia)
+connolly.f:               c(k,nc) = axyz(k,ia) + factor*atvect(k)
+connolly.f:c     now we collect all the concave edges for this torus;
+connolly.f:c     for each concave edge, calculate vector from torus center
+connolly.f:c     thru probe center and the angle relative to first such vector
+connolly.f:c     calculate angle between this vector and first vector
+connolly.f:c     to torus axis vector (which goes from first to second atom)
+connolly.f:c     collect pairs of concave edges into saddles
+connolly.f:c     find a unit vector along interatomic (torus) axis
+connolly.f:      real*8 acvect(3,maxepa)
+connolly.f:      real*8 aavect(3,maxepa)
+connolly.f:      real*8 pole(3),unvect(3)
+connolly.f:c     vector from atom to circle center; also
+connolly.f:c     vector from atom to center of neighboring atom
+connolly.f:c     sometimes we use one vector, sometimes the other
+connolly.f:            acvect(k,nepa) = c(k,ic) - axyz(k,ia)
+connolly.f:            aavect(k,nepa) = axyz(k,ia2) - axyz(k,ia)
+connolly.f:c     look for next connected edge
+connolly.f:c     edges are connected
+connolly.f:c     it better connect to first edge of cycle
+connolly.f:               anaa = anorm(aavect(1,iepa))
+connolly.f:c     north pole and unit vector pointing south
+connolly.f:                  pole(k) = factor*aavect(k,iepa) + axyz(k,ia)
+connolly.f:                  unvect(k) = -aavect(k,iepa) / anaa
+connolly.f:               cycy(icya,jcya) = ptincy(pole,unvect,jcy)
+connolly.f:c     group cycles into faces; direct comparison for i and j
+connolly.f:c     as a collection of spherical and toroidal polygons
+connolly.f:      real*8 vects(3,3)
+connolly.f:      real*8 vect1(3),vect2(3)
+connolly.f:      real*8 vect3(3),vect4(3)
+connolly.f:      real*8 vect5(3),vect6(3)
+connolly.f:      real*8 vect7(3),vect8(3)
+connolly.f:      real*8, allocatable :: fnvect(:,:,:)
+connolly.f:      allocate (fnvect(3,3,nfn))
+connolly.f:c     as well as the spindle correction value
+connolly.f:c     compute the area and volume lens correction values
+connolly.f:c     get vertices and vectors
+connolly.f:               vects(k,ke) = vxyz(k,ivs(ke)) - p(k,ip)
+connolly.f:c     calculate normal vectors for the three planes
+connolly.f:         call vcross (vects(1,1),vects(1,2),fnvect(1,1,ifn))
+connolly.f:         call vnorm (fnvect(1,1,ifn),fnvect(1,1,ifn))
+connolly.f:         call vcross (vects(1,2),vects(1,3),fnvect(1,2,ifn))
+connolly.f:         call vnorm (fnvect(1,2,ifn),fnvect(1,2,ifn))
+connolly.f:         call vcross (vects(1,3),vects(1,1),fnvect(1,3,ifn))
+connolly.f:         call vnorm (fnvect(1,3,ifn),fnvect(1,3,ifn))
+connolly.f:c     these two probes may have intersecting surfaces
+connolly.f:c     use circle-plane intersection routine
+connolly.f:               call cirpln (ppm,rm,upp,fncen(1,ifn),fnvect(1,ke,ifn),
+connolly.f:c     intersection points match
+connolly.f:               call vcross (uij,upp,vect1)
+connolly.f:               dt = dot(umq,vect1)
+connolly.f:               call vcross (upq,fnvect(1,ke,ifn),vect1)
+connolly.f:               call vnorm (vect1,uc)
+connolly.f:               call vcross (upp,upq,vect1)
+connolly.f:               call vnorm (vect1,uq)
+connolly.f:               call cirpln (ppm,rm,upp,fncen(1,jfn),fnvect(1,ke,jfn),
+connolly.f:                  vect3(k) = vxyz(k,iv1) - fncen(k,ifn)
+connolly.f:                  vect4(k) = vxyz(k,iv2) - fncen(k,ifn)
+connolly.f:                  call cirpln (fncen(1,ifn),pr,fnvect(1,ke,ifn),
+connolly.f:     &                           fncen(1,jfn),fnvect(1,ke2,jfn),
+connolly.f:                     vect7(k) = vxyz(k,iv1) - fncen(k,jfn)
+connolly.f:                     vect8(k) = vxyz(k,iv2) - fncen(k,jfn)
+connolly.f:                     vect1(k) = xpnt1(k) - fncen(k,ifn)
+connolly.f:                     vect2(k) = xpnt2(k) - fncen(k,ifn)
+connolly.f:                     vect5(k) = xpnt1(k) - fncen(k,jfn)
+connolly.f:                     vect6(k) = xpnt2(k) - fncen(k,jfn)
+connolly.f:                  if (triple(vect3,vect1,fnvect(1,ke,ifn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect1,vect4,fnvect(1,ke,ifn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect7,vect5,fnvect(1,ke2,jfn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect5,vect8,fnvect(1,ke2,jfn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect3,vect2,fnvect(1,ke,ifn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect2,vect4,fnvect(1,ke,ifn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect7,vect6,fnvect(1,ke2,jfn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect6,vect8,fnvect(1,ke2,jfn)) .lt. 0.0d0)
+connolly.f:                  vect3(k) = vxyz(k,iv1) - fncen(k,ifn)
+connolly.f:                  vect4(k) = vxyz(k,iv2) - fncen(k,ifn)
+connolly.f:                  call cirpln (fncen(1,jfn),pr,fnvect(1,ke2,jfn),
+connolly.f:     &                           fncen(1,ifn),fnvect(1,ke,ifn),
+connolly.f:                     vect7(k) = vxyz(k,iv1) - fncen(k,jfn)
+connolly.f:                     vect8(k) = vxyz(k,iv2) - fncen(k,jfn)
+connolly.f:                     vect1(k) = xpnt1(k) - fncen(k,ifn)
+connolly.f:                     vect2(k) = xpnt2(k) - fncen(k,ifn)
+connolly.f:                     vect5(k) = xpnt1(k) - fncen(k,jfn)
+connolly.f:                     vect6(k) = xpnt2(k) - fncen(k,jfn)
+connolly.f:                  if (triple(vect3,vect1,fnvect(1,ke,ifn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect1,vect4,fnvect(1,ke,ifn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect7,vect5,fnvect(1,ke2,jfn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect5,vect8,fnvect(1,ke2,jfn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect3,vect2,fnvect(1,ke,ifn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect2,vect4,fnvect(1,ke,ifn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect7,vect6,fnvect(1,ke2,jfn)) .lt. 0.0d0)
+connolly.f:                  if (triple(vect6,vect8,fnvect(1,ke2,jfn)) .lt. 0.0d0)
+connolly.f:                  vect1(k) = vxyz(k,iv) - fncen(k,ifn)
+connolly.f:               call vnorm (vect1,vect1)
+connolly.f:                  dt = dot(fnvect(1,ke,ifn),vxyz(1,iv))
+connolly.f:c     numerical calculation of the correction
+connolly.f:               dt = dot(fnvect(1,ke,ifn),dots(1,idot))
+connolly.f:                        vect1(k) = sdot(k) - fncen(k,jfn)
+connolly.f:                        dt = dot(fnvect(1,ke,jfn),vect1)
+connolly.f:c     use either the analytical or numerical correction
+connolly.f:  220       format (/,' Spindle Correction :',11x,'Area :',f13.3,
+connolly.f:  230       format (' Lens Analytical Correction :',3x,'Area :',f13.3,
+connolly.f:  240       format (' Lens Numerical Correction :',4x,'Area :',f13.3,
+connolly.f:      deallocate (fnvect)
+connolly.f:      real*8 vect1(3),vect2(3)
+connolly.f:      real*8 vect3(3),vect4(3)
+connolly.f:         vect1(k) = axyz(k,ia1) - axyz(k,ia3)
+connolly.f:         vect2(k) = axyz(k,ia2) - axyz(k,ia3)
+connolly.f:         vect3(k) = p(k,ip) - axyz(k,ia3)
+connolly.f:      call vcross (vect1,vect2,vect4)
+connolly.f:      call vnorm (vect4,vect4)
+connolly.f:      depth = dot(vect4,vect3)
+connolly.f:         alt(k) = vect4(k)
+connolly.f:c     "measpm" computes the volume of a single prism section of
+connolly.f:      real*8 vect1(3)
+connolly.f:      real*8 vect2(3)
+connolly.f:      real*8 vect3(3)
+connolly.f:         vect1(k) = pav(k,2) - pav(k,1)
+connolly.f:         vect2(k) = pav(k,3) - pav(k,1)
+connolly.f:      call vcross (vect1,vect2,vect3)
+connolly.f:      prism = height * vect3(3) / 2.0d0
+connolly.f:      real*8 vect1(3)
+connolly.f:      real*8 vect2(3)
+connolly.f:      real*8 acvect(3)
+connolly.f:      real*8 aavect(3)
+connolly.f:               acvect(k) = c(k,ic) - axyz(k,ia)
+connolly.f:               aavect(k) = axyz(k,ia2) - axyz(k,ia)
+connolly.f:            call vnorm (aavect,aavect)
+connolly.f:            dt = dot(acvect,aavect)
+connolly.f:                  vect1(k) = vxyz(k,iv1) - c(k,ic)
+connolly.f:                  vect2(k) = vxyz(k,iv2) - c(k,ic)
+connolly.f:               call vcross (vect1,aavect,tanv(1,1,ke))
+connolly.f:               call vcross (vect2,aavect,tanv(1,2,ke))
+connolly.f:               angle = vecang(vect1,vect2,aavect,-1.0d0)
+connolly.f:      real*8 vect1(3)
+connolly.f:      real*8 vect2(3)
+connolly.f:      real*8 aavect(3)
+connolly.f:         aavect(k) = axyz(k,ia2) - axyz(k,ia1)
+connolly.f:      call vnorm (aavect,aavect)
+connolly.f:            vect1(k) = vxyz(k,iv1) - c(k,ic)
+connolly.f:            vect2(k) = vxyz(k,iv2) - c(k,ic)
+connolly.f:         phi = vecang(vect1,vect2,aavect,1.0d0)
+connolly.f:         vect1(k) = axyz(k,ia1) - t(k,it)
+connolly.f:         vect2(k) = axyz(k,ia2) - t(k,it)
+connolly.f:      d1 = -dot(vect1,aavect)
+connolly.f:      d2 = dot(vect2,aavect)
+connolly.f:         vect1(k) = c(k,ic1) - axyz(k,ia1)
+connolly.f:         vect2(k) = c(k,ic2) - axyz(k,ia2)
+connolly.f:      w1 = dot(vect1,aavect)
+connolly.f:      w2 = -dot(vect2,aavect)
+connolly.f:      real*8 defect,simplx
+connolly.f:         defect = 2.0d0*pi - (angle(1)+angle(2)+angle(3))
+connolly.f:         arean = (pr**2) * defect
+connolly.f:      subroutine projct (pnt,unvect,icy,ia,spv,nedge,fail)
+connolly.f:      real*8 unvect(3)
+connolly.f:c     vector from north pole to vertex
+connolly.f:            dt = dot(polev,unvect)
+connolly.f:c     projected vertex for this convex edge
+connolly.f:      function ptincy (pnt,unvect,icy)
+connolly.f:      real*8 unvect(3)
+connolly.f:      real*8 acvect(3)
+connolly.f:      real*8 cpvect(3)
+connolly.f:            acvect(k) = axyz(k,iaoth) - axyz(k,iatom)
+connolly.f:            cpvect(k) = pnt(k) - c(k,ic)
+connolly.f:         if (dot(acvect,cpvect) .ge. 0.0d0) then
+connolly.f:      call projct (pnt,unvect,icy,iatom,spv,nedge,fail)
+connolly.f:      totang = rotang(epu,nedge,unvect)
+connolly.f:c     calculate unit vectors along edges
+connolly.f:c     unit vector along edge of cycle
+connolly.f:c     vectors for null edges come from following or preceding edges
+connolly.f:      function rotang (epu,nedge,unvect)
+connolly.f:      real*8 unvect(3)
+connolly.f:         if (dot(crs,unvect) .gt. 0.0d0)  ang = -ang
+connolly.f:c     ##  subroutine vcross  --  find cross product of two vectors  ##
+connolly.f:c     "vcross" finds the cross product of two vectors
+connolly.f:c     ##  function dot  --  find the dot product of two vectors  ##
+connolly.f:c     "dot" finds the dot product of two vectors
+connolly.f:c     ##  function anorm  --  find the length of a vector  ##
+connolly.f:c     "anorm" finds the norm (length) of a vector; used as a
+connolly.f:c     ##  subroutine vnorm  --  normalize a vector to unit length  ##
+connolly.f:c     "vnorm" normalizes a vector to unit length; used as a
+connolly.f:c     ##  function triple  --  form triple product of three vectors  ##
+connolly.f:c     "triple" finds the triple product of three vectors; used as
+connolly.f:c     ##  function vecang  --  finds the angle between two vectors  ##
+connolly.f:c     "vecang" finds the angle between two vectors handed with respect
+connolly.f:c     ##  subroutine cirpln  --  locate circle-plane intersection  ##
+connolly.f:c     "cirpln" determines the points of intersection between a
+connolly.f:      real*8 cpvect(3)
+connolly.f:      real*8 vect1(3)
+connolly.f:      real*8 vect2(3)
+connolly.f:      real*8 uvect1(3)
+connolly.f:      real*8 uvect2(3)
+connolly.f:         cpvect(k) = plncen(k) - circen(k)
+connolly.f:      dcp = dot(cpvect,plnvec)
+connolly.f:      call vcross (plnvec,cirvec,vect1)
+connolly.f:      if (anorm(vect1) .gt. 0.0d0) then
+connolly.f:         call vnorm (vect1,uvect1)
+connolly.f:         call vcross (cirvec,uvect1,vect2)
+connolly.f:         if (anorm(vect2) .gt. 0.0d0) then
+connolly.f:            call vnorm (vect2,uvect2)
+connolly.f:            dir = dot(uvect2,plnvec)
+connolly.f:                     pnt1(k) = circen(k) + ratio*uvect2(k)
+connolly.f:                     xpnt1(k) = pnt1(k) - rlen*uvect1(k)
+connolly.f:                     xpnt2(k) = pnt1(k) + rlen*uvect1(k)
+correlate.f:c     from a molecular dynamics or other trajectory
+correlate.f:c     this is slow, but correctly handles any valid TINKER file
+correlate.f:c     transfer the input trajectory frames to local vectors
+couple.f:c     ##  module couple  --  atom neighbor connectivity lists   ##
+couple.f:c     n12      number of atoms directly bonded to each atom
+couple.f:c     i12      atom numbers of atoms 1-2 connected to each atom
+couple.f:c     i13      atom numbers of atoms 1-3 connected to each atom
+couple.f:c     i14      atom numbers of atoms 1-4 connected to each atom
+couple.f:c     i15      atom numbers of atoms 1-5 connected to each atom
+crystal.f:c     merge fragments to form complete connected molecules
+crystal.f:c     ##  subroutine molmerge  --  connect fragments into molecules  ##
+crystal.f:c     "molmerge" connects fragments and removes duplicate atoms
+crystal.f:c    connections between partially duplicated fragments
+crystal.f:c     connection between bonded atoms in different fragments
+crystal.f:c     sort the connected atom lists into ascending order
+cspline.f:c     Springer Verlag, 1996, Section 10.1.2  [see routine "isplpe"]
+cspline.f:c     Springer Verlag, 1996, Section 4.11.2
+cspline.f:c     symmetric, positive definite matrix given by two vectors
+cspline.f:c     Springer Verlag, 1996, Section 4.11.2
+cspline.f:c     Springer Verlag, 1996, Section 4.11.2
+deflate.f:c     few largest eigenvalues and eigenvectors of a symmetric matrix
+deflate.f:c     vec    returned with the eigenvectors of the matrix
+deflate.f:c     work   local vector containing temporary work space
+deflate.f:c     use identity vector as initial guess for eigenvectors
+deflate.f:c     find the few largest eigenvalues and eigenvectors
+deflate.f:c     if in or near null space, use random guess as eigenvector
+deflate.f:c     first multiply vector by matrix and compute dot products
+deflate.f:c     normalize new eigenvector and substitute for old one
+delete.f:c     shift the atom coordinates, types and connectivities
+delete.f:c     remove connections to deleted atom and shift the lists
+deriv.f:c     dect    charge transfer Cartesian coordinate derivatives
+deriv.f:      real*8, allocatable :: dect(:,:)
+diagq.f:c     nv        number of eigenvalues and eigenvectors desired
+diagq.f:c     vec       returned with the eigenvectors of the matrix
+diagq.f:c     a,b,p,w   local vectors containing temporary work space
+diagq.f:c     ta,tb,y   local vectors containing temporary work space
+diagq.f:c     find the eigenvalues via the Sturm bisection method
+diagq.f:c     find the eigenvectors via a backtransformation step
+diagq.f:c     normalization of the eigenvalues and eigenvectors
+diffeq.f:c     University Press, 1992, Section 16.4
+diffuse.f:c     unfold each molecule to get its corrected center of mass
+distgeom.f:c     user also has the ability to interactively inspect and alter
+distgeom.f:c     optionally inspect and alter the smoothed bounds matrix
+distgeom.f:  140    format (/,' Select the Enantiomer Closest to the Input',
+dynamic.f:c     "dynamic" computes a molecular or stochastic dynamics trajectory
+dynamic.f:c     set the time between trajectory snapshot coordinate dumps
+dynamic.f:  340    format (/,' Molecular Dynamics Trajectory via',
+dynamic.f:  350    format (/,' Stochastic Dynamics Trajectory via',
+dynamic.f:  360    format (/,' Molecular Dynamics Trajectory via',
+dynamic.f:  370    format (/,' Molecular Dynamics Trajectory via',
+dynamic.f:  380    format (/,' Stochastic Dynamics Trajectory via',
+dynamic.f:  390    format (/,' Molecular Dynamics Trajectory via',
+dynamic.f:  400    format (/,' Molecular Dynamics Trajectory via',
+dynamic.f:  410    format (/,' Molecular Dynamics Trajectory via',
+dynamic_omm.f:c     trajectory via an interface to the OpenMM GPU code for the
+dynamic_omm.f:c     set the time between trajectory snapshot coordinate dumps
+dynamic_omm.f:  370    format (/,' Molecular Dynamics Trajectory via',
+dynamic_omm.f:  380    format (/,' Stochastic Dynamics Trajectory via',
+dynamic_omm.f:  390    format (/,' Molecular Dynamics Trajectory via',
+dynamic_omm.f:  400    format (/,' Molecular Dynamics Trajectory via',
+dynamic_omm.f:  410    format (/,' Stochastic Dynamics Trajectory via',
+dynamic_omm.f:  420    format (/,' Molecular Dynamics Trajectory via',
+dynamic_omm.f:  430    format (/,' Molecular Dynamics Trajectory via',
+dynamic_omm.f:  440    format (/,' Molecular Dynamics Trajectory via',
+dynamic_omm.f:      call set_chgpot_data (electric,dielec,ebuffer,c2scale,c3scale,
+dynamic_omm.f:     &                     decd,ded,dem,dep,der,des,delf,deg,dex,dect)
+dynamic_omm.f:     &                      es,elf,eg,ex,ect)
+eangang1.f:c     first derivatives with respect to Cartesian coordinates
+eangang1.f:c     OpenMP directives for the major loop structure
+eangang1.f:c     OpenMP directives for the major loop structure
+eangang2.f:c     second derivatives with respect to Cartesian coordinates
+eangang2.f:c     a single interaction with respect to Cartesian coordinates;
+eangang3.f:c     OpenMP directives for the major loop structure
+eangang3.f:c     OpenMP directives for the major loop structure
+eangang.f:c     OpenMP directives for the major loop structure
+eangang.f:c     OpenMP directives for the major loop structure
+eangle1.f:c     the first derivatives with respect to Cartesian coordinates;
+eangle1.f:c     projected in-plane angles at trigonal centers, special linear
+eangle1.f:c     OpenMP directives for the major loop structure
+eangle1.f:c     compute the projected in-plane angle energy and gradient
+eangle1.f:c     chain rule components for the projection of the central atom
+eangle1.f:c     OpenMP directives for the major loop structure
+eangle2.f:c     finite difference methods; projected in-plane angles at trigonal
+eangle2.f:c     second derivatives with respect to Cartesian coordinates
+eangle2.f:c     construct an orthogonal direction for linear angles
+eangle2.f:c     first derivatives of bond angle with respect to coordinates
+eangle2.f:c     construct a second orthogonal direction for linear angles
+eangle2.f:c     "eangle2b" computes projected in-plane bending first derivatives
+eangle2.f:c     for a single angle with respect to Cartesian coordinates;
+eangle2.f:c     compute the projected in-plane angle gradient
+eangle2.f:c     chain rule components for the projection of the central atom
+eangle3.f:c     partitions the energy among the atoms; projected in-plane
+eangle3.f:c     OpenMP directives for the major loop structure
+eangle3.f:c     compute the projected in-plane angle bend energy
+eangle3.f:c     OpenMP directives for the major loop structure
+eangle.f:c     projected in-plane angles at trigonal centers, special
+eangle.f:c     OpenMP directives for the major loop structure
+eangle.f:c     compute the projected in-plane angle bend energy
+eangle.f:c     OpenMP directives for the major loop structure
+eangtor1.f:c     derivatives with respect to Cartesian coordinates
+eangtor1.f:c     OpenMP directives for the major loop structure
+eangtor1.f:c     OpenMP directives for the major loop structure
+eangtor2.f:c     second derivatives with respect to Cartesian coordinates
+eangtor3.f:c     OpenMP directives for the major loop structure
+eangtor3.f:c     OpenMP directives for the major loop structure
+eangtor.f:c     OpenMP directives for the major loop structure
+eangtor.f:c     OpenMP directives for the major loop structure
+ebond1.f:c     first derivatives with respect to Cartesian coordinates
+ebond1.f:c     OpenMP directives for the major loop structure
+ebond1.f:c     OpenMP directives for the major loop structure
+ebond3.f:c     OpenMP directives for the major loop structure
+ebond3.f:c     OpenMP directives for the major loop structure
+ebond.f:c     OpenMP directives for the major loop structure
+ebond.f:c     OpenMP directives for the major loop structure
+ebuck1.f:c     and its first derivatives with respect to Cartesian coordinates
+ebuck1.f:c     apply long range van der Waals correction if desired
+ebuck1.f:c     set arrays needed to scale connected atom interactions
+ebuck1.f:c     set exclusion coefficients for connected atoms
+ebuck1.f:c     reset exclusion coefficients for connected atoms
+ebuck1.f:c     set exclusion coefficients for connected atoms
+ebuck1.f:c     reset exclusion coefficients for connected atoms
+ebuck1.f:c     set arrays needed to scale connected atom interactions
+ebuck1.f:c     set exclusion coefficients for connected atoms
+ebuck1.f:c     reset exclusion coefficients for connected atoms
+ebuck1.f:c     set arrays needed to scale connected atom interactions
+ebuck1.f:c     set exclusion coefficients for connected atoms
+ebuck1.f:c     reset exclusion coefficients for connected atoms
+ebuck2.f:c     set arrays needed to scale connected atom interactions
+ebuck2.f:c     set exclusion coefficients for connected atoms
+ebuck2.f:c     reset exclusion coefficients for connected atoms
+ebuck2.f:c     set exclusion coefficients for connected atoms
+ebuck2.f:c     reset exclusion coefficients for connected atoms
+ebuck3.f:c     apply long range van der Waals correction if desired
+ebuck3.f:   20       format (/,' Long Range vdw Correction :',9x,f12.4)
+ebuck3.f:c     set arrays needed to scale connected atom interactions
+ebuck3.f:c     set exclusion coefficients for connected atoms
+ebuck3.f:c     reset exclusion coefficients for connected atoms
+ebuck3.f:c     set exclusion coefficients for connected atoms
+ebuck3.f:c     reset exclusion coefficients for connected atoms
+ebuck3.f:c     set arrays needed to scale connected atom interactions
+ebuck3.f:c     set exclusion coefficients for connected atoms
+ebuck3.f:c     reset exclusion coefficients for connected atoms
+ebuck3.f:c     set arrays needed to scale connected atom interactions
+ebuck3.f:c     set exclusion coefficients for connected atoms
+ebuck3.f:c     reset exclusion coefficients for connected atoms
+ebuck.f:c     apply long range van der Waals correction if desired
+ebuck.f:c     set arrays needed to scale connected atom interactions
+ebuck.f:c     set exclusion coefficients for connected atoms
+ebuck.f:c     reset exclusion coefficients for connected atoms
+ebuck.f:c     set exclusion coefficients for connected atoms
+ebuck.f:c     reset exclusion coefficients for connected atoms
+ebuck.f:c     set arrays needed to scale connected atom interactions
+ebuck.f:c     set exclusion coefficients for connected atoms
+ebuck.f:c     reset exclusion coefficients for connected atoms
+ebuck.f:c     set arrays needed to scale connected atom interactions
+ebuck.f:c     set exclusion coefficients for connected atoms
+ebuck.f:c     reset exclusion coefficients for connected atoms
+echarge1.f:c     and first derivatives with respect to Cartesian coordinates
+echarge1.f:c     and first derivatives with respect to Cartesian coordinates
+echarge1.f:c     initialize connected atom exclusion coefficients
+echarge1.f:      f = electric / dielec
+echarge1.f:c     set exclusion coefficients for connected atoms
+echarge1.f:c     reset exclusion coefficients for connected atoms
+echarge1.f:c     set exclusion coefficients for connected atoms
+echarge1.f:c     reset exclusion coefficients for connected atoms
+echarge1.f:c     and first derivatives with respect to Cartesian coordinates
+echarge1.f:c     initialize connected atom exclusion coefficients
+echarge1.f:      f = electric / dielec
+echarge1.f:c     set exclusion coefficients for connected atoms
+echarge1.f:c     reset exclusion coefficients for connected atoms
+echarge1.f:c     and first derivatives with respect to Cartesian coordinates
+echarge1.f:c     initialize connected atom exclusion coefficients
+echarge1.f:      f = electric / dielec
+echarge1.f:c     OpenMP directives for the major loop structure
+echarge1.f:c     set exclusion coefficients for connected atoms
+echarge1.f:c     reset exclusion coefficients for connected atoms
+echarge1.f:c     OpenMP directives for the major loop structure
+echarge1.f:c     and first derivatives with respect to Cartesian coordinates
+echarge1.f:c     initialize connected atom exclusion coefficients
+echarge1.f:      f = electric / dielec
+echarge1.f:c     compute the cell dipole boundary correction term
+echarge1.f:c     set exclusion coefficients for connected atoms
+echarge1.f:c     reset exclusion coefficients for connected atoms
+echarge1.f:c     set exclusion coefficients for connected atoms
+echarge1.f:c     reset exclusion coefficients for connected atoms
+echarge1.f:c     and first derivatives with respect to Cartesian coordinates
+echarge1.f:c     initialize connected atom exclusion coefficients
+echarge1.f:      f = electric / dielec
+echarge1.f:c     compute the cell dipole boundary correction term
+echarge1.f:c     set exclusion coefficients for connected atoms
+echarge1.f:c     reset exclusion coefficients for connected atoms
+echarge1.f:c     and first derivatives with respect to Cartesian coordinates
+echarge1.f:c     initialize connected atom exclusion coefficients
+echarge1.f:      f = electric / dielec
+echarge1.f:c     compute the cell dipole boundary correction term
+echarge1.f:c     OpenMP directives for the major loop structure
+echarge1.f:c     set exclusion coefficients for connected atoms
+echarge1.f:c     reset exclusion coefficients for connected atoms
+echarge1.f:c     OpenMP directives for the major loop structure
+echarge1.f:c     and first derivatives with respect to Cartesian coordinates
+echarge1.f:c     initialize connected atom exclusion coefficients
+echarge1.f:      f = electric / dielec
+echarge1.f:c     set exclusion coefficients for connected atoms
+echarge1.f:c     reset exclusion coefficients for connected atoms
+echarge1.f:      f = 0.5d0 * electric / dielec
+echarge1.f:      f = electric / dielec
+echarge2.f:            fi = electric * pchg(k) / dielec
+echarge2.f:c     initialize connected atom exclusion coefficients
+echarge2.f:            fi = electric * pchg(k) / dielec
+echarge2.f:c     initialize connected atom exclusion coefficients
+echarge2.f:            fi = electric * pchg(k) / dielec
+echarge2.f:c     initialize connected atom exclusion coefficients
+echarge3.f:c     initialize connected atom exclusion coefficients
+echarge3.f:      f = electric / dielec
+echarge3.f:c     set exclusion coefficients for connected atoms
+echarge3.f:c     reset exclusion coefficients for connected atoms
+echarge3.f:c     set exclusion coefficients for connected atoms
+echarge3.f:c     reset exclusion coefficients for connected atoms
+echarge3.f:c     initialize connected atom exclusion coefficients
+echarge3.f:      f = electric / dielec
+echarge3.f:c     set exclusion coefficients for connected atoms
+echarge3.f:c     reset exclusion coefficients for connected atoms
+echarge3.f:c     initialize connected atom exclusion coefficients
+echarge3.f:      f = electric / dielec
+echarge3.f:c     OpenMP directives for the major loop structure
+echarge3.f:c     set exclusion coefficients for connected atoms
+echarge3.f:c     reset exclusion coefficients for connected atoms
+echarge3.f:c     OpenMP directives for the major loop structure
+echarge3.f:c     initialize connected atom exclusion coefficients
+echarge3.f:      f = electric / dielec
+echarge3.f:c     compute the cell dipole boundary correction term
+echarge3.f:c     set exclusion coefficients for connected atoms
+echarge3.f:c     reset exclusion coefficients for connected atoms
+echarge3.f:c     set exclusion coefficients for connected atoms
+echarge3.f:c     reset exclusion coefficients for connected atoms
+echarge3.f:c     initialize connected atom exclusion coefficients
+echarge3.f:      f = electric / dielec
+echarge3.f:c     compute the cell dipole boundary correction term
+echarge3.f:c     set exclusion coefficients for connected atoms
+echarge3.f:c     reset exclusion coefficients for connected atoms
+echarge3.f:c     initialize connected atom exclusion coefficients
+echarge3.f:      f = electric / dielec
+echarge3.f:c     compute the cell dipole boundary correction term
+echarge3.f:c     OpenMP directives for the major loop structure
+echarge3.f:c     set exclusion coefficients for connected atoms
+echarge3.f:c     reset exclusion coefficients for connected atoms
+echarge3.f:c     OpenMP directives for the major loop structure
+echarge3.f:c     initialize connected atom exclusion coefficients
+echarge3.f:      f = electric / dielec
+echarge3.f:c     set exclusion coefficients for connected atoms
+echarge3.f:c     reset exclusion coefficients for connected atoms
+echarge.f:c     initialize connected atom exclusion coefficients
+echarge.f:      f = electric / dielec
+echarge.f:c     set exclusion coefficients for connected atoms
+echarge.f:c     reset exclusion coefficients for connected atoms
+echarge.f:c     set exclusion coefficients for connected atoms
+echarge.f:c     reset exclusion coefficients for connected atoms
+echarge.f:c     initialize connected atom exclusion coefficients
+echarge.f:      f = electric / dielec
+echarge.f:c     set exclusion coefficients for connected atoms
+echarge.f:c     reset exclusion coefficients for connected atoms
+echarge.f:c     initialize connected atom exclusion coefficients
+echarge.f:      f = electric / dielec
+echarge.f:c     OpenMP directives for the major loop structure
+echarge.f:c     set exclusion coefficients for connected atoms
+echarge.f:c     reset exclusion coefficients for connected atoms
+echarge.f:c     OpenMP directives for the major loop structure
+echarge.f:c     initialize connected atom exclusion coefficients
+echarge.f:      f = electric / dielec
+echarge.f:c     compute the cell dipole boundary correction term
+echarge.f:c     set exclusion coefficients for connected atoms
+echarge.f:c     reset exclusion coefficients for connected atoms
+echarge.f:c     set exclusion coefficients for connected atoms
+echarge.f:c     reset exclusion coefficients for connected atoms
+echarge.f:c     initialize connected atom exclusion coefficients
+echarge.f:      f = electric / dielec
+echarge.f:c     compute the cell dipole boundary correction term
+echarge.f:c     set exclusion coefficients for connected atoms
+echarge.f:c     reset exclusion coefficients for connected atoms
+echarge.f:c     initialize connected atom exclusion coefficients
+echarge.f:      f = electric / dielec
+echarge.f:c     compute the cell dipole boundary correction term
+echarge.f:c     OpenMP directives for the major loop structure
+echarge.f:c     set exclusion coefficients for connected atoms
+echarge.f:c     reset exclusion coefficients for connected atoms
+echarge.f:c     OpenMP directives for the major loop structure
+echarge.f:c     initialize connected atom exclusion coefficients
+echarge.f:      f = electric / dielec
+echarge.f:c     set exclusion coefficients for connected atoms
+echarge.f:c     reset exclusion coefficients for connected atoms
+echarge.f:      f = 0.5d0 * electric / dielec
+echgdpl1.f:c     and first derivatives with respect to Cartesian coordinates
+echgdpl1.f:      f = electric / (debye * dielec)
+echgdpl2.f:      f = -electric / (debye * dielec)
+echgdpl3.f:      f = electric / (debye * dielec)
+echgdpl.f:      f = electric / (debye * dielec)
+ect0.f:c     ##  subroutine ect0  --  charge transfer energy                 ##
+ect0.f:      subroutine ect0
+ect0.f:         call ect0b
+ect0.f:         call ect0a
+ect0.f:c     ##  subroutine ect0  --  charge transfer energy via double loop ##
+ect0.f:      subroutine ect0a
+ect0.f:      ect = 0.0d0
+ect0.f:c     set arrays needed to scale connected atom interactions
+ect0.f:c     set interaction scaling coefficients for connected atoms
+ect0.f:                     ect = ect + e
+ect0.f:c     reset interaction scaling coefficients for connected atoms
+ect0.f:cc     set interaction scaling coefficients for connected atoms
+ect0.f:                     ect = ect + e
+ect0.f:c     reset interaction scaling coefficients for connected atoms
+ect0.f:c     ##  subroutine ect0b  --  Charge transfer energy via list    ##
+ect0.f:c     "ect0b" calculates the charge transfer energy
+ect0.f:      subroutine ect0b
+ect0.f:      ect = 0.0d0
+ect0.f:c     set arrays needed to scale connected atom interactions
+ect0.f:c     OpenMP directives for the major loop structure
+ect0.f:!$OMP& shared(ect)
+ect0.f:!$OMP DO reduction(+:ect) schedule(guided)
+ect0.f:c     set exclusion coefficients for connected atoms
+ect0.f:                  ect = ect + e
+ect0.f:c     reset exclusion coefficients for connected atoms
+ect0.f:c     OpenMP directives for the major loop structure
+ect1.f:c     ##  subroutine ect1  --  charge transfer energy & derivatives   ##
+ect1.f:      subroutine ect1
+ect1.f:         call ect1b
+ect1.f:         call ect1a
+ect1.f:c     ##  subroutine ect1  --  CT energy & derivative via double loop ##
+ect1.f:      subroutine ect1a
+ect1.f:      ect = 0.0d0
+ect1.f:        dect(1,i) = 0.0d0
+ect1.f:        dect(2,i) = 0.0d0
+ect1.f:        dect(3,i) = 0.0d0
+ect1.f:c     set arrays needed to scale connected atom interactions
+ect1.f:c     set interaction scaling coefficients for connected atoms
+ect1.f:                  ect = ect + e
+ect1.f:                  dect(1,i) = dect(1,i) + dedx
+ect1.f:                  dect(2,i) = dect(2,i) + dedy
+ect1.f:                  dect(3,i) = dect(3,i) + dedz
+ect1.f:                  dect(1,k) = dect(1,k) - dedx
+ect1.f:                  dect(2,k) = dect(2,k) - dedy
+ect1.f:                  dect(3,k) = dect(3,k) - dedz
+ect1.f:c     reset interaction scaling coefficients for connected atoms
+ect1.f:cc     set interaction scaling coefficients for connected atoms
+ect1.f:                    ect = ect + e
+ect1.f:                    dect(1,i) = dect(1,i) + dedx
+ect1.f:                    dect(2,i) = dect(2,i) + dedy
+ect1.f:                    dect(3,i) = dect(3,i) + dedz
+ect1.f:                    dect(1,k) = dect(1,k) - dedx
+ect1.f:                    dect(2,k) = dect(2,k) - dedy
+ect1.f:                    dect(3,k) = dect(3,k) - dedz
+ect1.f:c     reset interaction scaling coefficients for connected atoms
+ect1.f:c     ##  subroutine ect1b  --  Charge transfer energy via list    ##
+ect1.f:c     "ect1b" calculates the charge transfer energy
+ect1.f:      subroutine ect1b
+ect1.f:      ect = 0.0d0
+ect1.f:         dect(1,i) = 0.0d0
+ect1.f:         dect(2,i) = 0.0d0
+ect1.f:         dect(3,i) = 0.0d0
+ect1.f:c     set arrays needed to scale connected atom interactions
+ect1.f:c     OpenMP directives for the major loop structure
+ect1.f:!$OMP& shared(ect,dect,vir,einter)
+ect1.f:!$OMP DO reduction(+:ect,dect,vir,einter) schedule(guided)
+ect1.f:c     set exclusion coefficients for connected atoms
+ect1.f:                  ect = ect + e
+ect1.f:                  dect(1,i) = dect(1,i) + dedx
+ect1.f:                  dect(2,i) = dect(2,i) + dedy
+ect1.f:                  dect(3,i) = dect(3,i) + dedz
+ect1.f:                  dect(1,k) = dect(1,k) - dedx
+ect1.f:                  dect(2,k) = dect(2,k) - dedy
+ect1.f:                  dect(3,k) = dect(3,k) - dedz
+ect1.f:c     reset exclusion coefficients for connected atoms
+ect1.f:c     OpenMP directives for the major loop structure
+ect3.f:c     ##  subroutine ect3  --  charge transfer energy & analysis      ##
+ect3.f:      subroutine ect3
+ect3.f:         call ect3b
+ect3.f:         call ect3a
+ect3.f:c     ##  subroutine ect3a -- CT double loop energy & analysis        ##
+ect3.f:c     "ect3a" calculates the  charge transfer energy
+ect3.f:      subroutine ect3a
+ect3.f:      nect = 0
+ect3.f:      ect = 0.0d0
+ect3.f:         aect(i) = 0.0d0
+ect3.f:c     set arrays needed to scale connected atom interactions
+ect3.f:c     set interaction scaling coefficients for connected atoms
+ect3.f:                      nect = nect + 1
+ect3.f:                        aect(i) = aect(i) +0.5d0*e
+ect3.f:                        ect = ect + e
+ect3.f:                        aect(i) = aect(i) + 0.5d0*e
+ect3.f:                        aect(k) = aect(k) + 0.5d0*e
+ect3.f:c     reset interaction scaling coefficients for connected atoms
+ect3.f:c     set interaction scaling coefficients for connected atoms
+ect3.f:                      nect = nect + 1
+ect3.f:                        aect(i) = aect(i) +0.5d0*e
+ect3.f:                        ect = ect + e
+ect3.f:                        aect(i) = aect(i) + 0.5d0*e
+ect3.f:                        aect(k) = aect(k) + 0.5d0*e
+ect3.f:c     reset interaction scaling coefficients for connected atoms
+ect3.f:c     ##  subroutine ect3b  --  Charge transfer energy via list    ##
+ect3.f:c     "ect3b" calculates the charge transfer energy
+ect3.f:      subroutine ect3b
+ect3.f:      nect = 0
+ect3.f:      ect = 0.0d0
+ect3.f:         aect(i) = 0.0d0
+ect3.f:c     set arrays needed to scale connected atom interactions
+ect3.f:c     OpenMP directives for the major loop structure
+ect3.f:!$OMP& shared(ect,einter,nect,aect)
+ect3.f:!$OMP DO reduction(+:ect,einter,nect,aect) schedule(guided)
+ect3.f:c     set exclusion coefficients for connected atoms
+ect3.f:                      nect = nect + 1
+ect3.f:                        aect(i) = aect(i) +0.5d0*e
+ect3.f:                        ect = ect + e
+ect3.f:                        aect(i) = aect(i) + 0.5d0*e
+ect3.f:                        aect(k) = aect(k) + 0.5d0*e
+ect3.f:c     reset exclusion coefficients for connected atoms
+ect3.f:c     OpenMP directives for the major loop structure
+edipole1.f:c     and first derivatives with respect to Cartesian coordinates
+edipole1.f:      f = electric / (debye**2 * dielec)
+edipole2.f:      f = electric / (debye**2 * dielec)
+edipole3.f:      f = electric / (debye**2 * dielec)
+edipole.f:      f = electric / (debye**2 * dielec)
+egauss1.f:c     interaction energy and its first derivatives with respect
+egauss1.f:c     set arrays needed to scale connected atom interactions
+egauss1.f:c     set exclusion coefficients for connected atoms
+egauss1.f:c     reset exclusion coefficients for connected atoms
+egauss1.f:c     set exclusion coefficients for connected atoms
+egauss1.f:c     reset exclusion coefficients for connected atoms
+egauss1.f:c     energy and its first derivatives with respect to Cartesian
+egauss1.f:c     set arrays needed to scale connected atom interactions
+egauss1.f:c     set exclusion coefficients for connected atoms
+egauss1.f:c     reset exclusion coefficients for connected atoms
+egauss1.f:c     energy and its first derivatives with respect to Cartesian
+egauss1.f:c     set arrays needed to scale connected atom interactions
+egauss1.f:c     set exclusion coefficients for connected atoms
+egauss1.f:c     reset exclusion coefficients for connected atoms
+egauss1.f:c     set arrays needed to scale connected atom interactions
+egauss1.f:c     set exclusion coefficients for connected atoms
+egauss1.f:c     reset exclusion coefficients for connected atoms
+egauss2.f:c     set arrays needed to scale connected atom interactions
+egauss2.f:c     set exclusion coefficients for connected atoms
+egauss2.f:c     reset exclusion coefficients for connected atoms
+egauss2.f:c     set exclusion coefficients for connected atoms
+egauss2.f:c     reset exclusion coefficients for connected atoms
+egauss2.f:c     set arrays needed to scale connected atom interactions
+egauss2.f:c     set exclusion coefficients for connected atoms
+egauss2.f:c     reset exclusion coefficients for connected atoms
+egauss3.f:c     set arrays needed to scale connected atom interactions
+egauss3.f:c     set exclusion coefficients for connected atoms
+egauss3.f:c     reset exclusion coefficients for connected atoms
+egauss3.f:c     set exclusion coefficients for connected atoms
+egauss3.f:c     reset exclusion coefficients for connected atoms
+egauss3.f:c     set arrays needed to scale connected atom interactions
+egauss3.f:c     set exclusion coefficients for connected atoms
+egauss3.f:c     reset exclusion coefficients for connected atoms
+egauss3.f:c     set arrays needed to scale connected atom interactions
+egauss3.f:c     set exclusion coefficients for connected atoms
+egauss3.f:c     reset exclusion coefficients for connected atoms
+egauss3.f:c     set arrays needed to scale connected atom interactions
+egauss3.f:c     reset exclusion coefficients for connected atoms
+egauss.f:c     set arrays needed to scale connected atom interactions
+egauss.f:c     set exclusion coefficients for connected atoms
+egauss.f:c     reset exclusion coefficients for connected atoms
+egauss.f:c     set exclusion coefficients for connected atoms
+egauss.f:c     reset exclusion coefficients for connected atoms
+egauss.f:c     set arrays needed to scale connected atom interactions
+egauss.f:c     set exclusion coefficients for connected atoms
+egauss.f:c     reset exclusion coefficients for connected atoms
+egauss.f:c     set arrays needed to scale connected atom interactions
+egauss.f:c     set exclusion coefficients for connected atoms
+egauss.f:c     reset exclusion coefficients for connected atoms
+egauss.f:c     set arrays needed to scale connected atom interactions
+egauss.f:c     set exclusion coefficients for connected atoms
+egauss.f:c     reset exclusion coefficients for connected atoms
+egeom1.f:c     with respect to Cartesian coordinates due to restraints
+egeom2.f:c     construct an orthogonal direction for linear angles
+egeom2.f:c     first derivatives of bond angle with respect to coordinates
+egeom2.f:c     construct a second orthogonal direction for linear angles
+ehal1.f:c     its first derivatives with respect to Cartesian coordinates
+ehal1.f:c     apply long range van der Waals correction if desired
+ehal1.f:c     its first derivatives with respect to Cartesian coordinates
+ehal1.f:c     set arrays needed to scale connected atom interactions
+ehal1.f:c     set exclusion coefficients for connected atoms
+ehal1.f:c     reset exclusion coefficients for connected atoms
+ehal1.f:c     set exclusion coefficients for connected atoms
+ehal1.f:c     reset exclusion coefficients for connected atoms
+ehal1.f:c     its first derivatives with respect to Cartesian coordinates
+ehal1.f:c     set arrays needed to scale connected atom interactions
+ehal1.f:c     set exclusion coefficients for connected atoms
+ehal1.f:c     reset exclusion coefficients for connected atoms
+ehal1.f:c     its first derivatives with respect to Cartesian coordinates
+ehal1.f:c     set arrays needed to scale connected atom interactions
+ehal1.f:c     OpenMP directives for the major loop structure
+ehal1.f:c     set exclusion coefficients for connected atoms
+ehal1.f:c     reset exclusion coefficients for connected atoms
+ehal1.f:c     OpenMP directives for the major loop structure
+ehal2.f:c     set arrays needed to scale connected atom interactions
+ehal2.f:c     set exclusion coefficients for connected atoms
+ehal2.f:c     reset exclusion coefficients for connected atoms
+ehal2.f:c     set exclusion coefficients for connected atoms
+ehal2.f:c     reset exclusion coefficients for connected atoms
+ehal3.f:c     apply long range van der Waals correction if desired
+ehal3.f:   10       format (/,' Long Range vdw Correction :',9x,f12.4)
+ehal3.f:c     set arrays needed to scale connected atom interactions
+ehal3.f:c     set exclusion coefficients for connected atoms
+ehal3.f:c     reset exclusion coefficients for connected atoms
+ehal3.f:c     set exclusion coefficients for connected atoms
+ehal3.f:c     reset exclusion coefficients for connected atoms
+ehal3.f:c     set arrays needed to scale connected atom interactions
+ehal3.f:c     set exclusion coefficients for connected atoms
+ehal3.f:c     reset exclusion coefficients for connected atoms
+ehal3.f:c     set arrays needed to scale connected atom interactions
+ehal3.f:c     OpenMP directives for the major loop structure
+ehal3.f:c     set exclusion coefficients for connected atoms
+ehal3.f:c     reset exclusion coefficients for connected atoms
+ehal3.f:c     OpenMP directives for the major loop structure
+ehal.f:c     apply long range van der Waals correction if desired
+ehal.f:c     set arrays needed to scale connected atom interactions
+ehal.f:c     set exclusion coefficients for connected atoms
+ehal.f:c     reset exclusion coefficients for connected atoms
+ehal.f:c     set exclusion coefficients for connected atoms
+ehal.f:c     reset exclusion coefficients for connected atoms
+ehal.f:c     set arrays needed to scale connected atom interactions
+ehal.f:c     set exclusion coefficients for connected atoms
+ehal.f:c     reset exclusion coefficients for connected atoms
+ehal.f:c     set arrays needed to scale connected atom interactions
+ehal.f:c     OpenMP directives for the major loop structure
+ehal.f:c     set exclusion coefficients for connected atoms
+ehal.f:c     reset exclusion coefficients for connected atoms
+ehal.f:c     OpenMP directives for the major loop structure
+eimprop1.f:c     first derivatives with respect to Cartesian coordinates
+eimprop1.f:c     OpenMP directives for the major loop structure
+eimprop1.f:c     OpenMP directives for the major loop structure
+eimprop3.f:c     OpenMP directives for the major loop structure
+eimprop3.f:c     OpenMP directives for the major loop structure
+eimprop.f:c     OpenMP directives for the major loop structure
+eimprop.f:c     OpenMP directives for the major loop structure
+eimptor1.f:c     first derivatives with respect to Cartesian coordinates
+eimptor1.f:c     OpenMP directives for the major loop structure
+eimptor1.f:c     OpenMP directives for the major loop structure
+eimptor3.f:c     OpenMP directives for the major loop structure
+eimptor3.f:c     OpenMP directives for the major loop structure
+eimptor.f:c     OpenMP directives for the major loop structure
+eimptor.f:c     OpenMP directives for the major loop structure
+elj0c.f:c     apply long range van der Waals correction if desired
+elj0c.f:c     set arrays needed to scale connected atom interactions
+elj0c.f:c     set exclusion coefficients for connected atoms
+elj0c.f:c     reset exclusion coefficients for connected atoms
+elj0c.f:c     set exclusion coefficients for connected atoms
+elj0c.f:c     reset exclusion coefficients for connected atoms
+elj0c.f:c     set arrays needed to scale connected atom interactions
+elj0c.f:c     set exclusion coefficients for connected atoms
+elj0c.f:c     reset exclusion coefficients for connected atoms
+elj0c.f:c     set arrays needed to scale connected atom interactions
+elj0c.f:c     OpenMP directives for the major loop structure
+elj0c.f:c     set exclusion coefficients for connected atoms
+elj0c.f:c     reset exclusion coefficients for connected atoms
+elj0c.f:c     OpenMP directives for the major loop structure
+elj1.f:c     and its first derivatives with respect to Cartesian coordinates
+elj1.f:c     apply long range van der Waals correction if desired
+elj1.f:c     set arrays needed to scale connected atom interactions
+elj1.f:c     set exclusion coefficients for connected atoms
+elj1.f:c     reset exclusion coefficients for connected atoms
+elj1.f:c     set exclusion coefficients for connected atoms
+elj1.f:c     reset exclusion coefficients for connected atoms
+elj1.f:c     set arrays needed to scale connected atom interactions
+elj1.f:c     set exclusion coefficients for connected atoms
+elj1.f:c     reset exclusion coefficients for connected atoms
+elj1.f:c     set arrays needed to scale connected atom interactions
+elj1.f:c     OpenMP directives for the major loop structure
+elj1.f:c     set exclusion coefficients for connected atoms
+elj1.f:c     reset exclusion coefficients for connected atoms
+elj1.f:c     OpenMP directives for the major loop structure
+elj1.f:c     set arrays needed to scale connected atom interactions
+elj1.f:c     set exclusion coefficients for connected atoms
+elj1.f:c     reset exclusion coefficients for connected atoms
+elj2.f:c     set arrays needed to scale connected atom interactions
+elj2.f:c     set exclusion coefficients for connected atoms
+elj2.f:c     reset exclusion coefficients for connected atoms
+elj2.f:c     set exclusion coefficients for connected atoms
+elj2.f:c     reset exclusion coefficients for connected atoms
+elj2.f:c     set arrays needed to scale connected atom interactions
+elj2.f:c     set exclusion coefficients for connected atoms
+elj2.f:c     reset exclusion coefficients for connected atoms
+elj3.f:c     apply long range van der Waals correction if desired
+elj3.f:   10       format (/,' Long Range vdw Correction :',9x,f12.4)
+elj3.f:c     set arrays needed to scale connected atom interactions
+elj3.f:c     set exclusion coefficients for connected atoms
+elj3.f:c     reset exclusion coefficients for connected atoms
+elj3.f:c     set exclusion coefficients for connected atoms
+elj3.f:c     reset exclusion coefficients for connected atoms
+elj3.f:c     set arrays needed to scale connected atom interactions
+elj3.f:c     set exclusion coefficients for connected atoms
+elj3.f:c     reset exclusion coefficients for connected atoms
+elj3.f:c     set arrays needed to scale connected atom interactions
+elj3.f:c     OpenMP directives for the major loop structure
+elj3.f:c     set exclusion coefficients for connected atoms
+elj3.f:c     reset exclusion coefficients for connected atoms
+elj3.f:c     OpenMP directives for the major loop structure
+elj3.f:c     set arrays needed to scale connected atom interactions
+elj3.f:c     set exclusion coefficients for connected atoms
+elj3.f:c     reset exclusion coefficients for connected atoms
+elj.f:c     apply long range van der Waals correction if desired
+elj.f:c     set arrays needed to scale connected atom interactions
+elj.f:c     set exclusion coefficients for connected atoms
+elj.f:c     reset exclusion coefficients for connected atoms
+elj.f:c     set exclusion coefficients for connected atoms
+elj.f:c     reset exclusion coefficients for connected atoms
+elj.f:c     set arrays needed to scale connected atom interactions
+elj.f:c     set exclusion coefficients for connected atoms
+elj.f:c     reset exclusion coefficients for connected atoms
+elj.f:c     set arrays needed to scale connected atom interactions
+elj.f:c     OpenMP directives for the major loop structure
+elj.f:c     set exclusion coefficients for connected atoms
+elj.f:c     reset exclusion coefficients for connected atoms
+elj.f:c     OpenMP directives for the major loop structure
+elj.f:c     set arrays needed to scale connected atom interactions
+elj.f:c     set exclusion coefficients for connected atoms
+elj.f:c     reset exclusion coefficients for connected atoms
+embed.f:c     parallelpiped spanned by vectors from a common atom to
+embed.f:c     John Wiley and Sons, U.S. distributor, see section 6-2
+embed.f:c     D. P. Bertsekas, "A Simple and Fast Label Correcting Algorithm
+embed.f:c     Wiley and Sons, Bristol, 1974; see section 7.7
+embed.f:c     of a square matrix in a schematic form for visual inspection
+embed.f:c     "dstmat" selects a distance matrix containing values between
+embed.f:c     initialize the method for distance element selection
+embed.f:c     get a distance selection method and extent of metrization
+embed.f:c     set extent of partial metrization during distance selection
+embed.f:c     set the initial distribution for selection of trial distances
+embed.f:c     adjust the distribution for selection of trial distances
+embed.f:  110    format (/,' Trial Distances Selected at Random from',
+embed.f:c     Crippen's triangle correlated distance selection
+embed.f:c     vectors and the center of mass using the law of cosines and the
+embed.f:c     and eigenvectors of the metric matrix, "valid" is set true if the
+embed.f:c     print out the eigenvalues and their eigenvectors
+embed.f:   30    format (/,' Eigenvectors from Metric Matrix :',/)
+embed.f:c     "coords" converts the three principal eigenvalues/vectors from
+embed.f:c     compute coordinates from the largest eigenvalues and vectors
+embed.f:c     transfer the final coordinates back to atomic vectors
+embed.f:c     zero out the list of atoms locally connected to each atom
+embed.f:c     "majorize" refines the projected coordinates by attempting to
+embed.f:c     C. M. Oshiro, J. Thomason and I. D. Kuntz, "Effects of Limited
+embed.f:c     with respect to atomic Cartesian coordinates as a sum the
+embed.f:c     derivatives with respect to the atomic Cartesian coordinates
+embed.f:c     see if the torsion involves four directly bonded atoms
+emetal1.f:c     and its first derivatives with respect to Cartesian coordinates
+emetal1.f:c     dfacback is derivative of back factor with respect to center
+emm3hb1.f:c     "emm3hb1" calculates the MM3 exp-6 van der Waals and directional
+emm3hb1.f:c     charge transfer hydrogen bonding energy with respect to Cartesian
+emm3hb1.f:c     J.-H. Lii and N. L. Allinger, "Directional Hydrogen Bonding in
+emm3hb1.f:c     J.-H. Lii and N. L. Allinger, "Directional Hydrogen Bonding in
+emm3hb1.f:c     apply long range van der Waals correction if desired
+emm3hb1.f:c     "emm3hb1a" calculates the MM3 exp-6 van der Waals and directional
+emm3hb1.f:c     charge transfer hydrogen bonding energy with respect to Cartesian
+emm3hb1.f:c     set arrays needed to scale connected atom interactions
+emm3hb1.f:c     set exclusion coefficients for connected atoms
+emm3hb1.f:c     increment the derivatives for directional hydrogen bonding
+emm3hb1.f:c     reset exclusion coefficients for connected atoms
+emm3hb1.f:c     set exclusion coefficients for connected atoms
+emm3hb1.f:c     increment the derivatives for directional hydrogen bonding
+emm3hb1.f:c     reset exclusion coefficients for connected atoms
+emm3hb1.f:c     "emm3hb1b" calculates the MM3 exp-6 van der Waals and directional
+emm3hb1.f:c     charge transfer hydrogen bonding energy with respect to Cartesian
+emm3hb1.f:c     set arrays needed to scale connected atom interactions
+emm3hb1.f:c     set exclusion coefficients for connected atoms
+emm3hb1.f:c     increment the derivatives for directional hydrogen bonding
+emm3hb1.f:c     reset exclusion coefficients for connected atoms
+emm3hb1.f:c     "emm3hb1c" calculates the MM3 exp-6 van der Waals and directional
+emm3hb1.f:c     charge transfer hydrogen bonding energy with respect to Cartesian
+emm3hb1.f:c     set arrays needed to scale connected atom interactions
+emm3hb1.f:c     set exclusion coefficients for connected atoms
+emm3hb1.f:c     increment the derivatives for directional hydrogen bonding
+emm3hb1.f:c     reset exclusion coefficients for connected atoms
+emm3hb2.f:c     "emm3hb2" calculates the MM3 exp-6 van der Waals and directional
+emm3hb2.f:c     note this version only partially incorporates the directional
+emm3hb2.f:c     J.-H. Lii and N. L. Allinger, "Directional Hydrogen Bonding in
+emm3hb2.f:c     J.-H. Lii and N. L. Allinger, "Directional Hydrogen Bonding in
+emm3hb2.f:c     set arrays needed to scale connected atom interactions
+emm3hb2.f:c     set exclusion coefficients for connected atoms
+emm3hb2.f:c     reset exclusion coefficients for connected atoms
+emm3hb2.f:c     set exclusion coefficients for connected atoms
+emm3hb2.f:c     reset exclusion coefficients for connected atoms
+emm3hb3.f:c     "emm3hb3" calculates the MM3 exp-6 van der Waals and directional
+emm3hb3.f:c     J.-H. Lii and N. L. Allinger, "Directional Hydrogen Bonding in
+emm3hb3.f:c     J.-H. Lii and N. L. Allinger, "Directional Hydrogen Bonding in
+emm3hb3.f:c     apply long range van der Waals correction if desired
+emm3hb3.f:   10       format (/,' Long Range vdw Correction :',9x,f12.4)
+emm3hb3.f:c     directional charge transfer hydrogen bonding energy, and
+emm3hb3.f:c     set arrays needed to scale connected atom interactions
+emm3hb3.f:c     set exclusion coefficients for connected atoms
+emm3hb3.f:c     reset exclusion coefficients for connected atoms
+emm3hb3.f:c     set exclusion coefficients for connected atoms
+emm3hb3.f:c     reset exclusion coefficients for connected atoms
+emm3hb3.f:c     directional charge transfer hydrogen bonding energy using
+emm3hb3.f:c     set arrays needed to scale connected atom interactions
+emm3hb3.f:c     set exclusion coefficients for connected atoms
+emm3hb3.f:c     reset exclusion coefficients for connected atoms
+emm3hb3.f:c     directional charge transfer hydrogen bonding energy using
+emm3hb3.f:c     set arrays needed to scale connected atom interactions
+emm3hb3.f:c     set exclusion coefficients for connected atoms
+emm3hb3.f:c     reset exclusion coefficients for connected atoms
+emm3hb.f:c     "emm3hb" calculates the MM3 exp-6 van der Waals and directional
+emm3hb.f:c     J.-H. Lii and N. L. Allinger, "Directional Hydrogen Bonding in
+emm3hb.f:c     J.-H. Lii and N. L. Allinger, "Directional Hydrogen Bonding in
+emm3hb.f:c     apply long range van der Waals correction if desired
+emm3hb.f:c     directional charge transfer hydrogen bonding energy using
+emm3hb.f:c     set arrays needed to scale connected atom interactions
+emm3hb.f:c     set exclusion coefficients for connected atoms
+emm3hb.f:c     reset exclusion coefficients for connected atoms
+emm3hb.f:c     set exclusion coefficients for connected atoms
+emm3hb.f:c     reset exclusion coefficients for connected atoms
+emm3hb.f:c     directional charge transfer hydrogen bonding energy using
+emm3hb.f:c     set arrays needed to scale connected atom interactions
+emm3hb.f:c     set exclusion coefficients for connected atoms
+emm3hb.f:c     reset exclusion coefficients for connected atoms
+emm3hb.f:c     directional charge transfer hydrogen bonding energy using
+emm3hb.f:c     set arrays needed to scale connected atom interactions
+emm3hb.f:c     set exclusion coefficients for connected atoms
+emm3hb.f:c     reset exclusion coefficients for connected atoms
+empole1.f:c     energy and derivatives with respect to Cartesian coordinates
+empole1.f:c     respect to Cartesian coordinates using a pairwise double loop
+empole1.f:c     initialize connected atom scaling and torque arrays
+empole1.f:      f = electric / dielec
+empole1.f:c     reset exclusion coefficients for connected atoms
+empole1.f:c     reset exclusion coefficients for connected atoms
+empole1.f:c     with respect to Cartesian coordinates using a neighbor list
+empole1.f:c     initialize connected atom scaling and torque arrays
+empole1.f:      f = electric / dielec
+empole1.f:c     OpenMP directives for the major loop structure
+empole1.f:c     reset exclusion coefficients for connected atoms
+empole1.f:c     OpenMP directives for the major loop structure
+empole1.f:c     OpenMP directives for the major loop structure
+empole1.f:c     with respect to Cartesian coordinates using particle mesh
+empole1.f:      f = electric / dielec
+empole1.f:c     compute the cell dipole boundary correction term
+empole1.f:c     boundary correction to virial due to overall cell dipole
+empole1.f:c     initialize connected atom scaling and torque arrays
+empole1.f:      f = electric / dielec
+empole1.f:c     reset exclusion coefficients for connected atoms
+empole1.f:c     reset exclusion coefficients for connected atoms
+empole1.f:c     with respect to Cartesian coordinates using particle mesh Ewald
+empole1.f:      f = electric / dielec
+empole1.f:c     compute the cell dipole boundary correction term
+empole1.f:c     boundary correction to virial due to overall cell dipole
+empole1.f:c     initialize connected atom scaling and torque arrays
+empole1.f:      f = electric / dielec
+empole1.f:c     OpenMP directives for the major loop structure
+empole1.f:c     reset exclusion coefficients for connected atoms
+empole1.f:c     OpenMP directives for the major loop structure
+empole1.f:c     OpenMP directives for the major loop structure
+empole1.f:c     Representation of Electrostatics in Classical Force Fields:
+empole1.f:c     indices into the electrostatic field array
+empole1.f:      f = electric / dielec
+empole1.f:            eterm = 0.5d0 * electric * expterm * struc2
+empole3.f:c     "empole3" calculates the electrostatic energy due to atomic
+empole3.f:c     initialize connected atom exclusion coefficients
+empole3.f:      f = electric / dielec
+empole3.f:c     reset exclusion coefficients for connected atoms
+empole3.f:c     reset exclusion coefficients for connected atoms
+empole3.f:c     initialize connected atom exclusion coefficients
+empole3.f:      f = electric / dielec
+empole3.f:c     OpenMP directives for the major loop structure
+empole3.f:c     reset exclusion coefficients for connected atoms
+empole3.f:c     OpenMP directives for the major loop structure
+empole3.f:      f = electric / dielec
+empole3.f:c     compute the cell dipole boundary correction term
+empole3.f:c     initialize connected atom exclusion coefficients
+empole3.f:      f = electric / dielec
+empole3.f:c     reset exclusion coefficients for connected atoms
+empole3.f:c     reset exclusion coefficients for connected atoms
+empole3.f:      f = electric / dielec
+empole3.f:c     compute the cell dipole boundary correction term
+empole3.f:c     initialize connected atom exclusion coefficients
+empole3.f:      f = electric / dielec
+empole3.f:c     OpenMP directives for the major loop structure
+empole3.f:c     reset exclusion coefficients for connected atoms
+empole3.f:c     OpenMP directives for the major loop structure
+empole.f:c     "empole" calculates the electrostatic energy due to atomic
+empole.f:c     initialize connected atom exclusion coefficients
+empole.f:      f = electric / dielec
+empole.f:c     reset exclusion coefficients for connected atoms
+empole.f:c     reset exclusion coefficients for connected atoms
+empole.f:c     initialize connected atom exclusion coefficients
+empole.f:      f = electric / dielec
+empole.f:c     OpenMP directives for the major loop structure
+empole.f:c     reset exclusion coefficients for connected atoms
+empole.f:c     OpenMP directives for the major loop structure
+empole.f:      f = electric / dielec
+empole.f:c     compute the cell dipole boundary correction term
+empole.f:c     initialize connected atom exclusion coefficients
+empole.f:      f = electric / dielec
+empole.f:c     reset exclusion coefficients for connected atoms
+empole.f:c     reset exclusion coefficients for connected atoms
+empole.f:      f = electric / dielec
+empole.f:c     compute the cell dipole boundary correction term
+empole.f:c     initialize connected atom exclusion coefficients
+empole.f:      f = electric / dielec
+empole.f:c     OpenMP directives for the major loop structure
+empole.f:c     reset exclusion coefficients for connected atoms
+empole.f:c     OpenMP directives for the major loop structure
+empole.f:c     Representation of Electrostatics in Classical Force Fields:
+empole.f:      f = electric / dielec
+energi.f:c     ect    charge transfer potential energy of the system
+energi.f:      real*8 ect
+energy.f:      ect = 0.0d0
+energy.f:      if (use_ct) call ect0
+energy.f:c     call the electrostatic energy component routines
+energy.f:     &          + em + ep + er + es + elf + eg + ex + ect !CW
+eopbend1.f:c     OpenMP directives for the major loop structure
+eopbend1.f:c     W-D-C angle between A-B-C plane and B-D vector for D-B<AC
+eopbend1.f:c     Allinger angle between A-C-D plane and D-B vector for D-B<AC
+eopbend1.f:c     OpenMP directives for the major loop structure
+eopbend2.f:c     W-D-C angle between A-B-C plane and B-D vector for D-B<AC
+eopbend2.f:c     Allinger angle between A-C-D plane and D-B vector for D-B<AC
+eopbend3.f:c     OpenMP directives for the major loop structure
+eopbend3.f:c     W-D-C angle between A-B-C plane and B-D vector for D-B<AC
+eopbend3.f:c     Allinger angle between A-C-D plane and D-B vector for D-B<AC
+eopbend3.f:c     OpenMP directives for the major loop structure
+eopbend.f:c     OpenMP directives for the major loop structure
+eopbend.f:c     W-D-C angle between A-B-C plane and B-D vector for D-B<AC
+eopbend.f:c     Allinger angle between A-C-D plane and D-B vector for D-B<AC
+eopbend.f:c     OpenMP directives for the major loop structure
+eopdist1.f:c     OpenMP directives for the major loop structure
+eopdist1.f:c     OpenMP directives for the major loop structure
+eopdist3.f:c     OpenMP directives for the major loop structure
+eopdist3.f:c     OpenMP directives for the major loop structure
+eopdist.f:c     OpenMP directives for the major loop structure
+eopdist.f:c     OpenMP directives for the major loop structure
+epitors1.f:c     and first derivatives with respect to Cartesian coordinates
+epitors1.f:c     OpenMP directives for the major loop structure
+epitors1.f:c     OpenMP directives for the major loop structure
+epitors3.f:c     OpenMP directives for the major loop structure
+epitors3.f:c     OpenMP directives for the major loop structure
+epitors.f:c     OpenMP directives for the major loop structure
+epitors.f:c     OpenMP directives for the major loop structure
+epolar1.f:c     and derivatives with respect to Cartesian coordinates
+epolar1.f:c     derivatives with respect to Cartesian coordinates using a
+epolar1.f:      f = 0.5d0 * electric / dielec
+epolar1.f:c     get the field gradient for direct polarization force
+epolar1.f:c     get the dEd/dR terms used for direct polarization force
+epolar1.f:c     get the dEp/dR terms used for direct polarization force
+epolar1.f:c     reset exclusion coefficients for connected atoms
+epolar1.f:c     get the field gradient for direct polarization force
+epolar1.f:c     get the dEd/dR terms used for direct polarization force
+epolar1.f:c     get the dEp/dR terms used for direct polarization force
+epolar1.f:c     reset exclusion coefficients for connected atoms
+epolar1.f:c     derivatives with respect to Cartesian coordinates using a
+epolar1.f:      f = 0.5d0 * electric / dielec
+epolar1.f:c     OpenMP directives for the major loop structure
+epolar1.f:c     get the field gradient for direct polarization force
+epolar1.f:c     get the dEd/dR terms used for direct polarization force
+epolar1.f:c     get the dEp/dR terms used for direct polarization force
+epolar1.f:c     reset exclusion coefficients for connected atoms
+epolar1.f:c     OpenMP directives for the major loop structure
+epolar1.f:c     OpenMP directives for the major loop structure
+epolar1.f:c     derivatives with respect to Cartesian coordinates using
+epolar1.f:      f = electric / dielec
+epolar1.f:c     compute the cell dipole boundary correction term
+epolar1.f:c     boundary correction to virial due to overall cell dipole
+epolar1.f:      f = 0.5d0 * electric / dielec
+epolar1.f:c     get the dEd/dR terms used for direct polarization force
+epolar1.f:c     get the dEp/dR terms used for direct polarization force
+epolar1.f:c     reset exclusion coefficients for connected atoms
+epolar1.f:c     get the dEd/dR terms used for direct polarization force
+epolar1.f:c     get the dEp/dR terms used for direct polarization force
+epolar1.f:c     reset exclusion coefficients for connected atoms
+epolar1.f:c     derivatives with respect to Cartesian coordinates using
+epolar1.f:      f = electric / dielec
+epolar1.f:c     compute the cell dipole boundary correction term
+epolar1.f:c     boundary correction to virial due to overall cell dipole
+epolar1.f:      f = 0.5d0 * electric / dielec
+epolar1.f:c     OpenMP directives for the major loop structure
+epolar1.f:c     get the dEd/dR terms used for direct polarization force
+epolar1.f:c     get the dEp/dR terms used for direct polarization force
+epolar1.f:c     reset exclusion coefficients for connected atoms
+epolar1.f:c     OpenMP directives for the major loop structure
+epolar1.f:c     OpenMP directives for the major loop structure
+epolar1.f:c     Representation of Electrostatics in Classical Force Fields:
+epolar1.f:c     indices into the electrostatic field array
+epolar1.f:      f = electric / dielec
+epolar2.f:c     it is incorrect to neglect interactions with atoms not directly
+epolar2.f:c     atom with respect to Cartesian coordinates; used to get finite
+epolar2.f:      f = 0.5d0 * electric / dielec
+epolar2.f:c     get the field gradient for direct polarization force
+epolar2.f:c     get the dEd/dR terms used for direct polarization force
+epolar2.f:c     get the dEp/dR terms used for direct polarization force
+epolar2.f:c     reset exclusion coefficients for connected atoms
+epolar2.f:c     get the field gradient for direct polarization force
+epolar2.f:c     get the dEd/dR terms used for direct polarization force
+epolar2.f:c     get the dEp/dR terms used for direct polarization force
+epolar2.f:c     reset exclusion coefficients for connected atoms
+epolar2.f:c     atom with respect to Cartesian coordinates; used to get finite
+epolar2.f:      f = 0.5d0 * electric / dielec
+epolar2.f:c     OpenMP directives for the major loop structure
+epolar2.f:c     get the field gradient for direct polarization force
+epolar2.f:c     get the dEd/dR terms used for direct polarization force
+epolar2.f:c     get the dEp/dR terms used for direct polarization force
+epolar2.f:c     reset exclusion coefficients for connected atoms
+epolar2.f:c     OpenMP directives for the major loop structure
+epolar2.f:c     OpenMP directives for the major loop structure
+epolar3.f:c     initialize connected atom exclusion coefficients
+epolar3.f:      f = 0.5d0 * electric / dielec
+epolar3.f:c     reset exclusion coefficients for connected atoms
+epolar3.f:c     reset exclusion coefficients for connected atoms
+epolar3.f:c     initialize connected atom exclusion coefficients
+epolar3.f:      f = 0.5d0 * electric / dielec
+epolar3.f:c     OpenMP directives for the major loop structure
+epolar3.f:c     reset exclusion coefficients for connected atoms
+epolar3.f:c     OpenMP directives for the major loop structure
+epolar3.f:c     respect to Cartesian coordinates using particle mesh Ewald and
+epolar3.f:      f = electric / dielec
+epolar3.f:c     compute the cell dipole boundary correction term
+epolar3.f:c     initialize connected atom exclusion coefficients
+epolar3.f:      f = 0.5d0 * electric / dielec
+epolar3.f:c     reset exclusion coefficients for connected atoms
+epolar3.f:c     reset exclusion coefficients for connected atoms
+epolar3.f:c     respect to Cartesian coordinates using particle mesh Ewald and
+epolar3.f:      f = electric / dielec
+epolar3.f:c     compute the cell dipole boundary correction term
+epolar3.f:c     initialize connected atom exclusion coefficients
+epolar3.f:      f = 0.5d0 * electric / dielec
+epolar3.f:c     OpenMP directives for the major loop structure
+epolar3.f:c     reset exclusion coefficients for connected atoms
+epolar3.f:c     OpenMP directives for the major loop structure
+epolar3.f:c     from the induced dipoles times the electric field
+epolar3.f:      f = -0.5d0 * electric / dielec
+epolar3.f:c     OpenMP directives for the major loop structure
+epolar3.f:c     OpenMP directives for the major loop structure
+epolar3.f:c     compute the cell dipole boundary correction term
+epolar3.f:            f = electric / dielec
+epolar.f:c     initialize connected atom exclusion coefficients
+epolar.f:      f = 0.5d0 * electric / dielec
+epolar.f:c     reset exclusion coefficients for connected atoms
+epolar.f:c     reset exclusion coefficients for connected atoms
+epolar.f:c     initialize connected atom exclusion coefficients
+epolar.f:      f = 0.5d0 * electric / dielec
+epolar.f:c     OpenMP directives for the major loop structure
+epolar.f:c     reset exclusion coefficients for connected atoms
+epolar.f:c     OpenMP directives for the major loop structure
+epolar.f:c     "epolar0c" calculates the dipole polarization energy with respect
+epolar.f:      f = electric / dielec
+epolar.f:c     compute the cell dipole boundary correction term
+epolar.f:c     initialize connected atom exclusion coefficients
+epolar.f:      f = 0.5d0 * electric / dielec
+epolar.f:c    use different damping functions for direct induction !CW
+epolar.f:c     reset exclusion coefficients for connected atoms
+epolar.f:c     reset exclusion coefficients for connected atoms
+epolar.f:c     "epolar0d" calculates the dipole polarization energy with respect
+epolar.f:      f = electric / dielec
+epolar.f:c     compute the cell dipole boundary correction term
+epolar.f:c     initialize connected atom exclusion coefficients
+epolar.f:      f = 0.5d0 * electric / dielec
+epolar.f:c     OpenMP directives for the major loop structure
+epolar.f:c     reset exclusion coefficients for connected atoms
+epolar.f:c     OpenMP directives for the major loop structure
+epolar.f:c     from the induced dipoles times the electric field
+epolar.f:      f = -0.5d0 * electric / dielec
+epolar.f:c     OpenMP directives for the major loop structure
+epolar.f:c     OpenMP directives for the major loop structure
+epolar.f:c     compute the cell dipole boundary correction term
+epolar.f:            f = electric / dielec
+epolar.f:c     Representation of Electrostatics in Classical Force Fields:
+epolar.f:      f = electric / dielec
+erf.f:c     approximation followed by cycles of Newton-Raphson correction
+erf.f:c     use two steps of Newton-Raphson correction to increase accuracy
+erxnfld1.f:c     and derivatives with respect to Cartesian coordinates
+erxnfld.f:      factor = electric * (1.0d0-ratio)
+esolv1.f:c     first derivatives with respect to Cartesian coordinates
+esolv1.f:c     "egb1a" calculates the generalized Born electrostatic energy
+esolv1.f:c     note application of distance cutoff scaling directly to
+esolv1.f:c     set the solvent dielectric and energy conversion factor
+esolv1.f:      f = -electric * (1.0d0 - 1.0d0/dwater)
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:c     calculate GB electrostatic polarization energy term
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:c     "egb1b" calculates the generalized Born electrostatic energy
+esolv1.f:c     note application of distance cutoff scaling directly to
+esolv1.f:c     set the solvent dielectric and energy conversion factor
+esolv1.f:      f = -electric * (1.0d0 - 1.0d0/dwater)
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:c     calculate GB electrostatic polarization energy term
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:c     set the solvent dielectric and energy conversion factor
+esolv1.f:      f = -electric * (1.0d0 - 1.0d0/dwater)
+esolv1.f:c     calculate GB electrostatic polarization energy term
+esolv1.f:c     correct energy and derivatives for vacuum to polarized state
+esolv1.f:c     "egk1a" calculates the electrostatic portion of the implicit
+esolv1.f:c     set the bulk dielectric constant to the water value
+esolv1.f:      fc = electric * 1.0d0 * (1.0d0-dwater)/(0.0d0+1.0d0*dwater)
+esolv1.f:      fd = electric * 2.0d0 * (1.0d0-dwater)/(1.0d0+2.0d0*dwater)
+esolv1.f:      fq = electric * 3.0d0 * (1.0d0-dwater)/(2.0d0+3.0d0*dwater)
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:c     calculate GK electrostatic solvation free energy
+esolv1.f:c     multiply the auxillary terms by their dielectric functions
+esolv1.f:c     electrostatic solvation energy of the permanent multipoles
+esolv1.f:c     electrostatic solvation energy of the permanent multipoles in
+esolv1.f:c     electrostatic solvation free energy gradient of the permanent
+esolv1.f:c     effective radii chain rule terms for the electrostatic solvation
+esolv1.f:c     mutual polarization electrostatic solvation free energy gradient
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:      f = electric / dielec
+esolv1.f:c     set arrays needed to scale connected atom interactions
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:c     construct auxiliary vectors for permanent terms
+esolv1.f:c     construct auxiliary vectors for induced terms
+esolv1.f:c     correction to convert mutual to direct polarization force
+esolv1.f:c     construct auxiliary vectors for induced terms
+esolv1.f:c     correction to convert mutual to direct polarization force
+esolv1.f:c     reset exclusion coefficients for connected atoms
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:      f = electric / dielec
+esolv1.f:c     set arrays needed to scale connected atom interactions
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:c     construct auxiliary vectors for permanent terms
+esolv1.f:c     construct auxiliary vectors for induced terms
+esolv1.f:c     correction to convert mutual to direct polarization force
+esolv1.f:c     construct auxiliary vectors for induced terms
+esolv1.f:c     correction to convert mutual to direct polarization force
+esolv1.f:c     reset exclusion coefficients for connected atoms
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:c     correct energy and derivatives for vacuum to polarized state
+esolv1.f:      real*8, allocatable :: directf(:,:)
+esolv1.f:      real*8, allocatable :: directt(:,:)
+esolv1.f:      allocate (directf(3,n))
+esolv1.f:      allocate (directt(3,n))
+esolv1.f:         sum = -0.5d0 * electric * sum
+esolv1.f:               directf(j,i) = 0.0d0
+esolv1.f:               directt(j,i) = 0.0d0
+esolv1.f:c     copy induced electrostatics into atom-based arrays
+esolv1.f:c     for direct polarization, the reaction field due to the
+esolv1.f:c     compute direct induced dipole implicit solvation energy
+esolv1.f:         call pbdirectpolforce (indpole,inppole,directf,directt)
+esolv1.f:         call torque2 (directt,polgrd)
+esolv1.f:            polgrd(1,i) = polgrd(1,i) - directf(1,i)
+esolv1.f:            polgrd(2,i) = polgrd(2,i) - directf(2,i)
+esolv1.f:            polgrd(3,i) = polgrd(3,i) - directf(3,i)
+esolv1.f:      deallocate (directf)
+esolv1.f:      deallocate (directt)
+esolv1.f:c     compute SASA and effective radius needed for cavity term
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv1.f:c     OpenMP directives for the major loop structure
+esolv2.f:c     get the electrostatic Hessian for GB/SA solvation
+esolv2.f:c     for derivatives of Born radii with respect to coordinates
+esolv2.f:c     set the solvent dielectric and energy conversion factor
+esolv2.f:      fi = -electric * (1.0d0 - 1.0d0/dwater) * fi
+esolv2.f:c     for derivatives of Born radii with respect to coordinates
+esolv2.f:c     set the solvent dielectric and energy conversion factor
+esolv2.f:      fi = -electric * (1.0d0 - 1.0d0/dwater) * fi
+esolv3.f:c     print nonpolar and electrostatic components for selected models
+esolv3.f:     &              /,' Electrostatic',23x,f12.4)
+esolv3.f:     &              /,' Electrostatic',23x,f12.4)
+esolv3.f:     &              /,' Electrostatic',23x,f12.4)
+esolv3.f:     &              /,' Electrostatic',23x,f12.4)
+esolv3.f:c     "egb3a" calculates the generalized Born electrostatic energy
+esolv3.f:c     set the solvent dielectric and energy conversion factor
+esolv3.f:      f = -electric * (1.0d0 - 1.0d0/dwater)
+esolv3.f:c     OpenMP directives for the major loop structure
+esolv3.f:c     calculate GB electrostatic polarization energy term
+esolv3.f:c     OpenMP directives for the major loop structure
+esolv3.f:c     "egb3b" calculates the generalized Born electrostatic energy
+esolv3.f:c     set the solvent dielectric and energy conversion factor
+esolv3.f:      f = -electric * (1.0d0 - 1.0d0/dwater)
+esolv3.f:c     OpenMP directives for the major loop structure
+esolv3.f:c     calculate GB electrostatic polarization energy term
+esolv3.f:c     OpenMP directives for the major loop structure
+esolv3.f:c     "egb3c" calculates the generalized Born electrostatic energy
+esolv3.f:c     set the solvent dielectric and energy conversion factor
+esolv3.f:      f = -electric * (1.0d0 - 1.0d0/dwater)
+esolv3.f:c     calculate GB electrostatic polarization energy term
+esolv3.f:c     "egk3" calculates the generalized Kirkwood electrostatic
+esolv3.f:c     correct the solvation energy for vacuum to polarized state
+esolv3.f:c     "egk3a" calculates the electrostatic portion of the implicit
+esolv3.f:c     set the bulk dielectric constant to the water value
+esolv3.f:      fc = electric * 1.0d0 * (1.0d0-dwater)/(0.0d0+1.0d0*dwater)
+esolv3.f:      fd = electric * 2.0d0 * (1.0d0-dwater)/(1.0d0+2.0d0*dwater)
+esolv3.f:      fq = electric * 3.0d0 * (1.0d0-dwater)/(2.0d0+3.0d0*dwater)
+esolv3.f:c     OpenMP directives for the major loop structure
+esolv3.f:c     calculate GK electrostatic solvation free energy
+esolv3.f:c     electrostatic solvation free energy of the permanent multipoles
+esolv3.f:c     electrostatic solvation free energy of the permenant multipoles
+esolv3.f:c     increment the total GK electrostatic solvation energy
+esolv3.f:c     OpenMP directives for the major loop structure
+esolv3.f:c     ##  subroutine ediff3  --  correct GK for polarization change  ##
+esolv3.f:      f = electric / dielec
+esolv3.f:c     set array needed to scale connected atom interactions
+esolv3.f:c     OpenMP directives for the major loop structure
+esolv3.f:c     increment the total GK electrostatic solvation energy
+esolv3.f:c     reset exclusion coefficients for connected atoms
+esolv3.f:c     OpenMP directives for the major loop structure
+esolv3.f:c     compute the electrostatic energy via Poisson-Boltzmann
+esolv3.f:         e = -0.5d0 * electric * e
+esolv3.f:c     correct the solvation energy for vacuum to polarized state
+esolv3.f:c     compute SASA and effective radius needed for cavity term
+esolv3.f:c     OpenMP directives for the major loop structure
+esolv3.f:c     OpenMP directives for the major loop structure
+esolv.f:c     set the solvent dielectric and energy conversion factor
+esolv.f:      f = -electric * (1.0d0 - 1.0d0/dwater)
+esolv.f:c     OpenMP directives for the major loop structure
+esolv.f:c     calculate GB electrostatic polarization energy term
+esolv.f:c     OpenMP directives for the major loop structure
+esolv.f:c     set the solvent dielectric and energy conversion factor
+esolv.f:      f = -electric * (1.0d0 - 1.0d0/dwater)
+esolv.f:c     OpenMP directives for the major loop structure
+esolv.f:c     calculate GB electrostatic polarization energy term
+esolv.f:c     OpenMP directives for the major loop structure
+esolv.f:c     set the solvent dielectric and energy conversion factor
+esolv.f:      f = -electric * (1.0d0 - 1.0d0/dwater)
+esolv.f:c     calculate GB electrostatic polarization energy term
+esolv.f:c     "egk" calculates the generalized Kirkwood electrostatic
+esolv.f:c     compute the generalized Kirkwood electrostatic energy
+esolv.f:c     correct the solvation energy for vacuum to polarized state
+esolv.f:c     "egk0a" calculates the electrostatic portion of the implicit
+esolv.f:c     set the bulk dielectric constant to the water value
+esolv.f:      fc = electric * 1.0d0 * (1.0d0-dwater)/(0.0d0+1.0d0*dwater)
+esolv.f:      fd = electric * 2.0d0 * (1.0d0-dwater)/(1.0d0+2.0d0*dwater)
+esolv.f:      fq = electric * 3.0d0 * (1.0d0-dwater)/(2.0d0+3.0d0*dwater)
+esolv.f:c     OpenMP directives for the major loop structure
+esolv.f:c     calculate GK electrostatic solvation free energy
+esolv.f:c     electrostatic solvation free energy of the permanent multipoles
+esolv.f:c     electrostatic solvation free energy of the permenant multipoles
+esolv.f:c     increment the total GK electrostatic solvation energy
+esolv.f:c     OpenMP directives for the major loop structure
+esolv.f:c     ##  subroutine ediff  --  correction for vacuum to SCRF energy  ##
+esolv.f:      f = electric / dielec
+esolv.f:c     set array needed to scale connected atom interactions
+esolv.f:c     OpenMP directives for the major loop structure
+esolv.f:c     increment the total GK electrostatic solvation energy
+esolv.f:c     reset exclusion coefficients for connected atoms
+esolv.f:c     OpenMP directives for the major loop structure
+esolv.f:c     compute the electrostatic energy via Poisson-Boltzmann
+esolv.f:         e = -0.5d0 * electric * e
+esolv.f:c     correct the solvation energy for vacuum to polarized state
+esolv.f:c     compute SASA and effective radius needed for cavity term
+esolv.f:c     OpenMP directives for the major loop structure
+esolv.f:c     OpenMP directives for the major loop structure
+estrbnd1.f:c     first derivatives with respect to Cartesian coordinates
+estrbnd1.f:c     OpenMP directives for the major loop structure
+estrbnd1.f:c     OpenMP directives for the major loop structure
+estrbnd2.f:c     second derivatives with respect to Cartesian coordinates
+estrbnd2.f:c     first derivatives of angle with respect to coordinates
+estrbnd2.f:c     second derivatives of angle with respect to coordinates
+estrbnd2.f:c     first derivatives of bond length with respect to coordinates
+estrbnd2.f:c     second derivatives of bond length with respect to coordinates
+estrbnd3.f:c     OpenMP directives for the major loop structure
+estrbnd3.f:c     OpenMP directives for the major loop structure
+estrbnd.f:c     OpenMP directives for the major loop structure
+estrbnd.f:c     OpenMP directives for the major loop structure
+estrtor1.f:c     derivatives with respect to Cartesian coordinates
+estrtor1.f:c     OpenMP directives for the major loop structure
+estrtor1.f:c     OpenMP directives for the major loop structure
+estrtor2.f:c     second derivatives with respect to Cartesian coordinates
+estrtor3.f:c     OpenMP directives for the major loop structure
+estrtor3.f:c     OpenMP directives for the major loop structure
+estrtor.f:c     OpenMP directives for the major loop structure
+estrtor.f:c     OpenMP directives for the major loop structure
+etors1.f:c     derivatives with respect to Cartesian coordinates
+etors1.f:c     derivatives with respect to Cartesian coordinates using a
+etors1.f:c     OpenMP directives for the major loop structure
+etors1.f:c     OpenMP directives for the major loop structure
+etors1.f:c     derivatives with respect to Cartesian coordinates for use with
+etors3.f:c     OpenMP directives for the major loop structure
+etors3.f:c     OpenMP directives for the major loop structure
+etors.f:c     OpenMP directives for the major loop structure
+etors.f:c     OpenMP directives for the major loop structure
+etortor1.f:c     derivatives with respect to Cartesian coordinates
+etortor1.f:c     OpenMP directives for the major loop structure
+etortor1.f:c     OpenMP directives for the major loop structure
+etortor2.f:c     second derivatives with respect to Cartesian coordinates
+etortor3.f:c     OpenMP directives for the major loop structure
+etortor3.f:c     OpenMP directives for the major loop structure
+etortor.f:c     OpenMP directives for the major loop structure
+etortor.f:c     OpenMP directives for the major loop structure
+etortor.f:c     note that the sign convention used in this version is correct
+etortor.f:c     correctly handle enantiomeric sugar rings in nucleic acids
+eurey1.f:c     its first derivatives with respect to Cartesian coordinates
+eurey1.f:c     OpenMP directives for the major loop structure
+eurey1.f:c     OpenMP directives for the major loop structure
+eurey3.f:c     OpenMP directives for the major loop structure
+eurey3.f:c     OpenMP directives for the major loop structure
+eurey.f:c     OpenMP directives for the major loop structure
+eurey.f:c     OpenMP directives for the major loop structure
+evcorr.f:c     ##  subroutine evcorr  --  long range vdw energy correction  ##
+evcorr.f:c     "evcorr" computes the long range van der Waals correction
+evcorr.f:c     Liquids", Oxford University Press, 1987, Section 2.8
+evcorr.f:c     zero out the long range van der Waals correction
+evcorr.f:c     "evcorr1" computes the long range van der Waals correction
+evcorr.f:c     Liquids", Oxford University Press, 1987, Section 2.8
+evcorr.f:c     zero out the long range van der Waals corrections
+files.f:c     ldir       length in characters of the directory name
+final.f:      if (allocated(aect))  deallocate (aect)
+final.f:      if (allocated(dect))  deallocate (dect)
+final.f:      if (allocated(pvect))  deallocate (pvect)
+gda.f:c     compute and store the Cartesian energy gradient vector
+gda.f:c     translate the energy gradient into a dr/dbeta vector
+gda.f:c     translate the Hessian diagonal into a dM2/dbeta vector
+getint.f:      call connect
+getprm.f:c     account for home directory abbreviation in filename
+getref.f:c     retrieve the coordinates, type and connectivity of each atom
+ghmcstep.f:c     A Mathematical Perspective", Imperial College Press, London, 2010,
+ghmcstep.f:c     get constraint-corrected positions and half-step velocities
+ghmcstep.f:c     find the constraint-corrected full-step velocities
+ghmcstep.f:c     accept or reject according to Metropolis scheme;
+ghmcstep.f:c     note that velocities are reversed upon rejection
+ghmcstep.f:   10    format (' GHMC Step Rejected',6x,'Acceptance Ratio',f8.3)
+ghmcstep.f:c     update the constraint-corrected full-step velocities
+ghmcstep.f:c     compute statistics and save trajectory for this step
+gradient.f:c     and first derivatives with respect to Cartesian coordinates
+gradient.f:      ect = 0.0d0
+gradient.f:            deallocate (dect)
+gradient.f:         allocate (dect(3,n))
+gradient.f:            dect(j,i) = 0.0d0
+gradient.f:      if (use_ct) call ect1
+gradient.f:c     call the electrostatic energy and gradient routines
+gradient.f:     &          + em + ep + er + es + elf + eg + ex + ect 
+gradient.f:     &                      + dex(j,i) + dect(j,i) 
+gradrgd.f:c     and first derivatives with respect to rigid body coordinates
+gradrgd.f:c     get unit vectors along the phi, theta and psi rotation axes
+groups.f:c     correct intra- or intergroup weight is assigned
+hessian.f:c     for each atom in turn with respect to Cartesian coordinates
+hessian.f:c     call the electrostatic Hessian component routines
+hessian.f:c     copy selected off-diagonal Hessian elements for current
+hessrgd.f:c     respect to rigid body coordinates via 6*ngroup+1 gradient
+hessrot.f:c     "hessrot" computes numerical Hessian elements with respect
+image.f:c     for orthogonal lattice, find the desired image directly
+image.f:c     for orthogonal lattice, find the desired image directly
+image.f:c     note this is a fast version which only returns the correct
+image.f:c     for orthogonal lattice, find the desired image directly
+induce.f:c     sites due to direct or mutual polarization
+induce.f:c     get the electrostatic field due to permanent multipoles
+induce.f:c     set induced dipoles to polarizability times direct field
+induce.f:c     get the electrostatic field due to induced dipoles
+induce.f:c     set initial conjugate gradient residual and conjugate vector
+induce.f:c     ##  subroutine dfield0a  --  direct induction via double loop  ##
+induce.f:c     "dfield0a" computes the direct electrostatic field due to
+induce.f:c     set array needed to scale connected atom interactions
+induce.f:c     find the electrostatic field due to permanent multipoles
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     "ufield0a" computes the mutual electrostatic field due to
+induce.f:c     set array needed to scale connected atom interactions
+induce.f:c     find the electrostatic field due to mutual induced dipoles
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     ##  subroutine dfield0b  --  direct induction via pair list  ##
+induce.f:c     "dfield0b" computes the mutual electrostatic field due to
+induce.f:c     set array needed to scale connected atom interactions
+induce.f:c     find the electrostatic field due to permanent multipoles
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     "ufield0b" computes the mutual electrostatic field due to
+induce.f:c     set array needed to scale connected atom interactions
+induce.f:c     find the electrostatic field due to mutual induced dipoles
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     ##  subroutine dfield0c  --  direct induction via Ewald sum  ##
+induce.f:c     "dfield0c" computes the mutual electrostatic field due to
+induce.f:c     get the reciprocal space part of the electrostatic field
+induce.f:      call udirect1 (field)
+induce.f:c     get the real space portion of the electrostatic field
+induce.f:         call udirect2b (field,fieldp)
+induce.f:         call udirect2a (field,fieldp)
+induce.f:c     get the self-energy portion of the electrostatic field
+induce.f:c     compute the cell dipole boundary correction to field
+induce.f:c     "ufield0c" computes the mutual electrostatic field due to
+induce.f:c     zero out the electrostatic field at each site
+induce.f:c     get the reciprocal space part of the electrostatic field
+induce.f:c     get the real space portion of the electrostatic field
+induce.f:c     get the self-energy portion of the electrostatic field
+induce.f:c     compute the cell dipole boundary correction to the field
+induce.f:c     ##  subroutine udirect1  --  Ewald recip direct induced field  ##
+induce.f:c     "udirect1" computes the reciprocal space contribution of the
+induce.f:      subroutine udirect1 (field)
+induce.f:c     ##  subroutine udirect2a  --  Ewald real direct field via loop  ##
+induce.f:c     "udirect2a" computes the real space contribution of the permanent
+induce.f:      subroutine udirect2a (field,fieldp)
+induce.f:c     set arrays needed to scale connected atom interactions
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     ##  subroutine udirect2b  --  Ewald real direct field via list  ##
+induce.f:c     "udirect2b" computes the real space contribution of the permanent
+induce.f:      subroutine udirect2b (field,fieldp)
+induce.f:c     set arrays needed to scale connected atom interactions
+induce.f:c     OpenMP directives for the major loop structure
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     set array needed to scale connected atom interactions
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     OpenMP directives for the major loop structure
+induce.f:c     compute the direct induced dipole moment at each atom, and
+induce.f:c     set vacuum induced dipoles to polarizability times direct field;
+induce.f:c     set SCRF induced dipoles to polarizability times direct field
+induce.f:c     set initial conjugate gradient residual and conjugate vector
+induce.f:c     ##  subroutine dfield0d  --  generalized Kirkwood direct field  ##
+induce.f:c     "dfield0d" computes the direct electrostatic field due to
+induce.f:c     set dielectric constant and scaling factors for water
+induce.f:c     set arrays needed to scale connected atom interactions
+induce.f:c     OpenMP directives for the major loop structure
+induce.f:c     multiply the auxiliary terms by dielectric functions
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     "ufield0d" computes the mutual electrostatic field due to
+induce.f:c     set dielectric constant and scaling factor for water
+induce.f:c     set array needed to scale connected atom interactions
+induce.f:c     OpenMP directives for the major loop structure
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     compute the direct induced dipole moment at each atom, and
+induce.f:c     set vacuum induced dipoles to polarizability times direct field;
+induce.f:c     SCRF induced dipoles are polarizability times direct field
+induce.f:c     set initial conjugate gradient residual and conjugate vector
+induce.f:c     ##  subroutine dfield0e  --  Poisson-Boltzmann direct field  ##
+induce.f:c     "dfield0e" computes the direct electrostatic field due to
+induce.f:c     set arrays needed to scale connected atom interactions
+induce.f:c     compute the direct electrostatic field at each atom, and
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     "ufield0e" computes the mutual electrostatic field due to
+induce.f:c     set array needed to scale connected atom interactions
+induce.f:c     compute the mutual electrostatic field at each atom,
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     J. Kolafa, "Time-Reversible Always Stable Predictor-Corrector
+induce.f:c     set always stable predictor-corrector (ASPC) coefficients
+induce.f:c     transfer the final solution to the coefficient vector
+induce.f:c     set array needed to scale connected atom interactions
+induce.f:c     reset exclusion coefficients for connected atoms
+induce.f:c     set array needed to scale connected atom interactions
+induce.f:c     OpenMP directives for the major loop structure
+induce.f:c     reset exclusion coefficients for connected atoms
+inertia.f:c     select the direction for each principal moment axis
+initprm.f:         electron(i) = 0.0d0
+initprm.f:      electric = coulomb
+initrot.f:c     in subsequent computation, by default automatically selects
+initrot.f:c     choose automatic or manual selection of torsional angles
+initrot.f:   20    format (/,' Selection of Torsional Angles for Rotation :',
+initrot.f:     &           //,'    0  - Automatic Selection of Torsional Angles',
+initrot.f:     &            /,'    1  - Manual Selection of Angles to Rotate',
+initrot.f:     &            /,'    2  - Manual Selection of Angles to Freeze',
+initrot.f:c     manual selection of the torsional angles to be rotated
+initrot.f:c     manual selection of the torsional angles to be frozen
+initrot.f:c     perform the automatic selection of torsional angles to rotate
+insert.f:c     shift the atom coordinates, types and connectivities
+insert.f:c     shift the connected atom lists to allow the insertion
+intedit.f:c     "zvalue" gets user supplied values for selected coordinates
+invbeta.f:c     via a combination of Newton iteration and bisection search
+invbeta.f:c     try bisection search if Newton iteration moved out of range
+invbeta.f:c     refine inverse distribution value via bisection search
+invbeta.f:c     get cumulative distribution directly or via reflection
+jacobi.f:c     v     returned with the eigenvectors of the matrix
+jacobi.f:c     b     temporary work vector
+jacobi.f:c     z     temporary work vector
+jacobi.f:c     sort the eigenvalues and vectors
+katom.f:     &                    'Expected',4x,'Found',/)
+kbond.f:c     check for electronegativity bond length corrections
+kbond.f:c     ##  subroutine keneg  --  assign electronegativity parameters  ##
+kbond.f:c     "keneg" applies primary and secondary electronegativity bond
+kbond.f:c     length corrections to applicable bond parameters
+kbond.f:c     note this version does not scale multiple corrections to the
+kbond.f:c     process keywords containing electronegativity parameters
+kbond.f:   20             format (/,' Additional Electronegativity',
+kbond.f:   40       format (/,' KENEG  --  Too many Electronegativity',
+kbond.f:c     check angles for primary electronegativity corrections
+kbond.f:c     check torsions for secondary electronegativity corrections
+kbond.f:c     turn off electronegativity effect for attached hydrogens
+kbonds.f:c     maxnel  maximum number of electronegativity bond corrections
+kbonds.f:c     dlen    electronegativity bond length correction parameters
+kbonds.f:c     kel     string of atom classes for electronegativity corrections
+kmpole.f:               if (kz.lt.0 .or. kx.lt.0)  axt = 'Bisector'
+kmpole.f:               if (kx.lt.0 .and. ky.lt.0)  axt = 'Z-Bisect'
+kmpole.f:c     assign multipole parameters via only 1-2 connected atoms
+kmpole.f:c     assign multipole parameters via 1-2 and 1-3 connected atoms
+kmpole.f:c     assign multipole parameters via no connected atoms
+kmpole.f:               if (kz.lt.0 .or. kx.lt.0)  axt = 'Bisector'
+kmpole.f:               if (kx.lt.0 .and. ky.lt.0)  axt = 'Z-Bisect'
+kopbend.f:c     mark angles at trigonal sites to use projected in-plane values
+kopdist.f:c     mark angles at trigonal sites to use projected in-plane values
+korbit.f:      real*8 elect,ioniz
+korbit.f:            elect = 0.0d0
+korbit.f:            read (string,*,err=10)  ia,elect,ioniz,repuls
+korbit.f:     &                    //,6x,'Atom Type',3x,'Electron',
+korbit.f:               write (iout,30)  ia,elect,ioniz,repuls
+korbit.f:               electron(ia) = elect
+korbit.f:         qorb(j) = electron(jt)
+korbs.f:c     electron   number of pi-electrons for each atom class
+korbs.f:      real*8 electron(maxclass)
+kpolar.f:c     assign polarization group connectivity of each atom
+kpolar.f:c     ##  subroutine polargrp  --  polarization group connectivity  ##
+kpolar.f:c     connectivities
+kpolar.f:c     find the directly connected group members for each atom
+kpolar.f:c     make sure all connected group members are bidirectional
+kpolr.f:c     adird  Direct polarizability damping value for each atom type
+kpolr.f:c     pgrp   connected types in polarization group of each atom type
+ksolv.f:c     M. Schaefer, C. Bartels, F. Leclerc and M. Karplus, "Effective
+ksolv.f:            gpol(i) = -0.5d0 * electric / (rsolv(i)-doffset+p1)
+lattice.f:c     compute and store real space lattice vectors as rows
+lattice.f:c     compute and store reciprocal lattice vectors as columns
+lbfgs.f:c     Springer-Verlag, New York, 1999, Section 9.1
+lbfgs.f:c     nvar      number of parameters in the objective function
+lbfgs.f:c     set search direction and store current point and gradient
+lbfgs.f:c     perform line search along the new conjugate direction
+lbfgs.f:c     set final value of the objective function
+lights.f:c     include each pair in both directions, ie, both (A,B) and (B,A);
+lights.f:c     inclusion of one vs both directions is controlled by "unique"
+lights.f:c     Dynamics on Vector Computers", Journal of Computational
+limits.f:c     ewaldcut    cutoff distance for direct space Ewald summation
+linmin.f:c     stpmin   minimum step length in current line search direction
+linmin.f:c     stpmax   maximum step length in current line search direction
+linmin.f:c     slpmax   projected gradient above which stepsize is reduced
+linmin.f:c     angmax   maximum angle between search direction and -gradient
+makeint.f:c     selection of internal coordinates is controlled by "mode"
+makeint.f:c        mode = 1     manual selection of coordinates
+makeint.f:   50             format (/,' MAKEINT  --  Connectivity Error',
+makeint.f:   60             format (/,' MAKEINT  --  Connectivity Error',
+makeint.f:   90                format (/,' MAKEINT  --  Connectivity Error',
+makeint.f:  100                format (/,' MAKEINT  --  Connectivity Error',
+makeint.f:c     "adjacent" finds an atom connected to atom "i1" other than
+makeint.f:c              defined atom other than "i2" which is directly
+makeint.f:c              connected (adjacent) to atom "i1"
+makeint.f:c     if only one directly bonded atom is eligible, then use it
+makeint.f:     &                 ' Connected Atom')
+makeint.f:   60       format (' Choose a Connected Atom (',2i6,') :  ',$)
+makeint.f:   70       format (' Choose a Connected Atom (',3i6,') :  ',$)
+makeint.f:   80       format (' Choose a Connected Atom (',4i6,') :  ',$)
+makeint.f:   90       format (' Choose a Connected Atom (',5i6,') :  ',$)
+makeint.f:  100       format (' Choose a Connected Atom (',6i6,') :  ',$)
+makeint.f:  110       format (' Choose a Connected Atom (',7i6,') :  ',$)
+makeint.f:  120       format (' Choose a Connected Atom (',8i6,') :  ',$)
+makeref.f:c     copy the coordinates, type and connectivity of each atom
+maxwell.f:c     selected from a 3-D Maxwell-Boltzmann distribution for the
+maxwell.f:c     New York, 1990; see section 24.2 for general discussion
+mdinit.f:c     ##  subroutine mdinit  --  initialize a dynamics trajectory  ##
+mdinit.f:c     for a molecular dynamics trajectory, including restarts
+mdinit.f:c     set default parameters for the dynamics trajectory
+mdinit.f:c     set always stable predictor-corrector (ASPC) coefficients
+mdsave.f:c     ##  subroutine mdsave  --  save trajectory and restart files  ##
+mdsave.f:c     "mdsave" writes molecular dynamics trajectory snapshots and
+mdsave.f:c     check number of steps between trajectory file dumps
+mdsave.f:c     get the sequence number of the current trajectory frame
+mdsave.f:c     update the information needed to restart the trajectory
+mdsave.f:c     save the velocity vector components at the current step
+mdsave.f:c     save the force vector components for the current step
+mdsave.f:  270    format (' Force Vector File',11x,a)
+mdstat.f:c     ##  subroutine mdstat  --  compute averages over a trajectory  ##
+mdstat.f:c     and to periodically save the state of the trajectory
+mdstuf.f:c     ##  module mdstuf  --  molecular dynamics trajectory controls  ##
+mdstuf.f:c     velsave     logical flag to save velocity vector components
+mdstuf.f:c     frcsave     logical flag to save force vector components
+mechanic.f:c     calculation and reads in many of the user selectable options
+mechanic.f:c     set the bonded connectivity lists and active atoms
+mechanic.f:c     assign van der Waals and electrostatic potential parameters
+merck.f:c     paulel    Pauling electronegativities for empirical bond rules
+merck.f:c     nn       effective number of valence electrons for MMFF eps
+moldyn.f:c     ##  module moldyn  --  MD trajectory velocity & acceleration  ##
+molecule.f:c     assign each atom to its respective molecule
+moment.f:c     ##  module moment  --  electric multipole moment components  ##
+moment.f:c     netchg   net electric charge for the total system
+moment.f:c     xdpl     dipole vector x-component in the global frame
+moment.f:c     ydpl     dipole vector y-component in the global frame
+moment.f:c     zdpl     dipole vector z-component in the global frame
+moments.f:c     ##  subroutine moments  --  total electric multipole moments  ##
+moments.f:c     "moments" computes the total electric charge, dipole and
+moments.f:c     "momfull" computes the electric moments for the full system
+moments.f:c     compute the electric multipole moments for the system
+monte.f:c     Section 6.7.4
+monte.f:      real*8 vector(3)
+monte.f:                  call ranvec (vector)
+monte.f:                  x(i) = x(i) + factor*vector(1)
+monte.f:                  y(i) = y(i) + factor*vector(2)
+monte.f:                  z(i) = z(i) + factor*vector(3)
+monte.f:c     reject the step if the energy increase is too large
+monte.f:               status = 'Reject'
+monte.f:         else if (status .eq. 'Reject') then
+mrecip.f:c     cmp     Cartesian permenent multipoles as polytensor vector
+mrecip.f:c     fmp     fractional permanent multipoles as polytensor vector
+mutant.f:c     elambda    state weighting value for electrostatic potentials
+mutate.f:c     scale electrostatic parameter values based on lambda
+mutate.f:     &              ' Lambda for Electrostatics')
+mutate.f:c     ##  subroutine altelec  --  mutated electrostatic parameters  ##
+mutate.f:c     "altelec" constructs the mutated electrostatic parameters
+mutate.f:c     set electrostatic parameters for partial charge models
+mutate.f:c     set electrostatic parameters for polarizable multipole models
+nblist.f:c     for vdw, electrostatic and polarization interactions
+nblist.f:c     update the vdw, CT and electrostatic neighbor lists
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     store coordinates to reflect update of the site
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     electrostatic neighbor lists for partial charges
+nblist.f:c     electrostatic neighbor list for all sites
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     store new coordinates to reflect update of the site
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     electrostatic neighbor lists for atomic multipoles
+nblist.f:c     electrostatic neighbor list for all sites
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     store new coordinates to reflect update of the site
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     store new coordinates to reflect update of the site
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     electrostatic neighbor list for all sites
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     store new coordinates to reflect update of the site
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+nblist.f:c     OpenMP directives for the major loop structure
+neigh.f:c     maxelst     maximum size of electrostatic pair neighbor lists
+neigh.f:c     nelst       number of sites in list for each electrostatic site
+neigh.f:c     elst        site numbers in list of each electrostatic site
+nucleic.f:      call connect
+numeral.f:c     find the correct length to be used for the numeral
+numgrad.f:c     "numgrad" computes the gradient of the objective function
+numgrad.f:c     "fvalue" with respect to Cartesian coordinates of the atoms
+ocvm.f:c     nvar       number of parameters in the objective function
+ocvm.f:c     test inner product of projected s and del-g
+openend.f:c     manually read to the end of file, slow but always correct
+openmm.f:c     ##  module openmm  --  OpenMM-related objects & variables  ##
+orbital.f:c     bonds connecting pisystem atoms and torsions whose central
+orbital.f:c     assign each orbital to its respective pisystem
+orbital.f:c     "piplane" selects the three atoms which specify the plane
+orbits.f:c     qorb    number of pi-electrons contributed by each atom
+orient.f:c     select the direction for each principle moment axis
+orient.f:c     compare the correct matrix diagonal to rebuilt diagonal
+orient.f:c     alter Euler angles to get correct rotation matrix values
+output.f:c     coordtype  selects Cartesian, internal, rigid body or none
+overlap.f:c     D. B. Cook, "Structures and Approximations for Electrons in
+overlap.f:c     s    vector containing the sigma-sigma, pi-pi
+path.f:c     a conformational pathway connecting the input reactant and
+path.f:      real*8 rmsvalue,project
+path.f:      allocate (pvect(nvar))
+path.f:c     construct step vector for getting
+path.f:         pvect(i) = pc1(i) - pc0(i)
+path.f:         pstep(i) = pvect(i) / rplen
+path.f:         pnorm = pnorm + pvect(i)**2
+path.f:         gc(ix,1) = pvect(ix)
+path.f:         gc(iy,1) = pvect(iy)
+path.f:         gc(iz,1) = pvect(iz)
+path.f:c     find projection of the gradient along path direction
+path.f:         project = 0.0d0
+path.f:            project = project + ge(i)*pvect(i)/pnorm
+path.f:         write (iout,130)  project
+path.f:         cnst(1) = cnst(1) + xx*pvect(ix) + yy*pvect(iy) + zz*pvect(iz)
+path.f:c     copy position vector into atomic coordinates
+path.f:c     set the energy value and gradient vector
+paths.f:c     pnorm    length of the reactant-product vector
+paths.f:c     pvect    vector connecting the reactant and product
+paths.f:c     pstep    step per cycle along reactant-product vector
+paths.f:c     pzet     current projection on reactant-product vector
+paths.f:      real*8, allocatable :: pvect(:)
+pbstuf.f:c     multipoles inside the dielectric boundary (2.5 * grid < PBR)
+pbstuf.f:c     ionq     ion charge (electrons)           [1.0]
+pdb.f:c     npdb12    number of atoms directly bonded to each CONECT atom
+pdb.f:c     ipdb12    atom numbers of atoms connected to each CONECT atom
+pdbxyz.f:c     find and connect atom pairs within bonding distance
+pdbxyz.f:c     write the TINKER coordinates and reset the connectivities
+pdbxyz.f:c     connect the terminal residues if the chain is cyclic
+pdbxyz.f:c     connect the sulfur atoms involved in disulfide bonds
+pdbxyz.f:c     are assigned and connectivity data generated
+pdbxyz.f:c     and connectivity data generated
+pdbxyz.f:c     and atomic connectivities
+pdbxyz.f:c     get coordinates, assign atom type, and update connectivities
+pdbxyz.f:c     connectivities and increment the atom counter
+pdbxyz.f:c     order to generate a direct connection between two atoms
+pdbxyz.f:c     add connectivity between the two atoms
+picalc.f:c     whether the orbital contributes one or two electrons
+picalc.f:c     calculate electron densities from filled MO's
+picalc.f:c     ##  subroutine pitilt  --  direction cosines for pisystem  ##
+picalc.f:c     if the same orbitals were perfectly parallel
+picalc.f:c     assume perfect overlap for any such pibond
+picalc.f:c     find and normalize a vector parallel to first p-orbital
+picalc.f:c     now find vector parallel to the second p-orbital,
+picalc.f:c     if more than 90 degrees, reverse one of the vectors
+picalc.f:c     find overlap if the orbitals were perfectly parallel
+picalc.f:c     ##  subroutine pimove  --  transform pisystem bond vectors  ##
+picalc.f:c     "pimove" rotates the vector between atoms "list(1)" and
+picalc.f:c     the x-axis; the atoms defining the respective planes are
+piorbs.f:c     nbpi      total number of bonds affected by the pisystem
+piorbs.f:c     ntpi      total number of torsions affected by the pisystem
+pme.f:c     nfft1      number of grid points along the a-axis direction
+pme.f:c     nfft2      number of grid points along the b-axis direction
+pme.f:c     nfft3      number of grid points along the c-axis direction
+pme.f:c     bsmod1     B-spline moduli along the a-axis direction
+pme.f:c     bsmod2     B-spline moduli along the b-axis direction
+pme.f:c     bsmod3     B-spline moduli along the c-axis direction
+pmestuff.f:c     a single PME atomic site along a particular direction
+pmestuff.f:c     from each electrostatic site
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     overlapped by the B-splines for an electrostatic site
+pmestuff.f:c     mark neighboring chunk overlapped by an electrostatic site
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     OpenMP directives for the major loop structure
+pmestuff.f:c     a multipole object in Cartesian coordinates to fractional
+pmestuff.f:c     set the reciprocal vector transformation matrix
+pmestuff.f:c     a multipole object in fraction coordinates to Cartesian
+pmestuff.f:c     set the reciprocal vector transformation matrix
+pmpb.f:c     ##  subroutine pbdirectpolforce  ##
+pmpb.f:      subroutine pbdirectpolforce (indpole,inppole,directf,directt)
+pmpb.f:      real*8 directf(*)
+pmpb.f:      real*8 directt(*)
+polar.f:c     dirdamp   direct polarizability damping value for each site
+polar.f:c     udir      direct induced dipole components at each multipole site
+polar.f:c     udirp     direct induced dipoles in field used for energy terms
+polar.f:c     udirs     direct GK or PB induced dipoles at each multipole site
+polar.f:c     udirps    direct induced dipoles in field used for GK or PB energy
+polarize.f:c     in the presence of an external electric field
+polarize.f:c     ##  subroutine ufield  --  electric field from induced dipoles  ##
+polarize.f:c     zero out the value of the electric field at each site
+polarize.f:c     initialize connected atom exclusion coefficients
+polarize.f:c     loop over pairs of sites incrementing the electric field
+polarize.f:c     reset exclusion coefficients for connected atoms
+poledit.f:c     the atomic multipole electrostatic models used in TINKER
+poledit.f:c     assign atom connectivities based on interatomic distances
+poledit.f:c     create a file with coordinates and connectivities
+poledit.f:c     multipole site using high priority connected atoms along axes
+poledit.f:               polaxe(i) = 'Bisector'
+poledit.f:               polaxe(i) = 'Bisector'
+poledit.f:               polaxe(i) = 'Bisector'
+poledit.f:               polaxe(i) = 'Bisector'
+poledit.f:               polaxe(i) = 'Z-Bisect'
+poledit.f:               polaxe(i) = 'Z-Bisect'
+poledit.f:               polaxe(i) = 'Z-Bisect'
+poledit.f:               polaxe(i) = 'Z-Bisect'
+poledit.f:               polaxe(i) = 'Bisector'
+poledit.f:               polaxe(i) = 'Bisector'
+poledit.f:               polaxe(i) = 'Bisector'
+poledit.f:               polaxe(i) = 'Bisector'
+poledit.f:               polaxe(i) = 'Bisector'
+poledit.f:               polaxe(i) = 'Bisector'
+poledit.f:            if (ia.lt.0 .or. ib.lt.0)  polaxe(i) = 'Bisector'
+poledit.f:            if (ib.lt.0 .and. ic.lt.0)  polaxe(i) = 'Z-Bisect'
+poledit.f:c     "priority" decides which of two connected atoms should be
+poledit.f:c     get priority based on atomic number and connected atoms
+poledit.f:            if (ia.lt.0  .or. ib.lt.0)  polaxe(i) = 'Bisector'
+poledit.f:            if (ib.lt.0 .and. ic.lt.0)  polaxe(i) = 'Z-Bisect'
+poledit.f:c     give the same electrostatic potential around the molecule as
+poledit.f:c     for direct-only models set mutual scale factors to zero
+poledit.f:c     "dfieldi" computes the electrostatic field due to permanent
+poledit.f:c     compute the electrostatic field due to permanent multipoles
+poledit.f:c     "ufieldi" computes the electrostatic field due to intergroup
+poledit.f:c     find the electrostatic field due to induced dipoles
+poledit.f:            if (polaxe(i) .eq. 'Bisector')  yzero = .true.
+poledit.f:            if (polaxe(i) .eq. 'Z-Bisect')  yzero = .true.
+poledit.f:         else if (polaxe(i) .eq. 'Bisector') then
+poledit.f:         else if (polaxe(i) .eq. 'Z-Bisect') then
+polgrp.f:c     ##  module polgrp  --  polarization group connectivity lists   ##
+polpot.f:c     d1scale   scale factor for intra-group direct induction
+polpot.f:c     d2scale   scale factor for 1-2 group direct induction
+polpot.f:c     d3scale   scale factor for 1-3 group direct induction
+polpot.f:c     d4scale   scale factor for 1-4 group direct induction
+polpot.f:c     poltyp    type of polarization potential (direct or mutual)
+polymer.f:c     see if any bond connections require a minimum image
+potderivs.f:c     ##  module potderivs  --  electric potential, field, field  ##        
+potderivs.f:c     potm        electric potential at every multipole site
+potderivs.f:c     fieldm      electric field with mscale exclusion rules
+potderivs.f:c     fieldd      electric field with dscale exclusion rules
+potderivs.f:c     fieldp      electric field with pscale exclusion rules
+potderivs.f:c     gradfieldm  electric field gradient with mscale exclusion rules
+potderivs.f:c     gradfieldp  electric field gradient with pscale exclusion rules
+potderivs.f:c     hessfieldm  electric field hession with mscale exclusion rules
+potential.f:c     ##  program potential  --  electrostatic potential utility  ##
+potential.f:c     "potential" calculates the electrostatic potential for a
+potential.f:c     target potential or optimizes electrostatic parameters
+potential.f:c     find electrostatic potential manipulation to perform
+potential.f:   20    format (/,' The TINKER Electrostatic Potential Utility Can :',
+potential.f:     &           /,4x,'(6) Fit Electrostatic Parameters to Target Grid')
+potential.f:c     read electrostatic potential from a Gaussian CUBE file
+potential.f:c     write the electrostatic potential to a TINKER POT file
+potential.f:  160    format (/,' Electrostatic Potential Written To :  ',a)
+potential.f:c     read first structure and get electrostatic parameters
+potential.f:      call setelect
+potential.f:  300       format (' Electrostatic Potential Grid Points :',6x,i10)
+potential.f:               call setelect
+potential.f:            call setelect
+potential.f:            call setelect
+potential.f:            call setelect
+potential.f:c     "readpot" gets a set of grid points and target electrostatic
+potential.f:c     "potgrid" generates electrostatic potential grid points in
+potential.f:c     ##  subroutine setelect  --  assign electrostatic parameters  ##
+potential.f:c     "setelect" assigns partial charge, bond dipole and atomic
+potential.f:c     for computation of the electrostatic potential
+potential.f:      subroutine setelect
+potential.f:c     get connectivity info and make parameter assignments
+potential.f:c     ##  subroutine potpoint  --  electrostatic potential at point  ##
+potential.f:c     "potpoint" calculates the electrostatic potential at a grid
+potential.f:c     point "i" as the total electrostatic interaction energy of
+potential.f:c     set charge of probe site and electrostatic constants
+potential.f:      f = electric / dielec
+potential.f:c     and gradient for electrostatic parameters fit to a potential
+potential.f:         call setelect
+potential.f:c     compute numerical gradient for electrostatic parameters
+potential.f:            call setelect
+potential.f:            call setelect
+potential.f:c     ##  subroutine prmvar  --  electrostatics to optimization  ##
+potential.f:c     corresponding electrostatic potential energy parameters
+potential.f:c     print header information for electrostatic parameters
+potential.f:   60    format (/,' Potential Fitting of Electrostatic Parameters :',
+potential.f:c     ##  subroutine varprm  --  optimization to electrostatics  ##
+potential.f:c     corresponding electrostatic potential energy parameters
+potential.f:c     ##  subroutine potstat  --  electrostatic potential statistics  ##
+potential.f:c     "potstat" computes and prints statistics for the electrostatic
+potential.f:   10          format (/,' Electrostatic Potential at Each Grid',
+potential.f:   20          format (/,' Electrostatic Potential at Grid Points',
+potential.f:  100       format (/,' Electrostatic Potential Written To :  ',a)
+potential.f:c     find average electrostatic potential around each atom
+potential.f:  110 format (/,' Average Electrostatic Potential over Atoms :',
+potential.f:c     overall averages for the sets of electrostatic potentials
+potential.f:  170    format (/,' Electrostatic Potential over all Grid Points :',
+potential.f:  180    format (/,' Electrostatic Potential over all Grid Points :',
+potential.f:c     charge or multipole model to an electrostatic potential grid
+potential.f:         call setelect
+potential.f:   20             format (/,'#',/,'# Charges from Electrostatic',
+potential.f:         call setelect
+potential.f:   40             format (/,'#',/,'# Multipoles from Electrostatic',
+potential.f:               else if (polaxe(i) .eq. 'Bisector') then
+potential.f:               else if (polaxe(i) .eq. 'Z-Bisect') then
+potfit.f:c     ##  module potfit  --  values for electrostatic potential fit  ##
+potfit.f:c     nfatm     total number of atoms in electrostatic potential fit
+potfit.f:c     npgrid    total number of electrostatic potential grid points
+potfit.f:c     epot      values of electrostatic potential at grid points
+potfit.f:c     fatm      flag to use each atom in electrostatic potential fit
+precise.f:c     "precise" finds a machine precision value as selected by the
+pressure.f:c     "pressure2" applies a box size and velocity correction at
+pressure.f:c     2nd Edition", Academic Press, San Diego, CA, 2002; Section 5.4.2
+pressure.f:c     reject the step, and restore values prior to trial change
+prmedit.f:  270       format ('electneg',2x,3i5,11x,f11.4)
+prmedit.f:  150       format ('electneg',2x,3i5,a)
+prmkey.f:c     select the individual force field potential terms
+prmkey.f:c     select the name of the force field parameter set
+prmkey.f:         read (string,*,err=10,end=10)  electric
+prmkey.f:c     jump directly to the end if any error was detected
+protein.f:      call connect
+prtdyn.f:c     molecular dynamics trajectory to an external disk file
+prtdyn.f:c     close the dynamics trajectory restart file
+prtpdb.f:c     write any connectivity records for PDB atoms
+prtprm.f:c     electronegativity bond length correction parameters
+prtprm.f:  340    format (//,15x,'Electronegativity Bond Length Parameters',
+prtprm.f:c     atomic multipole electrostatic parameters
+prtprm.f: 1390    format (//,15x,'Direct Induction Scaling Factors',
+prtprm.f:     &           ///,20x,'Class',3x,'Electron',
+prtprm.f:               write (itxt,1440)  k,i,electron(i),ionize(i),repulse(i)
+pss.f:c     get the number of eigenvectors to use for local search
+pss.f:  110       format (/,' Enter the Range of Local Search Directions',
+pss.f:      real*8, allocatable :: vects(:,:)
+pss.f:      allocate (vects(nfreq,nfreq))
+pss.f:c     find local minimum along each of the steepest directions
+pss.f:         call eigenxyz (eigen,vects)
+pss.f:c     search both directions along each eigenvector in turn
+pss.f:               step(1,k) = size * vects(j+1,3*n-i+1)
+pss.f:               step(2,k) = size * vects(j+2,3*n-i+1)
+pss.f:               step(3,k) = size * vects(j+3,3*n-i+1)
+pss.f:      deallocate (vects)
+pss.f:      real*8, allocatable :: vects(:,:)
+pss.f:      allocate (vects(nomega,nomega))
+pss.f:c     find local minimum along each of the steepest directions
+pss.f:         call eigentor (eigen,vects)
+pss.f:c     search both directions along each eigenvector in turn
+pss.f:               step(k) = vects(k,nomega-i+1)
+pss.f:      deallocate (vects)
+pss.f:c     ##  subroutine eigenxyz  --  Cartesian Hessian eigenvectors  ##
+pss.f:      subroutine eigenxyz (eigen,vects)
+pss.f:      real*8 vects(3*n,*)
+pss.f:      call diagq (nfreq,nfreq,matrix,eigen,vects)
+pss.f:c     ##  subroutine eigentor  --  torsional Hessian eigenvectors  ##
+pss.f:      subroutine eigentor (eigen,vects)
+pss.f:      real*8 vects(nomega,*)
+pss.f:      call diagq (nomega,nomega,matrix,eigen,vects)
+pss.f:c     ##  subroutine climbxyz  --  Cartesian local search direction  ##
+pss.f:c     scan the search direction for a minimization candidate
+pss.f:   10                format (4x,'Search Direction',i4,10x,'Step',
+pss.f:   20                format (4x,'Search Direction',i4,10x,'Step',
+pss.f:   30             format (4x,'Search Direction',i4,36x,'------')
+pss.f:   40       format (4x,'Search Direction',i4,36x,'------')
+pss.f:c     ##  subroutine climbtor  --  torsional local search direction  ##
+pss.f:c     scan the search direction for a minimization candidate
+pss.f:   10                format (4x,'Search Direction',i4,10x,'Step',
+pss.f:   20                format (4x,'Search Direction',i4,10x,'Step',
+pss.f:   30             format (4x,'Search Direction',i4,36x,'------')
+pss.f:   40       format (4x,'Search Direction',i4,36x,'------')
+pss.f:c     belongs to the correct progenitor in the existing map
+pssrigid.f:c     get the number of eigenvectors to use for the local search
+pssrigid.f:   70       format (/,' Enter the Number of Directions for Local',
+pssrigid.f:      real*8, allocatable :: vects(:,:)
+pssrigid.f:      allocate (vects(6*ngrp,6*ngrp))
+pssrigid.f:c     find local minimum along each of the steepest directions
+pssrigid.f:         call eigenrgd (eigen,vects)
+pssrigid.f:c     search both directions along each eigenvector in turn
+pssrigid.f:               step(k) = vects(k,nvar-i+1)
+pssrigid.f:               step(k) = -vects(k,nvar-i+1)
+pssrigid.f:      deallocate (vects)
+pssrigid.f:c     ##  subroutine eigenrgd  --  rigid body Hessian eigenvectors  ##
+pssrigid.f:      subroutine eigenrgd (eigen,vects)
+pssrigid.f:      real*8 vects(6*ngrp,*)
+pssrigid.f:      call diagq (nvar,nvar,matrix,eigen,vects)
+pssrigid.f:c     normalize the rigid body Hessian eigenvectors
+pssrigid.f:            vnorm = vnorm + vects(j,i)**2
+pssrigid.f:            vects(j,i) = vects(j,i) / vnorm
+pssrigid.f:c     scan the search direction for a minimization candidate
+pssrigid.f:   10             format (4x,'Search Direction',i4,10x,'Step',
+pssrigid.f:   20             format (4x,'Search Direction',i4,36x,'------')
+pssrigid.f:   30       format (4x,'Search Direction',i4,36x,'------')
+pssrot.f:c     get the number of eigenvectors to use for the local search
+pssrot.f:   70       format (/,' Enter the Number of Directions for Local',
+pssrot.f:      real*8, allocatable :: vects(:,:)
+pssrot.f:      allocate (vects(nomega,nomega))
+pssrot.f:c     find local minimum along each of the steepest directions
+pssrot.f:         call eigenrot (eigen,vects)
+pssrot.f:c     search both directions along each eigenvector in turn
+pssrot.f:               step(k) = vects(k,nomega-i+1)
+pssrot.f:               step(k) = -vects(k,nomega-i+1)
+pssrot.f:      deallocate (vects)
+pssrot.f:c     ##  subroutine eigenrot  --  torsional Hessian eigenvectors  ##
+pssrot.f:      subroutine eigenrot (eigen,vects)
+pssrot.f:      real*8 vects(nomega,*)
+pssrot.f:      call diagq (nomega,nomega,matrix,eigen,vects)
+pssrot.f:c     scan the search direction for a minimization candidate
+pssrot.f:   10             format (4x,'Search Direction',i4,10x,'Step',
+pssrot.f:   20             format (4x,'Search Direction',i4,36x,'------')
+pssrot.f:   30       format (4x,'Search Direction',i4,36x,'------')
+qrfact.f:c     ##  subroutine qrfact  --  rectangular matrix QR factorization  ##
+qrfact.f:c     rdiag    output vector of length n with diagonal elements of r
+qrfact.f:c     k-th column of "a" to a multiple of the k-th unit vector
+qrfact.f:c     ipvt     vector of length n which defines the permutation
+qrfact.f:c     diag     vector of length n containing the diagonal elements
+qrfact.f:c     qtb      vector of length n containing the first n elements
+qrfact.f:c                of the vector q(transpose)*b
+qrfact.f:c     x        vector of length n containing the least squares
+qrfact.f:c     sdiag    vector of length n containing the diagonal elements
+qrfact.f:c     xpvt     vector of length n containing permuted (pivoted)
+quatfit.f:c     Structural Comparisons", Acta Crystallographica Section A,
+radial.f:      real*8 volume,expect
+radial.f:            expect = factor * (rupper**3 - rlower**3)
+radial.f:            gr(i) = dble(hist(i)) / expect
+random.f:c     University Press, 1992, Section 7.1
+random.f:c     ##  subroutine ranvec  --  unit vector in random direction  ##
+random.f:c     "ranvec" generates a unit vector in 3-dimensional
+random.f:c     2nd Edition, Cambridge University Press, 2004, Section 18.4
+random.f:      subroutine ranvec (vector)
+random.f:      real*8 vector(3)
+random.f:c     construct the 3-dimensional random unit vector
+random.f:      vector(3) = 1.0d0 - 2.0d0*s
+random.f:      vector(2) = s * y
+random.f:      vector(1) = s * x
+random.f:c     print the components of the random unit vector
+random.f:c        write (iout,10)  vector(1),vector(2),vector(3)
+random.f:c  10    format (' RANVEC  --  The Random Vector is',3f10.4)
+rattle.f:c     by correcting atomic positions and half-step velocities to
+rattle.f:c     initialize the lists of atoms previously corrected
+rattle.f:c     ##  subroutine rattle2  --  RATTLE atom velocity corrections  ##
+rattle.f:c     by correcting the full-step velocities in order to maintain
+rattle.f:c     initialize the lists of atoms previously corrected
+rattle.f:c     apply the RATTLE algorithm to correct the velocities
+readdyn.f:   40    format (/,' READDYN  --  Restart File has Incorrect',
+readgau.f:c     read the Hessian from archive section at bottom of output
+readgau.f:c     ##  subroutine readgarc  --  read Gaussian archive section  ##
+readgau.f:c     "readgarc" reads data from Gaussian archive section; each
+readint.f:c     initialize coordinates and connectivities for each atom
+readint.f:c     read the coordinates and connectivities for each atom
+readmol2.f:c     assign atom types from atomic number and connectivity
+readmol.f:c     assign atom types from atomic number and connectivity
+readpdb.f:c     "fixpdb" corrects problems with PDB files by converting residue
+readprm.f:c     electronegativity bond length correction parameters
+readprm.f:            if (ib.lt.0 .or. ic.lt.0)  axt = 'Bisector'
+readprm.f:            if (ic.lt.0 .and. id.lt.0)  axt = 'Z-Bisect'
+readprm.f:               electron(ia) = el
+readprm.f:c     MMFF covalent radius and electronegativity parameters
+readxyz.f:c     initialize coordinates and connectivities for each atom
+readxyz.f:c     read the coordinates and connectivities for each atom
+readxyz.f:c     make sure all atom connectivities are bidirectional
+readxyz.f:  120       format (/,' READXYZ  --  Check Connection of Atoms',
+refer.f:c     i12ref      atom numbers of atoms 1-2 connected to each atom
+respa.f:c     make half-step temperature and pressure corrections
+respa.f:c     find the constraint-corrected full-step velocities
+respa.f:c     make full-step temperature and pressure corrections
+respa.f:c     compute statistics and save trajectory for this step
+rgdstep.f:c     make center of mass correction to virial for rigid body
+rgdstep.f:c     make any temperature and pressure corrections
+rgdstep.f:c     compute statistics and save trajectory for this step
+rgdstep.f:c     construct a normalized vector along the molecular axis
+rgdstep.f:c     find two orthogonal vectors to complete coordinate frame
+rotlist.f:c     to one side of a pair of directly bonded atoms; optionally
+rotlist.f:c     add any links needed to make intermolecular connections
+rotlist.f:c     check to see if the two atoms are still directly bonded
+rotlist.f:c     remove links added to make intermolecular connections
+rotpole.f:c     frame by applying the correct rotation matrix for each site
+rotpole.f:c     Bisector method rotation matrix elements for z- and x-axes
+rotpole.f:      else if (polaxe(i) .eq. 'Bisector') then
+rotpole.f:c     Z-Bisect method rotation matrix elements for z- and x-axes
+rotpole.f:      else if (polaxe(i) .eq. 'Z-Bisect') then
+rxnpot.f:c     rfbulkd   bulk dielectric constant of reaction field continuum
+saddle.f:c     copy the superimposed structures into vectors
+saddle.f:c     set the initial conjugate direction for minimization
+saddle.f:  170 format (/,' Search for a Minimum in Conjugate Directions :',
+saddle.f:c     line search to find minimum in conjugate direction
+saddle.f:c     if search direction points uphill, use its negative
+saddle.f:c     find the next conjugate search direction to search;
+saddle.f:c     "tangent" finds the projected gradient on the synchronous
+saddle.f:c     compute tangent to the path, and projected gradient
+scan.f:c     normal mode directions
+scan.f:c     get the number of eigenvectors to use for the local search
+scan.f:   20    format(/,' Enter the Number Search Directions for Local',
+scan.f:      real*8, allocatable :: vects(:,:)
+scan.f:      allocate (vects(nomega,nomega))
+scan.f:      call eigenrot (eigen,vects)
+scan.f:c     search both directions along each torsional eigenvector
+scan.f:            step(k) = vects(k,nomega-i+1)
+scan.f:            step(k) = -vects(k,nomega-i+1)
+scan.f:      deallocate (vects)
+scan.f:c     ##  subroutine eigenrot  --  torsional Hessian eigenvectors  ##
+scan.f:      subroutine eigenrot (eigen,vects)
+scan.f:      real*8 vects(nomega,*)
+scan.f:      call diagq (nomega,nomega,matrix,eigen,vects)
+scan.f:c     normalize the torsional Hessian eigenvectors
+scan.f:            vnorm = vnorm + vects(j,i)**2
+scan.f:            vects(j,i) = vects(j,i) / vnorm
+scan.f:c     ##  subroutine climber  --  explore single search direction  ##
+scan.f:c     scan the search direction for a minimization candidate
+scan.f:   10             format (4x,'Search Direction',i4,38x,'<<<<<<')
+scan.f:   20             format (4x,'Search Direction',i4,38x,'>>>>>>')
+scan.f:   30                format (4x,'Search Direction',i4,11x,'Step',
+scan.f:   40                format (4x,'Search Direction',i4,11x,'Step',
+scan.f:   50                format (4x,'Search Direction',i4,11x,'Step',
+scan.f:   60       format (4x,'Search Direction',i4,38x,'------')
+sdstep.f:c     get constraint-corrected positions and half-step velocities
+sdstep.f:c     correct internal virial to account for frictional forces
+sdstep.f:c     find the constraint-corrected full-step velocities
+sdstep.f:c     compute statistics and save trajectory for this step
+sdstep.f:c     of Solvent Effects on the Conformation and Dynamics of
+search.f:c     p       initial search vector, unchanged by this routine
+search.f:c     s       scaled search vector at current line search point
+search.f:c     angle   angle between search and negative gradient vector
+search.f:c     stpmin   minimum step length in current line search direction
+search.f:c     stpmax   maximum step length in current line search direction
+search.f:c     slpmax   projected gradient above which stepsize is reduced
+search.f:c     angmax   maximum angle between search direction and -gradient
+search.f:c     WideAngle   large angle between search direction and -gradient
+search.f:c     copy the search direction into a new vector
+search.f:c     compute the length of gradient and search direction
+search.f:c     search vector and find projected gradient
+search.f:c     check the angle between the search direction
+search.f:c     and the negative gradient vector
+search.f:c     search vector, or based on previous function decrease
+search.f:c     get new function and projected gradient following a step
+search.f:c     otherwise truncate to step or 4*step, respectively
+server.f:c     ##  subroutine setconnectivity  ##
+server.f:      subroutine setconnectivity (n,b1,b2,b3,b4)
+shakeup.f:c     note this version correctly handles isolated small rings,
+sigmoid.f:c     interval [0,1]; the curves connect (0,0) to (1,1) and have
+simplex.f:c     the objective function
+simplex.f:c     ##  function simplex1  --  objective function for simplex  ##
+simplex.f:c     evaluate the objective function and update the simplex
+sizes.f:c     maxval          atoms directly bonded to an atom
+sktstuff.f:c     a server, and loading an object with system information
+sktstuff.f:c     create the TINKER system object
+sktstuff.f:c     load the atom connectivity information
+sktstuff.f:      call setconnectivity (n,b1,b2,b3,b4)
+sktstuff.f:c     create the update object
+sktstuff.f:   40    format (/,' SKTINIT  --  Unable to Create Update Object',/)
+sniffer.f:c     discrete version of Griewank's global search trajectory
+sniffer.f:c     initialize unit direction vector along negative gradient
+sniffer.f:c     get rms gradient and dot product with search direction
+sniffer.f:c     compute the next direction vector and its length
+sniffer.f:c     normalize direction and get angle with negative gradient
+sniffer.f:c     move atomic positions along the direction vector
+solute.f:c     doffset   dielectric offset to continuum solvation atomic radii
+solute.f:c     drb       solvation derivatives with respect to Born radii
+solute.f:c     drbp      GK polarization derivatives with respect to Born radii
+spacefill.f:c     select either vdw, excluded or molecular volume and area
+spectrum.f:c     ##  program spectrum  --  power spectrum from autocorrelation  ##
+spectrum.f:c     "spectrum" computes a power spectrum over a wavelength range
+spectrum.f:      program spectrum
+spectrum.f:c     compute the power spectrum via discrete Fourier transform
+spectrum.f:c     print the power spectrum intensity at each wavelength
+spectrum.f:  100 format (/,' Power Spectrum from Velocity Autocorrelation :',
+square.f:c     xlo       vector with the lower bounds for the variables
+square.f:c     xhi       vector with the upper bounds for the variables
+square.f:c     xscale    vector with the diagonal scaling matrix for variables
+square.f:c     xc        vector with variable values at the approximate solution
+square.f:c     fc        vector with the residuals at the approximate solution
+square.f:c     fp        vector containing the updated residuals
+square.f:c     xp        vector containing the updated point
+square.f:c     sc        vector containing the last step taken
+square.f:c     gc        vector with gradient estimate at approximate solution
+square.f:c     iactive   vector showing if variable is at upper or lower bound
+square.f:c     ipvt      vector with permutation matrix used in QR factorization
+square.f:c     compute the total gradient vector for all variables
+square.f:c     compute the vector Q(transpose) * residuals
+square.f:c     unpack the step vector to include all variables
+square.f:c     compute the total gradient vector for all variables
+square.f:     &              /,' asymptote in some direction, or STEPMAX',
+square.f:c     ga       vector with the gradient of the residual vector
+square.f:c     ipvt     vector with pivoting information from QR factorization
+square.f:c     xscale   vector with the diagonal scaling matrix for variables
+square.f:c     qtf      vector with first n elements of Q(transpose)
+square.f:c     sa       vector with the Levenberg-Marquardt step
+square.f:c     gnstep   vector with the Gauss-Newton step
+square.f:c     diag     vector with the diagonal elements of the Cholesky
+square.f:c     the Gauss-Newton step is rejected, find a nontrivial step;
+square.f:c     xc        vector with the current iterate
+square.f:c     gc        vector with the gradient at xc
+square.f:c     ipvt      vector of length n containing the permutation matrix
+square.f:c     sc        vector containing the Newton step
+square.f:c     sa        vector containing current step
+square.f:c     xscale    vector containing the diagonal scaling matrix for x
+square.f:c                 3  means that false convergence is detected
+square.f:c     xpprev    vector with the value of xp at the  previous call
+square.f:c     fpprev    vector of length m containing f(xpprev)
+square.f:c     xp        vector of length n containing the new iterate
+square.f:c     fp        vector of length m containing the functions at xp
+square.f:c     xlo       vector of length n containing the lower bounds
+square.f:c     xhi       vector of length n containing the upper bounds
+stodyn.f:c     ##  module stodyn  --  SD trajectory frictional coefficients  ##
+surface.f:c     derivatives of the area with respect to Cartesian coordinates
+surface.f:c     rmove    connectivity errors can usually be avoided if the
+surface.f:c     general case where more than one sphere intersects the
+surface.f:c     current sphere; sort intersecting spheres by their degree
+surface.f:c     check to see if J circle is intersecting K circle;
+surface.f:c     find T value of circle intersections
+surface.f:c     rotate spheres so K vector colinear with z-axis
+surface.f:c     get T values of intersection for K circle
+surface.f:c     special case; K circle without intersections
+surface.f:c     general case; sum up arclength and set connectivity code
+surface.f:c     find number of independent boundaries and check connectivity
+surface.f:c     attempt to fix connectivity error by moving atom slightly
+surface.f:  140       format (/,' SURFACE  --  Connectivity Error at Atom',i6)
+surface.f:c     derivatives of the area with respect to Cartesian coordinates
+surface.f:c                the molecule with respect to atomic coordinates
+surface.f:c     rmove    connectivity errors can usually be avoided if the
+surface.f:c     general case where more than one sphere intersects the
+surface.f:c     current sphere; sort intersecting spheres by their degree
+surface.f:c     check to see if J circle is intersecting K circle;
+surface.f:c     find T value of circle intersections
+surface.f:c     rotate spheres so K vector colinear with z-axis
+surface.f:c     get T values of intersection for K circle
+surface.f:c     special case; K circle without intersections
+surface.f:c     general case; sum up arclength and set connectivity code
+surface.f:c     find number of independent boundaries and check connectivity
+surface.f:c     attempt to fix connectivity error by moving atom slightly
+surface.f:  140       format (/,' SURFACE1  --  Connectivity Error at Atom',i6)
+surfatom.f:c     set the overlap significance and connectivity shift
+surfatom.f:c     case where many spheres intersect the sphere of interest;
+surfatom.f:c     sort the intersecting spheres by their degree of overlap
+surfatom.f:c     check to see if J circle is intersecting K circle;
+surfatom.f:c     find T value of circle intersections
+surfatom.f:c     rotate spheres so K vector colinear with z-axis
+surfatom.f:c     get T values of intersection for K circle
+surfatom.f:c     special case; K circle without intersections
+surfatom.f:c     general case; sum up arclength and set connectivity code
+surfatom.f:c     find number of independent boundaries and check connectivity
+surfatom.f:c     attempt to fix connectivity error by moving atom slightly
+surfatom.f:  140    format (/,' SURFATOM  --  Connectivity Error at Atom',i6)
+surfatom.f:c     area and first derivatives with respect to Cartesian coordinates
+surfatom.f:c     set the overlap significance and connectivity shift
+surfatom.f:c     case where many spheres intersect the sphere of interest;
+surfatom.f:c     sort the intersecting spheres by their degree of overlap
+surfatom.f:c     check to see if J circle is intersecting K circle;
+surfatom.f:c     find T value of circle intersections
+surfatom.f:c     rotate spheres so K vector colinear with z-axis
+surfatom.f:c     get T values of intersection for K circle
+surfatom.f:c     special case; K circle without intersections
+surfatom.f:c     general case; sum up arclength and set connectivity code
+surfatom.f:c     find number of independent boundaries and check connectivity
+surfatom.f:c     attempt to fix connectivity error by moving atom slightly
+surfatom.f:  140    format (/,' SURFATOM  --  Connectivity Error at Atom',i6)
+temper.f:c     select random velocities via Andersen stochastic collisions
+temper.f:c     make full-step velocity correction for Nose-Hoover system
+temper.f:c     "temper2" applies a velocity correction at the half time step
+temper.f:c     make half-step velocity correction for Nose-Hoover system
+testgrad.f:c     gradient vectors of the potential energy function with respect
+testgrad.f:      real*8 ep0,er0,es0,elf0,eg0,ex0,ect0 
+testgrad.f:      real*8, allocatable :: ndect(:,:) 
+testgrad.f:   10    format (/,' Compute the Analytical Gradient Vector [Y] :  ',$)
+testgrad.f:   30    format (/,' Compute the Numerical Gradient Vector [Y] :   ',$)
+testgrad.f:         allocate (ndect(3,n)) 
+testgrad.f:     &                           ed,em,ep,er,es,elf,eg,ex,ect 
+testgrad.f:     &                           ed,em,ep,er,es,elf,eg,ex,ect 
+testgrad.f:     &                           ed,em,ep,er,es,elf,eg,ex,ect
+testgrad.f:                  ect0 = ect 
+testgrad.f:                  ndect(j,i) = (ect - ect0) / eps
+testgrad.f:     &                                    dect(j,i) 
+testgrad.f:     &                                    dect(j,i)
+testgrad.f:     &                                    dect(j,i)
+testgrad.f:     &                                    ndeg(j,i),ndex(j,i),ndect(j,i)
+testgrad.f:     &                                    ndect(j,i) 
+testgrad.f:     &                                    ndect(j,i) 
+testgrad.f:         deallocate (ndect) 
+testhess.f:c     Hessian matrices of the potential energy function with respect
+testpair.f:     &           13x,'Evdw',11x,'Eelect')
+testpair.f:     &           13x,'Dvdw',11x,'Delect')
+testpol.f:c     "testpol" computes the induced dipole moments for direct
+testpol.f:      real*8 rdirect
+testpol.f:      real*8, allocatable :: tdirect(:)
+testpol.f:      real*8, allocatable :: ddirect(:,:)
+testpol.f:      real*8, allocatable :: udirect(:,:)
+testpol.f:      allocate (tdirect(n))
+testpol.f:      allocate (ddirect(3,n))
+testpol.f:      allocate (udirect(3,n))
+testpol.f:c     get induced dipoles for direct polarization only
+testpol.f:            udirect(j,i) = debye * uind(j,i)
+testpol.f:            ustore(j,i,0) = udirect(j,i)
+testpol.f:c     print the direct polarization induced dipole moments
+testpol.f:   40    format (/,' Direct Induced Dipole Moments :',
+testpol.f:               ux = udirect(1,i)
+testpol.f:               uy = udirect(2,i)
+testpol.f:               uz = udirect(3,i)
+testpol.f:      rdirect = 0.0d0
+testpol.f:            ddirect(j,i) = udirect(j,i) - uexact(j,i)
+testpol.f:         tdirect(i) = sqrt(ddirect(1,i)**2+ddirect(2,i)**2
+testpol.f:     &                           +ddirect(3,i)**2)
+testpol.f:         rdirect = rdirect + tdirect(i)**2
+testpol.f:      rdirect = sqrt(rdirect/dble(n))
+testpol.f:     &        //,4x,'Atom',14x,'Direct',14x,'PCG',14x,'OPT',i1)
+testpol.f:               write (iout,150)  i,tdirect(i),tpcg(i),txpt(i)
+testpol.f:      write (iout,160)  rdirect,rpcg,rxpt
+testpol.f:      deallocate (tdirect)
+testpol.f:      deallocate (ddirect)
+testpol.f:      deallocate (udirect)
+testrot.f:c     gradient vectors of the potential energy function with respect
+tncg.f:c     Newton search directions can be used optionally; by default the
+tncg.f:c     nvar       number of parameters in the objective function
+tncg.f:c     p          search direction resulting from pcg iteration
+tncg.f:c     g_norm     Euclidian norm of the gradient vector
+tncg.f:c     angmax     maximum angle between search and -grad directions
+tncg.f:c     find the next approximate Newton search direction
+tncg.f:c     perform a line search in the chosen direction
+tncg.f:c     update variables to reflect this iteration
+tncg.f:c     NegCurve     termination upon detecting negative curvature
+tncg.f:c     evaluate or estimate the matrix-vector product
+tncg.f:c     check for a direction of negative curvature
+tncg.f:c     update the truncated Newton direction
+torque.f:c     Second Derivatives of Anisotropic Potentials with Respect to
+torque.f:      if (axetyp.eq.'Z-Bisect' .or. axetyp.eq.'3-Fold') then
+torque.f:c     build some additional axes needed for the Z-Bisect method
+torque.f:      if (axetyp .eq. 'Z-Bisect') then
+torque.f:      if (axetyp .eq. 'Z-Bisect') then
+torque.f:      if (axetyp .eq. 'Z-Bisect') then
+torque.f:c     compute the projection of v and w onto the ru-plane
+torque.f:      if (axetyp .eq. 'Z-Bisect') then
+torque.f:c     negative of dot product of torque with unit vectors gives
+torque.f:c     result of infinitesimal rotation along these vectors
+torque.f:      if (axetyp .eq. 'Z-Bisect') then
+torque.f:c     force distribution for the Bisector local coordinate method
+torque.f:      else if (axetyp .eq. 'Bisector') then
+torque.f:c     force distribution for the Z-Bisect local coordinate method
+torque.f:      else if (axetyp .eq. 'Z-Bisect') then
+torque.f:c     Second Derivatives of Anisotropic Potentials with Respect to
+torque.f:         if (axetyp.eq.'Z-Bisect' .or. axetyp.eq.'3-Fold') then
+torque.f:c     build some additional axes needed for the Z-Bisect method
+torque.f:         if (axetyp .eq. 'Z-Bisect') then
+torque.f:         if (axetyp .eq. 'Z-Bisect') then
+torque.f:         if (axetyp .eq. 'Z-Bisect') then
+torque.f:c     compute the projection of v and w onto the ru-plane
+torque.f:         if (axetyp .eq. 'Z-Bisect') then
+torque.f:c     negative of dot product of torque with unit vectors gives
+torque.f:c     result of infinitesimal rotation along these vectors
+torque.f:         if (axetyp .eq. 'Z-Bisect') then
+torque.f:c     force distribution for the Bisector local coordinate method
+torque.f:         else if (axetyp .eq. 'Bisector') then
+torque.f:c     force distribution for the Z-Bisect local coordinate method
+torque.f:         else if (axetyp .eq. 'Z-Bisect') then
+torsfit.f:c     get the Cartesian coordinates and connectivity info
+torsfit.f:c     multiply vector: Yi * Coeff * Weight
+units.f:c     the permittivity of vacuum (the "electric constant"); note that
+units.f:c     emass       mass of an electron in atomic mass units
+units.f:c     evolt       conversion from Hartree to electron-volts
+units.f:c     coulomb     conversion from electron**2/Ang to kcal/mole
+units.f:c     debye       conversion from electron-Ang to Debyes
+uprior.f:c     aspc      coefficients for always stable predictor-corrector
+valence.f:c     read the Cartesian coordinates and connectivity info
+valence.f:c     and connected atoms
+valence.f:c     assign specific values based on atom type and connectivity
+valence.f:c     on atom type and connected atoms
+valence.f:c     on atom type and connected atoms
+valence.f:c     on atom type and connected atoms
+valence.f:c     based on atom type and connected atoms
+valence.f:c     based on atom type and connected atoms
+valence.f:c     on atom type and connected atoms
+valence.f:      real*8, allocatable :: vects(:,:)
+valence.f:      allocate (vects(nfreq,nfreq))
+valence.f:      call diagq (nfreq,nfreq,matrix,eigen,vects)
+valence.f:      deallocate (vects)
+vdwpot.f:c     use_vcorr   flag to use long range vdw der Waals correction
+verlet.f:c     get constraint-corrected positions and half-step velocities
+verlet.f:c     make half-step temperature and pressure corrections
+verlet.f:c     find the constraint-corrected full-step velocities
+verlet.f:c     make full-step temperature and pressure corrections
+verlet.f:c     compute statistics and save trajectory for this step
+vibbig.f:c     only vector storage and gradient evaluations; preconditioning
+vibbig.f:c     eigenvectors starting from either lowest or highest frequency
+vibbig.f:c     for the Lowest Few Eigenvalues and Associated Eigenvectors of
+vibbig.f:c     A. L. Kaledin, "Gradient-Based Direct Normal-Mode Analysis",
+vibbig.f:c     open or create eigenvector file for use during restarts
+vibbig.f:c     open or create basis vector file for use during restarts
+vibbig.f:c     store a coordinate vector for each atom
+vibbig.f:c     if restarting, read trial vectors and estimate eigenvalues
+vibbig.f:c     if not restarting, generate initial guess eigenvectors
+vibbig.f:c     project out locked roots from components of phi
+vibbig.f:      call project (nvar,nconv,ivb1,nroot,0)
+vibbig.f:      call projectk (nvar,nconv,ivb1,nroot,0)
+vibbig.f:c     reload and make vector orthonormal to existing basis
+vibbig.f:c     project residual onto P-space
+vibbig.f:c     project out locked roots from components of phi
+vibbig.f:      call project (nvar,nconv,ivb1,nroot,nroot)
+vibbig.f:      call projectk (nvar,nconv,ivb1,nroot,nroot)
+vibbig.f:c     reload and make vector orthonormal to existing basis
+vibbig.f:c     normalize leading vector
+vibbig.f:c     project onto P-space
+vibbig.f:c     project out locked roots from components of phi
+vibbig.f:      call project (nvar,nconv,ivb1,nroot,npair)
+vibbig.f:      call projectk (nvar,nconv,ivb1,nroot,npair)
+vibbig.f:c     is gradually deflated, reduce effect of the preconditioner
+vibbig.f:c     update total number of vectors locked on disk
+vibbig.f:c     normalize leading vector
+vibbig.f:c     save vectors for restart
+vibbig.f:c     project out locked roots from components of phi
+vibbig.f:      call project (nvar,nconv,ivb1,npair,0)
+vibbig.f:      call projectk (nvar,nconv,ivb1,npair,0)
+vibbig.f:c     project residual onto P-space
+vibbig.f:c     project out locked roots from components of phi
+vibbig.f:      call project (nvar,nconv,ivb1,nroot,npair)
+vibbig.f:c     project out locked roots from components of phik
+vibbig.f:      call projectk (nvar,nconv,ivb1,nroot,npair)
+vibbig.f:c     ##  subroutine trigger  --  get initial trial eigenvectors  ##
+vibbig.f:c     "trigger" constructs a set of initial trial vectors for
+vibbig.f:c     zero out the trial vector
+vibbig.f:c     project the vector onto P-space
+vibbig.f:c     ##  subroutine trbasis  --  set translation/rotation vectors  ##
+vibbig.f:c     "trbasis" forms translation and rotation basis vectors used
+vibbig.f:c     zero out the translation and rotation vectors
+vibbig.f:c     set basis vectors for translations
+vibbig.f:c     set basis vectors for rotation
+vibbig.f:c     "preconblk" applies a preconditioner to an atom block section
+vibbig.f:c     ##  subroutine gsort  --  orthogonal vector via Gram-Schmidt  ##
+vibbig.f:c     vectors for sliding block interative matrix diagonalization
+vibbig.f:c     construct projector
+vibbig.f:c     apply projector and normalize new vector
+vibbig.f:c     "qonvec" is a vector utility routine used during sliding
+vibbig.f:c     operate on vector pk with u-transpose
+vibbig.f:c     ##  subroutine project  --  remove known vectors from current  ##
+vibbig.f:c     "project" reads locked vectors from a binary file and projects
+vibbig.f:c     them out of the components of the set of trial eigenvectors
+vibbig.f:      subroutine project (nvar,nconv,ivb1,ns,m)
+vibbig.f:c     read and scan over the locked eigenvectors
+vibbig.f:c     project locked vectors out of the current set
+vibbig.f:c     ##  subroutine projectk  --  remove known vectors from current  ##
+vibbig.f:c     "projectk" reads locked vectors from a binary file and projects
+vibbig.f:c     them out of the components of the set of trial eigenvectors
+vibbig.f:      subroutine projectk (nvar,nconv,ivb1,ns,m)
+vibbig.f:c     read and scan over the locked eigenvectors
+vibbig.f:c     project locked vectors out of the current set
+vibbig.f:c     ##  subroutine konvec  --  evaluate Hessian-vector product  ##
+vibbig.f:c     "konvec" finds a Hessian-vector product via finite-difference
+vibbig.f:c     ##  subroutine transform  --  diagonalize trial basis vectors  ##
+vibbig.f:c     "transform" diagonalizes the current basis vectors to produce
+vibbig.f:      subroutine diagblk (k0,k1,n,vector,wres)
+vibbig.f:      real*8 vector(*)
+vibbig.f:            hres(k) = vector(m+j)
+vibbig.f:            vector(k0+k) = hvec(j,i)
+vibbig.f:c     for each atom in turn with respect to Cartesian coordinates
+vibbig.f:      subroutine hessblk (amass,k0,i1,i2,vector)
+vibbig.f:      real*8 vector(*)
+vibbig.f:c     call the electrostatic Hessian component routines
+vibbig.f:c     store Hessian for the current atom block as a vector
+vibbig.f:                  vector(k0+ii) = hessx(j,k) * amik
+vibbig.f:                  vector(k0+ii) = hessy(j,k) * amik
+vibbig.f:                  vector(k0+ii) = hessz(j,k) * amik
+vibrate.f:c     diagonalized both directly and after mass weighting; output
+vibrate.f:      real*8, allocatable :: vects(:,:)
+vibrate.f:      allocate (vects(nfreq,nfreq))
+vibrate.f:      call diagq (nfreq,nfreq,matrix,eigen,vects)
+vibrate.f:      call diagq (nfreq,nfreq,matrix,eigen,vects)
+vibrate.f:            vects(j,i) = vects(j,i) / mass2(k)
+vibrate.f:            vnorm = vnorm + vects(j,i)**2
+vibrate.f:            vects(j,i) = vects(j,i) / vnorm
+vibrate.f:            write (iout,100)  iuse(i),vects(j+1,ivib),vects(j+2,ivib),
+vibrate.f:     &                        vects(j+3,ivib)
+vibrate.f:               sum = sum + vects(j+k,ivib)**2
+vibrate.f:               x(m) = xref(m) + ratio*vects(j+1,ivib)
+vibrate.f:               y(m) = yref(m) + ratio*vects(j+2,ivib)
+vibrate.f:               z(m) = zref(m) + ratio*vects(j+3,ivib)
+vibrate.f:      deallocate (vects)
+vibrot.f:c     "vibrot" computes the eigenvalues and eigenvectors of the
+vibrot.f:      real*8, allocatable :: vects(:,:)
+vibrot.f:      allocate (vects(nomega,nomega))
+vibrot.f:      call diagq (nomega,nomega,matrix,eigen,vects)
+vibrot.f:      deallocate (vects)
+vibs.f:c     phi        trial vectors for iterative vibrational analysis
+vibs.f:c     phik       alternate vectors for iterative vibrational analysis
+vibs.f:c     pwork      temporary work array for eigenvector transformation
+volume.f:c     volume with respect to the Cartesian coordinates of each atom
+volume.f:c     fix the stepsize in the z-direction; this value sets
+volume.f:c     first select the potential intersecting atoms
+volume.f:c     section atom spheres perpendicular to the z axis
+volume.f:c     "rsecr" is radius of circle of intersection
+volume.f:c     check intersections of neighbor circles
+volume.f:c     initial and final arc endpoints are found for intersection
+volume.f:c     of intersection and the reference circle center and the
+volume.f:c     find the pre-area and pre-forces on this section (band),
+volume.f:c     volume with respect to the Cartesian coordinates of the atoms
+volume.f:c     fix the stepsize in the z-direction; this value sets
+volume.f:c     select potential intersecting atoms
+volume.f:c     section atom spheres perpendicular to the z axis
+volume.f:c     check intersections of neighbor circles
+volume.f:c     initial and final arc endpoints are found for intersection
+volume.f:c     of intersection and the reference circle center and the
+volume.f:c     find the pre-area and pre-forces on this section (band)
+volume.f:c     partials with respect to coordinates of serial atom id(m)
+xtalfit.f:c     "xtalfit" determines optimized van der Waals and electrostatic
+xtalfit.f:c     gradient with respect to structural parameters
+xtalfit.f:c     get the gradient with respect to structure perturbations
+xtalmin.f:c     gradient with respect to fractional coordinates and lattice
+xtalmin.f:c     find derivative with respect to lattice a-axis length
+xtalmin.f:c     find derivative with respect to lattice b-axis length
+xtalmin.f:c     find derivative with respect to lattice c-axis length
+xtalmin.f:c     find derivative with respect to lattice alpha angle
+xtalmin.f:c     find derivative with respect to lattice beta angle
+xtalmin.f:c     find derivative with respect to lattice gamma angle
+xyzedit.f:     &        /,4x,'(7) Assign Connectivities for Linear Chain',
+xyzedit.f:     &        /,4x,'(8) Assign Connectivities Based on Distance',
+xyzedit.f:     &        /,3x,'(11) Translate All Atoms by an X,Y,Z-Vector',
+xyzedit.f:c     assign atom connectivities to produce a linear chain
+xyzedit.f:c     assign atom connectivities based on interatomic distances
+xyzedit.f:c     translate the entire system by a specified x,y,z-vector
+xyzedit.f:  290       format (/,' Enter Translation Vector Components :  ',$)
+xyzedit.f:c     to expand and refine a collection of solvent molecules in a
+xyzedit.f:c     make a copy of the solute coordinates and connectivities
+xyzedit.f:c     OpenMP directives for the major loop structure
+xyzedit.f:c     OpenMP directives for the major loop structure
+ommstuff.cpp: *           TINKER Routines Called Directly from Interface
+ommstuff.cpp:   double electric;
+ommstuff.cpp:   double* dect;
+ommstuff.cpp:   double* ect;
+ommstuff.cpp:void set_chgpot_data_ (double* electric, double* dielec, double* ebuffer,
+ommstuff.cpp:   chgpot__.electric = *electric;
+ommstuff.cpp:                      double* deg, double* dex, double* dect) {
+ommstuff.cpp:   deriv__.dect = dect;
+ommstuff.cpp:                       double* eg, double* ex, double* ect) {
+ommstuff.cpp:   energi__.ect = ect;
+ommstuff.cpp:static void setDefaultPeriodicBoxVectors (OpenMM_System* system, FILE* log) {
+ommstuff.cpp:      OpenMM_System_setDefaultPeriodicBoxVectors (system, &a, &b, &c);
+ommstuff.cpp:static void printDefaultPeriodicBoxVectors (OpenMM_System* system, FILE* log) {
+ommstuff.cpp:   OpenMM_System_getDefaultPeriodicBoxVectors (system, &a, &b, &c);
+ommstuff.cpp:      (void) fprintf (log, "\n Box Vectors:  %12.4f %12.4f %12.4f",
+ommstuff.cpp:   setDefaultPeriodicBoxVectors (system, log);
+ommstuff.cpp:         // OpenMM_NonbondedForce_setReactionFieldDielectric (coulombForce, chgpot__.dielec);
+ommstuff.cpp:   // to detect if vdw can be calculated by AmoebaVdwForce
+ommstuff.cpp:   OpenMM_Boolean useCorrection;
+ommstuff.cpp:   useCorrection = OpenMM_False;
+ommstuff.cpp:   if (vdwpot__.use_vcorr)  useCorrection = OpenMM_True;
+ommstuff.cpp:   OpenMM_AmoebaVdwForce_setUseDispersionCorrection (amoebaVdwForce,
+ommstuff.cpp:                                                     useCorrection);
+ommstuff.cpp:   setDefaultPeriodicBoxVectors (system, log);
+ommstuff.cpp:   // to detect if CT can be calculated by AmoebaCTForce
+ommstuff.cpp:   setDefaultPeriodicBoxVectors (system, log);
+ommstuff.cpp:static double getCFluxDirection(int atomA, int atomB) {
+ommstuff.cpp:      cfDir = getCFluxDirection(atom1, atom2);
+ommstuff.cpp:      } else if (strncasecmp(axisPtr, "Bisector", 8) == 0) {
+ommstuff.cpp:         axisType = OpenMM_AmoebaMultipoleForce_Bisector;
+ommstuff.cpp:      } else if (strncasecmp(axisPtr, "Z-Bisect", 8) == 0) {
+ommstuff.cpp:         axisType = OpenMM_AmoebaMultipoleForce_ZBisect;
+ommstuff.cpp:      setDefaultPeriodicBoxVectors (system, log);
+ommstuff.cpp:                                   OpenMM_AmoebaMultipoleForce_Direct);
+ommstuff.cpp:   OpenMM_AmoebaGeneralizedKirkwoodForce_setSolventDielectric
+ommstuff.cpp:   OpenMM_AmoebaGeneralizedKirkwoodForce_setSoluteDielectric
+ommstuff.cpp:   // OpenMM_AmoebaGeneralizedGeneralizedKirkwoodForce_setDielectricOffset
+ommstuff.cpp: *        objects
+ommstuff.cpp: *    (5) Select the OpenMM platform to be used.
+ommstuff.cpp:   // allocate space for opaque handle to hold OpenMM objects
+ommstuff.cpp:   // These are temporary OpenMM objects used and discarded here
+ommstuff.cpp:   pluginList = OpenMM_Platform_loadPluginsFromDirectory
+ommstuff.cpp:                    (OpenMM_Platform_getDefaultPluginsDirectory());
+ommstuff.cpp:   pluginList = OpenMM_Platform_loadPluginsFromDirectory
+ommstuff.cpp:                    (OpenMM_Platform_getDefaultPluginsDirectory());
+ommstuff.cpp:      (void) fprintf (stderr, "\n Default OpenMM Plugin Directory :  %s\n\n",
+ommstuff.cpp:                          OpenMM_Platform_getDefaultPluginsDirectory());
+ommstuff.cpp:   // create System and Force objects within the System; retain a reference
+ommstuff.cpp:   // to each force object so we can fill in the forces; mote the OpenMM
+ommstuff.cpp:   // System takes ownership of the force objects, don't delete them yourself
+ommstuff.cpp:   // choose an Integrator, and a Context connecting the System with the
+ommstuff.cpp:   // initialize the configuration from default positions collected above
+ommstuff.cpp:   // State object is created here and must be explicitly destroyed below
+ommstuff.cpp:   OpenMM_State_getPeriodicBoxVectors (state, &aBox, &bBox, &cBox);
+ommstuff.cpp:   // state object is created here and must be destroyed below
+ommstuff.cpp:   OpenMM_State_getPeriodicBoxVectors (state, &aBox, &bBox, &cBox);
+ommstuff.cpp:   // State object is created here and must be explicitly destroyed below
+ommstuff.cpp:   OpenMM_State_getPeriodicBoxVectors (state, &aBox, &bBox, &cBox);
+ommstuff.cpp:   OpenMM_Context_setPeriodicBoxVectors (openMMDataHandle->context,
+ommstuff.cpp:   // clean up top-level heap allocated objects we are done with
+ommstuff.cpp:            strncasecmp (mpole__.polaxe + 8*ii, "Bisector", 8) != 0 &&
+ommstuff.cpp:            strncasecmp (mpole__.polaxe + 8*ii, "Z-Bisect", 8) != 0 &&
+ommstuff.cpp:   // Create a System and Force objects within the System. Retain a reference
+ommstuff.cpp:   // to each force object so we can fill in the forces. Note: the OpenMM
+ommstuff.cpp:   // System takes ownership of the force objects; don't delete them yourself.
+ommstuff.cpp:                    *energi__.ex,   *energi__.ect);
+ommstuff.cpp:      loadTinkerForce (deriv__.dect, 0, tinkerForce);
+ommstuff.cpp:      tinkerEnergy = *energi__.ect;
+ommstuff.cpp:         testName = "AmoebaMultipoleDirectTest";
+ommstuff.cpp:         testName = "AmoebaKirkwoodDirectTest";
+ommstuff.cpp:   setDefaultPeriodicBoxVectors (system, log);
+ommstuff.cpp:      printDefaultPeriodicBoxVectors (system, log);

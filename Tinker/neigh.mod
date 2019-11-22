@@ -1,0 +1,151 @@
+GFORTRAN module version '0' created from neigh.f on Tue Aug 20 14:34:06 2019
+MD5:d5eae884fd5078ab25f8d734a19b2a46 -- If you edit this, you'll get what you deserve.
+
+(() () () () () () () () () () () () () () () () () () () () () () () ()
+() () ())
+
+()
+
+()
+
+()
+
+()
+
+(2 'cbuf2' 'neigh' 'cbuf2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+3 'cbufx' 'neigh' 'cbufx' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+4 'ctbuf2' 'neigh' 'ctbuf2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+5 'ctbufx' 'neigh' 'ctbufx' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+6 'ctlst' 'neigh' 'ctlst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (INTEGER 4 0 0 INTEGER ())
+0 0 () (2 DEFERRED () () () ()) 0 () () () 0 0)
+7 'doclst' 'neigh' 'doclst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (LOGICAL 4 0 0 LOGICAL ()) 0 0 () () 0 () () () 0
+0)
+8 'doctlst' 'neigh' 'doctlst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (LOGICAL 4 0 0 LOGICAL ()) 0 0 () () 0 () () () 0
+0)
+9 'domlst' 'neigh' 'domlst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (LOGICAL 4 0 0 LOGICAL ()) 0 0 () () 0 () () () 0
+0)
+10 'doulst' 'neigh' 'doulst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (LOGICAL 4 0 0 LOGICAL ()) 0 0 () () 0 () () () 0
+0)
+11 'dovlst' 'neigh' 'dovlst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (LOGICAL 4 0 0 LOGICAL ()) 0 0 () () 0 () () () 0
+0)
+12 'elst' 'neigh' 'elst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (INTEGER 4 0 0 INTEGER ())
+0 0 () (2 DEFERRED () () () ()) 0 () () () 0 0)
+13 'lbuf2' 'neigh' 'lbuf2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+14 'lbuffer' 'neigh' 'lbuffer' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+15 'maxctlst' 'neigh' 'maxctlst' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () ()
+0 () () () 0 0)
+16 'maxelst' 'neigh' 'maxelst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () () 0 () () () 0
+0)
+17 'maxulst' 'neigh' 'maxulst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () () 0 () () () 0
+0)
+18 'maxvlst' 'neigh' 'maxvlst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () () 0 () () () 0
+0)
+19 'mbuf2' 'neigh' 'mbuf2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+20 'mbufx' 'neigh' 'mbufx' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+21 'nctlst' 'neigh' 'nctlst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (INTEGER 4 0 0 INTEGER ())
+0 0 () (1 DEFERRED () ()) 0 () () () 0 0)
+22 'neigh' 'neigh' 'neigh' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+23 'nelst' 'neigh' 'nelst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (INTEGER 4 0 0 INTEGER ())
+0 0 () (1 DEFERRED () ()) 0 () () () 0 0)
+24 'nulst' 'neigh' 'nulst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (INTEGER 4 0 0 INTEGER ())
+0 0 () (1 DEFERRED () ()) 0 () () () 0 0)
+25 'nvlst' 'neigh' 'nvlst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (INTEGER 4 0 0 INTEGER ())
+0 0 () (1 DEFERRED () ()) 0 () () () 0 0)
+26 'pbuf2' 'neigh' 'pbuf2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+27 'pbuffer' 'neigh' 'pbuffer' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+28 'ubuf2' 'neigh' 'ubuf2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+29 'ubufx' 'neigh' 'ubufx' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+30 'ulst' 'neigh' 'ulst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (INTEGER 4 0 0 INTEGER ())
+0 0 () (2 DEFERRED () () () ()) 0 () () () 0 0)
+31 'vbuf2' 'neigh' 'vbuf2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+32 'vbufx' 'neigh' 'vbufx' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+33 'vlst' 'neigh' 'vlst' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (INTEGER 4 0 0 INTEGER ())
+0 0 () (2 DEFERRED () () () ()) 0 () () () 0 0)
+34 'xcold' 'neigh' 'xcold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+35 'xctold' 'neigh' 'xctold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+36 'xmold' 'neigh' 'xmold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+37 'xuold' 'neigh' 'xuold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+38 'xvold' 'neigh' 'xvold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+39 'ycold' 'neigh' 'ycold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+40 'yctold' 'neigh' 'yctold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+41 'ymold' 'neigh' 'ymold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+42 'yuold' 'neigh' 'yuold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+43 'yvold' 'neigh' 'yvold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+44 'zcold' 'neigh' 'zcold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+45 'zctold' 'neigh' 'zctold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+46 'zmold' 'neigh' 'zmold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+47 'zuold' 'neigh' 'zuold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+48 'zvold' 'neigh' 'zvold' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+)
+
+('cbuf2' 0 2 'cbufx' 0 3 'ctbuf2' 0 4 'ctbufx' 0 5 'ctlst' 0 6 'doclst'
+0 7 'doctlst' 0 8 'domlst' 0 9 'doulst' 0 10 'dovlst' 0 11 'elst' 0 12
+'lbuf2' 0 13 'lbuffer' 0 14 'maxctlst' 0 15 'maxelst' 0 16 'maxulst' 0
+17 'maxvlst' 0 18 'mbuf2' 0 19 'mbufx' 0 20 'nctlst' 0 21 'neigh' 0 22
+'nelst' 0 23 'nulst' 0 24 'nvlst' 0 25 'pbuf2' 0 26 'pbuffer' 0 27 'ubuf2'
+0 28 'ubufx' 0 29 'ulst' 0 30 'vbuf2' 0 31 'vbufx' 0 32 'vlst' 0 33
+'xcold' 0 34 'xctold' 0 35 'xmold' 0 36 'xuold' 0 37 'xvold' 0 38 'ycold'
+0 39 'yctold' 0 40 'ymold' 0 41 'yuold' 0 42 'yvold' 0 43 'zcold' 0 44
+'zctold' 0 45 'zmold' 0 46 'zuold' 0 47 'zvold' 0 48)

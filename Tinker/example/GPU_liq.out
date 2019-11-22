@@ -1,0 +1,79 @@
+
+     ######################################################################
+   ##########################################################################
+  ###                                                                      ###
+ ###            TINKER  ---  Software Tools for Molecular Design            ###
+ ##                                                                          ##
+ ##                          Version 8.2  June 2017                          ##
+ ##                                                                          ##
+ ##               Copyright (c)  Jay William Ponder  1990-2017               ##
+ ###                           All Rights Reserved                          ###
+  ###                                                                      ###
+   ##########################################################################
+     ######################################################################
+
+
+ Molecular Dynamics Trajectory via r-RESPA MTS Algorithm
+
+ Instantaneous Values for Frame Saved at         1 Dynamics Steps
+
+ Current Time                 0.00100000 Picosecond
+ Current Potential        -2089.87863920 Kcal/mole
+ Current Kinetic            514.18320573 Kcal/mole
+ Lattice Lengths           20.0000000000     20.0000000000     20.0000000000
+ Lattice Angles            90.0000000000     90.0000000000     90.0000000000
+ Frame Number                      1
+ Coordinate File            liquid.arc
+ Current Density            0.80751515 Grams/cc
+
+ Instantaneous Values for Frame Saved at         2 Dynamics Steps
+
+ Current Time                 0.00200000 Picosecond
+ Current Potential        -2012.32782144 Kcal/mole
+ Current Kinetic            434.32785267 Kcal/mole
+ Lattice Lengths           20.0000000000     20.0000000000     20.0000000000
+ Lattice Angles            90.0000000000     90.0000000000     90.0000000000
+ Frame Number                      2
+ Coordinate File            liquid.arc
+ Current Density            0.80751515 Grams/cc
+
+ Instantaneous Values for Frame Saved at         3 Dynamics Steps
+
+ Current Time                 0.00300000 Picosecond
+ Current Potential        -2021.07217184 Kcal/mole
+ Current Kinetic            442.25589163 Kcal/mole
+ Lattice Lengths           20.0000000000     20.0000000000     20.0000000000
+ Lattice Angles            90.0000000000     90.0000000000     90.0000000000
+ Frame Number                      3
+ Coordinate File            liquid.arc
+ Current Density            0.80751515 Grams/cc
+
+ Instantaneous Values for Frame Saved at         4 Dynamics Steps
+
+ Current Time                 0.00400000 Picosecond
+ Current Potential        -2079.53474429 Kcal/mole
+ Current Kinetic            497.71713381 Kcal/mole
+ Lattice Lengths           20.0000000000     20.0000000000     20.0000000000
+ Lattice Angles            90.0000000000     90.0000000000     90.0000000000
+ Frame Number                      4
+ Coordinate File            liquid.arc
+ Current Density            0.80751515 Grams/cc
+
+ Instantaneous Values for Frame Saved at         5 Dynamics Steps
+
+ Current Time                 0.00500000 Picosecond
+ Current Potential        -2080.43931140 Kcal/mole
+ Current Kinetic            497.86620927 Kcal/mole
+ Lattice Lengths           20.0000000000     20.0000000000     20.0000000000
+ Lattice Angles            90.0000000000     90.0000000000     90.0000000000
+ Frame Number                      5
+ Coordinate File            liquid.arc
+ Current Density            0.80751515 Grams/cc
+
+ Performance:  ns/day               1.2067
+               Wall Time            0.3580
+               Steps                     5
+               Updates                   5
+               Time Step            1.0000
+               Atoms                   648
+               Threads                   1

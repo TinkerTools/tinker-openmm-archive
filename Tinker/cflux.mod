@@ -1,0 +1,85 @@
+GFORTRAN module version '0' created from cflux.f on Tue Aug 20 14:34:05 2019
+MD5:9b5288cd3df8b98470479d7ddd334a2b -- If you edit this, you'll get what you deserve.
+
+(() () () () () ()
+() () () () () () () () () () () () () () () () () () () () ())
+
+()
+
+()
+
+()
+
+()
+
+(2 'b0' 'cflux' 'b0' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (1
+DEFERRED () ()) 0 () () () 0 0)
+3 'bond1' 'cflux' 'bond1' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+4 'bond2' 'cflux' 'bond2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+5 'cflux' 'cflux' 'cflux' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+6 'doanglecflux' 'cflux' 'doanglecflux' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE) (LOGICAL 4 0 0 LOGICAL ()) 0 0 () ()
+0 () () () 0 0)
+7 'dobondcflux' 'cflux' 'dobondcflux' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE) (LOGICAL 4 0 0 LOGICAL ()) 0 0 () ()
+0 () () () 0 0)
+8 'jb' 'cflux' 'jb' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (1
+DEFERRED () ()) 0 () () () 0 0)
+9 'jbp1' 'cflux' 'jbp1' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (1
+DEFERRED () ()) 0 () () () 0 0)
+10 'jbp2' 'cflux' 'jbp2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+11 'jtheta1' 'cflux' 'jtheta1' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+12 'jtheta2' 'cflux' 'jtheta2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+13 'maxatm' 'sizes' 'maxatm' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1000000') () 0 () () () 0 0)
+14 'maxclass' 'sizes' 'maxclass' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1000') () 0 () () () 0 0)
+15 'maxfix' 'sizes' 'maxfix' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '100000') () 0 () () () 0 0)
+16 'maxgrp' 'sizes' 'maxgrp' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1000') () 0 () () () 0 0)
+17 'maxref' 'sizes' 'maxref' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '30') () 0 () () () 0 0)
+18 'maxres' 'sizes' 'maxres' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '10000') () 0 () () () 0 0)
+19 'maxtyp' 'sizes' 'maxtyp' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '5000') () 0 () () () 0 0)
+20 'maxval' 'sizes' 'maxval' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '8') () 0 () () () 0 0)
+21 'pchrgflux' 'cflux' 'pchrgflux' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0
+REAL ()) 0 0 () (1 DEFERRED () ()) 0 () () () 0 0)
+22 'sizes' 'sizes' 'sizes' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+23 'theta0' 'cflux' 'theta0' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+)
+
+('b0' 0 2 'bond1' 0 3 'bond2' 0 4 'cflux' 0 5 'doanglecflux' 0 6
+'dobondcflux' 0 7 'jb' 0 8 'jbp1' 0 9 'jbp2' 0 10 'jtheta1' 0 11 'jtheta2'
+0 12 'maxatm' 0 13 'maxclass' 0 14 'maxfix' 0 15 'maxgrp' 0 16 'maxref'
+0 17 'maxres' 0 18 'maxtyp' 0 19 'maxval' 0 20 'pchrgflux' 0 21 'sizes'
+0 22 'theta0' 0 23)

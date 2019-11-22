@@ -1,0 +1,36 @@
+GFORTRAN module version '0' created from rxnfld.f on Tue Aug 20 14:34:06 2019
+MD5:38ade4ea0b8a6ca1ef06753c79f2d99f -- If you edit this, you'll get what you deserve.
+
+(() () () () () () () () () () () () () () () () () () () () () () () ()
+() () ())
+
+()
+
+()
+
+()
+
+()
+
+(2 'b1' 'rxnfld' 'b1' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (2 EXPLICIT (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '40') (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '13')) 0 () () () 0 0)
+3 'b2' 'rxnfld' 'b2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (2 EXPLICIT (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '40') (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '13')) 0 () () () 0 0)
+4 'ijk' 'rxnfld' 'ijk' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE DIMENSION) (INTEGER 4 0 0 INTEGER ()) 0 0 () (3 EXPLICIT (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '0') (CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '5') (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '0') (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '5') (CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '0') (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '5')) 0 () ()
+() 0 0)
+5 'rxnfld' 'rxnfld' 'rxnfld' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+)
+
+('b1' 0 2 'b2' 0 3 'ijk' 0 4 'rxnfld' 0 5)

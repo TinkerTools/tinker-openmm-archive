@@ -1,0 +1,1453 @@
+action.f:c     nev     number of van der Waals energy terms computed
+action.f:      integer nebt,neat,nett,nev,nect
+alchemy.f:      real*8 ev0,evpos,evneg
+alchemy.f:            cv(ilamb,istep) = ev
+alchemy.f:               write (iout,150)  istep,eb,ea,eit,et,ev,ec
+alchemy.f:         ev0 = cv(1,istep)
+alchemy.f:         evpos = cv(2,istep)
+alchemy.f:         evneg = cv(3,istep)
+alchemy.f:         svp = svp + evpos - ev0
+alchemy.f:         svm = svm + evneg - ev0
+analysis.f:      ev = 0.0d0
+analysis.f:            deallocate (aev)
+analysis.f:         allocate (aev(n))
+analysis.f:         aev(i) = 0.0d0
+analysis.f:c     remove any previous use of the replicates method
+analysis.f:     &          + et + ept + ebt + eat + ett + ev + ec + ecd + ed
+analysis.f:     &                 + aev(i) + aec(i) + aecd(i) + aed(i) + aem(i)
+analyze.f:      if (use_vdw .and. (nev.ne.0.or.ev.ne.0.0d0)) then
+analyze.f:         if (abs(ev) .lt. 1.0d10) then
+analyze.f:         write (iout,fstr)  ev,nev
+analyze.f:     &                         aept(i),aebt(i),aeat(i),aett(i),aev(i),
+analyz.f:c     aev     van der Waals energy partitioned over atoms
+analyz.f:      real*8, allocatable :: aev(:)
+archive.f:c     performs any of several manipulations on an existing archive
+attach.f:c     starting from the previously determined list of attached
+bar.f:      real*8 stdev,patm
+bar.f:      real*8 stdev0,stdev1
+bar.f:      stdev = sqrt((bot2-bot*bot/frma)/(bot*bot)
+bar.f:         write (iout,350)  cnew,stdev
+bar.f:         stdev = sqrt((bot2-bot*bot/frma)/(bot*bot)
+bar.f:            write (iout,370)  cnew,stdev
+bar.f:      stdev = sqrt(ratio*(sum2/bst-cnew*cnew))
+bar.f:      write (iout,390)  cnew,stdev
+bar.f:      stdev0 = sqrt(ratio*(u0sum2/bst-uave0*uave0))
+bar.f:      stdev1 = sqrt(ratio*(u1sum2/bst-uave1*uave1))
+bar.f:      stdev = sqrt(ratio*(hsum2/bst-hdir*hdir))
+bar.f:      write (iout,410)  uave0,stdev0
+bar.f:      write (iout,420)  uave1,stdev1
+bar.f:      write (iout,440)  hdir,stdev
+bar.f:      stdhf = stdhf + stdev0
+bar.f:      stdhb = stdhb + stdev1
+bar.f:      stdev = sqrt(ratio*(hsum2/bst-hbar*hbar))
+bar.f:      write (iout,530)  hbar,stdev
+basefile.f:c     also reads any keyfile and sets information level values
+basefile.f:c     account for home directory abbreviation in filename
+basefile.f:c     get the information level and output style
+born.f:c     A. Onufriev, D. Bashford and D. A. Case, "Exploring Protein
+born.f:c     get the Born radii via the Onufriev-Bashford-Case method
+chrgflux.f:c     compute the value of the bond length deviation
+column.f:c     set column index by scanning rows in reverse order
+connolly.f:c     retrieve saddle center, axis and radius
+connolly.f:      real*8 dtev,dt
+connolly.f:      real*8 tev(3,maxent)
+connolly.f:            tev(k,nent) = p(k,ip) - t(k,it)
+connolly.f:         dtev = 0.0d0
+connolly.f:            dtev = dtev + tev(k,nent)**2
+connolly.f:         if (dtev .le. 0.0d0)  call cerror ('Probe on Torus Axis')
+connolly.f:         dtev = sqrt(dtev)
+connolly.f:            tev(k,nent) = tev(k,nent) / dtev
+connolly.f:               dt = dt + tev(k,1)*tev(k,nent)
+connolly.f:            if (triple(tev(1,1),tev(1,nent),tax(1,it)) .lt. 0.0d0) then
+connolly.f:      logical, allocatable :: fntrev(:,:)
+connolly.f:      allocate (fntrev(3,nfn))
+connolly.f:            fntrev(ke,ifn) = (ta(1,it) .ne. ia)
+connolly.f:               if (fntrev(ke,ifn)) then
+connolly.f:      deallocate (fntrev)
+connolly.f:      real*8 planev(3,3)
+connolly.f:            call vcross (pvv(1,ke),pvv(1,je),planev(1,ke))
+connolly.f:            call vnorm (planev(1,ke),planev(1,ke))
+connolly.f:            angle(ke) = vecang(planev(1,je),planev(1,ke),
+connolly.f:      real*8 polev(3)
+connolly.f:               polev(k) = vxyz(k,iv) - pnt(k)
+connolly.f:            dt = dot(polev,unvect)
+connolly.f:               spv(k,ke) = pnt(k) + f*polev(k)
+control.f:c     the output style and information level provided by TINKER
+correlate.f:c     sample code to find the rms deviation upon superposition
+deflate.f:c     ev     returned with the eigenvalues in descending order
+deflate.f:      subroutine deflate (n,nv,a,ev,vec)
+deflate.f:      real*8 ev(*)
+deflate.f:         ev(k) = 0.0d0
+deflate.f:            ratio = abs((ev(k)-dot2) / dot2)
+deflate.f:            ev(k) = dot2
+deflate.f:               a(j,i) = a(j,i) - ev(k)*vec(i,k)*vec(j,k)
+deriv.f:c     dev     van der Waals Cartesian coordinate derivatives
+deriv.f:      real*8, allocatable :: dev(:,:)
+diagq.f:c     several modifications to increase efficiency and accuracy
+diagq.f:c     ev        returned with the eigenvalues in ascending order
+diagq.f:      subroutine diagq (n,nv,dd,ev,vec)
+diagq.f:      real*8 ev(*)
+diagq.f:         ev(i) = alimit
+diagq.f:            rootx = min(rootx,ev(j))
+diagq.f:         ev(i) = rootx
+diagq.f:         trial = 0.5d0 * (root+ev(i))
+diagq.f:         do while (abs(trial-root).ge.eps .and. abs(trial-ev(i)).ge.eps)
+diagq.f:               ev(i) = trial
+diagq.f:               ev(nom) = trial
+diagq.f:            trial = 0.5d0 * (root+ev(i))
+diagq.f:         root = ev(i)
+diagq.f:            if (abs(ev(i-1)-root) .ge. eps)  ia = 0
+diagq.f:         ev(i) = ev(i) * anorm
+domega.f:c     tev     van der Waals derivatives over torsions
+domega.f:      real*8, allocatable :: tev(:)
+dynamic.f:c     any of several possible integration methods
+dynamic_omm.f:      cudaDevice = '0               '
+dynamic_omm.f:            call gettext (record,cudaDevice,next)
+dynamic_omm.f:            call upcase (cudaDevice)
+dynamic_omm.f:c     and retrieve data (positions/velocities/energies) each step;
+dynamic_omm.f:      call set_cuda_devices (cudaDevice)
+dynamic_omm.f:     &                     deid,deit,det,dept,debt,deat,dett,dev,dec,
+dynamic_omm.f:     &                      et,ept,ebt,eat,ett,ev,ec,ecd,ed,em,ep,er,
+dynamic_omm.f:      call set_nonpol_data (epso,epsh,rmino,rminh,awater,slevy,
+dynamic_omm.f:      call set_polar_data (maxopt,npolar,coptmax,optlevel,copt,copm,
+dynamic_omm.f:     &                     planck,joule,convert,bohr,hartree,evolt,
+eangang1.f:c     find chain rule terms for the first bond angle deviation
+eangang1.f:c     find chain rule terms for the second bond angle deviation
+eangang2.f:c     find chain rule terms for the first bond angle deviation
+eangang2.f:c     find chain rule terms for the second bond angle deviation
+eangle2.f:c     abbreviations used in defining chain rule terms
+eangtor2.f:c     abbreviations used in defining chain rule terms
+eangtor2.f:c     abbreviations for first derivative chain rule terms
+eangtor2.f:c     abbreviations for second derivative chain rule terms
+eangtor2.f:c     abbreviations used in defining chain rule terms
+ebond1.f:c     compute the value of the bond length deviation
+ebond1.f:c     through the fourth power of the bond length deviation
+ebond2.f:c     compute the value of the bond length deviation
+ebond2.f:c     through the fourth power of the bond length deviation
+ebond3.f:c     compute the value of the bond length deviation
+ebond3.f:c     through the fourth power of the bond length deviation
+ebond.f:c     compute the value of the bond length deviation
+ebond.f:c     through the fourth power of the bond length deviation
+ebuck1.f:         call evcorr1 (elrc,vlrc)
+ebuck1.f:         ev = ev + elrc
+ebuck1.f:      ev = 0.0d0
+ebuck1.f:         dev(1,i) = 0.0d0
+ebuck1.f:         dev(2,i) = 0.0d0
+ebuck1.f:         dev(3,i) = 0.0d0
+ebuck1.f:                  ev = ev + e
+ebuck1.f:                     dev(1,i) = dev(1,i) + dedx
+ebuck1.f:                     dev(2,i) = dev(2,i) + dedy
+ebuck1.f:                     dev(3,i) = dev(3,i) + dedz
+ebuck1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+ebuck1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+ebuck1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+ebuck1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+ebuck1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+ebuck1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+ebuck1.f:                     dev(1,k) = dev(1,k) - dedx
+ebuck1.f:                     dev(2,k) = dev(2,k) - dedy
+ebuck1.f:                     dev(3,k) = dev(3,k) - dedz
+ebuck1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+ebuck1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+ebuck1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+ebuck1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+ebuck1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+ebuck1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+ebuck1.f:                     ev = ev + e
+ebuck1.f:                        dev(1,i) = dev(1,i) + dedx
+ebuck1.f:                        dev(2,i) = dev(2,i) + dedy
+ebuck1.f:                        dev(3,i) = dev(3,i) + dedz
+ebuck1.f:                        dev(1,i) = dev(1,i) + dedx*redi
+ebuck1.f:                        dev(2,i) = dev(2,i) + dedy*redi
+ebuck1.f:                        dev(3,i) = dev(3,i) + dedz*redi
+ebuck1.f:                        dev(1,iv) = dev(1,iv) + dedx*rediv
+ebuck1.f:                        dev(2,iv) = dev(2,iv) + dedy*rediv
+ebuck1.f:                        dev(3,iv) = dev(3,iv) + dedz*rediv
+ebuck1.f:                           dev(1,k) = dev(1,k) - dedx
+ebuck1.f:                           dev(2,k) = dev(2,k) - dedy
+ebuck1.f:                           dev(3,k) = dev(3,k) - dedz
+ebuck1.f:                           dev(1,k) = dev(1,k) - dedx*redk
+ebuck1.f:                           dev(2,k) = dev(2,k) - dedy*redk
+ebuck1.f:                           dev(3,k) = dev(3,k) - dedz*redk
+ebuck1.f:                           dev(1,kv) = dev(1,kv) - dedx*redkv
+ebuck1.f:                           dev(2,kv) = dev(2,kv) - dedy*redkv
+ebuck1.f:                           dev(3,kv) = dev(3,kv) - dedz*redkv
+ebuck1.f:      ev = 0.0d0
+ebuck1.f:         dev(1,i) = 0.0d0
+ebuck1.f:         dev(2,i) = 0.0d0
+ebuck1.f:         dev(3,i) = 0.0d0
+ebuck1.f:                  ev = ev + e
+ebuck1.f:                     dev(1,i) = dev(1,i) + dedx
+ebuck1.f:                     dev(2,i) = dev(2,i) + dedy
+ebuck1.f:                     dev(3,i) = dev(3,i) + dedz
+ebuck1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+ebuck1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+ebuck1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+ebuck1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+ebuck1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+ebuck1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+ebuck1.f:                     dev(1,k) = dev(1,k) - dedx
+ebuck1.f:                     dev(2,k) = dev(2,k) - dedy
+ebuck1.f:                     dev(3,k) = dev(3,k) - dedz
+ebuck1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+ebuck1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+ebuck1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+ebuck1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+ebuck1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+ebuck1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+ebuck1.f:      ev = 0.0d0
+ebuck1.f:         dev(1,i) = 0.0d0
+ebuck1.f:         dev(2,i) = 0.0d0
+ebuck1.f:         dev(3,i) = 0.0d0
+ebuck1.f:                  ev = ev + e
+ebuck1.f:                     dev(1,i) = dev(1,i) + dedx
+ebuck1.f:                     dev(2,i) = dev(2,i) + dedy
+ebuck1.f:                     dev(3,i) = dev(3,i) + dedz
+ebuck1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+ebuck1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+ebuck1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+ebuck1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+ebuck1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+ebuck1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+ebuck1.f:                     dev(1,k) = dev(1,k) - dedx
+ebuck1.f:                     dev(2,k) = dev(2,k) - dedy
+ebuck1.f:                     dev(3,k) = dev(3,k) - dedz
+ebuck1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+ebuck1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+ebuck1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+ebuck1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+ebuck1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+ebuck1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+ebuck2.f:c     derivatives using a double loop over relevant atom pairs
+ebuck3.f:         call evcorr (elrc)
+ebuck3.f:         ev = ev + elrc
+ebuck3.f:            aev(i) = aev(i) + aelrc
+ebuck3.f:      nev = 0
+ebuck3.f:      ev = 0.0d0
+ebuck3.f:         aev(i) = 0.0d0
+ebuck3.f:                     nev = nev + 1
+ebuck3.f:                     ev = ev + e
+ebuck3.f:                     aev(i) = aev(i) + 0.5d0*e
+ebuck3.f:                     aev(k) = aev(k) + 0.5d0*e
+ebuck3.f:                        nev = nev + 1
+ebuck3.f:                           ev = ev + 0.5d0*e
+ebuck3.f:                           aev(i) = aev(i) + 0.5d0*e
+ebuck3.f:                           ev = ev + e
+ebuck3.f:                           aev(i) = aev(i) + 0.5d0*e
+ebuck3.f:                           aev(k) = aev(k) + 0.5d0*e
+ebuck3.f:      nev = 0
+ebuck3.f:      ev = 0.0d0
+ebuck3.f:         aev(i) = 0.0d0
+ebuck3.f:                     nev = nev + 1
+ebuck3.f:                     ev = ev + e
+ebuck3.f:                     aev(i) = aev(i) + 0.5d0*e
+ebuck3.f:                     aev(k) = aev(k) + 0.5d0*e
+ebuck3.f:      nev = 0
+ebuck3.f:      ev = 0.0d0
+ebuck3.f:         aev(i) = 0.0d0
+ebuck3.f:                     nev = nev + 1
+ebuck3.f:                     ev = ev + e
+ebuck3.f:                     aev(i) = aev(i) + 0.5d0*e
+ebuck3.f:                     aev(k) = aev(k) + 0.5d0*e
+ebuck.f:         call evcorr (elrc)
+ebuck.f:         ev = ev + elrc
+ebuck.f:      ev = 0.0d0
+ebuck.f:                  ev = ev + e
+ebuck.f:                     ev = ev + e
+ebuck.f:      ev = 0.0d0
+ebuck.f:                  ev = ev + e
+ebuck.f:      ev = 0.0d0
+ebuck.f:                  ev = ev + e
+echarge1.f:c     "ecrecip1" evaluates the reciprocal space portion of the particle
+echarge.f:c     "ecrecip" evaluates the reciprocal space portion of the particle
+echgdpl2.f:c     some abbreviations used in various chain rule terms
+echgdpl2.f:c     some abbreviations used in various chain rule terms
+echgdpl2.f:c     some abbreviations used in various chain rule terms
+echgdpl2.f:c     some abbreviations used in various chain rule terms
+edipole2.f:c     some abbreviations used in various chain rule terms
+edipole2.f:c     some abbreviations used in various chain rule terms
+egauss1.f:      ev = 0.0d0
+egauss1.f:         dev(1,i) = 0.0d0
+egauss1.f:         dev(2,i) = 0.0d0
+egauss1.f:         dev(3,i) = 0.0d0
+egauss1.f:                  ev = ev + e
+egauss1.f:                     dev(1,i) = dev(1,i) + dedx
+egauss1.f:                     dev(2,i) = dev(2,i) + dedy
+egauss1.f:                     dev(3,i) = dev(3,i) + dedz
+egauss1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+egauss1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+egauss1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+egauss1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+egauss1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+egauss1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+egauss1.f:                     dev(1,k) = dev(1,k) - dedx
+egauss1.f:                     dev(2,k) = dev(2,k) - dedy
+egauss1.f:                     dev(3,k) = dev(3,k) - dedz
+egauss1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+egauss1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+egauss1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+egauss1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+egauss1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+egauss1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+egauss1.f:                     ev = ev + e
+egauss1.f:                        dev(1,i) = dev(1,i) + dedx
+egauss1.f:                        dev(2,i) = dev(2,i) + dedy
+egauss1.f:                        dev(3,i) = dev(3,i) + dedz
+egauss1.f:                        dev(1,i) = dev(1,i) + dedx*redi
+egauss1.f:                        dev(2,i) = dev(2,i) + dedy*redi
+egauss1.f:                        dev(3,i) = dev(3,i) + dedz*redi
+egauss1.f:                        dev(1,iv) = dev(1,iv) + dedx*rediv
+egauss1.f:                        dev(2,iv) = dev(2,iv) + dedy*rediv
+egauss1.f:                        dev(3,iv) = dev(3,iv) + dedz*rediv
+egauss1.f:                           dev(1,k) = dev(1,k) - dedx
+egauss1.f:                           dev(2,k) = dev(2,k) - dedy
+egauss1.f:                           dev(3,k) = dev(3,k) - dedz
+egauss1.f:                           dev(1,k) = dev(1,k) - dedx*redk
+egauss1.f:                           dev(2,k) = dev(2,k) - dedy*redk
+egauss1.f:                           dev(3,k) = dev(3,k) - dedz*redk
+egauss1.f:                           dev(1,kv) = dev(1,kv) - dedx*redkv
+egauss1.f:                           dev(2,kv) = dev(2,kv) - dedy*redkv
+egauss1.f:                           dev(3,kv) = dev(3,kv) - dedz*redkv
+egauss1.f:      ev = 0.0d0
+egauss1.f:         dev(1,i) = 0.0d0
+egauss1.f:         dev(2,i) = 0.0d0
+egauss1.f:         dev(3,i) = 0.0d0
+egauss1.f:                  ev = ev + e
+egauss1.f:                     dev(1,i) = dev(1,i) + dedx
+egauss1.f:                     dev(2,i) = dev(2,i) + dedy
+egauss1.f:                     dev(3,i) = dev(3,i) + dedz
+egauss1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+egauss1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+egauss1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+egauss1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+egauss1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+egauss1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+egauss1.f:                     dev(1,k) = dev(1,k) - dedx
+egauss1.f:                     dev(2,k) = dev(2,k) - dedy
+egauss1.f:                     dev(3,k) = dev(3,k) - dedz
+egauss1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+egauss1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+egauss1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+egauss1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+egauss1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+egauss1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+egauss1.f:      ev = 0.0d0
+egauss1.f:         dev(1,i) = 0.0d0
+egauss1.f:         dev(2,i) = 0.0d0
+egauss1.f:         dev(3,i) = 0.0d0
+egauss1.f:                  ev = ev + e
+egauss1.f:                     dev(1,i) = dev(1,i) + dedx
+egauss1.f:                     dev(2,i) = dev(2,i) + dedy
+egauss1.f:                     dev(3,i) = dev(3,i) + dedz
+egauss1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+egauss1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+egauss1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+egauss1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+egauss1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+egauss1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+egauss1.f:                     dev(1,k) = dev(1,k) - dedx
+egauss1.f:                     dev(2,k) = dev(2,k) - dedy
+egauss1.f:                     dev(3,k) = dev(3,k) - dedz
+egauss1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+egauss1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+egauss1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+egauss1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+egauss1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+egauss1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+egauss1.f:      ev = 0.0d0
+egauss1.f:         dev(1,i) = 0.0d0
+egauss1.f:         dev(2,i) = 0.0d0
+egauss1.f:         dev(3,i) = 0.0d0
+egauss1.f:               ev = ev + e
+egauss1.f:                  dev(1,i) = dev(1,i) + dedx
+egauss1.f:                  dev(2,i) = dev(2,i) + dedy
+egauss1.f:                  dev(3,i) = dev(3,i) + dedz
+egauss1.f:                  dev(1,i) = dev(1,i) + dedx*redi
+egauss1.f:                  dev(2,i) = dev(2,i) + dedy*redi
+egauss1.f:                  dev(3,i) = dev(3,i) + dedz*redi
+egauss1.f:                  dev(1,iv) = dev(1,iv) + dedx*rediv
+egauss1.f:                  dev(2,iv) = dev(2,iv) + dedy*rediv
+egauss1.f:                  dev(3,iv) = dev(3,iv) + dedz*rediv
+egauss1.f:                  dev(1,k) = dev(1,k) - dedx
+egauss1.f:                  dev(2,k) = dev(2,k) - dedy
+egauss1.f:                  dev(3,k) = dev(3,k) - dedz
+egauss1.f:                  dev(1,k) = dev(1,k) - dedx*redk
+egauss1.f:                  dev(2,k) = dev(2,k) - dedy*redk
+egauss1.f:                  dev(3,k) = dev(3,k) - dedz*redk
+egauss1.f:                  dev(1,kv) = dev(1,kv) - dedx*redkv
+egauss1.f:                  dev(2,kv) = dev(2,kv) - dedy*redkv
+egauss1.f:                  dev(3,kv) = dev(3,kv) - dedz*redkv
+egauss3.f:      nev = 0
+egauss3.f:      ev = 0.0d0
+egauss3.f:         aev(i) = 0.0d0
+egauss3.f:                  nev = nev + 1
+egauss3.f:                  aev(i) = aev(i) + 0.5d0*e
+egauss3.f:                  aev(k) = aev(k) + 0.5d0*e
+egauss3.f:                  ev = ev + e
+egauss3.f:                        nev = nev + 1
+egauss3.f:                           ev = ev + 0.5d0*e
+egauss3.f:                           aev(i) = aev(i) + 0.5d0*e
+egauss3.f:                           ev = ev + e
+egauss3.f:                           aev(i) = aev(i) + 0.5d0*e
+egauss3.f:                           aev(k) = aev(k) + 0.5d0*e
+egauss3.f:      nev = 0
+egauss3.f:      ev = 0.0d0
+egauss3.f:         aev(i) = 0.0d0
+egauss3.f:                     nev = nev + 1
+egauss3.f:                     ev = ev + e
+egauss3.f:                     aev(i) = aev(i) + 0.5d0*e
+egauss3.f:                     aev(k) = aev(k) + 0.5d0*e
+egauss3.f:      nev = 0
+egauss3.f:      ev = 0.0d0
+egauss3.f:         aev(i) = 0.0d0
+egauss3.f:                  nev = nev + 1
+egauss3.f:                  aev(i) = aev(i) + 0.5d0*e
+egauss3.f:                  aev(k) = aev(k) + 0.5d0*e
+egauss3.f:                  ev = ev + e
+egauss3.f:      nev = 0
+egauss3.f:      ev = 0.0d0
+egauss3.f:         aev(i) = 0.0d0
+egauss3.f:               nev = nev + 1
+egauss3.f:               aev(i) = aev(i) + 0.5d0*e
+egauss3.f:               aev(k) = aev(k) + 0.5d0*e
+egauss3.f:               ev = ev + e
+egauss.f:      ev = 0.0d0
+egauss.f:                  ev = ev + e
+egauss.f:                     ev = ev + e
+egauss.f:      ev = 0.0d0
+egauss.f:                  ev = ev + e
+egauss.f:      ev = 0.0d0
+egauss.f:                  ev = ev + e
+egauss.f:      ev = 0.0d0
+egauss.f:               ev = ev + e
+egeom2.f:c     abbreviations used in defining chain rule terms
+egeom2.f:c     abbreviations for first derivative chain rule terms
+egeom2.f:c     abbreviations for second derivative chain rule terms
+ehal1.f:         call evcorr1 (elrc,vlrc)
+ehal1.f:         ev = ev + elrc
+ehal1.f:      ev = 0.0d0
+ehal1.f:         dev(1,i) = 0.0d0
+ehal1.f:         dev(2,i) = 0.0d0
+ehal1.f:         dev(3,i) = 0.0d0
+ehal1.f:                  ev = ev + e
+ehal1.f:                     dev(1,i) = dev(1,i) + dedx
+ehal1.f:                     dev(2,i) = dev(2,i) + dedy
+ehal1.f:                     dev(3,i) = dev(3,i) + dedz
+ehal1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+ehal1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+ehal1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+ehal1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+ehal1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+ehal1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+ehal1.f:                     dev(1,k) = dev(1,k) - dedx
+ehal1.f:                     dev(2,k) = dev(2,k) - dedy
+ehal1.f:                     dev(3,k) = dev(3,k) - dedz
+ehal1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+ehal1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+ehal1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+ehal1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+ehal1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+ehal1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+ehal1.f:                     ev = ev + e
+ehal1.f:                        dev(1,i) = dev(1,i) + dedx
+ehal1.f:                        dev(2,i) = dev(2,i) + dedy
+ehal1.f:                        dev(3,i) = dev(3,i) + dedz
+ehal1.f:                        dev(1,i) = dev(1,i) + dedx*redi
+ehal1.f:                        dev(2,i) = dev(2,i) + dedy*redi
+ehal1.f:                        dev(3,i) = dev(3,i) + dedz*redi
+ehal1.f:                        dev(1,iv) = dev(1,iv) + dedx*rediv
+ehal1.f:                        dev(2,iv) = dev(2,iv) + dedy*rediv
+ehal1.f:                        dev(3,iv) = dev(3,iv) + dedz*rediv
+ehal1.f:                           dev(1,k) = dev(1,k) - dedx
+ehal1.f:                           dev(2,k) = dev(2,k) - dedy
+ehal1.f:                           dev(3,k) = dev(3,k) - dedz
+ehal1.f:                           dev(1,k) = dev(1,k) - dedx*redk
+ehal1.f:                           dev(2,k) = dev(2,k) - dedy*redk
+ehal1.f:                           dev(3,k) = dev(3,k) - dedz*redk
+ehal1.f:                           dev(1,kv) = dev(1,kv) - dedx*redkv
+ehal1.f:                           dev(2,kv) = dev(2,kv) - dedy*redkv
+ehal1.f:                           dev(3,kv) = dev(3,kv) - dedz*redkv
+ehal1.f:      ev = 0.0d0
+ehal1.f:         dev(1,i) = 0.0d0
+ehal1.f:         dev(2,i) = 0.0d0
+ehal1.f:         dev(3,i) = 0.0d0
+ehal1.f:                  ev = ev + e
+ehal1.f:                     dev(1,i) = dev(1,i) + dedx
+ehal1.f:                     dev(2,i) = dev(2,i) + dedy
+ehal1.f:                     dev(3,i) = dev(3,i) + dedz
+ehal1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+ehal1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+ehal1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+ehal1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+ehal1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+ehal1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+ehal1.f:                     dev(1,k) = dev(1,k) - dedx
+ehal1.f:                     dev(2,k) = dev(2,k) - dedy
+ehal1.f:                     dev(3,k) = dev(3,k) - dedz
+ehal1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+ehal1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+ehal1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+ehal1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+ehal1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+ehal1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+ehal1.f:      ev = 0.0d0
+ehal1.f:         dev(1,i) = 0.0d0
+ehal1.f:         dev(2,i) = 0.0d0
+ehal1.f:         dev(3,i) = 0.0d0
+ehal1.f:!$OMP& firstprivate(vscale,iv14) shared(ev,dev,vir,einter)
+ehal1.f:!$OMP DO reduction(+:ev,dev,vir,einter) schedule(guided)
+ehal1.f:                  ev = ev + e
+ehal1.f:                     dev(1,i) = dev(1,i) + dedx
+ehal1.f:                     dev(2,i) = dev(2,i) + dedy
+ehal1.f:                     dev(3,i) = dev(3,i) + dedz
+ehal1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+ehal1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+ehal1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+ehal1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+ehal1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+ehal1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+ehal1.f:                     dev(1,k) = dev(1,k) - dedx
+ehal1.f:                     dev(2,k) = dev(2,k) - dedy
+ehal1.f:                     dev(3,k) = dev(3,k) - dedz
+ehal1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+ehal1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+ehal1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+ehal1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+ehal1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+ehal1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+ehal3.f:         call evcorr (elrc)
+ehal3.f:         ev = ev + elrc
+ehal3.f:            aev(i) = aev(i) + aelrc
+ehal3.f:      nev = 0
+ehal3.f:      ev = 0.0d0
+ehal3.f:         aev(i) = 0.0d0
+ehal3.f:                     nev = nev + 1
+ehal3.f:                     ev = ev + e
+ehal3.f:                     aev(i) = aev(i) + 0.5d0*e
+ehal3.f:                     aev(k) = aev(k) + 0.5d0*e
+ehal3.f:                        nev = nev + 1
+ehal3.f:                           ev = ev + 0.5d0*e
+ehal3.f:                           aev(i) = aev(i) + 0.5d0*e
+ehal3.f:                           ev = ev + e
+ehal3.f:                           aev(i) = aev(i) + 0.5d0*e
+ehal3.f:                           aev(k) = aev(k) + 0.5d0*e
+ehal3.f:      nev = 0
+ehal3.f:      ev = 0.0d0
+ehal3.f:         aev(i) = 0.0d0
+ehal3.f:                     nev = nev + 1
+ehal3.f:                     ev = ev + e
+ehal3.f:                     aev(i) = aev(i) + 0.5d0*e
+ehal3.f:                     aev(k) = aev(k) + 0.5d0*e
+ehal3.f:      nev = 0
+ehal3.f:      ev = 0.0d0
+ehal3.f:         aev(i) = 0.0d0
+ehal3.f:!$OMP& firstprivate(vscale,iv14) shared(ev,einter,nev,aev)
+ehal3.f:!$OMP DO reduction(+:ev,einter,nev,aev) schedule(guided)
+ehal3.f:                     nev = nev + 1
+ehal3.f:                     ev = ev + e
+ehal3.f:                     aev(i) = aev(i) + 0.5d0*e
+ehal3.f:                     aev(k) = aev(k) + 0.5d0*e
+ehal.f:         call evcorr (elrc)
+ehal.f:         ev = ev + elrc
+ehal.f:      ev = 0.0d0
+ehal.f:                  ev = ev + e
+ehal.f:                     ev = ev + e
+ehal.f:      ev = 0.0d0
+ehal.f:                  ev = ev + e
+ehal.f:      ev = 0.0d0
+ehal.f:!$OMP& firstprivate(vscale,iv14) shared(ev)
+ehal.f:!$OMP DO reduction(+:ev) schedule(guided)
+ehal.f:                  ev = ev + e
+eimprop2.f:c     abbreviations for first derivative chain rule terms
+eimprop2.f:c     abbreviations for second derivative chain rule terms
+eimptor2.f:c     abbreviations for first derivative chain rule terms
+eimptor2.f:c     abbreviations for second derivative chain rule terms
+elj0c.f:         call evcorr (elrc)
+elj0c.f:         ev = ev + elrc
+elj0c.f:      ev = 0.0d0
+elj0c.f:                  ev = ev + e
+elj0c.f:                     ev = ev + e
+elj0c.f:      ev = 0.0d0
+elj0c.f:                  ev = ev + e
+elj0c.f:      ev = 0.0d0
+elj0c.f:!$OMP& shared(ev)
+elj0c.f:!$OMP DO reduction(+:ev) schedule(guided)
+elj0c.f:                  ev = ev + e
+elj1.f:         call evcorr1 (elrc,vlrc)
+elj1.f:         ev = ev + elrc
+elj1.f:      ev = 0.0d0
+elj1.f:         dev(1,i) = 0.0d0
+elj1.f:         dev(2,i) = 0.0d0
+elj1.f:         dev(3,i) = 0.0d0
+elj1.f:                  ev = ev + e
+elj1.f:                     dev(1,i) = dev(1,i) + dedx
+elj1.f:                     dev(2,i) = dev(2,i) + dedy
+elj1.f:                     dev(3,i) = dev(3,i) + dedz
+elj1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+elj1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+elj1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+elj1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+elj1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+elj1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+elj1.f:                     dev(1,k) = dev(1,k) - dedx
+elj1.f:                     dev(2,k) = dev(2,k) - dedy
+elj1.f:                     dev(3,k) = dev(3,k) - dedz
+elj1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+elj1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+elj1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+elj1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+elj1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+elj1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+elj1.f:                     ev = ev + e
+elj1.f:                        dev(1,i) = dev(1,i) + dedx
+elj1.f:                        dev(2,i) = dev(2,i) + dedy
+elj1.f:                        dev(3,i) = dev(3,i) + dedz
+elj1.f:                        dev(1,i) = dev(1,i) + dedx*redi
+elj1.f:                        dev(2,i) = dev(2,i) + dedy*redi
+elj1.f:                        dev(3,i) = dev(3,i) + dedz*redi
+elj1.f:                        dev(1,iv) = dev(1,iv) + dedx*rediv
+elj1.f:                        dev(2,iv) = dev(2,iv) + dedy*rediv
+elj1.f:                        dev(3,iv) = dev(3,iv) + dedz*rediv
+elj1.f:                           dev(1,k) = dev(1,k) - dedx
+elj1.f:                           dev(2,k) = dev(2,k) - dedy
+elj1.f:                           dev(3,k) = dev(3,k) - dedz
+elj1.f:                           dev(1,k) = dev(1,k) - dedx*redk
+elj1.f:                           dev(2,k) = dev(2,k) - dedy*redk
+elj1.f:                           dev(3,k) = dev(3,k) - dedz*redk
+elj1.f:                           dev(1,kv) = dev(1,kv) - dedx*redkv
+elj1.f:                           dev(2,kv) = dev(2,kv) - dedy*redkv
+elj1.f:                           dev(3,kv) = dev(3,kv) - dedz*redkv
+elj1.f:      ev = 0.0d0
+elj1.f:         dev(1,i) = 0.0d0
+elj1.f:         dev(2,i) = 0.0d0
+elj1.f:         dev(3,i) = 0.0d0
+elj1.f:                  ev = ev + e
+elj1.f:                     dev(1,i) = dev(1,i) + dedx
+elj1.f:                     dev(2,i) = dev(2,i) + dedy
+elj1.f:                     dev(3,i) = dev(3,i) + dedz
+elj1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+elj1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+elj1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+elj1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+elj1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+elj1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+elj1.f:                     dev(1,k) = dev(1,k) - dedx
+elj1.f:                     dev(2,k) = dev(2,k) - dedy
+elj1.f:                     dev(3,k) = dev(3,k) - dedz
+elj1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+elj1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+elj1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+elj1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+elj1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+elj1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+elj1.f:      ev = 0.0d0
+elj1.f:         dev(1,i) = 0.0d0
+elj1.f:         dev(2,i) = 0.0d0
+elj1.f:         dev(3,i) = 0.0d0
+elj1.f:!$OMP& shared(ev,dev,vir,einter)
+elj1.f:!$OMP DO reduction(+:ev,dev,vir,einter) schedule(guided)
+elj1.f:                  ev = ev + e
+elj1.f:                     dev(1,i) = dev(1,i) + dedx
+elj1.f:                     dev(2,i) = dev(2,i) + dedy
+elj1.f:                     dev(3,i) = dev(3,i) + dedz
+elj1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+elj1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+elj1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+elj1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+elj1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+elj1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+elj1.f:                     dev(1,k) = dev(1,k) - dedx
+elj1.f:                     dev(2,k) = dev(2,k) - dedy
+elj1.f:                     dev(3,k) = dev(3,k) - dedz
+elj1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+elj1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+elj1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+elj1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+elj1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+elj1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+elj1.f:      ev = 0.0d0
+elj1.f:         dev(1,i) = 0.0d0
+elj1.f:         dev(2,i) = 0.0d0
+elj1.f:         dev(3,i) = 0.0d0
+elj1.f:               ev = ev + e
+elj1.f:                  dev(1,i) = dev(1,i) + dedx
+elj1.f:                  dev(2,i) = dev(2,i) + dedy
+elj1.f:                  dev(3,i) = dev(3,i) + dedz
+elj1.f:                  dev(1,i) = dev(1,i) + dedx*redi
+elj1.f:                  dev(2,i) = dev(2,i) + dedy*redi
+elj1.f:                  dev(3,i) = dev(3,i) + dedz*redi
+elj1.f:                  dev(1,iv) = dev(1,iv) + dedx*rediv
+elj1.f:                  dev(2,iv) = dev(2,iv) + dedy*rediv
+elj1.f:                  dev(3,iv) = dev(3,iv) + dedz*rediv
+elj1.f:                  dev(1,k) = dev(1,k) - dedx
+elj1.f:                  dev(2,k) = dev(2,k) - dedy
+elj1.f:                  dev(3,k) = dev(3,k) - dedz
+elj1.f:                  dev(1,k) = dev(1,k) - dedx*redk
+elj1.f:                  dev(2,k) = dev(2,k) - dedy*redk
+elj1.f:                  dev(3,k) = dev(3,k) - dedz*redk
+elj1.f:                  dev(1,kv) = dev(1,kv) - dedx*redkv
+elj1.f:                  dev(2,kv) = dev(2,kv) - dedy*redkv
+elj1.f:                  dev(3,kv) = dev(3,kv) - dedz*redkv
+elj2.f:c     derivatives using a double loop over relevant atom pairs
+elj3.f:         call evcorr (elrc)
+elj3.f:         ev = ev + elrc
+elj3.f:            aev(i) = aev(i) + aelrc
+elj3.f:      nev = 0
+elj3.f:      ev = 0.0d0
+elj3.f:         aev(i) = 0.0d0
+elj3.f:                     nev = nev + 1
+elj3.f:                     ev = ev + e
+elj3.f:                     aev(i) = aev(i) + 0.5d0*e
+elj3.f:                     aev(k) = aev(k) + 0.5d0*e
+elj3.f:                        nev = nev + 1
+elj3.f:                           ev = ev + 0.5d0*e
+elj3.f:                           aev(i) = aev(i) + 0.5d0*e
+elj3.f:                           ev = ev + e
+elj3.f:                           aev(i) = aev(i) + 0.5d0*e
+elj3.f:                           aev(k) = aev(k) + 0.5d0*e
+elj3.f:      nev = 0
+elj3.f:      ev = 0.0d0
+elj3.f:         aev(i) = 0.0d0
+elj3.f:                     nev = nev + 1
+elj3.f:                     ev = ev + e
+elj3.f:                     aev(i) = aev(i) + 0.5d0*e
+elj3.f:                     aev(k) = aev(k) + 0.5d0*e
+elj3.f:      nev = 0
+elj3.f:      ev = 0.0d0
+elj3.f:         aev(i) = 0.0d0
+elj3.f:!$OMP& firstprivate(vscale,iv14) shared(ev,einter,nev,aev)
+elj3.f:!$OMP DO reduction(+:ev,einter,nev,aev) schedule(guided)
+elj3.f:                     nev = nev + 1
+elj3.f:                     ev = ev + e
+elj3.f:                     aev(i) = aev(i) + 0.5d0*e
+elj3.f:                     aev(k) = aev(k) + 0.5d0*e
+elj3.f:      nev = 0
+elj3.f:      ev = 0.0d0
+elj3.f:         aev(i) = 0.0d0
+elj3.f:               if (e .ne. 0.0d0)  nev = nev + 1
+elj3.f:               ev = ev + e
+elj3.f:               aev(i) = aev(i) + 0.5d0*e
+elj3.f:               aev(k) = aev(k) + 0.5d0*e
+elj.f:         call evcorr (elrc)
+elj.f:         ev = ev + elrc
+elj.f:      ev = 0.0d0
+elj.f:                  ev = ev + e
+elj.f:                     ev = ev + e
+elj.f:      ev = 0.0d0
+elj.f:                  ev = ev + e
+elj.f:      ev = 0.0d0
+elj.f:!$OMP& shared(ev)
+elj.f:!$OMP DO reduction(+:ev) schedule(guided)
+elj.f:                  ev = ev + e
+elj.f:      ev = 0.0d0
+elj.f:               ev = ev + e
+embed.f:      real*8 evl(maxeigen)
+embed.f:      real*8, allocatable :: evc(:,:)
+embed.f:      allocate (evc(n,maxeigen))
+embed.f:         call eigen (evl,evc,matrix,valid)
+embed.f:         call coords (evl,evc)
+embed.f:c     print the final rms deviations and radius of gyration
+embed.f:      deallocate (evc)
+embed.f:c     the previously smoothed upper and lower bounds; the distance
+embed.f:      real*8 corr,mean,stdev
+embed.f:      save mean,stdev
+embed.f:         stdev = sqrt(alpha*beta/(alpha+beta+1.0d0)) / (alpha+beta)
+embed.f:            stdev = sqrt(alpha*beta/(alpha+beta+1.0d0)) / (alpha+beta)
+embed.f:         write (iout,120)  mean,stdev,alpha,beta
+embed.f:      subroutine eigen (evl,evc,gmx,valid)
+embed.f:      real*8 evl(*)
+embed.f:      real*8 evc(n,*)
+embed.f:      call deflate (n,neigen,gmx,evl,evc)
+embed.f:         if (evl(i) .lt. 0.0d0)  valid = .false.
+embed.f:         write (iout,20)  (evl(i),i=1,neigen)
+embed.f:            write (iout,40)  (evc(i,j),j=1,neigen)
+embed.f:c     to compute the rms deviation from the bounds
+embed.f:      subroutine coords (evl,evc)
+embed.f:      real*8 evl(*)
+embed.f:      real*8 evc(n,*)
+embed.f:         evl(j) = sqrt(abs(evl(j)))
+embed.f:            evc(i,j) = evl(j) * evc(i,j)
+embed.f:         x(i) = evc(i,1)
+embed.f:         y(i) = evc(i,2)
+embed.f:         z(i) = evc(i,3)
+embed.f:c     find the rms bounds deviations and radius of gyration
+embed.f:c     find the rms bounds deviations and radius of gyration
+embed.f:c     "rmserror" computes the maximum absolute deviation and the
+embed.f:c     rms deviation from the distance bounds, and the number and
+embed.f:c     search all atom pairs for maximal bounds deviations
+embed.f:c     print the maximal and rms bound deviations
+embed.f:     &        /,' RMS Deviation from Bounds :',4x,f12.4)
+embed.f:c     squares of deviations of chiral volumes from target values
+embed.f:c     based on the deviation of specified torsional angles from
+emm3hb1.f:         call evcorr1 (elrc,vlrc)
+emm3hb1.f:         ev = ev + elrc
+emm3hb1.f:      ev = 0.0d0
+emm3hb1.f:         dev(1,i) = 0.0d0
+emm3hb1.f:         dev(2,i) = 0.0d0
+emm3hb1.f:         dev(3,i) = 0.0d0
+emm3hb1.f:                  ev = ev + e
+emm3hb1.f:                     dev(1,i) = dev(1,i) + dedx
+emm3hb1.f:                     dev(2,i) = dev(2,i) + dedy
+emm3hb1.f:                     dev(3,i) = dev(3,i) + dedz
+emm3hb1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+emm3hb1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+emm3hb1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+emm3hb1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+emm3hb1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+emm3hb1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+emm3hb1.f:                     dev(1,k) = dev(1,k) - dedx
+emm3hb1.f:                     dev(2,k) = dev(2,k) - dedy
+emm3hb1.f:                     dev(3,k) = dev(3,k) - dedz
+emm3hb1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+emm3hb1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+emm3hb1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+emm3hb1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+emm3hb1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+emm3hb1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+emm3hb1.f:                     dev(1,ia) = dev(1,ia) + dedxia
+emm3hb1.f:                     dev(2,ia) = dev(2,ia) + dedyia
+emm3hb1.f:                     dev(3,ia) = dev(3,ia) + dedzia
+emm3hb1.f:                     dev(1,ib) = dev(1,ib) + dedxib
+emm3hb1.f:                     dev(2,ib) = dev(2,ib) + dedyib
+emm3hb1.f:                     dev(3,ib) = dev(3,ib) + dedzib
+emm3hb1.f:                     dev(1,ic) = dev(1,ic) + dedxic
+emm3hb1.f:                     dev(2,ic) = dev(2,ic) + dedyic
+emm3hb1.f:                     dev(3,ic) = dev(3,ic) + dedzic
+emm3hb1.f:                     ev = ev + e
+emm3hb1.f:                        dev(1,i) = dev(1,i) + dedx
+emm3hb1.f:                        dev(2,i) = dev(2,i) + dedy
+emm3hb1.f:                        dev(3,i) = dev(3,i) + dedz
+emm3hb1.f:                        dev(1,i) = dev(1,i) + dedx*redi
+emm3hb1.f:                        dev(2,i) = dev(2,i) + dedy*redi
+emm3hb1.f:                        dev(3,i) = dev(3,i) + dedz*redi
+emm3hb1.f:                        dev(1,iv) = dev(1,iv) + dedx*rediv
+emm3hb1.f:                        dev(2,iv) = dev(2,iv) + dedy*rediv
+emm3hb1.f:                        dev(3,iv) = dev(3,iv) + dedz*rediv
+emm3hb1.f:                           dev(1,k) = dev(1,k) - dedx
+emm3hb1.f:                           dev(2,k) = dev(2,k) - dedy
+emm3hb1.f:                           dev(3,k) = dev(3,k) - dedz
+emm3hb1.f:                           dev(1,k) = dev(1,k) - dedx*redk
+emm3hb1.f:                           dev(2,k) = dev(2,k) - dedy*redk
+emm3hb1.f:                           dev(3,k) = dev(3,k) - dedz*redk
+emm3hb1.f:                           dev(1,kv) = dev(1,kv) - dedx*redkv
+emm3hb1.f:                           dev(2,kv) = dev(2,kv) - dedy*redkv
+emm3hb1.f:                           dev(3,kv) = dev(3,kv) - dedz*redkv
+emm3hb1.f:                        dev(1,ia) = dev(1,ia) + dedxia
+emm3hb1.f:                        dev(2,ia) = dev(2,ia) + dedyia
+emm3hb1.f:                        dev(3,ia) = dev(3,ia) + dedzia
+emm3hb1.f:                        dev(1,ib) = dev(1,ib) + dedxib
+emm3hb1.f:                        dev(2,ib) = dev(2,ib) + dedyib
+emm3hb1.f:                        dev(3,ib) = dev(3,ib) + dedzib
+emm3hb1.f:                        dev(1,ic) = dev(1,ic) + dedxic
+emm3hb1.f:                        dev(2,ic) = dev(2,ic) + dedyic
+emm3hb1.f:                        dev(3,ic) = dev(3,ic) + dedzic
+emm3hb1.f:      ev = 0.0d0
+emm3hb1.f:         dev(1,i) = 0.0d0
+emm3hb1.f:         dev(2,i) = 0.0d0
+emm3hb1.f:         dev(3,i) = 0.0d0
+emm3hb1.f:                  ev = ev + e
+emm3hb1.f:                     dev(1,i) = dev(1,i) + dedx
+emm3hb1.f:                     dev(2,i) = dev(2,i) + dedy
+emm3hb1.f:                     dev(3,i) = dev(3,i) + dedz
+emm3hb1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+emm3hb1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+emm3hb1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+emm3hb1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+emm3hb1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+emm3hb1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+emm3hb1.f:                     dev(1,k) = dev(1,k) - dedx
+emm3hb1.f:                     dev(2,k) = dev(2,k) - dedy
+emm3hb1.f:                     dev(3,k) = dev(3,k) - dedz
+emm3hb1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+emm3hb1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+emm3hb1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+emm3hb1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+emm3hb1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+emm3hb1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+emm3hb1.f:                     dev(1,ia) = dev(1,ia) + dedxia
+emm3hb1.f:                     dev(2,ia) = dev(2,ia) + dedyia
+emm3hb1.f:                     dev(3,ia) = dev(3,ia) + dedzia
+emm3hb1.f:                     dev(1,ib) = dev(1,ib) + dedxib
+emm3hb1.f:                     dev(2,ib) = dev(2,ib) + dedyib
+emm3hb1.f:                     dev(3,ib) = dev(3,ib) + dedzib
+emm3hb1.f:                     dev(1,ic) = dev(1,ic) + dedxic
+emm3hb1.f:                     dev(2,ic) = dev(2,ic) + dedyic
+emm3hb1.f:                     dev(3,ic) = dev(3,ic) + dedzic
+emm3hb1.f:      ev = 0.0d0
+emm3hb1.f:         dev(1,i) = 0.0d0
+emm3hb1.f:         dev(2,i) = 0.0d0
+emm3hb1.f:         dev(3,i) = 0.0d0
+emm3hb1.f:                  ev = ev + e
+emm3hb1.f:                     dev(1,i) = dev(1,i) + dedx
+emm3hb1.f:                     dev(2,i) = dev(2,i) + dedy
+emm3hb1.f:                     dev(3,i) = dev(3,i) + dedz
+emm3hb1.f:                     dev(1,i) = dev(1,i) + dedx*redi
+emm3hb1.f:                     dev(2,i) = dev(2,i) + dedy*redi
+emm3hb1.f:                     dev(3,i) = dev(3,i) + dedz*redi
+emm3hb1.f:                     dev(1,iv) = dev(1,iv) + dedx*rediv
+emm3hb1.f:                     dev(2,iv) = dev(2,iv) + dedy*rediv
+emm3hb1.f:                     dev(3,iv) = dev(3,iv) + dedz*rediv
+emm3hb1.f:                     dev(1,k) = dev(1,k) - dedx
+emm3hb1.f:                     dev(2,k) = dev(2,k) - dedy
+emm3hb1.f:                     dev(3,k) = dev(3,k) - dedz
+emm3hb1.f:                     dev(1,k) = dev(1,k) - dedx*redk
+emm3hb1.f:                     dev(2,k) = dev(2,k) - dedy*redk
+emm3hb1.f:                     dev(3,k) = dev(3,k) - dedz*redk
+emm3hb1.f:                     dev(1,kv) = dev(1,kv) - dedx*redkv
+emm3hb1.f:                     dev(2,kv) = dev(2,kv) - dedy*redkv
+emm3hb1.f:                     dev(3,kv) = dev(3,kv) - dedz*redkv
+emm3hb1.f:                     dev(1,ia) = dev(1,ia) + dedxia
+emm3hb1.f:                     dev(2,ia) = dev(2,ia) + dedyia
+emm3hb1.f:                     dev(3,ia) = dev(3,ia) + dedzia
+emm3hb1.f:                     dev(1,ib) = dev(1,ib) + dedxib
+emm3hb1.f:                     dev(2,ib) = dev(2,ib) + dedyib
+emm3hb1.f:                     dev(3,ib) = dev(3,ib) + dedzib
+emm3hb1.f:                     dev(1,ic) = dev(1,ic) + dedxic
+emm3hb1.f:                     dev(2,ic) = dev(2,ic) + dedyic
+emm3hb1.f:                     dev(3,ic) = dev(3,ic) + dedzic
+emm3hb3.f:         call evcorr (elrc)
+emm3hb3.f:         ev = ev + elrc
+emm3hb3.f:            aev(i) = aev(i) + aelrc
+emm3hb3.f:      nev = 0
+emm3hb3.f:      ev = 0.0d0
+emm3hb3.f:         aev(i) = 0.0d0
+emm3hb3.f:                     nev = nev + 1
+emm3hb3.f:                     ev = ev + e
+emm3hb3.f:                     aev(i) = aev(i) + 0.5d0*e
+emm3hb3.f:                     aev(k) = aev(k) + 0.5d0*e
+emm3hb3.f:                        nev = nev + 1
+emm3hb3.f:                           ev = ev + 0.5d0*e
+emm3hb3.f:                           aev(i) = aev(i) + 0.5d0*e
+emm3hb3.f:                           ev = ev + e
+emm3hb3.f:                           aev(i) = aev(i) + 0.5d0*e
+emm3hb3.f:                           aev(k) = aev(k) + 0.5d0*e
+emm3hb3.f:      nev = 0
+emm3hb3.f:      ev = 0.0d0
+emm3hb3.f:         aev(i) = 0.0d0
+emm3hb3.f:                     nev = nev + 1
+emm3hb3.f:                     ev = ev + e
+emm3hb3.f:                     aev(i) = aev(i) + 0.5d0*e
+emm3hb3.f:                     aev(k) = aev(k) + 0.5d0*e
+emm3hb3.f:      nev = 0
+emm3hb3.f:      ev = 0.0d0
+emm3hb3.f:         aev(i) = 0.0d0
+emm3hb3.f:                     nev = nev + 1
+emm3hb3.f:                     ev = ev + e
+emm3hb3.f:                     aev(i) = aev(i) + 0.5d0*e
+emm3hb3.f:                     aev(k) = aev(k) + 0.5d0*e
+emm3hb.f:         call evcorr (elrc)
+emm3hb.f:         ev = ev + elrc
+emm3hb.f:      ev = 0.0d0
+emm3hb.f:                  ev = ev + e
+emm3hb.f:                     ev = ev + e
+emm3hb.f:      ev = 0.0d0
+emm3hb.f:                  ev = ev + e
+emm3hb.f:      ev = 0.0d0
+emm3hb.f:                  ev = ev + e
+empole1.f:c     evaluate all sites within the cutoff distance
+empole1.f:c     evaluate all sites within the cutoff distance
+empole1.f:c     evaluate all sites within the cutoff distance
+empole1.f:c     "emreal1c" evaluates the real space portion of the Ewald
+empole1.f:c     evaluate all sites within the cutoff distance
+empole1.f:c     evaluate all sites within the cutoff distance
+empole1.f:c     "emreal1d" evaluates the real space portion of the Ewald
+empole1.f:c     evaluate all sites within the cutoff distance
+empole1.f:c     "emrecip1" evaluates the reciprocal space portion of the particle
+empole3.f:c     evaluate all sites within the cutoff distance
+empole3.f:c     evaluate all sites within the cutoff distance
+empole3.f:c     evaluate all sites within the cutoff distance
+empole3.f:c     "emreal3c" evaluates the real space portion of the Ewald sum
+empole3.f:c     W. Smith, "Point Multipoles in the Ewald Summation (Revisited)",
+empole3.f:c     evaluate all sites within the cutoff distance
+empole3.f:c     evaluate all sites within the cutoff distance
+empole3.f:c     "emreal3d" evaluates the real space portion of the Ewald sum
+empole3.f:c     W. Smith, "Point Multipoles in the Ewald Summation (Revisited)",
+empole3.f:c     evaluate all sites within the cutoff distance
+empole.f:c     evaluate all sites within the cutoff distance
+empole.f:c     evaluate all sites within the cutoff distance
+empole.f:c     evaluate all sites within the cutoff distance
+empole.f:c     "emreal0c" evaluates the real space portion of the Ewald sum
+empole.f:c     W. Smith, "Point Multipoles in the Ewald Summation (Revisited)",
+empole.f:c     evaluate all sites within the cutoff distance
+empole.f:c     evaluate all sites within the cutoff distance
+empole.f:c     "emreal0d" evaluates the real space portion of the Ewald sum
+empole.f:c     W. Smith, "Point Multipoles in the Ewald Summation (Revisited)",
+empole.f:c     evaluate all sites within the cutoff distance
+empole.f:c     "emrecip" evaluates the reciprocal space portion of the particle
+energi.f:c     ev     van der Waals potential energy of the system
+energi.f:      real*8 ev,ec,ecd
+energy.f:c     ##  function energy  --  evaluates energy terms and total  ##
+energy.f:      ev = 0.0d0
+energy.f:c     remove any previous use of the replicates method
+energy.f:     &          + et + ept + ebt + eat + ett + ev + ec + ecd + ed
+eopdist2.f:c     abbreviations for second derivative chain rule terms
+epolar1.f:c     evaluate all sites within the cutoff distance
+epolar1.f:c     evaluate all sites within the cutoff distance
+epolar1.f:c     evaluate all sites within the cutoff distance
+epolar1.f:c     "epreal1c" evaluates the real space portion of the Ewald
+epolar1.f:c     evaluate all sites within the cutoff distance
+epolar1.f:c     evaluate all sites within the cutoff distance
+epolar1.f:c     "epreal1d" evaluates the real space portion of the Ewald
+epolar1.f:c     evaluate all sites within the cutoff distance
+epolar1.f:c     "eprecip1" evaluates the reciprocal space portion of the particle
+epolar2.f:c     are recomputed every time an atom is moved during computation
+epolar2.f:c     evaluate all sites within the cutoff distance
+epolar2.f:c     evaluate all sites within the cutoff distance
+epolar2.f:c     evaluate all sites within the cutoff distance
+epolar3.f:c     evaluate all sites within the cutoff distance
+epolar3.f:c     evaluate all sites within the cutoff distance
+epolar3.f:c     evaluate all sites within the cutoff distance
+epolar3.f:c     evaluate all sites within the cutoff distance
+epolar3.f:c     evaluate all sites within the cutoff distance
+epolar3.f:c     evaluate all sites within the cutoff distance
+epolar.f:c     evaluate all sites within the cutoff distance
+epolar.f:c     evaluate all sites within the cutoff distance
+epolar.f:c     evaluate all sites within the cutoff distance
+epolar.f:c     evaluate all sites within the cutoff distance
+epolar.f:c     evaluate all sites within the cutoff distance
+epolar.f:c     evaluate all sites within the cutoff distance
+epolar.f:c     "eprecip" evaluates the reciprocal space portion of particle
+erf.f:c     ##  function erf  --  evaluate the standard error function  ##
+erf.f:c     the error function via a Chebyshev approximation
+erf.f:c     compute the error function via Chebyshev fitting
+erf.f:c     ##  function erfc  --  evaluate complementary error function  ##
+erf.f:c     complementary error function via a Chebyshev approximation
+erf.f:c     get the complementary error function via Chebyshev fitting
+erf.f:c     ##  subroutine erfcore  --  erf and erfc via Chebyshev approx  ##
+erf.f:c     "erfcore" evaluates erf(x) or erfc(x) for a real argument x;
+erf.f:c     W. J. Cody, "Rational Chebyshev Approximations for the Error
+erf.f:c     evaluate error function for |x| less than 0.46875
+erf.f:c     ##  function erfinv  --  evaluate the error function inverse  ##
+erf.f:c     "erfinv" evaluates the inverse of the error function for
+esolv1.f:      real*8 evol,esurf
+esolv1.f:         call volume (evol,rcav,exclude)
+esolv1.f:         evol = evol * solvprs
+esolv1.f:         ecav = evol
+esolv1.f:         ecav = evol * taperv
+esolv1.f:     &                    + evol*dtaperv*dsurf(1,i)
+esolv1.f:     &                    + evol*dtaperv*dsurf(2,i)
+esolv1.f:     &                    + evol*dtaperv*dsurf(3,i)
+esolv1.f:         ecav = evol * taperv
+esolv1.f:     &                    + evol*dtaperv*dsurf(1,i)
+esolv1.f:     &                    + evol*dtaperv*dsurf(2,i)
+esolv1.f:     &                    + evol*dtaperv*dsurf(3,i)
+esolv1.f:                  de = -de/r * slevy * awater
+esolv1.f:         e = cdisp(i) - slevy*awater*sum
+esolv3.f:      real*8 evol,esurf,aevol
+esolv3.f:         call volume (evol,rcav,exclude)
+esolv3.f:         evol = evol * solvprs
+esolv3.f:         aevol = evol / dble(n)
+esolv3.f:         ecav = evol
+esolv3.f:            aecav(i) = aevol
+esolv3.f:         ecav = taper * evol
+esolv3.f:            aecav(i) = taper * aevol
+esolv3.f:         ecav = taper * evol
+esolv3.f:            aecav(i) = taper * (aevol+aesurf(i))
+esolv3.f:         e = cdisp(i) - slevy*awater*sum
+esolv3.f:         e = 4.0d0 * pi * slevy * awater * e
+esolv.f:      real*8 evol,esurf
+esolv.f:         call volume (evol,rcav,exclude)
+esolv.f:         evol = evol * solvprs
+esolv.f:         ecav = evol
+esolv.f:         ecav = taper * evol
+esolv.f:         ecav = taper * evol
+esolv.f:         e = cdisp(i) - slevy*awater*sum
+esolv.f:         e = 4.0d0 * pi * slevy * awater * e
+estrbnd1.f:c     find chain rule terms for the bond angle deviation
+estrbnd1.f:c     find chain rule terms for the bond length deviations
+estrbnd1.f:c     abbreviations used in defining chain rule terms
+estrbnd2.f:c     abbreviations used in defining chain rule terms
+estrbnd2.f:c     more angle deviation derivatives resulting from symmetry
+estrbnd2.f:c     compute the values of the bond length deviations
+estrbnd2.f:c     abbreviations used in defining chain rule terms
+estrtor2.f:c     abbreviations for first derivative chain rule terms
+estrtor2.f:c     abbreviations for second derivative chain rule terms
+etors2.f:c     abbreviations for first derivative chain rule terms
+etors2.f:c     abbreviations for second derivative chain rule terms
+etors2.f:c     abbreviations for first derivative chain rule terms
+etors2.f:c     abbreviations for second derivative chain rule terms
+etortor2.f:c     abbreviations for first derivative chain rule terms
+etortor2.f:c     abbreviations for second derivative chain rule terms
+etortor2.f:c     abbreviations for first derivative chain rule terms
+etortor2.f:c     abbreviations for second derivative chain rule terms
+eurey1.f:c     compute the value of the 1-3 distance deviation
+eurey2.f:c     compute the value of the 1-3 distance deviation
+eurey3.f:c     compute the value of the 1-3 distance deviation
+eurey.f:c     compute the value of the 1-3 distance deviation
+evcorr.f:c     ##  subroutine evcorr  --  long range vdw energy correction  ##
+evcorr.f:c     "evcorr" computes the long range van der Waals correction
+evcorr.f:      subroutine evcorr (elrc)
+evcorr.f:c     ##  subroutine evcorr1  --  long range vdw energy & virial  ##
+evcorr.f:c     "evcorr1" computes the long range van der Waals correction
+evcorr.f:      subroutine evcorr1 (elrc,vlrc)
+fatal.f:c     "fatal" terminates execution due to a user request, a severe
+files.f:c     nprior     number of previously existing cycle files
+final.f:c     ensure any output is written to the storage device
+final.f:      if (allocated(aev))  deallocate (aev)
+final.f:      if (allocated(dev))  deallocate (dev)
+final.f:      if (allocated(tev))  deallocate (tev)
+geometry.f:c     ##  function geometry  --  evaluate distance, angle, torsion  ##
+getprm.f:c     account for home directory abbreviation in filename
+getref.f:c     retrieve the filename and title line for the structure
+getref.f:c     retrieve the coordinates, type and connectivity of each atom
+getref.f:c     retrieve any unitcell parameters defining a periodic box
+ghmcstep.f:c     T. Lelievre, M. Rousset and G. Stoltz, "Free Energy Computations:
+ghmcstep.f:c     T. Lelievre, M. Rousset and G. Stoltz, "Langevin Dynamics
+ghmcstep.f:c     evolve velocities according to midpoint Euler for half-step
+ghmcstep.f:c     use current values as previous energies for first step
+ghmcstep.f:c     note that velocities are reversed upon rejection
+ghmcstep.f:c     evolve velocities according to midpoint Euler for half-step
+gradient.f:      ev = 0.0d0
+gradient.f:            deallocate (dev)
+gradient.f:         allocate (dev(3,n))
+gradient.f:            dev(j,i) = 0.0d0
+gradient.f:c     remove any previous use of the replicates method
+gradient.f:     &          + et + ept + ebt + eat + ett + ev + ec + ecd + ed
+gradient.f:     &                      + deat(j,i) + dett(j,i) + dev(j,i)
+gradrot.f:            deallocate (tev)
+gradrot.f:         allocate (tev(nomega))
+gradrot.f:         tev(i) = 0.0d0
+gradrot.f:            tev(i) = tev(i) + dev(1,k)*xterm + dev(2,k)*yterm
+gradrot.f:     &                              + dev(3,k)*zterm
+gradrot.f:     &                 + tev(i) + tec(i) + tecd(i) + ted(i) + tem(i)
+hessian.f:c     remove any previous use of the replicates method
+hessrgd.f:c     evaluations
+hessrot.f:c     evaluations while the diagonal needs just two evaluations
+impose.f:c     use a quaternion method to achieve the superposition
+induce.f:c     ##  subroutine induce  --  evaluate induced dipole moments  ##
+induce.f:c     update the lists of previous induced dipole values
+induce.f:            optlevel = k - 1
+induce.f:               fopt(optlevel,k,i) = fdip_phi1(k,i)
+induce.f:               foptp(optlevel,k,i) = fdip_phi2(k,i)
+induce.f:c     J. Kolafa, "Time-Reversible Always Stable Predictor-Corrector
+initatom.f:c     B. Cordero, V. Gomez. A. E. Platero-Prats, M. Reves,
+initatom.f:c     J. Echeverria, E. Cremades, F. Barragan and S. Alverez,
+initatom.f:c     "Covalent Radii Revisited", Dalton Transactions, 2832-2838 (2008)
+initial.f:c     highest numbered previous cycle file
+initial.f:c     flags for information levels within the program
+invbeta.f:      real*8 mean,stdev
+invbeta.f:         stdev = sqrt(a*b/((a+b+1.0d0)*(a+b)**2))
+invbeta.f:            x = mean + (y/0.167d0-2.0d0)*stdev
+invbeta.f:            x = mean + (y/0.333d0-1.5d0)*stdev
+invbeta.f:            x = mean + (y/0.167d0-4.0d0)*stdev
+invbeta.f:c     "betai" evaluates the cumulative Beta distribution function
+invbeta.f:c     by routine "betai" to evaluate the cumulative Beta distribution
+kbond.f:c     R. Blom and A. Haaland, "A Modification of the Schomaker-Stevenson
+kewald.f:c     PME grid size must be even with factors of only 2, 3 and 5
+kewald.f:c     grid size must be even, with prime factors of 2, 3 and 5
+kewald.f:c     evaluate use of two to six chunks along each axis
+korbit.f:         worb(j) = ionize(jt) / evolt
+korbit.f:         emorb(j) = repulse(jt) / evolt
+ksolv.f:c     forces need to be evaluated at the same resolution
+ksolv.f:         cdisp(i) = slevy * awater * cdisp(i)
+lbfgs.f:c     ncalls    total number of function/gradient evaluations
+lbfgs.f:c     fgvalue    function to evaluate function and gradient values
+lbfgs.f:c     evaluate the function and get the initial gradient
+makeint.f:c     more   returned true if there is more than one previously
+mdstat.f:c     ensure any output is written to the storage device
+moments.f:c     revert to the original set of active atoms
+monte.f:c     restore coordinates to those from the previous iteration
+nonpol.f:c     slevy     enthalpy-to-free energy scale factor for dispersion
+nonpol.f:      real*8 awater,slevy
+nonpol.f:      parameter (slevy=1.0d0)
+nose.f:c     "Explicit Reversible Integrators for Extended Systems Dynamics",
+nucleic.f:c     ##  Marina A. Vorobieva, Nina N. Sokolova & Jay W. Ponder  ##
+nucleic.f:c     build a second strand as the reverse-complement sequence
+nucleic.f:c     set all atoms to be active during energy evaluations
+nucleo.f:c     ##  Marina A. Vorobieva, Nina N. Sokolova & Jay W. Ponder  ##
+ocvm.f:c     D. F. Shanno and K-H. Phua, "Numerical Comparison of Several
+ocvm.f:c     ncalls     total number of function/gradient evaluations
+ocvm.f:c     fgvalue    function to evaluate function and gradient values
+ocvm.f:c     evaluate the function and get the initial gradient
+ocvm.f:c     matrix or the "h" matrix from the previous iteration
+openmm.f:c     cudaDevice  string containing names of the CUDA GPU cards
+openmm.f:      character*16 cudaDevice
+optsave.f:c     coordinates and other relevant information; also checks for
+overlap.f:c     evaluation of Slater-type (STO) overlap integrals
+overlap.f:c     in the evaluation of Slater-type (STO) overlap integrals
+overlap.f:c     for evaluation of Slater-type (STO) overlap integrals
+picalc.f:      cionize = -11.16d0 / evolt
+picalc.f:c     if more than 90 degrees, reverse one of the vectors
+piorbs.f:c     reorbit   number of evaluations between orbital updates
+pmestuff.f:      integer level
+pmestuff.f:      level = 2
+pmestuff.f:      if (use_mpole .or. use_polar)  level = 4
+pmestuff.f:      if (level .eq. 4) then
+pmestuff.f:         do j = 1, level
+polar.f:c     optlevel  current OPT order for reciprocal potential and field
+polar.f:      integer optlevel
+poledit.f:c     will be the parameter values that achieve the same potential
+poledit.f:c     copy the contents of any previously existing keyfile
+potderivs.f:c     potm        electric potential at every multipole site
+potential.f:c     get deviation from integral net molecular charge
+potential.f:c     get deviation from dipole and quadrupole targets
+potential.f:c     copy the contents of any previously existing keyfile
+pressure.f:c     Pressure Molecular Dynamics Simulation: The Langevin Piston
+prmedit.f:c     "prmedit" reformats an existing parameter file, and revises
+protein.f:c     set all atoms to be active during energy evaluations
+pss.f:      nlevel = -1
+pss.f:      if (exist)  read (string,*,err=10,end=10)  nlevel
+pss.f:      if (nlevel .lt. 0) then
+pss.f:         read (input,30)  nlevel
+pss.f:         if (nlevel .le. 0)  nlevel = 100
+pss.f:c     get the maximal smoothing level for use of local search
+pss.f:  140       format (/,' Enter the Largest Smoothing Level for',
+pss.f:c     compute the smoothing levels for the desired protocol
+pss.f:      do i = 0, nlevel
+pss.f:         ratio = 1.0d0 - dble(nlevel-i)/dble(nlevel)
+pss.f:            ilevel(i) = deform * ratio**2
+pss.f:            ilevel(i) = deform * ratio**3
+pss.f:            ilevel(i) = deform * sigmoid (12.0d0,ratio)
+pss.f:         do i = 0, nlevel-1
+pss.f:            deform = ilevel(i)
+pss.f:c     perform PSS reversal by looping over smoothed surfaces
+pss.f:      do i = nlevel, 0, -1
+pss.f:         deform = ilevel(i)
+pss.f:         if (i .eq. nlevel)  etree = minimum
+pss.f:            call psswrite (2*nlevel-i)
+pss.f:            call psswrite (nlevel-i)
+pss.f:c     smoothing level
+pss.f:c     store the current smoothing level and coordinates
+pss.f:c     forward smoothing optimizations back to highest level
+pss.f:      do i = 1, nlevel
+pss.f:         if (deform .lt. ilevel(i)) then
+pss.f:            deform = ilevel(i)
+pss.f:c     restore the original smoothing level and coordinates
+pssrigid.f:   40    format (/,' Use Local Search to Explore Each Smoothing Level',
+pssrigid.f:c     get the maximal smoothing level for use of local search
+pssrigid.f:c     write out final energy function value and smoothing level
+pssrot.f:   40    format (/,' Use Local Search to Explore the Smoothing Levels',
+pssrot.f:c     get the maximal smoothing level for use of local search
+pssrot.f:c     write out final energy function value and smoothing level
+quatfit.f:c     "quatfit" uses a quaternion-based method to achieve the best
+rattle.f:c     initialize the lists of atoms previously corrected
+rattle.f:c     initialize the lists of atoms previously corrected
+resdue.f:c     amino     three-letter abbreviations for amino acids types
+resdue.f:c     nuclz     three-letter abbreviations for nucleic acids types
+resdue.f:c     amino1    one-letter abbreviations for amino acids types
+resdue.f:c     nuclz1    one-letter abbreviations for nucleic acids types
+respa.f:c     step using the reversible reference system propagation algorithm
+respa.f:c     and slow-evolving portions
+respa.f:c     initialize virial from fast-evolving potential energy terms
+respa.f:c     find fast-evolving velocities and positions via Verlet recursion
+respa.f:c     get the fast-evolving potential energy and atomic forces
+respa.f:c     use Newton's second law to get fast-evolving accelerations;
+respa.f:c     update fast-evolving velocities using the Verlet recursion
+respa.f:c     find average virial from fast-evolving potential terms
+respa.f:c     get the slow-evolving potential energy and atomic forces
+respa.f:c     for the fast-evolving local valence potential energy terms
+respa.f:c     save the original state of slow-evolving potentials
+respa.f:c     turn off slow-evolving nonbonded potential energy terms
+respa.f:c     get energy and gradient for fast-evolving potential terms
+respa.f:c     restore the original state of slow-evolving potentials
+respa.f:c     for the slow-evolving nonbonded potential energy terms
+respa.f:c     save the original state of fast-evolving potentials
+respa.f:c     turn off fast-evolving valence potential energy terms
+respa.f:c     get energy and gradient for slow-evolving potential terms
+respa.f:c     restore the original state of fast-evolving potentials
+rgdstep.f:c     ##  Andrey Kutepov, Marina A. Vorobieva & Jay W. Ponder  ##
+rgdstep.f:c     based on an original algorithm developed by Andrey Kutapov
+rgdstep.f:c     and Marina A. Vorobieva, VNIITF, Russian Federal Nuclear
+rmsfit.f:c     ##  function rmsfit  --  rms deviation for paired atoms  ##
+rotlist.f:c     so reverse the base and partner atoms, then start over
+saddle.f:c     choice of "beta" is Fletcher-Reeves or Polak-Ribiere
+saddle.f:c     ##  function transit  --  synchronous transit evaluation  ##
+saddle.f:c     "transit" evaluates the synchronous transit function and
+scan.f:c     check to see if the current minimum was previously found
+scan.f:c     add minimum to master list if it was not previously known
+scan.f:c     initialize optimization parameters and output level
+sdstep.f:c     determine new friction coefficients every few SD steps
+search.f:c     search vector, or based on previous function decrease
+shunt.f:c     f7     seventh order coefficient of additive switch function
+simplex.f:c     optimization routine requiring only repeated evaluations of
+simplex.f:c     evaluate the objective function and update the simplex
+sniffer.f:c     print intermediate results every few iterations
+solute.f:c     drobc     chain rule term for Onufriev-Bashford-Case radii
+solute.f:c     aobc      alpha values for Onufriev-Bashford-Case radii
+solute.f:c     bobc      beta values for Onufriev-Bashford-Case radii
+solute.f:c     gobc      gamma values for Onufriev-Bashford-Case radii
+square.f:c     rsdvalue   subroutine to evaluate residual function values
+square.f:c     evaluate the function at the initial point
+square.f:c     evaluate the Jacobian at the initial point by finite
+square.f:   20    format (/,' Levenberg-Marquardt Nonlinear Least Squares :')
+square.f:c     compute the Levenberg-Marquardt step
+square.f:c     evaluate the Jacobian at the new point using finite
+square.f:c     if still done, then normal termination has been achieved
+square.f:c     check for several consecutive maximum steps taken
+square.f:c     ##  subroutine lmstep  --  computes Levenberg-Marquardt step  ##
+square.f:c     "lmstep" computes the Levenberg-Marquardt step during a
+square.f:c     amu      scalar with initial estimate of the Levenberg-Marquardt
+square.f:c     sa       vector with the Levenberg-Marquardt step
+square.f:c     first compute a starting value of "amu" if previous step
+square.f:c     Levenberg-Marquardt step using More's Minpack technique
+square.f:c     xpprev    vector with the value of xp at the  previous call
+square.f:c     fpprev    vector of length m containing f(xpprev)
+square.f:c     ncalls    number of function evaluations used
+square.f:c     rsdvalue   subroutine to evaluate residual function values
+square.f:      real*8 xpprev(maxlsq)
+square.f:      real*8 fpprev(maxrsd)
+square.f:      save xpprev,fpprev
+square.f:c     internal doubling no good; reset to previous and quit
+square.f:            xp(i) = xpprev(i)
+square.f:            fp(i) = fpprev(i)
+square.f:               xpprev(i) = xp(i)
+square.f:               fpprev(i) = fp(i)
+superpose.f:c     chose cutoff value for output of atom pair deviations
+superpose.f:  210    format (/,' Cutoff Value for Listing RMS Deviations',
+switch.f:c     "switch" sets the coeffcients used by the fifth and seventh
+temper.f:c     "Explicit Reversible Integrators for Extended Systems Dynamics",
+testgrad.f:      real*8 eat0,ett0,ev0,ec0,ecd0,ed0,em0
+testgrad.f:      real*8, allocatable :: ndev(:,:)
+testgrad.f:         allocate (ndev(3,n))
+testgrad.f:     &                           eit,et,ept,ebt,eat,ett,ev,ec,ecd,
+testgrad.f:     &                           eit,et,ept,ebt,eat,ett,ev,ec,ecd,
+testgrad.f:     &                           eit,et,ept,ebt,eat,ett,ev,ec,ecd,
+testgrad.f:                  ev0 = ev
+testgrad.f:                  ndev(j,i) = (ev - ev0) / eps
+testgrad.f:     &                                    dett(j,i),dev(j,i),dec(j,i),
+testgrad.f:     &                                    dett(j,i),dev(j,i),dec(j,i),
+testgrad.f:     &                                    dett(j,i),dev(j,i),dec(j,i),
+testgrad.f:     &                                    ndev(j,i),ndec(j,i),
+testgrad.f:     &                                    ndett(j,i),ndev(j,i),
+testgrad.f:     &                                    ndett(j,i),ndev(j,i),
+testgrad.f:         deallocate (ndev)
+testpair.f:c     evaluation of potential energy and energy/gradient using
+testpair.f:      allocate (dev(3,n))
+testpair.f:      ev = 0.0d0
+testpair.f:            dev(j,i) = 0.0d0
+testpair.f:      eloop = ev + ec + ecd + ed + em + ep
+testpair.f:         write (iout,120)  wall,cpu,ev,eloop-ev
+testpair.f:         write (iout,130)  wall,cpu,ev,eloop-ev
+testpair.f:         write (iout,140)  wall,cpu,ev,eloop-ev
+testpair.f:      elight = ev + ec + ecd + ed + em + ep
+testpair.f:         write (iout,150)  wall,cpu,ev,elight-ev
+testpair.f:         write (iout,160)  wall,cpu,ev,elight-ev
+testpair.f:         write (iout,170)  wall,cpu,ev,elight-ev
+testpair.f:      elist = ev + ec + ecd + ed + em + ep
+testpair.f:         write (iout,180)  wall,cpu,ev,elist-ev
+testpair.f:         write (iout,190)  wall,cpu,ev,elist-ev
+testpair.f:         write (iout,200)  wall,cpu,ev,elist-ev
+testpair.f:            dloop(j,i) = dev(j,i) + dec(j,i) + decd(j,i)
+testpair.f:            vrms = vrms + dev(j,i)**2
+testpair.f:            dlight(j,i) = dev(j,i) + dec(j,i) + decd(j,i)
+testpair.f:            vrms = vrms + dev(j,i)**2
+testpair.f:            dlist(j,i) = dev(j,i) + dec(j,i) + decd(j,i)
+testpair.f:            vrms = vrms + dev(j,i)**2
+testrot.f:      real*8 ett0,ev0,ec0,ecd0
+testrot.f:     &                    eit,et,ept,ebt,eat,ett,ev,ec,ecd,
+testrot.f:     &                     eit,et,ept,ebt,eat,ett,ev,ec,ecd,
+testrot.f:     &                     eit,et,ept,ebt,eat,ett,ev,ec,ecd,
+testrot.f:         ev0 = ev
+testrot.f:     &                        teat(i),tett(i),tev(i),tec(i),tecd(i),
+testrot.f:     &                        teat(i),tett(i),tev(i),tec(i),tecd(i),
+testrot.f:     &                        teat(i),tett(i),tev(i),tec(i),tecd(i),
+testrot.f:     &                        (ett-ett0)/eps,(ev-ev0)/eps,(ec-ec0)/eps,
+testrot.f:     &                        (ett-ett0)/eps,(ev-ev0)/eps,(ec-ec0)/eps,
+testrot.f:     &                        (ett-ett0)/eps,(ev-ev0)/eps,(ec-ec0)/eps,
+timer.f:c     and gradient computation, and Hessian matrix evaluation
+timer.f:c     decide whether to include timing of Hessian evaluations
+timerot.f:c     Hessian matrix evaluation
+timerot.f:c     decide whether to include timing of Hessian evaluations
+tncg.f:c     algorithm checks for negative curvature to prevent convergence
+tncg.f:c     iprint     print iteration results every iprint iterations
+tncg.f:c     iwrite     call user-supplied output every iwrite iterations
+tncg.f:c     fgvalue    function to evaluate function and gradient values
+tncg.f:c     hmatrix    subroutine which evaluates Hessian diagonal
+tncg.f:c     evaluate the function and get the initial gradient
+tncg.f:c     evaluate or estimate the matrix-vector product
+torsfit.f:c     copy the contents of any previously existing keyfile
+tree.f:c     ##  module tree  --  potential smoothing search tree levels  ##
+tree.f:c     maxpss   maximum number of potential smoothing levels
+tree.f:c     nlevel   number of levels of potential smoothing used
+tree.f:c     ilevel   smoothing deformation value at each tree level
+tree.f:      integer nlevel
+tree.f:      real*8 ilevel(0:maxpss)
+units.f:c     evolt       conversion from Hartree to electron-volts
+units.f:      real*8 evolt,efreq
+units.f:      parameter (evolt=27.21138602d0)
+uprior.f:c     ##  module uprior  --  previous values of induced dipoles  ##
+valence.f:c     reverse the atom order based on atomic number
+valence.f:c     "valrms" evaluates a valence parameter goodness-of-fit error
+valence.f:     &              /,4x,'Root Mean Square Deviation :',31x,f12.4)
+valence.f:     &              /,4x,'Root Mean Square Deviation :',31x,f12.4)
+valence.f:     &              /,4x,'Root Mean Square Deviation :',31x,f12.4)
+valence.f:     &              /,4x,'Root Mean Square Deviation :',18x,f12.4)
+valence.f:     &              /,4x,'Root Mean Square Deviation :',18x,f12.4)
+valence.f:     &           /,4x,'Root Mean Square Deviation :',18x,f12.4)
+valence.f:c     copy the contents of any previously existing keyfile
+vibbig.f:c     only vector storage and gradient evaluations; preconditioning
+vibbig.f:c     list of previous frequencies
+vibbig.f:c     shift levels of preconditioner matrix; since the Hessian
+vibbig.f:c     based on a simple 1/x curve, the uku levels are squeezed
+vibbig.f:c     upwards to eventually lead to a unit operator
+vibbig.f:c     ##  subroutine konvec  --  evaluate Hessian-vector product  ##
+vibbig.f:c     evaluation of the gradient based on atomic displacements
+vibbig.f:c     remove any previous use of the replicates method
+vibrot.f:c     M. Levitt, C. Sander and P. S. Stern, "Protein Normal-mode
+xtalfit.f:c     "xtalprm" stores or retrieves a molecular structure; used to
+xtalfit.f:c     make a previously stored structure the active structure, or to
+xtalfit.f:         e0 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e1 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e2 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e3 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e4 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e5 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e6 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e1 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e2 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e3 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e4 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e5 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e6 = ev + ec + ecd + ed + em + ep
+xtalfit.f:            e_monomer = ev + ec + ecd + ed + em + ep
+xtalmin.f:c     revert to the original atomic coordinate values
+ommstuff.cpp: *                     System-Level Include Files
+ommstuff.cpp:   double* dev;
+ommstuff.cpp:   double* ev;
+ommstuff.cpp:   double slevy;
+ommstuff.cpp:   int optlevel;
+ommstuff.cpp:   double evolt;
+ommstuff.cpp:                      double* dev, double* dec, double* decd,
+ommstuff.cpp:   deriv__.dev = dev;
+ommstuff.cpp:                       double* ev, double* ec, double* ecd,
+ommstuff.cpp:   energi__.ev = ev;
+ommstuff.cpp:                       double* rminh, double* awater, double* slevy,
+ommstuff.cpp:   nonpol__.slevy = *slevy;
+ommstuff.cpp:void set_polar_data_ (int* maxopt, int* npolar, int* coptmax, int*optlevel,
+ommstuff.cpp:   polar__.optlevel = *optlevel;
+ommstuff.cpp:                      double* hartree, double* evolt, double* efreq,
+ommstuff.cpp:   units__.evolt = *evolt;
+ommstuff.cpp: *              Find Available CUDA-Enabled GPU Devices
+ommstuff.cpp:static char cudaDevices[MAX_CUDA_DEVICES];
+ommstuff.cpp:void set_cuda_devices_ (char* devices) {
+ommstuff.cpp:      if (devices[i] == ' ') {
+ommstuff.cpp:         cudaDevices[i] = '\0';
+ommstuff.cpp:      } else if ((devices[i] < '0' || devices[i] > '9') && devices[i] != ',') {
+ommstuff.cpp:         cudaDevices[0] = '\0';
+ommstuff.cpp:      cudaDevices[i] = devices[i];
+ommstuff.cpp:   double slevy = 1.0;
+ommstuff.cpp:   OpenMM_AmoebaWcaDispersionForce_setSlevy (amoebaWcaDispersionForce, slevy);
+ommstuff.cpp:   char* deviceId;
+ommstuff.cpp:   int device_number;
+ommstuff.cpp:   bool device_key = false;
+ommstuff.cpp:   if (cudaDevices[0] != '\0') {
+ommstuff.cpp:      deviceId = cudaDevices;
+ommstuff.cpp:      device_key = true;
+ommstuff.cpp:      device_number = findBestCUDACard();
+ommstuff.cpp:      if (device_number < 0) {
+ommstuff.cpp:         deviceId = NULL;
+ommstuff.cpp:         deviceId = buffer;
+ommstuff.cpp:         sprintf(deviceId, "%d", device_number);
+ommstuff.cpp:   //deviceId = "0,1";
+ommstuff.cpp:   //fprintf (log, "\n Value of deviceId is %s \n", deviceId);
+ommstuff.cpp:   if (device_key) {
+ommstuff.cpp:      OpenMM_Platform_setPropertyDefaultValue (platform, "CudaDeviceIndex",
+ommstuff.cpp:                                               deviceId);
+ommstuff.cpp:         (void) fprintf (log, "\n Platform CUDA :  Setting Device ID to %s from CUDA-DEVICE keyword\n", deviceId);
+ommstuff.cpp:      (void) fprintf (log, "\n Platform CUDA :  Setting Device ID to %s \n", deviceId);
+ommstuff.cpp:      fatal_(); //This will never return
+ommstuff.cpp:      omm->integrator = (OpenMM_Integrator*)OpenMM_LangevinIntegrator_create
+ommstuff.cpp:   // clean up top-level heap allocated objects we are done with
+ommstuff.cpp:                    *energi__.eat,  *energi__.ett, *energi__.ev,
+ommstuff.cpp:      loadTinkerForce (deriv__.dev, 0, tinkerForce);
+ommstuff.cpp:      tinkerEnergy = *energi__.ev;

@@ -1,0 +1,59 @@
+GFORTRAN module version '0' created from xtals.f on Tue Aug 20 14:34:09 2019
+MD5:3bbdbc66b178d0827eb0253d1466850b -- If you edit this, you'll get what you deserve.
+
+(() () () () () () () () () () () () () () () () () () () () () () () ()
+() () ())
+
+()
+
+()
+
+()
+
+()
+
+(2 'e0_lattice' 'xtals' 'e0_lattice' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 ()
+() () 0 0)
+3 'iresid' 'xtals' 'iresid' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (INTEGER 4 0 0 INTEGER ()) 0 0 () (1
+EXPLICIT (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER
+4 0 0 INTEGER ()) 0 '1000')) 0 () () () 0 0)
+4 'ivary' 'xtals' 'ivary' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (INTEGER 4 0 0 INTEGER ()) 0 0 () (1
+EXPLICIT (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER
+4 0 0 INTEGER ()) 0 '1000')) 0 () () () 0 0)
+5 'maxlsq' 'xtals' 'maxlsq' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1000') () 0 () () () 0 0)
+6 'maxrsd' 'xtals' 'maxrsd' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1000') () 0 () () () 0 0)
+7 'nvary' 'xtals' 'nvary' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () () 0 () () () 0
+0)
+8 'nxtal' 'xtals' 'nxtal' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () () 0 () () () 0
+0)
+9 'rsdtyp' 'xtals' 'rsdtyp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '16'))) 0 0 () (1 EXPLICIT (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0
+'1000')) 0 () () () 0 0)
+10 'vartyp' 'xtals' 'vartyp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '16'))) 0 0 () (1 EXPLICIT (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0
+'1000')) 0 () () () 0 0)
+11 'vary' 'xtals' 'vary' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (INTEGER 4 0 0 INTEGER ()) 0 0 () (2
+EXPLICIT (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER
+4 0 0 INTEGER ()) 0 '2') (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1000')) 0 () () () 0 0)
+12 'xtals' 'xtals' 'xtals' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+)
+
+('e0_lattice' 0 2 'iresid' 0 3 'ivary' 0 4 'maxlsq' 0 5 'maxrsd' 0 6
+'nvary' 0 7 'nxtal' 0 8 'rsdtyp' 0 9 'vartyp' 0 10 'vary' 0 11 'xtals' 0
+12)

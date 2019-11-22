@@ -1,0 +1,64 @@
+GFORTRAN module version '0' created from zcoord.f on Tue Aug 20 14:34:05 2019
+MD5:5613ddccce686f437d7a20fd1f923433 -- If you edit this, you'll get what you deserve.
+
+(() () () () () ()
+() () () () () () () () () () () () () () () () () () () () ())
+
+()
+
+()
+
+()
+
+()
+
+(2 'iz' 'zcoord' 'iz' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE DIMENSION) (INTEGER 4 0 0 INTEGER ()) 0 0 () (2 EXPLICIT (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '4') (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1000000')) 0 () () () 0 0)
+3 'maxatm' 'sizes' 'maxatm' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1000000') () 0 () () () 0 0)
+4 'maxclass' 'sizes' 'maxclass' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1000') () 0 () () () 0 0)
+5 'maxfix' 'sizes' 'maxfix' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '100000') () 0 () () () 0 0)
+6 'maxgrp' 'sizes' 'maxgrp' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1000') () 0 () () () 0 0)
+7 'maxref' 'sizes' 'maxref' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '30') () 0 () () () 0 0)
+8 'maxres' 'sizes' 'maxres' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '10000') () 0 () () () 0 0)
+9 'maxtyp' 'sizes' 'maxtyp' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '5000') () 0 () () () 0 0)
+10 'maxval' 'sizes' 'maxval' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '8') () 0 () () () 0 0)
+11 'sizes' 'sizes' 'sizes' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+12 'zang' 'zcoord' 'zang' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (1 EXPLICIT
+(CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '1000000')) 0 () () () 0 0)
+13 'zbond' 'zcoord' 'zbond' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (1 EXPLICIT
+(CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '1000000')) 0 () () () 0 0)
+14 'zcoord' 'zcoord' 'zcoord' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+15 'ztors' 'zcoord' 'ztors' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (1 EXPLICIT
+(CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '1000000')) 0 () () () 0 0)
+)
+
+('iz' 0 2 'maxatm' 0 3 'maxclass' 0 4 'maxfix' 0 5 'maxgrp' 0 6 'maxref'
+0 7 'maxres' 0 8 'maxtyp' 0 9 'maxval' 0 10 'sizes' 0 11 'zang' 0 12
+'zbond' 0 13 'zcoord' 0 14 'ztors' 0 15)

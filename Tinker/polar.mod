@@ -1,0 +1,108 @@
+GFORTRAN module version '0' created from polar.f on Tue Aug 20 14:34:05 2019
+MD5:4d61bb0614a90a9497103f59e0fb38e5 -- If you edit this, you'll get what you deserve.
+
+(() () () () () () () () () () () () () () () () () () () () () () () ()
+() () ())
+
+()
+
+()
+
+()
+
+()
+
+(2 'copm' 'polar' 'copm' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+3 'copt' 'polar' 'copt' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (1
+DEFERRED () ()) 0 () () () 0 0)
+4 'coptmax' 'polar' 'coptmax' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () () 0 () () () 0
+0)
+5 'dirdamp' 'polar' 'dirdamp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+6 'douind' 'polar' 'douind' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (LOGICAL 4 0 0 LOGICAL ())
+0 0 () (1 DEFERRED () ()) 0 () () () 0 0)
+7 'fopt' 'polar' 'fopt' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (3
+DEFERRED () () () () () ()) 0 () () () 0 0)
+8 'foptp' 'polar' 'foptp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(3 DEFERRED () () () () () ()) 0 () () () 0 0)
+9 'maxopt' 'polar' 'maxopt' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '4') () 0 () () () 0 0)
+10 'npolar' 'polar' 'npolar' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () () 0 () () () 0
+0)
+11 'optlevel' 'polar' 'optlevel' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () ()
+0 () () () 0 0)
+12 'pdamp' 'polar' 'pdamp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+13 'penalpha' 'polar' 'penalpha' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0
+REAL ()) 0 0 () (1 DEFERRED () ()) 0 () () () 0 0)
+14 'pencore' 'polar' 'pencore' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+15 'polar' 'polar' 'polar' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+16 'polarity' 'polar' 'polarity' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0
+REAL ()) 0 0 () (1 DEFERRED () ()) 0 () () () 0 0)
+17 'thole' 'polar' 'thole' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+18 'udir' 'polar' 'udir' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+19 'udirp' 'polar' 'udirp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+20 'udirps' 'polar' 'udirps' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+21 'udirs' 'polar' 'udirs' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+22 'uexact' 'polar' 'uexact' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+23 'uind' 'polar' 'uind' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+24 'uinds' 'polar' 'uinds' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+25 'uinp' 'polar' 'uinp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+26 'uinps' 'polar' 'uinps' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+27 'uopt' 'polar' 'uopt' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(3 DEFERRED () () () () () ()) 0 () () () 0 0)
+28 'uoptp' 'polar' 'uoptp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(3 DEFERRED () () () () () ()) 0 () () () 0 0)
+29 'uoptps' 'polar' 'uoptps' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(3 DEFERRED () () () () () ()) 0 () () () 0 0)
+30 'uopts' 'polar' 'uopts' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(3 DEFERRED () () () () () ()) 0 () () () 0 0)
+)
+
+('copm' 0 2 'copt' 0 3 'coptmax' 0 4 'dirdamp' 0 5 'douind' 0 6 'fopt' 0
+7 'foptp' 0 8 'maxopt' 0 9 'npolar' 0 10 'optlevel' 0 11 'pdamp' 0 12
+'penalpha' 0 13 'pencore' 0 14 'polar' 0 15 'polarity' 0 16 'thole' 0 17
+'udir' 0 18 'udirp' 0 19 'udirps' 0 20 'udirs' 0 21 'uexact' 0 22 'uind'
+0 23 'uinds' 0 24 'uinp' 0 25 'uinps' 0 26 'uopt' 0 27 'uoptp' 0 28
+'uoptps' 0 29 'uopts' 0 30)

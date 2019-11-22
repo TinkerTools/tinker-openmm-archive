@@ -1,0 +1,70 @@
+GFORTRAN module version '0' created from nucleo.f on Tue Aug 20 14:34:07 2019
+MD5:1245d8b87c5120d64b478c6c5f7a681a -- If you edit this, you'll get what you deserve.
+
+(() () () () () ()
+() () () () () () () () () () () () () () () () () () () () ())
+
+()
+
+()
+
+()
+
+()
+
+(2 'bkbone' 'nucleo' 'bkbone' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (2 EXPLICIT
+(CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '6') (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '10000')) 0 () () () 0 0)
+3 'dblhlx' 'nucleo' 'dblhlx' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (LOGICAL 4 0 0 LOGICAL ()) 0 0 () () 0 () () () 0
+0)
+4 'deoxy' 'nucleo' 'deoxy' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (LOGICAL 4 0 0 LOGICAL ()) 0 0 () (1
+EXPLICIT (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER
+4 0 0 INTEGER ()) 0 '10000')) 0 () () () 0 0)
+5 'glyco' 'nucleo' 'glyco' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (1 EXPLICIT
+(CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '10000')) 0 () () () 0 0)
+6 'hlxform' 'nucleo' 'hlxform' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4
+0 0 INTEGER ()) 0 '1'))) 0 0 () () 0 () () () 0 0)
+7 'maxatm' 'sizes' 'maxatm' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1000000') () 0 () () () 0 0)
+8 'maxclass' 'sizes' 'maxclass' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1000') () 0 () () () 0 0)
+9 'maxfix' 'sizes' 'maxfix' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '100000') () 0 () () () 0 0)
+10 'maxgrp' 'sizes' 'maxgrp' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1000') () 0 () () () 0 0)
+11 'maxref' 'sizes' 'maxref' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '30') () 0 () () () 0 0)
+12 'maxres' 'sizes' 'maxres' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '10000') () 0 () () () 0 0)
+13 'maxtyp' 'sizes' 'maxtyp' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '5000') () 0 () () () 0 0)
+14 'maxval' 'sizes' 'maxval' 1 ((PARAMETER UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN IMPLICIT-SAVE) (INTEGER 4 0 0 INTEGER ()) 0 0 () (CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '8') () 0 () () () 0 0)
+15 'nucleo' 'nucleo' 'nucleo' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+16 'pucker' 'nucleo' 'pucker' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE DIMENSION) (INTEGER 4 0 0 INTEGER ()) 0 0 () (1
+EXPLICIT (CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER
+4 0 0 INTEGER ()) 0 '10000')) 0 () () () 0 0)
+17 'sizes' 'sizes' 'sizes' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+)
+
+('bkbone' 0 2 'dblhlx' 0 3 'deoxy' 0 4 'glyco' 0 5 'hlxform' 0 6 'maxatm'
+0 7 'maxclass' 0 8 'maxfix' 0 9 'maxgrp' 0 10 'maxref' 0 11 'maxres' 0
+12 'maxtyp' 0 13 'maxval' 0 14 'nucleo' 0 15 'pucker' 0 16 'sizes' 0 17)

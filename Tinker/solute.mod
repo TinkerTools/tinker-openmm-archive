@@ -1,0 +1,85 @@
+GFORTRAN module version '0' created from solute.f on Tue Aug 20 14:34:05 2019
+MD5:253019af343991d9b4b4f268cbf763a0 -- If you edit this, you'll get what you deserve.
+
+(() () () () () () () () () () () () () () () () () () () () () () () ()
+() () ())
+
+()
+
+()
+
+()
+
+()
+
+(2 'aobc' 'solute' 'aobc' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+3 'asolv' 'solute' 'asolv' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+4 'bobc' 'solute' 'bobc' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+5 'borntyp' 'solute' 'borntyp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4
+0 0 INTEGER ()) 0 '8'))) 0 0 () () 0 () () () 0 0)
+6 'doffset' 'solute' 'doffset' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+7 'drb' 'solute' 'drb' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 () (1
+DEFERRED () ()) 0 () () () 0 0)
+8 'drbp' 'solute' 'drbp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+9 'drobc' 'solute' 'drobc' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+10 'gobc' 'solute' 'gobc' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+11 'gpol' 'solute' 'gpol' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+12 'p1' 'solute' 'p1' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+13 'p2' 'solute' 'p2' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+14 'p3' 'solute' 'p3' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+15 'p4' 'solute' 'p4' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+16 'p5' 'solute' 'p5' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+EXPLICIT-SAVE) (REAL 8 0 0 REAL ()) 0 0 () () 0 () () () 0 0)
+17 'rborn' 'solute' 'rborn' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+18 'rsolv' 'solute' 'rsolv' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+19 's2ace' 'solute' 's2ace' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+20 'shct' 'solute' 'shct' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+21 'solute' 'solute' 'solute' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+22 'solvtyp' 'solute' 'solvtyp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4
+0 0 INTEGER ()) 0 '8'))) 0 0 () () 0 () () () 0 0)
+23 'uace' 'solute' 'uace' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+24 'vsolv' 'solute' 'vsolv' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(1 DEFERRED () ()) 0 () () () 0 0)
+25 'wace' 'solute' 'wace' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE ALLOCATABLE DIMENSION) (REAL 8 0 0 REAL ()) 0 0 ()
+(2 DEFERRED () () () ()) 0 () () () 0 0)
+)
+
+('aobc' 0 2 'asolv' 0 3 'bobc' 0 4 'borntyp' 0 5 'doffset' 0 6 'drb' 0 7
+'drbp' 0 8 'drobc' 0 9 'gobc' 0 10 'gpol' 0 11 'p1' 0 12 'p2' 0 13 'p3'
+0 14 'p4' 0 15 'p5' 0 16 'rborn' 0 17 'rsolv' 0 18 's2ace' 0 19 'shct' 0
+20 'solute' 0 21 'solvtyp' 0 22 'uace' 0 23 'vsolv' 0 24 'wace' 0 25)

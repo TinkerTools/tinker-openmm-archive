@@ -1,0 +1,152 @@
+
+     ######################################################################
+   ##########################################################################
+  ###                                                                      ###
+ ###            TINKER  ---  Software Tools for Molecular Design            ###
+ ##                                                                          ##
+ ##                          Version 8.2  June 2017                          ##
+ ##                                                                          ##
+ ##               Copyright (c)  Jay William Ponder  1990-2017               ##
+ ###                           All Rights Reserved                          ###
+  ###                                                                      ###
+   ##########################################################################
+     ######################################################################
+
+
+ Total Potential Energy :              5.55308778 Kcal/mole
+
+ Energy Component Breakdown :           Kcal/mole        Interactions
+
+ Bond Stretching                       0.40954559                4
+ Angle Bending                         0.25854355                2
+ Urey-Bradley                         -0.05452274                2
+ Van der Waals                        40.27489166                9
+ Charge Transfer                      -7.53207819                9
+ Atomic Multipoles                   -24.33560490               15
+ Polarization                         -3.46768720               15
+
+ Analysis for Archive Structure :               2
+
+ Total Potential Energy :              6.94529495 Kcal/mole
+
+ Energy Component Breakdown :           Kcal/mole        Interactions
+
+ Bond Stretching                       2.60210753                4
+ Angle Bending                         0.85540108                2
+ Urey-Bradley                         -0.17779728                2
+ Van der Waals                        35.80943681                9
+ Charge Transfer                      -6.46972838                9
+ Atomic Multipoles                   -22.56715306               15
+ Polarization                         -3.10697175               15
+
+ Analysis for Archive Structure :               3
+
+ Total Potential Energy :              8.33158852 Kcal/mole
+
+ Energy Component Breakdown :           Kcal/mole        Interactions
+
+ Bond Stretching                       3.73886851                4
+ Angle Bending                         1.72587082                2
+ Urey-Bradley                         -0.29424440                2
+ Van der Waals                        33.83975080                9
+ Charge Transfer                      -6.02828758                9
+ Atomic Multipoles                   -21.70423542               15
+ Polarization                         -2.94613421               15
+
+ Analysis for Archive Structure :               4
+
+ Total Potential Energy :              7.41525850 Kcal/mole
+
+ Energy Component Breakdown :           Kcal/mole        Interactions
+
+ Bond Stretching                       1.62336981                4
+ Angle Bending                         2.63215603                2
+ Urey-Bradley                         -0.32480864                2
+ Van der Waals                        34.88994665                9
+ Charge Transfer                      -6.33399992                9
+ Atomic Multipoles                   -22.03598529               15
+ Polarization                         -3.03542014               15
+
+ Analysis for Archive Structure :               5
+
+ Total Potential Energy :              7.29269630 Kcal/mole
+
+ Energy Component Breakdown :           Kcal/mole        Interactions
+
+ Bond Stretching                       0.15052689                4
+ Angle Bending                         3.25715074                2
+ Urey-Bradley                         -0.29106350                2
+ Van der Waals                        37.25195006                9
+ Charge Transfer                      -6.97810890                9
+ Atomic Multipoles                   -22.86681448               15
+ Polarization                         -3.23094452               15
+
+ Analysis for Archive Structure :               6
+
+ Total Potential Energy :              7.71504120 Kcal/mole
+
+ Energy Component Breakdown :           Kcal/mole        Interactions
+
+ Bond Stretching                       0.29617007                4
+ Angle Bending                         3.36534128                2
+ Urey-Bradley                         -0.24679012                2
+ Van der Waals                        38.10007625                9
+ Charge Transfer                      -7.28185545                9
+ Atomic Multipoles                   -23.19160238               15
+ Polarization                         -3.32629845               15
+
+ Analysis for Archive Structure :               7
+
+ Total Potential Energy :              6.23168286 Kcal/mole
+
+ Energy Component Breakdown :           Kcal/mole        Interactions
+
+ Bond Stretching                       0.31081294                4
+ Angle Bending                         2.92547178                2
+ Urey-Bradley                         -0.21571997                2
+ Van der Waals                        35.64563146                9
+ Charge Transfer                      -6.80677034                9
+ Atomic Multipoles                   -22.42725723               15
+ Polarization                         -3.20048578               15
+
+ Analysis for Archive Structure :               8
+
+ Total Potential Energy :              3.34465267 Kcal/mole
+
+ Energy Component Breakdown :           Kcal/mole        Interactions
+
+ Bond Stretching                       0.04736639                4
+ Angle Bending                         2.11410641                2
+ Urey-Bradley                         -0.19998131                2
+ Van der Waals                        30.72481356                9
+ Charge Transfer                      -5.73651081                9
+ Atomic Multipoles                   -20.72206274               15
+ Polarization                         -2.88307884               15
+
+ Analysis for Archive Structure :               9
+
+ Total Potential Energy :              1.51174216 Kcal/mole
+
+ Energy Component Breakdown :           Kcal/mole        Interactions
+
+ Bond Stretching                       0.72982686                4
+ Angle Bending                         1.22687650                2
+ Urey-Bradley                         -0.18574537                2
+ Van der Waals                        25.63677172                9
+ Charge Transfer                      -4.61966474                9
+ Atomic Multipoles                   -18.76239020               15
+ Polarization                         -2.51393261               15
+
+ Analysis for Archive Structure :              10
+
+ Total Potential Energy :              0.87078634 Kcal/mole
+
+ Energy Component Breakdown :           Kcal/mole        Interactions
+
+ Bond Stretching                       1.81341011                4
+ Angle Bending                         0.55194472                2
+ Urey-Bradley                         -0.14527885                2
+ Van der Waals                        22.04325334                9
+ Charge Transfer                      -3.86300114                9
+ Atomic Multipoles                   -17.28830039               15
+ Polarization                         -2.24124145               15
