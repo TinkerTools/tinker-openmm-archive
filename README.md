@@ -1,13 +1,15 @@
-This branch is the preliminary implementation of AMOEBA+ model with the latest charge flux (CF) implementation.
+# What is this branch? 
+
+This branch is the preliminary implementation of AMOEBA+CF model in OpenMM implementation.
 
 We are currently migrating our implementation into the latest OpenMM.
 
 Date: 11/22/2019
 
 Progress on migrating to the latest OpenMM
-- [x] Van der Waals: W-H combining rules now supported in OpenMM
-- [ ] Charge tranfer: code optimization using the *nonbonded* force supported by OpenMM
-- [ ] AMOEBAplusNonbond: electrostatics and polarization with charge flux
+- [x] Van der Waals: W-H combining rule is supported in OpenMM
+- [ ] Charge tranfer: code optimization using the *nonbonded* force class supported by OpenMM
+- [ ] AMOEBAplusNonbond: creat an individual nonbonded force for AMOEBA+ (electrostatics and polarization with charge flux)
 
 ## Reference
 1. Liu, C.; Piquemal, J.-P.; Ren, P., Implementation of Geometry Dependent Charge Flux into AMOEBA+ Potential.  *submitted*
