@@ -49,27 +49,33 @@ AmoebaCTForce::AmoebaCTForce()
 void AmoebaCTForce::setParticleParameters(int particleIndex,
                                           int CTprType,
                                           double apre,
-                                          double bexp) {
+                                          double bexp,
+                                          double lambda) {
     parameters[particleIndex].CTprType = CTprType;
     parameters[particleIndex].apre = apre;
     parameters[particleIndex].bexp = bexp;
+    parameters[particleIndex].lambda = lambda;
 }
 
 void AmoebaCTForce::getParticleParameters(int particleIndex,
                                           int& CTprType,
                                           double& apre,
-                                          double& bexp) const {
+                                          double& bexp,
+                                          double& lambda) const {
     CTprType = parameters[particleIndex].CTprType;
     apre = parameters[particleIndex].apre;
     bexp = parameters[particleIndex].bexp;
+    lambda = parameters[particleIndex].lambda;
 }
 
 int AmoebaCTForce::addParticle(int CTprType,
                                double apre,
-                               double bexp) {
+                               double bexp,
+                               double lambda) {
     parameters.push_back(CTInfo(CTprType,
                                 apre,
-                                bexp));
+                                bexp,
+                                lambda));
     return static_cast<int>(parameters.size() - 1);
 }
 
@@ -101,9 +107,6 @@ void AmoebaCTForce::computeCombinedApreBexp() {
         int tp = parameters[i].CTprType; // tp = new
         apreByType[tp] = parameters[i].apre;
         bexpByType[tp] = parameters[i].bexp;
-
-        //fprintf(stdout, "\n apre checkpoint1 %f\n", parameters[i].apre); //PASSED
-        //fprintf(stdout, "\n bexp %f\n", parameters[i].bexp);//PASSED
     }
 
     // compute combined apre and bexp

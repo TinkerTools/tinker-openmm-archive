@@ -1206,10 +1206,10 @@ void ReferenceCalcAmoebaCTForceKernel::initialize(const System& system, const Am
 
         //int indexIV, vtype;
         int CTtype;
-        double apre, bexp;
+        double apre, bexp, lambda;
         std::vector<int> exclusions;
 
-        force.getParticleParameters(ii, CTtype, apre, bexp);
+        force.getParticleParameters(ii, CTtype, apre, bexp, lambda);
         force.getParticleExclusions(ii, exclusions);
         for (unsigned int jj = 0; jj < exclusions.size(); jj++) {
             allExclusions[ii].insert(exclusions[jj]);
@@ -1277,10 +1277,10 @@ void ReferenceCalcAmoebaCTForceKernel::copyParametersToContext(ContextImpl& cont
     for (int ii = 0; ii < numParticles; ii++) {
 
         int CTtype;
-        double apre, bexp; 
+        double apre, bexp, lambda; 
         std::vector<int> exclusions;
 
-        force.getParticleParameters(ii, CTtype, apre, bexp);
+        force.getParticleParameters(ii, CTtype, apre, bexp, lambda);
         force.getParticleExclusions(ii, exclusions);
         for (unsigned int jj = 0; jj < exclusions.size(); jj++) {
             allExclusions[ii].insert(exclusions[jj]);

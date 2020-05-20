@@ -67,8 +67,10 @@ c
      &       .not.use_mpole .and. use_polar) then
          use_mpole = .true.
          use_polar = .true.
+         use_cflux = .true.
          call kmpole
          call kpolar
+         call kcflux
          call mutate
       end if
 c

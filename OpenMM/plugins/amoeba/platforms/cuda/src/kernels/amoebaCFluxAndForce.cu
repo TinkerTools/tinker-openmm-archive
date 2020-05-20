@@ -1,6 +1,6 @@
 
 // loop over bond to accumulate charge fluxes
-extern "C" __global__ void computeBondCFluxes(const real4* __restrict__ posq, real4 periodicBoxSize, real4 invPeriodicBoxSize, real4 periodicBoxVecX, real4 periodicBoxVecY, real4 periodicBoxVecZ, real* __restrict__ cfCharges, const real2* bondCFluxParams, const uint2* __restrict__ atomIndicesBond) {
+extern "C" __global__ void computeBondCFluxes(const real4* __restrict__ posq, real4 periodicBoxSize, real4 invPeriodicBoxSize, real4 periodicBoxVecX, real4 periodicBoxVecY, real4 periodicBoxVecZ, real* __restrict__ cfCharges, const real3* bondCFluxParams, const uint2* __restrict__ atomIndicesBond) {
     for (unsigned int index = blockIdx.x*blockDim.x+threadIdx.x; index < NUM_BONDS; index += blockDim.x*gridDim.x) 
     {
         uint2 atoms = atomIndicesBond[index];
@@ -14,11 +14,11 @@ extern "C" __global__ void computeBondCFluxes(const real4* __restrict__ posq, re
         APPLY_PERIODIC_TO_DELTA(delta)
 #endif
         real r = SQRT(delta.x*delta.x + delta.y*delta.y + delta.z*delta.z);
-        float2 data = bondCFluxParams[index];
+        float3 data = bondCFluxParams[index];
         real dr = r - data.x;
         real deltaQ = data.y*dr;
          
-        real cfQ1 = (-deltaQ); 
+        real cfQ1 = data.z*deltaQ; 
         real cfQ2 = -cfQ1;
         
         atomicAdd(&cfCharges[atom1], cfQ1);
@@ -81,7 +81,7 @@ extern "C" __global__ void computeAngleCFluxes(const real4* __restrict__ posq, r
 
 
 //loop over each bond to calculate chain rule term force 
-extern "C" __global__ void computeCFluxBondForce(unsigned long long* __restrict__ forceBuffers, const real4* __restrict__ posq, real4 periodicBoxSize, real4 invPeriodicBoxSize, real4 periodicBoxVecX, real4 periodicBoxVecY, real4 periodicBoxVecZ, float* __restrict__ cfPotentials, const float2* bondCFluxParams, const uint2* __restrict__ atomIndicesBond) {
+extern "C" __global__ void computeCFluxBondForce(unsigned long long* __restrict__ forceBuffers, const real4* __restrict__ posq, real4 periodicBoxSize, real4 invPeriodicBoxSize, real4 periodicBoxVecX, real4 periodicBoxVecY, real4 periodicBoxVecZ, float* __restrict__ cfPotentials, const real3* bondCFluxParams, const uint2* __restrict__ atomIndicesBond) {
     for (unsigned int index = blockIdx.x*blockDim.x+threadIdx.x; index < NUM_BONDS; index += blockDim.x*gridDim.x) 
     {
         uint2 atoms = atomIndicesBond[index];
@@ -96,7 +96,7 @@ extern "C" __global__ void computeCFluxBondForce(unsigned long long* __restrict_
         APPLY_PERIODIC_TO_DELTA(delta)
 #endif
         real r = SQRT(delta.x*delta.x + delta.y*delta.y + delta.z*delta.z);
-        float2 data = bondCFluxParams[index];
+        float3 data = bondCFluxParams[index];
         real deltaPot = cfPotentials[atom1]-cfPotentials[atom2];
         real3 ddqdr = make_real3(data.y*delta.x/r, data.y*delta.y/r,data.y*delta.z/r);
         real3 force1 = make_real3(-ddqdr.x*deltaPot, -ddqdr.y*deltaPot, -ddqdr.z*deltaPot);

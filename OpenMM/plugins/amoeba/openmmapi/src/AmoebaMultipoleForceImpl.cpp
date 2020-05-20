@@ -162,8 +162,8 @@ std::vector<pair<int, int> > AmoebaMultipoleForceImpl::getCFluxBondParticles() c
     int numBonds = owner.getNumBonds();
     vector<pair<int, int> > bonds(numBonds);
     for (int i = 0; i < numBonds; i++) {
-        double length, jbond;
-        owner.getCFluxBondParameters(i, bonds[i].first, bonds[i].second, length, jbond); 
+        double length, jbond, cfluxDir;
+        owner.getCFluxBondParameters(i, bonds[i].first, bonds[i].second, length, jbond, cfluxDir); 
     }   
     return bonds;
 }

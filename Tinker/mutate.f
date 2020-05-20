@@ -157,7 +157,10 @@ c
 c
       subroutine altelec
       use sizes
+      use angbnd
       use atoms
+      use bndstr
+      use cflux
       use charge
       use mpole
       use mutant
@@ -165,6 +168,7 @@ c
       use potent
       implicit none
       integer i,j,k
+      integer ia,ib,ic
 c
 c
 c     set electrostatic parameters for partial charge models
@@ -191,6 +195,42 @@ c
          do i = 1, npolar
             if (mut(i)) then
                polarity(i) = polarity(i) * elambda
+            end if
+         end do
+      end if
+c
+c     set charge penetration pencore parameters 
+c
+      !if (use_chgpen) then
+         do i = 1, npole
+            k = ipole(i)
+            if (mut(k)) pencore(i) = pencore(i) * elambda
+         end do
+      !end if 
+c
+c     set charge flux j parameter using cflux-bond 
+c
+      if (use_cflux .and. dobondcflux) then
+         do i = 1, nbond
+            ia = ibnd(1,i)
+            ib = ibnd(2,i)
+            if ((mut(ia) .or. mut(ib))) jb(i) = jb(i) * elambda 
+         end do
+      end if 
+c
+c     set charge flux j parameter using cflux-angle
+c
+
+      if (use_cflux .and. doanglecflux) then
+         do i = 1, nangle 
+            ia = iang(1,i)
+            ib = iang(2,i)
+            ic = iang(3,i)
+            if ((mut(ia)) .or. (mut(ib)) .or. (mut(ic))) then
+               jbp1(i) = jbp1(i) * elambda
+               jbp2(i) = jbp2(i) * elambda
+               jtheta1(i) = jtheta1(i) * elambda
+               jtheta2(i) = jtheta2(i) * elambda
             end if
          end do
       end if

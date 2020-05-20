@@ -83,23 +83,25 @@ void AmoebaMultipoleForce::setCutoffDistance(double distance) {
 // CFlux due to bond stretching
 //
 
-int AmoebaMultipoleForce::addCFluxBond(int particle1, int particle2, double length, double jBond) {
-    bonds.push_back(CFluxBondInfo(particle1, particle2, length, jBond));
+int AmoebaMultipoleForce::addCFluxBond(int particle1, int particle2, double length, double jBond, double cfluxDir) {
+    bonds.push_back(CFluxBondInfo(particle1, particle2, length, jBond, cfluxDir));
     return bonds.size()-1;
 }
 
-void AmoebaMultipoleForce::setCFluxBondParameters(int index, int particle1, int particle2, double length, double jBond) {
+void AmoebaMultipoleForce::setCFluxBondParameters(int index, int particle1, int particle2, double length, double jBond, double cfluxDir) {
     bonds[index].particle1  = particle1;
     bonds[index].particle2  = particle2;
     bonds[index].length     = length;
     bonds[index].jBond      = jBond;
+    bonds[index].cfluxDir   = cfluxDir;
 }
 
-void AmoebaMultipoleForce::getCFluxBondParameters(int index, int& particle1, int& particle2, double& length, double&  jBond) const {
+void AmoebaMultipoleForce::getCFluxBondParameters(int index, int& particle1, int& particle2, double& length, double&  jBond, double& cfluxDir) const {
     particle1       = bonds[index].particle1;
     particle2       = bonds[index].particle2;
     length          = bonds[index].length;
     jBond           = bonds[index].jBond;
+    cfluxDir        = bonds[index].cfluxDir;
 }
 
 //

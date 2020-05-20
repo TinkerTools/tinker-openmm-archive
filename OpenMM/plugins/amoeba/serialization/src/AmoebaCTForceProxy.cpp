@@ -57,11 +57,11 @@ void AmoebaCTForceProxy::serialize(const void* object, SerializationNode& node) 
     for (unsigned int ii = 0; ii < static_cast<unsigned int>(force.getNumParticles()); ii++) {
 
         int CTType;
-        double apre, bexp;
-        force.getParticleParameters(ii, CTType, apre, bexp);
+        double apre, bexp, lambda;
+        force.getParticleParameters(ii, CTType, apre, bexp, lambda);
 
         SerializationNode& particle = particles.createChildNode("Particle");
-        particle.setIntProperty("CTType", CTType).setDoubleProperty("apre", apre).setDoubleProperty("bexp", bexp);
+        particle.setIntProperty("CTType", CTType).setDoubleProperty("apre", apre).setDoubleProperty("bexp", bexp).setDoubleProperty("lambda", lambda);
 
         std::vector<int> exclusions;
         force.getParticleExclusions(ii, exclusions);
@@ -104,7 +104,7 @@ void* AmoebaCTForceProxy::deserialize(const SerializationNode& node) const {
         for (unsigned int ii = 0; ii < particles.getChildren().size(); ii++) {
             const SerializationNode& particle = particles.getChildren()[ii];
             force->addParticle(particle.getIntProperty("CTType"),
-                particle.getDoubleProperty("apre"), particle.getDoubleProperty("bexp"));
+                particle.getDoubleProperty("apre"), particle.getDoubleProperty("bexp"), particle.getDoubleProperty("lambda"));
 
             // exclusions
 

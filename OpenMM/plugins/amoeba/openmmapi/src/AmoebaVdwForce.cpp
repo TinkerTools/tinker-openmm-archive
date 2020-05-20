@@ -78,8 +78,6 @@ void AmoebaVdwForce::getParticleParameters(int particleIndex,
     epsilon = parameters[particleIndex].epsilon;
     reductionFactor = parameters[particleIndex].reductionFactor;
     lambda = parameters[particleIndex].lambda;
-    //printf("sigma: %s\n",sigma); sigma is nothing, but not Null
-    //printf(particleIndex);
 }
 
 int AmoebaVdwForce::addParticle(int parentIndex,

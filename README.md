@@ -1,15 +1,13 @@
+# Latest update
+
+* May 2020
+  * Support lambda scaling for pencore (CP), apre (CT) and j parameters (CF) for Free Energy simulations
+
 # What is this branch? 
 
 This branch is the preliminary implementation of AMOEBA+CF model in OpenMM. 
-
 We are currently migrating our implementation into the latest OpenMM.
-
 Date: 11/22/2019
-
-Progress on migrating to the latest OpenMM
-- [x] Van der Waals: W-H combining rule is supported in OpenMM
-- [ ] Charge tranfer: code optimization using the *nonbonded* force class supported by OpenMM
-- [ ] AMOEBAplusNonbond: creat an individual nonbonded force for AMOEBA+ (electrostatics and polarization with charge flux)
 
 ## Reference
 1. Liu, C.; Piquemal, J.-P.; Ren, P., Implementation of Geometry Dependent Charge Flux into AMOEBA+ Potential.  *submitted*

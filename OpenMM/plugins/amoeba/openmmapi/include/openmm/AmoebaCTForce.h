@@ -90,8 +90,9 @@ public:
      * @param CTprType        the CT class/type number
      * @param apre            CT apre
      * @param bexp            CT bexp
+     * @param lambda          CT lambda
      */
-    void setParticleParameters(int particleIndex, int CTprType, double apre, double bexp);
+    void setParticleParameters(int particleIndex, int CTprType, double apre, double bexp, double lambda);
 
     /**
      * Get the force field parameters for a CT particle.
@@ -100,8 +101,9 @@ public:
      * @param[out] CTprType        the CT class/type number
      * @param[out] apre            CT apre
      * @param[out] bexp            CT bexp
+     * @param[out] lambda          CT lambda
      */
-    void getParticleParameters(int particleIndex, int& CTprType, double& apre, double& bexp) const;
+    void getParticleParameters(int particleIndex, int& CTprType, double& apre, double& bexp, double& lambda) const;
 
 
     /**
@@ -110,9 +112,10 @@ public:
      * @param CTprType       the CT class/type number
      * @param apre           CT apre
      * @param bexp           CT bexp
+     * @param lambda         CT lambda
      * @return index of added particle
      */
-    int addParticle(int CTprType, double apre, double bexp);
+    int addParticle(int CTprType, double apre, double bexp, double lambda);
 
     /**
      * Compute the combined apres and bexps using combining rules.
@@ -346,17 +349,19 @@ private:
 class AmoebaCTForce::CTInfo {
 public:
     int CTprType;
-    double apre, bexp;
+    double apre, bexp, lambda;
 
     CTInfo()
         : CTprType(-1)
         , apre(0.0)
-        , bexp(0.0)  {}
+        , bexp(0.0)  
+        , lambda(1.0) {}
 
-    CTInfo(int CTprType, double apre, double bexp)
+    CTInfo(int CTprType, double apre, double bexp, double lambda)
         : CTprType(CTprType)
         , apre(apre)
-        , bexp(bexp) {}
+        , bexp(bexp)
+        , lambda(lambda) {}
 };
 
 /**

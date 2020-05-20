@@ -34,11 +34,6 @@
 ##  Master Directory Locations; Change as Needed for Local Site  ##
 ###################################################################
 
-##  TINKERDIR    TINKER Distribution Directory
-##  BINDIR       Directory with TINKER Executables
-##  LINKDIR      Linked Copies of TINKER Executables
-##  FFTWDIR      FFTW Top-Level Directory
-##  OPENMMDIR    OpenMM Distribution Directory
 
 TINKERDIR =/home/liuchw/Softwares/tinkers
 BINDIR = $(TINKERDIR)/bin
@@ -48,7 +43,7 @@ FFTWDIR =/home/liuchw/Softwares/tinkers/tinker8.2-intel13/fftw
 FFTW_LIB_DIR = -L$(FFTWDIR)/lib
 FFTW_LIBS = -lfftw3_threads -lfftw3
 
-OPENMMDIR =/home/liuchw/temp/AMOEBAplusCFlux/bin
+OPENMMDIR = ../bin
 OPENMM_LIB_DIR = -L$(OPENMMDIR)/lib
 OPENMM_INCLUDE_DIR = $(OPENMMDIR)/include
 OPENMM_LIBS = -lOpenMM -lOpenMMAmoeba
@@ -65,10 +60,8 @@ CXX = g++
 NVCC = /usr/local/cuda/bin/nvcc
 F77 = gfortran
 LIBS = -lstdc++ -L. -L$(NVML_LIB) -lnvidia-ml -lfftw3_threads -lfftw3 -L$(CUDA_LIB) -lcudart -lcuda
-CFLAGS = -c 
+CFLAGS = -c
 F77FLAGS = -c
-
-#OPTFLAGS_C =  -O3 -ffast-math -fopenmp 
 OPTFLAGS_C =  -O3 -ffast-math -fopenmp -g -ggdb  
 OPTFLAGS_F = -O3 -ffast-math -fopenmp
 CUDAFLAGS = -O3 -I $(CUDA_INCLUDE) -I$(NVML_INCLUDE) --debug --device-debug
@@ -76,7 +69,7 @@ LIBFLAGS = -crusv
 RANLIB = ranlib
 LINKFLAGS = $(OPTFLAGS_C) -static-libgcc 
 
-#p################################################################
+#################################################################
 ##  Should not be Necessary to Change Things Below this Point  ##
 #################################################################
 
@@ -514,7 +507,6 @@ OBJS =	action.o \
 	rattle.o \
 	readdyn.o \
 	readgau.o \
-	readgdma.o \
 	readint.o \
 	readmol.o \
 	readmol2.o \
@@ -640,7 +632,7 @@ EXEFILES = dynamic_omm.x
 all:${EXEFILES}
 
 clean:
-	rm -f *.o *.mod *.x
+	rm -f *.o *.mod *.x *.a
 
 listing:
 	cat *.f *.cpp > tinker.txt
@@ -1060,7 +1052,6 @@ libtinker.a: ${OBJS}
 	rattle.o \
 	readdyn.o \
 	readgau.o \
-	readgdma.o \
 	readint.o \
 	readmol.o \
 	readmol2.o \
@@ -1149,7 +1140,6 @@ libtinker.a: ${OBJS}
 dynamic_omm.o: angbnd.o angpot.o angtor.o atomid.o atoms.o bath.o bitor.o bndpot.o bndstr.o bound.o boxes.o cell.o cflux.o charge.o chgpot.o couple.o ctran.o deriv.o energi.o ewald.o freeze.o group.o imptor.o inform.o iounit.o keys.o ktrtor.o kvdws.o limits.o mdstuf.o molcul.o moldyn.o mplpot.o mpole.o mutant.o nonpol.o opbend.o openmm.o openmp.o pitors.o pme.o polar.o polgrp.o polpot.o potent.o restrn.o sizes.o solute.o stodyn.o strbnd.o strtor.o torpot.o tors.o tortor.o units.o urey.o urypot.o usage.o vdw.o vdwpot.o
 gpu_cards.o: $(GPU_USAGE_OBJS)
 openmm.o:
-
 action.o:
 active.o: atoms.o inform.o iounit.o keys.o sizes.o usage.o
 alchemy.o: analyz.o atoms.o energi.o files.o inform.o iounit.o katoms.o mutant.o potent.o sizes.o units.o usage.o
@@ -1581,7 +1571,6 @@ random.o: inform.o iounit.o keys.o math.o
 rattle.o: atomid.o atoms.o freeze.o group.o inform.o iounit.o moldyn.o sizes.o units.o usage.o virial.o
 readdyn.o: atoms.o boxes.o files.o group.o iounit.o mdstuf.o moldyn.o rgddyn.o sizes.o
 readgau.o: ascii.o iounit.o qmstuf.o sizes.o units.o
-readgdma.o: atomid.o atoms.o dma.o files.o iounit.o mpole.o sizes.o units.o
 readint.o: atomid.o atoms.o files.o inform.o iounit.o sizes.o titles.o zclose.o zcoord.o
 readmol.o: atomid.o atoms.o couple.o files.o iounit.o ptable.o sizes.o titles.o
 readmol2.o: atomid.o atoms.o couple.o files.o iounit.o ptable.o sizes.o titles.o

@@ -1459,18 +1459,18 @@ void CudaCalcAmoebaMultipoleForceKernel::initialize(const System& system, const 
     if (numBonds == 0)
         return;
     vector<vector<int>> atomsB(numBonds, vector<int>(2)); 
-    vector<double2> bondCFluxParamsVectord(numBonds);
-    vector<float2> bondCFluxParamsVectorf(numBonds);
+    vector<double3> bondCFluxParamsVectord(numBonds);
+    vector<float3> bondCFluxParamsVectorf(numBonds);
     vector<int2> atomIndicesBondVector(numBonds);
 
     for (int i = 0; i < numBonds; i++) {
-        double length, jbond;
-        force.getCFluxBondParameters(startIndex+i, atomsB[i][0], atomsB[i][1], length, jbond);
+        double length, jbond, cfluxDir;
+        force.getCFluxBondParameters(startIndex+i, atomsB[i][0], atomsB[i][1], length, jbond, cfluxDir);
         atomIndicesBondVector[i] = make_int2((int) atomsB[i][0], (int) atomsB[i][1]);
         if (cu.getUseDoublePrecision())
-          bondCFluxParamsVectord[i] = make_double2(length, jbond);
+          bondCFluxParamsVectord[i] = make_double3(length, jbond, cfluxDir);
         else
-          bondCFluxParamsVectorf[i] = make_float2(length, jbond);
+          bondCFluxParamsVectorf[i] = make_float3(length, jbond, cfluxDir);
           
     }
 
@@ -1505,7 +1505,7 @@ void CudaCalcAmoebaMultipoleForceKernel::initialize(const System& system, const 
     // CudaArrays
     cfPotentials = new CudaArray(cu, paddedNumAtoms, elementSize, "cfPotentials");
     cfCharges = new CudaArray(cu, paddedNumAtoms, elementSize, "cfCharges");
-    bondCFluxParams = new CudaArray(cu, numBonds, 2*elementSize, "bondCFluxParams");
+    bondCFluxParams = new CudaArray(cu, numBonds, 3*elementSize, "bondCFluxParams");
     atomIndicesBond = new CudaArray(cu, numBonds, 2*sizeof(int), "atomIndicesBond");
     angleCFluxAngleParams = new CudaArray(cu, numAngles, 3*elementSize, "angleCFluxAngleParams");
     angleCFluxBondParams = new CudaArray(cu, numAngles, 4*elementSize, "angleCFluxBondParams");
@@ -2987,10 +2987,10 @@ public:
 
     bool areParticlesIdentical(int particle1, int particle2) {
         int CTtype1, CTtype2;
-        double apre, bexp;
-        force.getParticleParameters(particle1, CTtype1, apre, bexp);
-        force.getParticleParameters(particle2, CTtype2, apre, bexp);
-        return (CTtype1 == CTtype2);
+        double apre, bexp, lambda1, lambda2;
+        force.getParticleParameters(particle1, CTtype1, apre, bexp, lambda1);
+        force.getParticleParameters(particle2, CTtype2, apre, bexp, lambda2);
+        return (CTtype1 == CTtype2 && lambda1 == lambda2);
     }
 private:
     const AmoebaCTForce& force;
@@ -3003,6 +3003,7 @@ CudaCalcAmoebaCTForceKernel::CudaCalcAmoebaCTForceKernel(std::string name, const
     , hasInitializedNonbonded(false)
     , CTTypes(NULL)
     , apreBexp(NULL)
+    , lambdas(NULL)
     , nonbonded(NULL) {}
 
 CudaCalcAmoebaCTForceKernel::~CudaCalcAmoebaCTForceKernel() {
@@ -3011,6 +3012,8 @@ CudaCalcAmoebaCTForceKernel::~CudaCalcAmoebaCTForceKernel() {
         delete CTTypes;
     if (apreBexp != NULL)
         delete apreBexp;
+    if (lambdas != NULL)
+        delete lambdas;
     if (nonbonded != NULL)
         delete nonbonded;
 }
@@ -3023,6 +3026,7 @@ void CudaCalcAmoebaCTForceKernel::initialize(const System& system, const AmoebaC
     CTTypes = CudaArray::create<long long>(cu, cu.getPaddedNumAtoms(), "CTTypes");
     int xsize = force.getNumCTprTypes();
     apreBexp = CudaArray::create<float2>(cu, xsize * xsize, "apreBexp");
+    lambdas = CudaArray::create<float>(cu, cu.getPaddedNumAtoms(), "lambdas");
 
     vector<float2> apreBexpVec(xsize * xsize, make_float2(1, 0));
     for (int i = 0; i < xsize; ++i) {
@@ -3036,21 +3040,25 @@ void CudaCalcAmoebaCTForceKernel::initialize(const System& system, const AmoebaC
     }
 
     vector<long long> CTTypesVec(cu.getPaddedNumAtoms(), -1);
+    vector<float> lambdasVec(cu.getPaddedNumAtoms(), 0);
     vector<vector<int> > exclusions(cu.getNumAtoms());
     for (int i = 0; i < force.getNumParticles(); i++) {
         int CTType;
-        double apre, bexp;
-        force.getParticleParameters(i,CTType, apre, bexp);
+        double apre, bexp, elambda;
+        force.getParticleParameters(i,CTType, apre, bexp, elambda);
         CTTypesVec[i] = CTType;
+        lambdasVec[i] = static_cast<float>(elambda);
         force.getParticleExclusions(i, exclusions[i]);
         exclusions[i].push_back(i);
     }
                 
     CTTypes->upload(CTTypesVec);
     apreBexp->upload(apreBexpVec);
+    lambdas->upload(lambdasVec);
 
     nonbonded = new CudaNonbondedUtilities(cu);
     nonbonded->addParameter(CudaNonbondedUtilities::ParameterInfo("CTTypes", "long long", 1, sizeof(long long), CTTypes->getDevicePointer()));
+    nonbonded->addParameter(CudaNonbondedUtilities::ParameterInfo("lambdas", "float", 1, sizeof(float), lambdas->getDevicePointer()));
     nonbonded->addArgument(CudaNonbondedUtilities::ParameterInfo("apreBexp", "float", 2, sizeof(float2), apreBexp->getDevicePointer()));
     
     // Create the interaction kernel.
@@ -3093,6 +3101,7 @@ void CudaCalcAmoebaCTForceKernel::copyParametersToContext(ContextImpl& context, 
     CTTypes = CudaArray::create<int>(cu, cu.getPaddedNumAtoms(), "CTTypes");
     int xsize = force.getNumCTprTypes();
     apreBexp = CudaArray::create<float2>(cu, xsize * xsize, "apreBexp");
+    lambdas = CudaArray::create<int>(cu, cu.getPaddedNumAtoms(), "lambdas");
 
     // Record atom parameters.
     vector<float2> apreBexpVec(xsize * xsize, make_float2(1, 0));
@@ -3110,18 +3119,21 @@ void CudaCalcAmoebaCTForceKernel::copyParametersToContext(ContextImpl& context, 
     }
 
     vector<long long> CTTypesVec(cu.getPaddedNumAtoms(), -1);
+    vector<float> lambdasVec(cu.getPaddedNumAtoms(), 0);
     vector<vector<int> > exclusions(cu.getNumAtoms());
     for (int i = 0; i < force.getNumParticles(); i++) {
         int CTType;
-        double apre, bexp;
-        force.getParticleParameters(i, CTType, apre, bexp);
+        double apre, bexp, elambda;
+        force.getParticleParameters(i, CTType, apre, bexp, elambda);
         CTTypesVec[i] = CTType;
+        lambdasVec[i] = static_cast<float>(elambda);
         force.getParticleExclusions(i, exclusions[i]);
         exclusions[i].push_back(i);
     }
 
     CTTypes->upload(CTTypesVec);
     apreBexp->upload(apreBexpVec);
+    lambdas->upload(lambdasVec);
 }
 
 /* -------------------------------------------------------------------------- *

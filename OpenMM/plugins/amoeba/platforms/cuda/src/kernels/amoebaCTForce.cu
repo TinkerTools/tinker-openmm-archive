@@ -5,11 +5,14 @@ unsigned int includeInteraction = (!isExcluded);
 #endif
 
 if (atom2 < PADDED_NUM_ATOMS) {
-    int pairK = CTTypes1 * NUM_CTPR_TYPES + CTTypes2;
-    real apre = apreBexp[pairK].x;
-    real bexp = apreBexp[pairK].y;
-    real termEnergy = -apre*1000.0*EXP(-bexp*r);
-    real deltaE = -bexp*termEnergy; 
+   int pairK = CTTypes1 * NUM_CTPR_TYPES + CTTypes2;
+   real combinedLambda = (lambdas1 < lambdas2 ? lambdas1 : lambdas2);
+   //printf("%f %f %f \n", lambdas1, lambdas2, combinedLambda);
+   real apre = apreBexp[pairK].x; 
+   real bexp = apreBexp[pairK].y;
+   apre = apre * combinedLambda;
+   real termEnergy = -apre*1000.0 * EXP(-bexp*r);
+   real deltaE = -bexp*termEnergy; 
 #ifdef USE_CUTOFF
 if (r > TAPER_CUTOFF) {
     real x = r - TAPER_CUTOFF;
@@ -19,6 +22,6 @@ if (r > TAPER_CUTOFF) {
     termEnergy *= taper;
 }
 #endif
-tempEnergy += (includeInteraction ? termEnergy : 0);
-dEdR -= (includeInteraction ? deltaE * invR : 0);
+    tempEnergy += (includeInteraction ? termEnergy : 0);
+    dEdR -= (includeInteraction ? deltaE * invR : 0);
 }

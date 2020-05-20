@@ -117,9 +117,9 @@ public:
     int getNumBonds() const {
         return bonds.size();
     }
-    int  addCFluxBond(int particle1, int particle2, double length, double jBond);
-    void getCFluxBondParameters(int index, int& particle1, int& particle2, double& length, double& jBond) const;
-    void setCFluxBondParameters(int index, int particle1, int particle2, double length, double jBond);
+    int  addCFluxBond(int particle1, int particle2, double length, double jBond, double cfluxDir);
+    void getCFluxBondParameters(int index, int& particle1, int& particle2, double& length, double& jBond, double& cfluxDir) const;
+    void setCFluxBondParameters(int index, int particle1, int particle2, double length, double jBond, double cfluxDir);
 
     //
     // CFlux due to angle bending/stretching
@@ -559,16 +559,17 @@ public:
 class AmoebaMultipoleForce::CFluxBondInfo {
 public:
     int particle1, particle2;
-    double length, jBond;
+    double length, jBond, cfluxDir;
 
     CFluxBondInfo()
       : particle1(-1)
       , particle2(-1)
       , length(0.0)
-      , jBond (0.0) {}
+      , jBond (0.0)
+      , cfluxDir (0.0)  {}
 
-    CFluxBondInfo(int particle1, int particle2, double length, double  jBond) 
-      : particle1(particle1), particle2(particle2), length(length), jBond(jBond) {}
+    CFluxBondInfo(int particle1, int particle2, double length, double  jBond, double cfluxDir) 
+      : particle1(particle1), particle2(particle2), length(length), jBond(jBond), cfluxDir(cfluxDir) {}
 };
 
 /**

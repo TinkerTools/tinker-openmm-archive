@@ -1,0 +1,11 @@
+# compiled files
+
+*.o
+*.mod
+*.x
+/bin
+/build
+/test-gpu
+bashrc.openmm
+
+

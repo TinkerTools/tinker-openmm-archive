@@ -667,6 +667,7 @@ private:
     bool hasInitializedNonbonded;
     CudaArray* CTTypes;
     CudaArray* apreBexp;
+    CudaArray* lambdas;
     CudaNonbondedUtilities* nonbonded;
 };
 

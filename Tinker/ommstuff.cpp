@@ -3041,12 +3041,20 @@ static void setupAmoebaCTForce (OpenMM_System* system, FILE* log) {
 
    for (ii = 0; ii < atoms__.n; ii++) {
       i = ctran__.jct[ii];
-      OpenMM_AmoebaCTForce_addParticle (amoebaCTForce,
-                           CTindex_ptr[ii], 
-                           OpenMM_KJPerKcal*(ctran__.apre[i-1]),
-                           (ctran__.bexp[i-1])/OpenMM_NmPerAngstrom);
+      if (mutant__.mut[ii] == 0) {
+         OpenMM_AmoebaCTForce_addParticle (amoebaCTForce, CTindex_ptr[ii], 
+                              OpenMM_KJPerKcal*(ctran__.apre[i-1]),
+                              (ctran__.bexp[i-1])/OpenMM_NmPerAngstrom, 1.0);
+         //printf("%i %f \n", CTindex_ptr[ii], ctran__.apre[i-1]); PASSED
+       } else {
+         OpenMM_AmoebaCTForce_addParticle (amoebaCTForce, CTindex_ptr[ii], 
+                              OpenMM_KJPerKcal*(ctran__.apre[i-1]),
+                              (ctran__.bexp[i-1])/OpenMM_NmPerAngstrom,
+                              mutant__.elambda);
+         //printf("%i %f \n", CTindex_ptr[ii], ctran__.apre[i-1]); PASSED
+       }
    }
-
+   //printf("%f \n", mutant__.elambda); PASSED
    setNullTerminator (ctran__.aprerule, 10, buffer);
    OpenMM_AmoebaCTForce_setApreCombiningRule (amoebaCTForce, buffer);
 
