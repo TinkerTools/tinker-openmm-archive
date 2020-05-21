@@ -6,8 +6,8 @@ unsigned int includeInteraction = (!isExcluded);
 
 if (atom2 < PADDED_NUM_ATOMS) {
    int pairK = CTTypes1 * NUM_CTPR_TYPES + CTTypes2;
-   real combinedLambda = (lambdas1 < lambdas2 ? lambdas1 : lambdas2);
-   //printf("%f %f %f \n", lambdas1, lambdas2, combinedLambda);
+   //real combinedLambda = (lambdas1 < lambdas2 ? lambdas1 : lambdas2); //scale intramolecular too
+   real combinedLambda = (lambdas1 == lambdas2 ? 1.0f : (lambdas1 < lambdas2 ? lambdas1 : lambdas2)); //scale intermolecular only
    real apre = apreBexp[pairK].x; 
    real bexp = apreBexp[pairK].y;
    apre = apre * combinedLambda;

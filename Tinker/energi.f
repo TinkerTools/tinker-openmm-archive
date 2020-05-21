@@ -28,10 +28,7 @@ c     ebt    stretch-torsion potential energy of the system
 c     eat    angle-torsion potential energy of the system
 c     ett    torsion-torsion potential energy of the system
 c     ev     van der Waals potential energy of the system
-CW!!!
 c     ect    charge transfer potential energy of the system
-CW!!!END
-
 c     ec     charge-charge potential energy of the system
 c     ecd    charge-dipole potential energy of the system
 c     ed     dipole-dipole potential energy of the system
@@ -52,9 +49,7 @@ c
       real*8 eit,et,ept
       real*8 ebt,eat,ett
       real*8 ev,ec,ecd
-CW!!!
       real*8 ect
-CW!!!END
       real*8 ed,em,ep
       real*8 er,es,elf
       real*8 eg,ex

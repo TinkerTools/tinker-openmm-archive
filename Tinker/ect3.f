@@ -169,6 +169,7 @@ c
                   end if
                end if
 
+               aprec = aprec*ctscale(k)
                if (rik2 .le. off2) then
                   rik = sqrt(rik2)
                   e = -aprec*1000.0d0*exp(-bexpc*rik)
@@ -314,6 +315,7 @@ c
                      end if
                   end if
                   
+                  aprec = aprec*ctscale(k)
                   if (rik2 .le. off2) then
                      rik = sqrt(rik2)
                      e = -aprec*1000.0d0*exp(-bexpc*rik)
@@ -546,6 +548,7 @@ c
                   end if
                end if
 
+               aprec = aprec*ctscale(k)
                if (rik2 .le. off2) then
                   rik = sqrt(rik2)
                   e = -aprec*1000.0d0*exp(-bexpc*rik)

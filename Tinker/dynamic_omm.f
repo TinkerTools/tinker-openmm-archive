@@ -61,19 +61,6 @@ c
       call getxyz
       call mechanic
 c
-c     multipole and polarization are computed together in OpenMM
-c
-      if (use_mpole .and. .not.use_polar .or.
-     &       .not.use_mpole .and. use_polar) then
-         use_mpole = .true.
-         use_polar = .true.
-         use_cflux = .true.
-         call kmpole
-         call kpolar
-         call kcflux
-         call mutate
-      end if
-c
 c     initialize the temperature, pressure, integrator and GPU ID
 c
       kelvin = 0.0d0
@@ -428,10 +415,10 @@ c
       use bound
       use boxes
       use cell
-      use cflux
       use charge
       use chgpot
       use couple
+      use cflux
       use ctran
       use deriv
       use energi
@@ -511,7 +498,6 @@ c
       call set_energi_data (esum,eb,ea,eba,eub,eaa,eopb,eopd,eid,eit,
      &                      et,ept,ebt,eat,ett,ev,ec,ecd,ed,em,ep,er,
      &                      es,elf,eg,ex,ect)
-     
       call set_ewald_data (aewald,boundary)
       call set_freeze_data (nrat,nratx,iratx,kratx,irat,rateps,
      &                      krat,use_rattle,ratimage)

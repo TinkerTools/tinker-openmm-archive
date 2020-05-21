@@ -310,15 +310,16 @@ c
        
       ct2scale = 0.0d0
       ct3scale = 0.0d0
-      ct4scale = 0.0d0
-      ct5scale = 0.0d0
+      ct4scale = 1.0d0
+      ct5scale = 1.0d0
       aprerule = "GEOMETRIC"
       bexprule = "ARITHMETIC"
 c   
 c     set default control parameters for charge flux 
 c
       dobondcflux = .false.
-      doanglecflux = .false.      
+      doanglecflux = .false.
+            
 c
 c     set default control parameters for charge-charge terms
 c

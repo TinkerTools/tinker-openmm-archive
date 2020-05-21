@@ -3019,10 +3019,10 @@ static void setupAmoebaCTForce (OpenMM_System* system, FILE* log) {
    if (potent__.use_ct == 1) {
       ok_to_go = true;
       if (ctran__.ct2scale != 0.0 || ctran__.ct3scale != 0.0 ||
-          ctran__.ct4scale != 0.0 || ctran__.ct5scale != 0.0) ok_to_go = false;
+          ctran__.ct4scale != 1.0 || ctran__.ct5scale != 1.0) ok_to_go = false;
    }
    if (!ok_to_go) {
-      fprintf (stderr, " EXIT -- ct2345scales should be 0.\n");
+      fprintf (stderr, " EXIT -- ct2345scales should be 0011.\n");
       exit (-1);
    }
 
@@ -5197,6 +5197,7 @@ int openmm_test_ (void) {
    if (potent__.use_dipole)  countActiveForces++;
    if (potent__.use_mpole)  countActiveForces++;
    if (potent__.use_polar)  countActiveForces++;
+   if (potent__.use_cflux)  countActiveForces++;
    if (potent__.use_rxnfld)  countActiveForces++;
    if (potent__.use_solv)  countActiveForces++;
    if (potent__.use_metal)  countActiveForces++;

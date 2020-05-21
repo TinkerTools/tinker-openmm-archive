@@ -3044,10 +3044,10 @@ void CudaCalcAmoebaCTForceKernel::initialize(const System& system, const AmoebaC
     vector<vector<int> > exclusions(cu.getNumAtoms());
     for (int i = 0; i < force.getNumParticles(); i++) {
         int CTType;
-        double apre, bexp, elambda;
-        force.getParticleParameters(i,CTType, apre, bexp, elambda);
+        double apre, bexp, ctlambda;
+        force.getParticleParameters(i,CTType, apre, bexp, ctlambda);
         CTTypesVec[i] = CTType;
-        lambdasVec[i] = static_cast<float>(elambda);
+        lambdasVec[i] = static_cast<float>(ctlambda);
         force.getParticleExclusions(i, exclusions[i]);
         exclusions[i].push_back(i);
     }
@@ -3123,10 +3123,10 @@ void CudaCalcAmoebaCTForceKernel::copyParametersToContext(ContextImpl& context, 
     vector<vector<int> > exclusions(cu.getNumAtoms());
     for (int i = 0; i < force.getNumParticles(); i++) {
         int CTType;
-        double apre, bexp, elambda;
-        force.getParticleParameters(i, CTType, apre, bexp, elambda);
+        double apre, bexp, ctlambda;
+        force.getParticleParameters(i, CTType, apre, bexp, ctlambda);
         CTTypesVec[i] = CTType;
-        lambdasVec[i] = static_cast<float>(elambda);
+        lambdasVec[i] = static_cast<float>(ctlambda);
         force.getParticleExclusions(i, exclusions[i]);
         exclusions[i].push_back(i);
     }
