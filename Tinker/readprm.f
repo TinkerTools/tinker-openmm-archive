@@ -39,6 +39,7 @@ c
       use korbs
       use kpitor
       use kpolr
+      use kcps
       use kstbnd
       use ksttor
       use ktorsn
@@ -81,7 +82,7 @@ c
       real*8 at4,at5,at6
       real*8 an,pr,ds,dk
       real*8 vd,cg,dp,ps
-      real*8 fc,bd,dl,el
+      real*8 fc,fj,bd,dl,el
       real*8 pt,pol,thl,dird
       real*8 iz,rp,ss,ts
       real*8 abc,cba
@@ -101,7 +102,7 @@ c
       character*20 keyword
       character*240 record
       character*240 string
-c
+
 c
 c     initialize the counters for some parameter types
 c
@@ -309,13 +310,12 @@ c
             alphaf = 0.0d0
             coref = 0.0d0
             string = record(next:120)
-            read (string,*,err=108,end=108)  ia,alphaf,coref
+            read (string,*,err=108,end=108) ia,alphaf,coref
   108       continue
             if (ia .ne. 0) then
                apena(ia) = alphaf
                apenc(ia) = coref
             end if
-
 c
 c     bond stretching parameters
 c
@@ -343,11 +343,10 @@ c
          else if (keyword(1:8) .eq. 'CFLUX-B ') then
             ia = 0
             ib = 0
-            bd = 0.0d0
-            fc = 0.0d0
+            fj = 0.0d0
             dobondcflux = .true.
             string = record(next:240)
-            read (string,*,err=115,end=115)  ia,ib,bd,fc
+            read (string,*,err=115,end=115) ia,ib,fj
   115       continue
             call numeral (ia,pa,size)
             call numeral (ib,pb,size)
@@ -357,8 +356,7 @@ c
             else
                kcfb(nbcf) = pb//pa
             end if
-            beq(nbcf) = bd
-            jbnd(nbcf) = fc
+            jbnd(nbcf) = fj
 c
 c     bond stretching parameters for 5-membered rings
 c
@@ -477,17 +475,13 @@ c
             ia = 0
             ib = 0
             ic = 0
-            tta = 0.0d0
             jtt1 = 0.0d0
             jtt2 = 0.0d0
-            bd10 = 0.0d0
-            bd20 = 0.0d0
             jb1 = 0.0d0
             jb2 = 0.0d0
             doanglecflux = .true.
             string = record(next:240)
-            read (string,*,err=165,end=165)  ia,ib,ic,tta,jtt1,jtt2,
-     &          bd10,jb1,bd20,jb2
+            read (string,*,err=165,end=165)ia,ib,ic,jtt1,jtt2,jb1,jb2
   165       continue
             call numeral (ia,pa,size)
             call numeral (ib,pb,size)
@@ -498,13 +492,10 @@ c
             else
                kcfa(nacf) = pc//pb//pa
             end if
-            theta0l(nacf) = tta
             jtheta1l(nacf) = jtt1 
             jtheta2l(nacf) = jtt2 
             jbp1l(nacf) = jb1 
             jbp2l(nacf) = jb2 
-            bond1l(nacf) = bd10 
-            bond2l(nacf) = bd20
 c
 c     angle bending parameters for 5-membered rings
 c

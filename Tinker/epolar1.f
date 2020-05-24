@@ -217,7 +217,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -278,7 +277,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -813,7 +811,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -880,7 +877,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -1664,7 +1660,7 @@ c
 !$OMP& d4scale,u1scale,u2scale,u3scale,u4scale,nelst,elst,use_bounds,
 !$OMP& off2,f,molcule,coptmax,copm,uopt,uoptp,poltyp)
 !$OMP& shared (ep,einter,dep,vir,ufld,dufld,use_cflux,
-!$OMP& dirdamp,pchrgflux,damppot,ibnd,nbond,iang,nangle) 
+!$OMP& dirdamp,damppot,ibnd,nbond,iang,nangle) 
 !$OMP& firstprivate(pscale,dscale,uscale)
 !$OMP DO reduction(+:ep,einter,dep,vir,ufld,dufld,
 !$OMP& damppot) schedule(guided)
@@ -1680,7 +1676,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -1742,7 +1737,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -2705,7 +2699,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -2766,7 +2759,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -3423,7 +3415,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -3490,7 +3481,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -4557,7 +4547,7 @@ c
 !$OMP& i14,n15,i15,np11,ip11,np12,ip12,np13,ip13,np14,ip14,p2scale,
 !$OMP& p3scale,p4scale,p41scale,p5scale,d1scale,d2scale,d3scale,
 !$OMP& d4scale,u1scale,u2scale,u3scale,u4scale,nelst,elst,use_bounds,
-!$OMP& use_cflux,ibnd,nbond,nangle,iang,pchrgflux,
+!$OMP& use_cflux,ibnd,nbond,nangle,iang,
 !$OMP& off2,f,aewald,molcule,coptmax,copm,uopt,uoptp,poltyp)
 !$OMP& shared (ep,einter,dep,vir,ufld,dufld,
 !$OMP& dirdamp,damppot)
@@ -4576,7 +4566,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -4638,7 +4627,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -5531,7 +5519,7 @@ c
             decfbeprx(i) = 0.0d0
             decfbepry(i) = 0.0d0
             decfbeprz(i) = 0.0d0
-            cmp(1,i) = rpole(1,i)+ pchrgflux(i)
+            cmp(1,i) = rpole(1,i)
             cmp(2,i) = rpole(2,i)
             cmp(3,i) = rpole(3,i)
             cmp(4,i) = rpole(4,i)

@@ -402,9 +402,9 @@ c
 c     OpenMP directives for the major loop structure
 c
 !$OMP PARALLEL default(private) shared(nct,ict,
-!$OMP& jct,use,nctlst,ctlst,n12,n13,n14,n15,
+!$OMP& jct,use,x,y,z,nctlst,ctlst,n12,n13,n14,n15,
 !$OMP& i12,i13,i14,i15,ct2scale,ct3scale,ct4scale,ct5scale,
-!$OMP& use_group,off2,apre,bexp,x,y,z,aprerule,bexprule,mut,
+!$OMP& use_group,off2,apre,bexp,aprerule,bexprule,mut,elambda,
 !$OMP& cut2,c0,c1,c2,c3,c4,c5) firstprivate(ctscale)
 !$OMP& shared(ect)
 !$OMP DO reduction(+:ect) schedule(guided)
@@ -496,7 +496,6 @@ c
 c
 c     increment the overall CT energy components
 c
-                  if (i .eq. k) e = 0.5d0 * e
                   ect = ect + e
                end if
             end if

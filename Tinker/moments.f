@@ -22,7 +22,6 @@ c
       use atomid
       use atoms
       use bound
-      use cflux
       use charge
       use dipole
       use limits
@@ -44,7 +43,6 @@ c
       real*8, allocatable :: xcm(:)
       real*8, allocatable :: ycm(:)
       real*8, allocatable :: zcm(:)
-      real*8, allocatable :: chrge(:)
       real*8 a(3,3),b(3,3)
 c
 c
@@ -72,18 +70,12 @@ c     maintain periodic boundaries and neighbor lists
 c
       if (use_bounds .and. .not.use_rigid)  call bounds
       if (use_clist .or. use_mlist)  call nblist
-      if (use_cflux)  call chrgflux
 c
 c     perform dynamic allocation of some local arrays
 c
       allocate (xcm(n))
       allocate (ycm(n))
       allocate (zcm(n))
-      allocate (chrge(n))
-
-      do i = 1, n
-        chrge(i) = 0.0d0
-      end do
 c
 c     find the center of mass of the set of active atoms
 c
@@ -112,7 +104,6 @@ c
 c
 c     set the multipole moment components due to partial charges
 c
-CW: not used      
       do i = 1, nion
          k = iion(i)
          if (use(k)) then
@@ -134,7 +125,6 @@ CW: not used
 c
 c     set the multipole moment components due to bond dipoles
 c
-CW: not used      
       do i = 1, ndipole
          j = idpl(1,i)
          k = idpl(2,i)
@@ -189,28 +179,27 @@ c
       do i = 1, npole
          k = ipole(i)
          if (use(k)) then
-            chrge(i) = rpole(1,i) + pchrgflux(i)
-            netchg = netchg + chrge(i) 
-            xdpl = xdpl + xcm(k)*chrge(i) + rpole(2,i)
-            ydpl = ydpl + ycm(k)*chrge(i) + rpole(3,i)
-            zdpl = zdpl + zcm(k)*chrge(i) + rpole(4,i)
-            xxqdp = xxqdp + xcm(k)*xcm(k)*chrge(i)
+            netchg = netchg + rpole(1,i)
+            xdpl = xdpl + xcm(k)*rpole(1,i) + rpole(2,i)
+            ydpl = ydpl + ycm(k)*rpole(1,i) + rpole(3,i)
+            zdpl = zdpl + zcm(k)*rpole(1,i) + rpole(4,i)
+            xxqdp = xxqdp + xcm(k)*xcm(k)*rpole(1,i)
      &                 + 2.0d0*xcm(k)*rpole(2,i)
-            xyqdp = xyqdp + xcm(k)*ycm(k)*chrge(i)
+            xyqdp = xyqdp + xcm(k)*ycm(k)*rpole(1,i)
      &                 + xcm(k)*rpole(3,i) + ycm(k)*rpole(2,i)
-            xzqdp = xzqdp + xcm(k)*zcm(k)*chrge(i)
+            xzqdp = xzqdp + xcm(k)*zcm(k)*rpole(1,i)
      &                 + xcm(k)*rpole(4,i) + zcm(k)*rpole(2,i)
-            yxqdp = yxqdp + ycm(k)*xcm(k)*chrge(i)
+            yxqdp = yxqdp + ycm(k)*xcm(k)*rpole(1,i)
      &                 + ycm(k)*rpole(2,i) + xcm(k)*rpole(3,i)
-            yyqdp = yyqdp + ycm(k)*ycm(k)*chrge(i)
+            yyqdp = yyqdp + ycm(k)*ycm(k)*rpole(1,i)
      &                 + 2.0d0*ycm(k)*rpole(3,i)
-            yzqdp = yzqdp + ycm(k)*zcm(k)*chrge(i)
+            yzqdp = yzqdp + ycm(k)*zcm(k)*rpole(1,i)
      &                 + ycm(k)*rpole(4,i) + zcm(k)*rpole(3,i)
-            zxqdp = zxqdp + zcm(k)*xcm(k)*chrge(i)
+            zxqdp = zxqdp + zcm(k)*xcm(k)*rpole(1,i)
      &                 + zcm(k)*rpole(2,i) + xcm(k)*rpole(4,i)
-            zyqdp = zyqdp + zcm(k)*ycm(k)*chrge(i)
+            zyqdp = zyqdp + zcm(k)*ycm(k)*rpole(1,i)
      &                 + zcm(k)*rpole(3,i) + ycm(k)*rpole(4,i)
-            zzqdp = zzqdp + zcm(k)*zcm(k)*chrge(i)
+            zzqdp = zzqdp + zcm(k)*zcm(k)*rpole(1,i)
      &                 + 2.0d0*zcm(k)*rpole(4,i)
          end if
       end do
@@ -220,7 +209,6 @@ c
       deallocate (xcm)
       deallocate (ycm)
       deallocate (zcm)
-      deallocate (chrge)
 c
 c     convert the quadrupole from traced to traceless form
 c

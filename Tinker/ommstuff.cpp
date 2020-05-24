@@ -227,8 +227,8 @@ struct {
    double* jb;
    double* b0;
    double* theta0;
-   double* bond1;
-   double* bond2;
+   double* bp1;
+   double* bp2;
    double* jbp1;
    double* jbp2;
    double* jtheta1;
@@ -561,8 +561,6 @@ struct {
    double* copt;
    double* copm;
    double* polarity;
-   double* penalpha;
-   double* pencore;
    double* thole;
    double* dirdamp;
    double* pdamp;
@@ -583,6 +581,12 @@ struct {
    double* uexact;
    int* douind;
 } polar__;
+
+struct {
+   double* penalpha;
+   double* pencore;
+} chgpen__;
+
 
 struct {
    int maxp11;
@@ -1066,13 +1070,13 @@ void set_boxes_data_ (double* xbox, double* ybox, double* zbox,
 }
 
 
-void set_cflux_data_ (double* jb, double* b0, double* theta0, double* bond1,  double* bond2, double* jbp1,
+void set_cflux_data_ (double* jb, double* b0, double* theta0, double* bp1,  double* bp2, double* jbp1,
                       double* jbp2, double* jtheta1, double* jtheta2, int* dobondcflux, int* doanglecflux) {
    cflux__.jb = jb;
    cflux__.b0 = b0;
    cflux__.theta0 = theta0;
-   cflux__.bond1 = bond1;
-   cflux__.bond2 = bond2;
+   cflux__.bp1 = bp1;
+   cflux__.bp2 = bp2;
    cflux__.jbp1 = jbp1;
    cflux__.jbp2 = jbp2;
    cflux__.jtheta1 = jtheta1;
@@ -1456,7 +1460,7 @@ void set_pme_data_ (int* nfft1, int* nfft2, int* nfft3, int* bsorder,
 
 void set_polar_data_ (int* maxopt, int* npolar, int* coptmax, int*optlevel,
                       double* copt, double* copm, double* polarity,
-                      double* penalpha, double* pencore, double* thole, 
+                      double* thole, 
                       double* dirdamp,  double* pdamp, double* udir, 
                       double* udirp, double* udirs, double* udirps,
                       double* uind, double* uinp, double* uinds,
@@ -1471,8 +1475,6 @@ void set_polar_data_ (int* maxopt, int* npolar, int* coptmax, int*optlevel,
    polar__.copt = copt;
    polar__.copm = copm;
    polar__.polarity = polarity;
-   polar__.penalpha = penalpha;
-   polar__.pencore = pencore;
    polar__.thole = thole;
    polar__.dirdamp = dirdamp;
    polar__.pdamp = pdamp;
@@ -1492,6 +1494,12 @@ void set_polar_data_ (int* maxopt, int* npolar, int* coptmax, int*optlevel,
    polar__.foptp = foptp;
    polar__.uexact = uexact;
    polar__.douind = douind;
+}
+
+
+void set_chgpen_data_ (double* penalpha, double* pencore) {
+   chgpen__.penalpha = penalpha;
+   chgpen__.pencore = pencore;
 }
 
 void set_polgrp_data_ (int* maxp11, int* maxp12, int* maxp13, int* maxp14,
@@ -3189,20 +3197,29 @@ static void setupAmoebaMultipoleForce (OpenMM_System* system, FILE* log) {
       cfDir = getCFluxDirection(atom1, atom2);
       //printf("atom1, atom2, %i %i %f \n", atom1, atom2, cfDir);
       // [atom1 atom2 b0 jb cfDir] for each bond
+      //OpenMM_AmoebaMultipoleForce_addCFluxBond (amoebaMultipoleForce, 
+      //          atom1, atom2, cflux__.b0[ii]*OpenMM_NmPerAngstrom,
+      //          jParameterConversion*cflux__.jb[ii], cfDir);
+
       OpenMM_AmoebaMultipoleForce_addCFluxBond (amoebaMultipoleForce, 
-                atom1, atom2, cflux__.b0[ii]*OpenMM_NmPerAngstrom,
+                atom1, atom2, bndstr__.bl[ii]*OpenMM_NmPerAngstrom,
                 jParameterConversion*cflux__.jb[ii], cfDir);
       bondPtr += 2;
    }
    // pass cflux angle parameters to openmm
    angleIndexPtr = angbnd__.iang;
-   // [atom1 atom2 atom3 theta0 jtheta1 jtheta2 bond1 jbp1 bond2 jbp2] for each angle
+   // [atom1 atom2 atom3 theta0 jtheta1 jtheta2 bp1 jbp1 bp2 jbp2] for each angle
    for (ii = 0; ii < angbnd__.nangle; ii++) {
+      //OpenMM_AmoebaMultipoleForce_addCFluxAngle (amoebaMultipoleForce, (*angleIndexPtr)-1,
+      //          *(angleIndexPtr+1)-1, *(angleIndexPtr+2)-1, 
+      //          cflux__.theta0[ii], cflux__.jtheta1[ii], cflux__.jtheta2[ii],
+      //          cflux__.bp1[ii]*OpenMM_NmPerAngstrom, jParameterConversion*cflux__.jbp1[ii], 
+      //          cflux__.bp2[ii]*OpenMM_NmPerAngstrom, jParameterConversion*cflux__.jbp2[ii]);
       OpenMM_AmoebaMultipoleForce_addCFluxAngle (amoebaMultipoleForce, (*angleIndexPtr)-1,
                 *(angleIndexPtr+1)-1, *(angleIndexPtr+2)-1, 
-                cflux__.theta0[ii], cflux__.jtheta1[ii], cflux__.jtheta2[ii],
-                cflux__.bond1[ii]*OpenMM_NmPerAngstrom, jParameterConversion*cflux__.jbp1[ii], 
-                cflux__.bond2[ii]*OpenMM_NmPerAngstrom, jParameterConversion*cflux__.jbp2[ii]);
+                angbnd__.anat[ii], cflux__.jtheta1[ii], cflux__.jtheta2[ii],
+                cflux__.bp1[ii]*OpenMM_NmPerAngstrom, jParameterConversion*cflux__.jbp1[ii], 
+                cflux__.bp2[ii]*OpenMM_NmPerAngstrom, jParameterConversion*cflux__.jbp2[ii]);
       angleIndexPtr += 4;
    }
    //
@@ -3256,8 +3273,8 @@ static void setupAmoebaMultipoleForce (OpenMM_System* system, FILE* log) {
                                 *(mpole__.zaxis+ii)-1,
                                 *(mpole__.xaxis+ii)-1,
                                 *(mpole__.yaxis+ii)-1,
-                                polar__.penalpha[ii]/OpenMM_NmPerAngstrom,
-                                polar__.pencore[ii],
+                                chgpen__.penalpha[ii]/OpenMM_NmPerAngstrom,
+                                chgpen__.pencore[ii],
                                 polar__.thole[ii],
                                 polar__.dirdamp[ii],
                                 polar__.pdamp[ii]*dampingFactorConversion,

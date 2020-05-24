@@ -26,19 +26,21 @@ c
       use cflux 
       use inform
       use iounit
+      use kangs
+      use kbonds
       use kcfluxes
       use keys
       use potent
       use usage
       implicit none
-      integer i,j
+      integer i,j,k
       integer ia,ib,ic,ita,itb,itc
       integer na,nb
       integer size,next
-      real*8 fc,bd
-      real*8 tta,jtt1,jtt2,bd10,bd20,jb1,jb2
+      real*8 fc,bd,fj
+      real*8 jtt1,jtt2,jb1,jb2
       character*4 pa,pb,pc
-      character*8 blank2,pt2
+      character*8 blank2,pt2,pt,ptab,ptbc
       character*12 blank3,pt3
       character*20 keyword
       character*240 record
@@ -54,14 +56,35 @@ c
          record = keyline(i)
          call gettext (record,keyword,next)
          call upcase (keyword)
-         if (keyword(1:8) .eq. 'CFLUX-B ') then
+         if (keyword(1:5) .eq. 'BOND ') then
             ia = 0
             ib = 0
-            bd = 0.0d0
             fc = 0.0d0
+            bd = 0.0d0
+            string = record(next:240)
+            read (string,*,err=5,end=5)  ia,ib,fc,bd
+   5       continue
+            call numeral (ia,pa,size)
+            call numeral (ib,pb,size)
+            if (ia .le. ib) then
+               pt = pa//pb
+            else
+               pt = pb//pa
+            end if
+            do j = 1, maxnb
+               if (kb(j).eq.blank2 .or. kb(j).eq.pt) then
+                  blen(j) = bd
+                  goto 8 
+               end if
+            end do
+   8       continue
+         else if (keyword(1:8) .eq. 'CFLUX-B ') then
+            ia = 0
+            ib = 0
+            fj = 0.0d0
             dobondcflux = .true.
             string = record(next:240)
-            read (string,*,err=10,end=10)  ia,ib,bd,fc
+            read (string,*,err=10,end=10) ia,ib,fj
    10       continue
             call numeral (ia,pa,size)
             call numeral (ib,pb,size)
@@ -73,8 +96,7 @@ c
             do j = 1, maxnbcf
                if (kcfb(j).eq.blank2 .or. kcfb(j).eq.pt2) then
                   kcfb(j) = pt2
-                  jbnd(j) = fc
-                  beq(j) = bd
+                  jbnd(j) = fj
                   goto 15
                end if
             end do
@@ -83,17 +105,13 @@ c
             ia = 0
             ib = 0
             ic = 0
-            tta = 0.0d0
             jtt1 = 0.0d0
             jtt2 = 0.0d0
-            bd10 = 0.0d0
-            bd20 = 0.0d0
             jb1 = 0.0d0
             jb2 = 0.0d0
             doanglecflux = .true.
             string = record(next:240)
-            read (string,*,err=20,end=20)  ia,ib,ic,tta,jtt1,jtt2,
-     &          bd10,jb1,bd20,jb2
+            read (string,*,err=20,end=20) ia,ib,ic,jtt1,jtt2,jb1,jb2
   20        continue
             call numeral (ia,pa,size)
             call numeral (ib,pb,size)
@@ -103,16 +121,14 @@ c
             else
                pt3 = pc//pb//pa
             end if
+
             do j = 1, maxnacf
                if (kcfa(j).eq.blank3 .or. kcfa(j).eq.pt3) then
                   kcfa(j) = pt3
-                  theta0l(j) = tta
                   jtheta1l(j) = jtt1 
                   jtheta2l(j) = jtt2 
                   jbp1l(j) = jb1 
                   jbp2l(j) = jb2 
-                  bond2l(j) = bd10 
-                  bond2l(j) = bd20
                   goto 25 
                end if
             end do
@@ -138,27 +154,24 @@ c     perform dynamic allocation of some global arrays
 c
       if (allocated(b0))  deallocate (b0)
       if (allocated(jb))  deallocate (jb)
-      allocate (b0(nbond))
-      allocate (jb(nbond))
-c
-c     perform dynamic allocation of some global arrays
-c
       if (allocated(theta0))  deallocate (theta0)
-      if (allocated(bond1))  deallocate (bond1)
-      if (allocated(bond2))  deallocate (bond2)
+      if (allocated(bp1))  deallocate (bp1)
+      if (allocated(bp2))  deallocate (bp2)
       if (allocated(jbp1))  deallocate (jbp1)
       if (allocated(jbp2))  deallocate (jbp2)
       if (allocated(jtheta1))  deallocate (jtheta1)
       if (allocated(jtheta2))  deallocate (jtheta2)
+      allocate (b0(nbond))
+      allocate (jb(nbond))
       allocate (theta0(nangle))
-      allocate (bond1(nangle))
-      allocate (bond2(nangle))
+      allocate (bp1(nangle))
+      allocate (bp2(nangle))
       allocate (jbp1(nangle))
       allocate (jbp2(nangle))
       allocate (jtheta1(nangle))
       allocate (jtheta2(nangle))
 c
-c     assign ideal bond length and force constant for each bond
+c     assign bond stretching parameters for each bond
 c
       do i = 1, nbond
          ia = ibnd(1,i)
@@ -175,12 +188,8 @@ c
          end if
          b0(i) = 0.0d0
          jb(i) = 0.0d0
-c
-c     assign bond stretching parameters for each bond
-c
          do j = 1, nb
            if (kcfb(j) .eq. pt2) then
-              b0(i) = beq(j)
               jb(i) = jbnd(j)
            end if
          end do
@@ -203,28 +212,45 @@ c
          else
             pt3 = pc//pb//pa
          end if
-         theta0(i) = 0.0d0
-         bond1(i) = 0.0d0
-         bond2(i) = 0.0d0
+
+         if (ita .le. itb) then
+            ptab = pa//pb
+         else
+            ptab = pb//pa
+         end if
+
+         if (itb .le. itc) then
+            ptbc = pb//pc
+         else
+            ptbc = pc//pb
+         end if
+
+         bp1(i) = 0.0d0
+         bp2(i) = 0.0d0
          jbp1(i) = 0.0d0
          jbp2(i) = 0.0d0
          jtheta1(i) = 0.0d0
          jtheta2(i) = 0.0d0
          do j = 1, na
            if (kcfa(j) .eq. pt3) then
-             theta0(i) = theta0l(j) 
-             bond1(i) = bond1l(j) 
-             bond2(i) = bond2l(j)
-             jbp1(i) = jbp1l(j) 
-             jbp2(i) = jbp2l(j)
              jtheta1(i) =jtheta1l(j)  
              jtheta2(i) =jtheta2l(j)  
+             jbp1(i) = jbp1l(j) 
+             jbp2(i) = jbp2l(j)
            end if
+           do k = 1, nbond
+              if (kb(k) .eq. ptab) then
+                 bp1(i) = blen(k)
+              end if
+              if (kb(k) .eq. ptbc) then
+                 bp2(i) = blen(k)
+              end if
+           end do
          end do
       end do
 c
 c     turn off the charge flux if bond and angle are not used 
 c
-      if (nbond .eq. 0 .and. nangle .eq. 0)  use_cflux = .false.
+      if (nb .eq. 0 .and. na .eq. 0)  use_cflux = .false.
       return
       end

@@ -627,10 +627,6 @@ c
       call switch (mode)
 
 c
-c     call charge flux
-c
-      if (use_cflux) call chrgflux
-c
 c     perform dynamic allocation of some local arrays
 c
       allocate (dscale(n))
@@ -651,7 +647,6 @@ c
          pti = thole(i)
          pdiri = dirdamp(i)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -702,7 +697,6 @@ c
                if (r2 .le. off2) then
                   r = sqrt(r2)
                   ck = rpole(1,k)
-                  ck = ck + pchrgflux(k)
                   dkx = rpole(2,k)
                   dky = rpole(3,k)
                   dkz = rpole(4,k)
@@ -799,7 +793,6 @@ c
             pti = thole(i)
             pdiri = dirdamp(i)
             ci = rpole(1,i)
-            ci = ci + pchrgflux(i)
             dix = rpole(2,i)
             diy = rpole(3,i)
             diz = rpole(4,i)
@@ -836,7 +829,6 @@ c
             do k = i, npole
                kk = ipole(k)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -1312,10 +1304,6 @@ c
       mode = 'MPOLE'
       call switch (mode)
 c
-c     call charge flux
-c
-      if (use_cflux) call chrgflux
-c
 c     perform dynamic allocation of some local arrays
 c
       allocate (dscale(n))
@@ -1336,7 +1324,6 @@ c
          pti = thole(i)
          pdiri = dirdamp(i)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -1388,7 +1375,6 @@ c
                if (r2 .le. off2) then
                   r = sqrt(r2)
                   ck = rpole(1,k)
-                  ck = ck + pchrgflux(k) 
                   dkx = rpole(2,k)
                   dky = rpole(3,k)
                   dkz = rpole(4,k)
@@ -1883,15 +1869,10 @@ c
       allocate (cphi(10,npole))
       allocate (fphi(20,npole))
 c
-c     call charge flux
-c
-      if (use_cflux) call chrgflux
-c
 c     copy multipole moments and coordinates to local storage
 c
       do i = 1, npole
          cmp(1,i) = rpole(1,i)
-         cmp(1,i) = cmp(1,i) + pchrgflux(i) 
          cmp(2,i) = rpole(2,i)
          cmp(3,i) = rpole(3,i)
          cmp(4,i) = rpole(4,i)
@@ -2090,10 +2071,6 @@ c
          dscale(i) = 1.0d0
       end do
 c
-c     call charge flux
-c
-      if (use_cflux) call chrgflux
-c
 c     compute the real space portion of the Ewald summation
 c
       do i = 1, npole-1
@@ -2102,7 +2079,6 @@ c
          pti = thole(i)
          pdiri = dirdamp(i)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -2155,7 +2131,6 @@ c
                rr5 = rr2 * rr3
                rr7 = rr2 * rr5
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -2287,7 +2262,6 @@ c
             pti = thole(i)
             pdiri = dirdamp(i)
             ci = rpole(1,i)
-            ci = ci + pchrgflux(i) 
             dix = rpole(2,i)
             diy = rpole(3,i)
             diz = rpole(4,i)
@@ -2324,7 +2298,6 @@ c
             do k = i, npole
                kk = ipole(k)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -2603,16 +2576,11 @@ c
          end do
       end do
 c
-c     call charge flux
-c
-      if (use_cflux) call chrgflux
-c
 c     OpenMP directives for the major loop structure
 c
 !$OMP PARALLEL default(private) shared(n,npole,ipole,x,y,z,pdamp,thole,
 !$OMP& rpole,p2scale,p3scale,p4scale,p41scale,p5scale,d1scale,d2scale,
 !$OMP& d3scale,d4scale,u1scale,u2scale,u3scale,u4scale,n12,i12,n13,
-!$OMP& pchrgflux,
 !$OMP& i13,n14,i14,n15,i15,np11,ip11,np12,ip12,np13,ip13,np14,ip14,
 !$OMP& nelst,elst,off2,aewald,aesq2,aesq2n,poltyp,ntpair,tindex,
 !$OMP& tdipdip,toffset,maxlocal,field,fieldp,fieldt,fieldtp,maxelst,
@@ -2636,7 +2604,6 @@ c
          pti = thole(i)
          pdiri = dirdamp(i)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -2694,7 +2661,6 @@ c
                rr5 = rr2 * rr3
                rr7 = rr2 * rr5
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)

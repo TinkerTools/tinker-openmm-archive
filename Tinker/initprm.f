@@ -39,6 +39,7 @@ c
       use korbs
       use kpitor
       use kpolr
+      use kcps
       use kstbnd
       use ksttor
       use ktorsn

@@ -1814,7 +1814,7 @@ c     assign only the permanent multipoles to the PME grid
 c     and perform the 3-D FFT forward transformation
 c
          do i = 1, npole
-            cmp(1,i) = rpole(1,i)+ pchrgflux(i)
+            cmp(1,i) = rpole(1,i)
             cmp(2,i) = rpole(2,i)
             cmp(3,i) = rpole(3,i)
             cmp(4,i) = rpole(4,i)

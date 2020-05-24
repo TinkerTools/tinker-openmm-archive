@@ -417,6 +417,7 @@ c
       use cell
       use charge
       use chgpot
+      use chgpen
       use couple
       use cflux
       use ctran
@@ -486,7 +487,7 @@ c
      &                     octahedron,spacegrp)
       call set_cell_data (ncell,icell,xcell,ycell,zcell,
      &                    xcell2,ycell2,zcell2)
-      call set_cflux_data (jb, b0, theta0, bond1, bond2, jbp1, jbp2, 
+      call set_cflux_data (jb, b0, theta0, bp1, bp2, jbp1, jbp2, 
      &                    jtheta1,jtheta2, dobondcflux, doanglecflux)
       call set_charge_data (nion,iion,jion,kion,pchg)
       call set_chgpot_data (electric,dielec,ebuffer,c2scale,c3scale,
@@ -533,10 +534,11 @@ c
      &                   bsmod2,bsmod3,bsbuild,thetai1,thetai2,
      &                   thetai3,qgrid,qfac)
       call set_polar_data (maxopt,npolar,coptmax,optlevel,copt,copm,
-     &                    polarity,penalpha,pencore,thole,dirdamp,
+     &                    polarity,thole,dirdamp,
      &                    pdamp,udir,udirp,udirs,udirps,uind,uinp,uinds,
      &                    uinps,uopt,uoptp,uopts,uoptps,fopt,foptp,
      &                    uexact,douind)
+      call set_chgpen_data (penalpha, pencore)
       call set_polgrp_data (maxp11,maxp12,maxp13,maxp14,np11,
      &                      np12,np13,np14,ip11,ip12,ip13,ip14)
       call set_polpot_data (politer,poleps,p2scale,p3scale,p4scale,

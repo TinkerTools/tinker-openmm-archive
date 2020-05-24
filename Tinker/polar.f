@@ -22,8 +22,6 @@ c     copm      coefficients for OPT incremental induced dipole moments
 c     polarity  dipole polarizability for each multipole site (Ang**3)
 c     thole     Thole polarizability damping value for each site
 c     dirdamp   direct polarizability damping value for each site
-c     penalpha  penetration damping value for each site
-c     pencore   penetration nuclei charge for each site
 c     pdamp     value of polarizability scale factor for each site
 c     udir      direct induced dipole components at each multipole site
 c     udirp     direct induced dipoles in field used for energy terms
@@ -52,8 +50,6 @@ c
       integer optlevel
       real*8, allocatable :: copt(:)
       real*8, allocatable :: dirdamp(:) 
-      real*8, allocatable :: penalpha(:) 
-      real*8, allocatable :: pencore(:) 
       real*8, allocatable :: copm(:)
       real*8, allocatable :: polarity(:)
       real*8, allocatable :: thole(:)

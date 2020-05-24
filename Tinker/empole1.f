@@ -60,7 +60,7 @@ c
       use bound
       use cell
       use cflux
-      use polar 
+      use chgpen 
       use chgpot
       use couple
       use deriv
@@ -210,7 +210,6 @@ c
       f = electric / dielec
       mode = 'MPOLE'
       call switch (mode)
-      if (use_cflux) call chrgflux
 c
 c     compute the multipole interaction energy and gradient
 c
@@ -223,7 +222,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -268,7 +266,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck+pchrgflux(k)
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -358,146 +355,181 @@ c
      &                     - 2.0d0*(qixx*qkxy+qixy*qkyy+qixz*qkyz
      &                             -qixy*qkxx-qiyy*qkxy-qiyz*qkxz)
 c
-c     read in charge penetration damping parameters
+c     charge penetration correction is used
 c
-               alphai = penalpha(type(ii))
-               alphak = penalpha(type(kk))
-               nuci = pencore(type(ii))
-               nuck = pencore(type(kk))
+               if (use_chgpen) then
+                  alphai = penalpha(ii)
+                  alphak = penalpha(kk)
+                  nuci = pencore(ii)
+                  nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
-               dampi = alphai*r
-               dampk = alphak*r
-               expdampi = exp(-dampi)
-               expdampk = exp(-dampk)
+                  dampi = alphai*r
+                  dampk = alphak*r
+                  expdampi = exp(-dampi)
+                  expdampk = exp(-dampk)
 c
 c     calculate one-site scale factors
 c
-               scalei(1) = 1.0d0 - expdampi
-               scalek(1) = 1.0d0 - expdampk
-               scalei(3) = 1.0d0 - (1.0d0 + dampi)*expdampi
-               scalek(3) = 1.0d0 - (1.0d0 +dampk)*expdampk
-               scalei(5) = 1.0d0 - (1.0d0 + dampi + 
-     &              (1.0d0/3.0d0)*dampi**2)*expdampi
-               scalek(5) = 1.0d0-(1.0d0 +dampk +
-     &              (1.0d0/3.0d0)*dampk**2)*expdampk
-               scalei(7) = 1.0d0-(1.0d0 + dampi + 0.4d0*dampi**2 +
-     &              (1.0d0/15.0d0)*dampi**3)*expdampi
-               scalek(7) = 1.0d0-(1.0d0 + dampk + 0.4d0*dampk**2 +
-     &              (1.0d0/15.0d0)*dampk**3)*expdampk
+                  scalei(1) = 1.0d0 - expdampi
+                  scalek(1) = 1.0d0 - expdampk
+                  scalei(3) = 1.0d0 - (1.0d0 + dampi)*expdampi
+                  scalek(3) = 1.0d0 - (1.0d0 +dampk)*expdampk
+                  scalei(5) = 1.0d0 - (1.0d0 + dampi + 
+     &                 (1.0d0/3.0d0)*dampi**2)*expdampi
+                  scalek(5) = 1.0d0-(1.0d0 +dampk +
+     &                 (1.0d0/3.0d0)*dampk**2)*expdampk
+                  scalei(7) = 1.0d0-(1.0d0 + dampi + 0.4d0*dampi**2 +
+     &                 (1.0d0/15.0d0)*dampi**3)*expdampi
+                  scalek(7) = 1.0d0-(1.0d0 + dampk + 0.4d0*dampk**2 +
+     &                 (1.0d0/15.0d0)*dampk**3)*expdampk
 c
 c     calculate two-site scale factors
 c
-               if (alphai .ne. alphak) then
-                  termi = alphak**2/(alphak**2 - alphai**2)
-                  termk = alphai**2/(alphai**2 - alphak**2)
-                  scaleik(1) =1.0d0-termi*expdampi -termk*expdampk
-                  scaleik(3) =1.0d0-termi*(1.0d0 +dampi)*expdampi
-     &                        - termk*(1.0d0 + dampk)*expdampk
-                  scaleik(5) = 1.0d0 - termi*(1.0d0 + dampi +
-     &                 (1.0d0/3.0d0)*dampi**2)*expdampi -
-     &                 termk*(1.0d0 + dampk +
-     &                 (1.0d0/3.0d0)*dampk**2)*expdampk
-                  scaleik(7) = 1.0d0 - termi*(1.0d0 + dampi +
-     &                 0.4d0*dampi**2 + (1.0d0/15.0d0)*dampi**3)*
-     &                 expdampi -
-     &                 termk*(1.0d0 + dampk +
-     &                 0.4d0*dampk**2 + (1.0d0/15.0d0)*dampk**3)*
-     &                 expdampk
-                  scaleik(9) = 1.0d0 - termi*(1.0d0 + dampi +
-     &                 (3.0d0/7.0d0)*dampi**2 +
-     &                 (2.0d0/21.0d0)*dampi**3 +
-     &                 (1.0d0/105.0d0)*dampi**4)*expdampi -
-     &                 termk*(1.0d0 + dampk +
-     &                 (3.0d0/7.0d0)*dampk**2 +
-     &                 (2.0d0/21.0d0)*dampk**3 +
-     &                 (1.0d0/105.0d0)*dampk**4)*expdampk
-                  scaleik(11) = 1.0d0 - termi*(1.0d0 + dampi +
-     &                 (4.0d0/9.0d0)*dampi**2 +
-     &                 (1.0d0/9.0d0)*dampi**3 +
-     &                 (1.0d0/63.0d0)*dampi**4 + 
-     &                 (1.0d0/945.0d0)*dampi**5)*expdampi - 
-     &                 termk*(1.0d0 + dampk +
-     &                 (4.0d0/9.0d0)*dampk**2+
-     &                 (1.0d0/9.0d0)*dampk**3+
-     &                 (1.0d0/63.0d0)*dampk**4 +
-     &                 (1.0d0/945.0d0)*dampk**5)*expdampk
-               else
-                  scaleik(1) = 1.0d0 -(1.0d0+0.5d0*dampi)*expdampi
-                  scaleik(3) = 1.0d0 -(1.0d0+dampi+0.5d0*dampi**2)
-     &                 *expdampi
-                  scaleik(5) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
-     &                 + (1.0d0/6.0d0)*dampi**3)*expdampi
-                  scaleik(7) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
-     &                 + (1.0d0/6.0d0)*dampi**3
-     &                 + (1.0d0/30.0d0)*dampi**4)*expdampi
-                  scaleik(9) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
-     &                 + (1.0d0/6.0d0)*dampi**3
-     &                 + (4.0d0/105.0d0)*dampi**4
-     &                 + (1.0d0/210.0d0)*dampi**5)*expdampi
-                  scaleik(11) = 1.0d0-(1.0d0+dampi+0.5d0*dampi**2
-     &                 + (1.0d0/6.0d0)*dampi**3 
-     &                 + (5.0d0/126.0d0)*dampi**4
-     &                 + (2.0d0/315.0d0)*dampi**5
-     &                 + (1.0d0/1890.0d0)*dampi**6)*expdampi
-               end if
+                  if (alphai .ne. alphak) then
+                     termi = alphak**2/(alphak**2 - alphai**2)
+                     termk = alphai**2/(alphai**2 - alphak**2)
+                     scaleik(1) =1.0d0-termi*expdampi -termk*expdampk
+                     scaleik(3) =1.0d0-termi*(1.0d0 +dampi)*expdampi
+     &                           - termk*(1.0d0 + dampk)*expdampk
+                     scaleik(5) = 1.0d0 - termi*(1.0d0 + dampi +
+     &                    (1.0d0/3.0d0)*dampi**2)*expdampi -
+     &                    termk*(1.0d0 + dampk +
+     &                    (1.0d0/3.0d0)*dampk**2)*expdampk
+                     scaleik(7) = 1.0d0 - termi*(1.0d0 + dampi +
+     &                    0.4d0*dampi**2 + (1.0d0/15.0d0)*dampi**3)*
+     &                    expdampi -
+     &                    termk*(1.0d0 + dampk +
+     &                    0.4d0*dampk**2 + (1.0d0/15.0d0)*dampk**3)*
+     &                    expdampk
+                     scaleik(9) = 1.0d0 - termi*(1.0d0 + dampi +
+     &                    (3.0d0/7.0d0)*dampi**2 +
+     &                    (2.0d0/21.0d0)*dampi**3 +
+     &                    (1.0d0/105.0d0)*dampi**4)*expdampi -
+     &                    termk*(1.0d0 + dampk +
+     &                    (3.0d0/7.0d0)*dampk**2 +
+     &                    (2.0d0/21.0d0)*dampk**3 +
+     &                    (1.0d0/105.0d0)*dampk**4)*expdampk
+                     scaleik(11) = 1.0d0 - termi*(1.0d0 + dampi +
+     &                    (4.0d0/9.0d0)*dampi**2 +
+     &                    (1.0d0/9.0d0)*dampi**3 +
+     &                    (1.0d0/63.0d0)*dampi**4 + 
+     &                    (1.0d0/945.0d0)*dampi**5)*expdampi - 
+     &                    termk*(1.0d0 + dampk +
+     &                    (4.0d0/9.0d0)*dampk**2+
+     &                    (1.0d0/9.0d0)*dampk**3+
+     &                    (1.0d0/63.0d0)*dampk**4 +
+     &                    (1.0d0/945.0d0)*dampk**5)*expdampk
+                  else
+                     scaleik(1) = 1.0d0 -(1.0d0+0.5d0*dampi)*expdampi
+                     scaleik(3) = 1.0d0 -(1.0d0+dampi+0.5d0*dampi**2)
+     &                    *expdampi
+                     scaleik(5) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
+     &                    + (1.0d0/6.0d0)*dampi**3)*expdampi
+                     scaleik(7) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
+     &                    + (1.0d0/6.0d0)*dampi**3
+     &                    + (1.0d0/30.0d0)*dampi**4)*expdampi
+                     scaleik(9) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
+     &                    + (1.0d0/6.0d0)*dampi**3
+     &                    + (4.0d0/105.0d0)*dampi**4
+     &                    + (1.0d0/210.0d0)*dampi**5)*expdampi
+                     scaleik(11) = 1.0d0-(1.0d0+dampi+0.5d0*dampi**2
+     &                    + (1.0d0/6.0d0)*dampi**3 
+     &                    + (5.0d0/126.0d0)*dampi**4
+     &                    + (2.0d0/315.0d0)*dampi**5
+     &                    + (1.0d0/1890.0d0)*dampi**6)*expdampi
+                  end if
             
-               qi = ci - nuci
-               qk = ck - nuck
+c
+                  qi = ci - nuci
+                  qk = ck - nuck
 
-               term1 = nuci*nuck + nuci*qk*scalek(1) 
-     &                 + nuck*qi*scalei(1) + qi*qk*scaleik(1)
-               term2 = nuck*dri*scalei(3) - nuci*drk*scalek(3)
-     &                 + (dik + qk*dri - qi*drk)*scaleik(3)
-               term3 = nuci*qrrk*scalek(5) + nuck*qrri*scalei(5)+
-     &                 (-dri*drk + 2.0d0*(dkqri-diqrk+qik) + 
-     &                 qi*qrrk + qk*qrri)*scaleik(5) 
-               term4 = (dri*qrrk-drk*qrri-4.0d0*qrrik)*scaleik(7)
-               term5 = qrri*qrrk*scaleik(9)
+                  term1 = nuci*nuck + nuci*qk*scalek(1) 
+     &                    + nuck*qi*scalei(1) + qi*qk*scaleik(1)
+                  term2 = nuck*dri*scalei(3) - nuci*drk*scalek(3)
+     &                    + (dik + qk*dri - qi*drk)*scaleik(3)
+                  term3 = nuci*qrrk*scalek(5) + nuck*qrri*scalei(5)+
+     &                    (-dri*drk + 2.0d0*(dkqri-diqrk+qik) + 
+     &                    qi*qrrk + qk*qrri)*scaleik(5) 
+                  term4 = (dri*qrrk-drk*qrri-4.0d0*qrrik)*scaleik(7)
+                  term5 = qrri*qrrk*scaleik(9)
+c
+c     compute t   he energy contribution for this interaction
+c
+                  e = term1*rr1 + term2*rr3 + term3*rr5
+     &                   + term4*rr7 + term5*rr9
+                  em = em + e
+                  if (molcule(ii) .ne. molcule(kk))
+     &               einter = einter + e
+c
+c     calculate    intermediate terms for force and torque
+c
+                  de =  nuci*nuck*rr3 
+     &                + nuci * qk*rr3*scalek(3)
+     &                + nuck * qi*rr3*scalei(3) 
+     &                + qi * qk  *rr3*scaleik(3)
+     &                + nuck*dri *rr5*scalei(5) 
+     &                - nuci*drk *rr5*scalek(5)
+     &                + (dik + qk*dri - qi*drk)*rr5*scaleik(5)
+     &                + nuci*qrrk*rr7*scalek(7) 
+     &                + nuck*qrri*rr7*scalei(7)
+     &                +(-dri*drk + 2.0d0*(dkqri-diqrk+qik)  
+     &                + qi*qrrk + qk*qrri)*rr7*scaleik(7) 
+     &                +(dri*qrrk-drk*qrri-4.0d0*qrrik)*rr9*scaleik(9)
+     &                + qrri*qrrk*rr11*scaleik(11)
+
+                  term1 = -nuck*rr3*scalei(3) 
+     &                    - qk*rr3*scaleik(3) 
+     &                    + drk*rr5*scaleik(5) 
+     &                    - qrrk*rr7*scaleik(7)
+                  term2 = nuci*rr3*scalek(3) 
+     &                    + qi*rr3*scaleik(3)  
+     &                    + dri*rr5*scaleik(5) 
+     &                    + qrri*rr7*scaleik(7)
+                  term3 = 2.0d0 * rr5 * scaleik(5) 
+                  term4 = 2.0d0 *(-nuck*rr5*scalei(5)
+     &                          -qk*rr5*scaleik(5)
+     &                          +drk*rr7*scaleik(7)
+     &                          -qrrk*rr9*scaleik(9))
+                  term5 = 2.0d0 *(-nuci*rr5*scalek(5)
+     &                          -qi*rr5*scaleik(5)
+     &                          -dri*rr7*scaleik(7)
+     &                          -qrri*rr9*scaleik(9))
+                  term6 = 4.0d0 * rr7 *scaleik(7)
+c
+c    charge penetration is not used
+c
+               else
+c
+c     calculate intermediate terms for multipole energy
+c
+                  term1 = ci*ck
+                  term2 = ck*dri - ci*drk + dik
+                  term3 = ci*qrrk + ck*qrri - dri*drk
+     &                       + 2.0d0*(dkqri-diqrk+qik)
+                  term4 = dri*qrrk - drk*qrri - 4.0d0*qrrik
+                  term5 = qrri*qrrk
 c
 c     compute the energy contribution for this interaction
 c
-               e = term1*rr1 + term2*rr3 + term3*rr5
-     &                + term4*rr7 + term5*rr9
-               em = em + e
-               if (molcule(ii) .ne. molcule(kk))
-     &            einter = einter + e
+                  e = term1*rr1 + term2*rr3 + term3*rr5
+     &                   + term4*rr7 + term5*rr9
+                  em = em + e
+                  if (molcule(ii) .ne. molcule(kk))
+     &               einter = einter + e
 c
 c     calculate intermediate terms for force and torque
 c
-               de =  nuci*nuck*rr3 
-     &             + nuci * qk*rr3*scalek(3)
-     &             + nuck * qi*rr3*scalei(3) 
-     &             + qi * qk  *rr3*scaleik(3)
-     &             + nuck*dri *rr5*scalei(5) 
-     &             - nuci*drk *rr5*scalek(5)
-     &             + (dik + qk*dri - qi*drk)*rr5*scaleik(5)
-     &             + nuci*qrrk*rr7*scalek(7) 
-     &             + nuck*qrri*rr7*scalei(7)
-     &             +(-dri*drk + 2.0d0*(dkqri-diqrk+qik)  
-     &             + qi*qrrk + qk*qrri)*rr7*scaleik(7) 
-     &             +(dri*qrrk-drk*qrri-4.0d0*qrrik)*rr9*scaleik(9)
-     &             + qrri*qrrk*rr11*scaleik(11)
-
-               term1 = -nuck*rr3*scalei(3) 
-     &                 - qk*rr3*scaleik(3) 
-     &                 + drk*rr5*scaleik(5) 
-     &                 - qrrk*rr7*scaleik(7)
-               term2 = nuci*rr3*scalek(3) 
-     &                 + qi*rr3*scaleik(3)  
-     &                 + dri*rr5*scaleik(5) 
-     &                 + qrri*rr7*scaleik(7)
-               term3 = 2.0d0 * rr5 * scaleik(5) 
-               term4 = 2.0d0 *(-nuck*rr5*scalei(5)
-     &                       -qk*rr5*scaleik(5)
-     &                       +drk*rr7*scaleik(7)
-     &                       -qrrk*rr9*scaleik(9))
-               term5 = 2.0d0 *(-nuci*rr5*scalek(5)
-     &                       -qi*rr5*scaleik(5)
-     &                       -dri*rr7*scaleik(7)
-     &                       -qrri*rr9*scaleik(9))
-               term6 = 4.0d0 * rr7 *scaleik(7) 
+                  de = term1*rr3 + term2*rr5 + term3*rr7
+     &                    + term4*rr9 + term5*rr11
+                  term1 = -ck*rr3 + drk*rr5 - qrrk*rr7
+                  term2 = ci*rr3 + dri*rr5 + qrri*rr7
+                  term3 = 2.0d0 * rr5
+                  term4 = 2.0d0 * (-ck*rr5+drk*rr7-qrrk*rr9)
+                  term5 = 2.0d0 * (-ci*rr5-dri*rr7-qrri*rr9)
+                  term6 = 4.0d0 * rr7
+               end if    
 
 c
 c     compute the force components for this interaction
@@ -514,7 +546,7 @@ c
 c
 c     calculate the CP-damped potential at each mpole site 
 c
-               if (use_cflux) then
+               if (use_cflux .and. use_chgpen) then
                   term1i = nuck*scalei(1) + qk*scaleik(1) 
                   term1k = nuci*scalek(1) + qi*scaleik(1) 
                   term2i = -drk*scaleik(3)
@@ -620,21 +652,65 @@ c
 c
 c     Extra derivative terms due to charge flux
 c
-      if (use_cflux .and. dobondcflux) then 
+      if (use_cflux .and. use_chgpen .and. dobondcflux) then 
           call cfbondem(damppot,decfbemx,decfbemy,decfbemz)
           do i = 1, npole 
-            dem(1,i) = dem(1,i) + decfbemx(i) 
-            dem(2,i) = dem(2,i) + decfbemy(i) 
-            dem(3,i) = dem(3,i) + decfbemz(i) 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfbemx(i)
+            frcy = decfbemy(i)
+            frcz = decfbemz(i)
+            dem(1,i) = dem(1,i) +  frcx
+            dem(2,i) = dem(2,i) +  frcy
+            dem(3,i) = dem(3,i) +  frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
           end do
       end if
 
-      if (use_cflux .and. doanglecflux) then
+      if (use_cflux .and. use_chgpen .and. doanglecflux) then
           call cfangleem(damppot,decfaemx,decfaemy,decfaemz)
           do i = 1, npole 
-            dem(1,i) = dem(1,i) + decfaemx(i) 
-            dem(2,i) = dem(2,i) + decfaemy(i) 
-            dem(3,i) = dem(3,i) + decfaemz(i) 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfaemx(i)
+            frcy = decfaemy(i)
+            frcz = decfaemz(i)
+            dem(1,i) = dem(1,i) + frcx 
+            dem(2,i) = dem(2,i) + frcy 
+            dem(3,i) = dem(3,i) + frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
           end do
       end if
 c
@@ -654,7 +730,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -702,7 +777,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck+pchrgflux(k)
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -794,10 +868,10 @@ c
 c
 c     read in charge penetration damping parameters
 c
-               alphai = penalpha(type(ii))
-               alphak = penalpha(type(kk))
-               nuci = pencore(type(ii))
-               nuck = pencore(type(kk))
+               alphai = penalpha(ii)
+               alphak = penalpha(kk)
+               nuci = pencore(ii)
+               nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
@@ -877,6 +951,8 @@ c
      &                 + (1.0d0/1890.0d0)*dampi**6)*expdampi
                end if
             
+c
+
                qi = ci - nuci
                qk = ck - nuck
 
@@ -1053,6 +1129,67 @@ c
             mscale(i15(j,ii)) = 1.0d0
          end do
       end do
+      if (use_cflux .and. use_chgpen .and. dobondcflux) then 
+          call cfbondem(damppot,decfbemx,decfbemy,decfbemz)
+          do i = 1, npole 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfbemx(i)
+            frcy = decfbemy(i)
+            frcz = decfbemz(i)
+            dem(1,i) = dem(1,i) +  frcx
+            dem(2,i) = dem(2,i) +  frcy
+            dem(3,i) = dem(3,i) +  frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
+          end do
+      end if
+
+      if (use_cflux .and. use_chgpen .and. doanglecflux) then
+          call cfangleem(damppot,decfaemx,decfaemy,decfaemz)
+          do i = 1, npole 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfaemx(i)
+            frcy = decfaemy(i)
+            frcz = decfaemz(i)
+            dem(1,i) = dem(1,i) + frcx 
+            dem(2,i) = dem(2,i) + frcy 
+            dem(3,i) = dem(3,i) + frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
+          end do
+      end if
       end if
 c
 c     resolve site torques then increment forces and virial
@@ -1129,7 +1266,7 @@ c
       use bndstr
       use bound
       use cflux
-      use polar 
+      use chgpen 
       use chgpot
       use couple
       use deriv
@@ -1280,15 +1417,14 @@ c
       f = electric / dielec
       mode = 'MPOLE'
       call switch (mode)
-      if (use_cflux) call chrgflux
 c
 c     OpenMP directives for the major loop structure
 c
 !$OMP PARALLEL default(private)
 !$OMP& shared(npole,ipole,x,y,z,xaxis,yaxis,zaxis,rpole,use,n12,
 !$OMP& i12,n13,i13,n14,i14,n15,i15,m2scale,m3scale,m4scale,m5scale,
-!$OMP& pencore,penalpha,type,use_cflux,
-!$OMP& ibnd,nbond,nangle,iang,pchrgflux,
+!$OMP& pencore,penalpha,use_cflux,
+!$OMP& ibnd,nbond,nangle,iang,
 !$OMP& nelst,elst,use_group,use_intra,use_bounds,off2,f,molcule)
 !$OMP& firstprivate(mscale) shared(em,einter,dem,tem,vir,damppot)
 !$OMP DO reduction(+:em,einter,dem,tem,vir,damppot)
@@ -1305,7 +1441,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -1351,7 +1486,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck+pchrgflux(k)
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -1443,10 +1577,10 @@ c
 c
 c     read in charge penetration damping parameters
 c
-               alphai = penalpha(type(ii))
-               alphak = penalpha(type(kk))
-               nuci = pencore(type(ii))
-               nuck = pencore(type(kk))
+               alphai = penalpha(ii)
+               alphak = penalpha(kk)
+               nuci = pencore(ii)
+               nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
@@ -1628,6 +1762,19 @@ c
      &                      - term5*qrkyr - term6*(qkiryr-qrry)
                ttmk(3) = rr3sc*dikz + term2*dkrz - term3*(dqiqkz+diqkzr)
      &                      - term5*qrkzr - term6*(qkirzr-qrrz)
+
+c
+c     force and torque components scaled by group membership
+c
+               if (use_group) then
+                  frcx = fgrp * frcx
+                  frcy = fgrp * frcy
+                  frcz = fgrp * frcz
+                  do j = 1, 3
+                     ttmi(j) = fgrp * ttmi(j)
+                     ttmk(j) = fgrp * ttmk(j)
+                  end do
+               end if
 c
 c     increment force-based gradient and torque on first site
 c
@@ -1735,21 +1882,64 @@ c
 !$OMP END DO
 !$OMP END PARALLEL
 
-      if (use_cflux .and. dobondcflux) then 
+      if (use_cflux .and. use_chgpen .and. dobondcflux) then 
           call cfbondem(damppot,decfbemx,decfbemy,decfbemz)
           do i = 1, npole 
-            dem(1,i) = dem(1,i) + decfbemx(i) 
-            dem(2,i) = dem(2,i) + decfbemy(i) 
-            dem(3,i) = dem(3,i) + decfbemz(i) 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfbemx(i)
+            frcy = decfbemy(i)
+            frcz = decfbemz(i)
+            dem(1,i) = dem(1,i) +  frcx
+            dem(2,i) = dem(2,i) +  frcy
+            dem(3,i) = dem(3,i) +  frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
           end do
       end if
-
-      if (use_cflux .and. doanglecflux) then
+      if (use_cflux .and. use_chgpen .and. doanglecflux) then
           call cfangleem(damppot,decfaemx,decfaemy,decfaemz)
           do i = 1, npole 
-            dem(1,i) = dem(1,i) + decfaemx(i) 
-            dem(2,i) = dem(2,i) + decfaemy(i) 
-            dem(3,i) = dem(3,i) + decfaemz(i) 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfaemx(i)
+            frcy = decfaemy(i)
+            frcz = decfaemz(i)
+            dem(1,i) = dem(1,i) + frcx 
+            dem(2,i) = dem(2,i) + frcy 
+            dem(3,i) = dem(3,i) + frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
           end do
       end if
 c
@@ -1810,6 +2000,10 @@ c
       real*8 qiyy,qiyz,qizz
       real*8 xdfield,ydfield
       real*8 zdfield
+      real*8 forcex,forcey,forcez
+      real*8 xi,yi,zi
+      real*8 vxx,vyy,vzz
+      real*8 vxy,vxz,vyz
       real*8 trq(3),frcx(3)
       real*8 frcy(3),frcz(3)
       real*8, allocatable :: decfbselfemx(:)
@@ -1818,7 +2012,7 @@ c
       real*8, allocatable :: decfaselfemx(:)
       real*8, allocatable :: decfaselfemy(:)
       real*8, allocatable :: decfaselfemz(:)
-      real*8, allocatable :: chrge(:)
+      real*8, allocatable :: selfpot(:)
 c
 c     allocate some local arrays
 c
@@ -1828,7 +2022,7 @@ c
       allocate (decfaselfemx(n))
       allocate (decfaselfemy(n))
       allocate (decfaselfemz(n))
-      allocate (chrge(n))
+      allocate (selfpot(n))
 c
 c     zero out the atomic multipole energy and derivatives
 c
@@ -1840,7 +2034,7 @@ c
          decfaselfemx(i) = 0.0d0
          decfaselfemy(i) = 0.0d0
          decfaselfemz(i) = 0.0d0
-         chrge(i) = 0.0d0
+         selfpot(i) = 0.0d0
          do j = 1, 3
             dem(j,i) = 0.0d0
          end do
@@ -1858,10 +2052,6 @@ c
 c     rotate the multipole components into the global frame
 c
       call rotpole
-c     
-c     charge flux
-c  
-      if (use_cflux) call chrgflux
 c
 c     compute the real space part of the Ewald summation
 c
@@ -1877,7 +2067,6 @@ c
       fterm = -f * aewald / sqrtpi
       do i = 1, npole
          ci = rpole(1,i)
-         ci = ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -1893,32 +2082,71 @@ c
      &            + qixx*qixx + qiyy*qiyy + qizz*qizz
          e = fterm * (cii + term*(dii/3.0d0+2.0d0*term*qii/5.0d0))
          em = em + e
+         selfpot(i) = 2.0d0*fterm*ci
       end do
 c
 c     force due to charge flux-bond for self energy
 c
-      if (use_cflux) then
-        do i = 1, npole
-          chrge(i) = rpole(1,i)
-        end do
+      if (use_cflux .and. dobondcflux) then 
+          call cfbondem(selfpot,decfbselfemx,decfbselfemy,decfbselfemz)
+          do i = 1, npole 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            forcex = decfbselfemx(i)
+            forcey = decfbselfemy(i)
+            forcez = decfbselfemz(i)
+            dem(1,i) = dem(1,i) +  forcex
+            dem(2,i) = dem(2,i) +  forcey
+            dem(3,i) = dem(3,i) +  forcez
+            vxx = xi * forcex
+            vxy = yi * forcex
+            vxz = zi * forcex
+            vyy = yi * forcey
+            vyz = zi * forcey
+            vzz = zi * forcez
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
+          end do
       end if
-      if (use_cflux .and. dobondcflux) then
-        call cfemselfb(fterm,chrge,pchrgflux,
-     &        decfbselfemx,decfbselfemy,decfbselfemz)
-        do i = 1, npole
-          dem(1,i) = dem(1,i) + decfbselfemx(i)
-          dem(2,i) = dem(2,i) + decfbselfemy(i)
-          dem(3,i) = dem(3,i) + decfbselfemz(i)
-        end do 
-      end if
+
       if (use_cflux .and. doanglecflux) then
-        call cfemselfa(fterm,chrge,pchrgflux,
-     &        decfaselfemx,decfaselfemy,decfaselfemz)
-        do i = 1, npole
-          dem(1,i) = dem(1,i) + decfaselfemx(i)
-          dem(2,i) = dem(2,i) + decfaselfemy(i)
-          dem(3,i) = dem(3,i) + decfaselfemz(i)
-        end do 
+          call cfangleem(selfpot,decfaselfemx,decfaselfemy,decfaselfemz)
+          do i = 1, npole 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            forcex = decfaselfemx(i)
+            forcey = decfaselfemy(i)
+            forcez = decfaselfemz(i)
+            dem(1,i) = dem(1,i) +  forcex
+            dem(2,i) = dem(2,i) +  forcey
+            dem(3,i) = dem(3,i) +  forcez
+            vxx = xi * forcex
+            vxy = yi * forcex
+            vxz = zi * forcex
+            vyy = yi * forcey
+            vyz = zi * forcey
+            vzz = zi * forcez
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
+          end do
       end if
 
 c
@@ -1993,7 +2221,7 @@ c
       deallocate (decfaselfemx)
       deallocate (decfaselfemy)
       deallocate (decfaselfemz)
-      deallocate (chrge)
+      deallocate (selfpot)
       return
       end
 c
@@ -2019,7 +2247,7 @@ c
       use bound
       use cell
       use cflux
-      use polar 
+      use chgpen 
       use chgpot
       use couple
       use deriv
@@ -2152,7 +2380,6 @@ c
       f = electric / dielec
       mode = 'EWALD'
       call switch (mode)
-      if (use_cflux) call chrgflux
 c
 c     compute the real space portion of the Ewald summation
 c
@@ -2162,7 +2389,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -2197,7 +2423,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck+pchrgflux(k)
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -2306,10 +2531,10 @@ c
 c
 c     read in charge penetration damping parameters
 c
-               alphai = penalpha(type(ii))
-               alphak = penalpha(type(kk))
-               nuci = pencore(type(ii))
-               nuck = pencore(type(kk))
+               alphai = penalpha(ii)
+               alphak = penalpha(kk)
+               nuci = pencore(ii)
+               nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
@@ -2591,21 +2816,65 @@ c
 c
 c     charge flux force
 c
-      if (use_cflux .and. dobondcflux) then 
+      if (use_cflux .and. use_chgpen .and. dobondcflux) then 
           call cfbondem(damppot,decfbemx,decfbemy,decfbemz)
           do i = 1, npole 
-            dem(1,i) = dem(1,i) + decfbemx(i) 
-            dem(2,i) = dem(2,i) + decfbemy(i) 
-            dem(3,i) = dem(3,i) + decfbemz(i) 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfbemx(i)
+            frcy = decfbemy(i)
+            frcz = decfbemz(i)
+            dem(1,i) = dem(1,i) +  frcx
+            dem(2,i) = dem(2,i) +  frcy
+            dem(3,i) = dem(3,i) +  frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
           end do
       end if
 
-      if (use_cflux .and. doanglecflux) then
+      if (use_cflux .and. use_chgpen .and. doanglecflux) then
           call cfangleem(damppot,decfaemx,decfaemy,decfaemz)
           do i = 1, npole 
-            dem(1,i) = dem(1,i) + decfaemx(i) 
-            dem(2,i) = dem(2,i) + decfaemy(i) 
-            dem(3,i) = dem(3,i) + decfaemz(i) 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfaemx(i)
+            frcy = decfaemy(i)
+            frcz = decfaemz(i)
+            dem(1,i) = dem(1,i) + frcx 
+            dem(2,i) = dem(2,i) + frcy 
+            dem(3,i) = dem(3,i) + frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
           end do
       end if
 c
@@ -2768,10 +3037,10 @@ c
 c
 c     read in charge penetration damping parameters
 c
-               alphai = penalpha(type(ii))
-               alphak = penalpha(type(kk))
-               nuci = pencore(type(ii))
-               nuck = pencore(type(kk))
+               alphai = penalpha(ii)
+               alphak = penalpha(kk)
+               nuci = pencore(ii)
+               nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
@@ -3046,6 +3315,67 @@ c
             mscale(i15(j,ii)) = 1.0d0
          end do
       end do
+      if (use_cflux .and. use_chgpen .and. dobondcflux) then 
+          call cfbondem(damppot,decfbemx,decfbemy,decfbemz)
+          do i = 1, npole 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfbemx(i)
+            frcy = decfbemy(i)
+            frcz = decfbemz(i)
+            dem(1,i) = dem(1,i) +  frcx
+            dem(2,i) = dem(2,i) +  frcy
+            dem(3,i) = dem(3,i) +  frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
+          end do
+      end if
+
+      if (use_cflux .and. use_chgpen .and. doanglecflux) then
+          call cfangleem(damppot,decfaemx,decfaemy,decfaemz)
+          do i = 1, npole 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfaemx(i)
+            frcy = decfaemy(i)
+            frcz = decfaemz(i)
+            dem(1,i) = dem(1,i) + frcx 
+            dem(2,i) = dem(2,i) + frcy 
+            dem(3,i) = dem(3,i) + frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
+          end do
+      end if
       end if
 c
 c     resolve site torques then increment forces and virial
@@ -3143,13 +3473,17 @@ c
       real*8 zdfield
       real*8 trq(3),frcx(3)
       real*8 frcy(3),frcz(3)
+      real*8 xi,yi,zi
+      real*8 forcex,forcey,forcez
+      real*8 vxx,vyy,vzz
+      real*8 vxy,vxz,vyz
       real*8, allocatable :: decfbselfemx(:)
       real*8, allocatable :: decfbselfemy(:)
       real*8, allocatable :: decfbselfemz(:)
       real*8, allocatable :: decfaselfemx(:)
       real*8, allocatable :: decfaselfemy(:)
       real*8, allocatable :: decfaselfemz(:)
-      real*8, allocatable :: chrge(:)
+      real*8, allocatable :: selfpot(:)
 c
 c     allocate some local arrays
 c
@@ -3159,7 +3493,7 @@ c
       allocate (decfaselfemx(n))
       allocate (decfaselfemy(n))
       allocate (decfaselfemz(n))
-      allocate (chrge(n))
+      allocate (selfpot(n))
 c
 c
 c     zero out the atomic multipole energy and derivatives
@@ -3172,7 +3506,7 @@ c
          decfaselfemx(i) = 0.0d0
          decfaselfemy(i) = 0.0d0
          decfaselfemz(i) = 0.0d0
-         chrge(i) = 0.0d0
+         selfpot(i) = 0.0d0
          do j = 1, 3
             dem(j,i) = 0.0d0
          end do
@@ -3190,10 +3524,6 @@ c
 c     rotate the multipole components into the global frame
 c
       call rotpole
-c     
-c     charge flux
-c  
-      if (use_cflux) call chrgflux
 c
 c     compute the real space part of the Ewald summation
 c
@@ -3209,7 +3539,6 @@ c
       fterm = -f * aewald / sqrtpi
       do i = 1, npole
          ci = rpole(1,i)
-         ci = ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -3225,32 +3554,71 @@ c
      &            + qixx*qixx + qiyy*qiyy + qizz*qizz
          e = fterm * (cii + term*(dii/3.0d0+2.0d0*term*qii/5.0d0))
          em = em + e
+         selfpot(i) = 2.0d0*fterm*ci
       end do
 c
 c     force due to charge flux-bond for self energy
 c
-      if (use_cflux) then
-        do i = 1, npole
-          chrge(i) = rpole(1,i)
-        end do
+      if (use_cflux .and. use_chgpen .and. dobondcflux) then 
+          call cfbondem(selfpot,decfbselfemx,decfbselfemy,decfbselfemz)
+          do i = 1, npole 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            forcex = decfbselfemx(i)
+            forcey = decfbselfemy(i)
+            forcez = decfbselfemz(i)
+            dem(1,i) = dem(1,i) +  forcex
+            dem(2,i) = dem(2,i) +  forcey
+            dem(3,i) = dem(3,i) +  forcez
+            vxx = xi * forcex
+            vxy = yi * forcex
+            vxz = zi * forcex
+            vyy = yi * forcey
+            vyz = zi * forcey
+            vzz = zi * forcez
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
+          end do
       end if
-      if (use_cflux .and. dobondcflux) then
-        call cfemselfb(fterm,chrge,pchrgflux,
-     &        decfbselfemx,decfbselfemy,decfbselfemz)
-        do i = 1, npole
-          dem(1,i) = dem(1,i) + decfbselfemx(i)
-          dem(2,i) = dem(2,i) + decfbselfemy(i)
-          dem(3,i) = dem(3,i) + decfbselfemz(i)
-        end do 
-      end if
-      if (use_cflux .and. doanglecflux) then
-        call cfemselfa(fterm,chrge,pchrgflux,
-     &        decfaselfemx,decfaselfemy,decfaselfemz)
-        do i = 1, npole
-          dem(1,i) = dem(1,i) + decfaselfemx(i)
-          dem(2,i) = dem(2,i) + decfaselfemy(i)
-          dem(3,i) = dem(3,i) + decfaselfemz(i)
-        end do 
+
+      if (use_cflux .and. use_chgpen .and. doanglecflux) then
+          call cfangleem(selfpot,decfaselfemx,decfaselfemy,decfaselfemz)
+          do i = 1, npole 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            forcex = decfaselfemx(i)
+            forcey = decfaselfemy(i)
+            forcez = decfaselfemz(i)
+            dem(1,i) = dem(1,i) + forcex 
+            dem(2,i) = dem(2,i) + forcey 
+            dem(3,i) = dem(3,i) + forcez
+            vxx = xi * forcex
+            vxy = yi * forcex
+            vxz = zi * forcex
+            vyy = yi * forcey
+            vyz = zi * forcey
+            vzz = zi * forcez
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
+          end do
       end if
 c
 c     compute the cell dipole boundary correction term
@@ -3324,9 +3692,10 @@ c
       deallocate (decfaselfemx)
       deallocate (decfaselfemy)
       deallocate (decfaselfemz)
-      deallocate (chrge)
+      deallocate (selfpot)
       return
       end
+
 c
 c
 c     #################################################################
@@ -3349,7 +3718,7 @@ c
       use bound
       use bndstr
       use cflux
-      use polar 
+      use chgpen 
       use chgpot
       use couple
       use deriv
@@ -3489,8 +3858,8 @@ c
 !$OMP PARALLEL default(private)
 !$OMP& shared(npole,ipole,x,y,z,rpole,n12,i12,n13,i13,n14,i14,
 !$OMP& n15,i15,m2scale,m3scale,m4scale,m5scale,nelst,elst,
-!$OMP& pencore,penalpha,type,use_cflux,
-!$OMP& ibnd,nbond,nangle,iang,pchrgflux,
+!$OMP& pencore,penalpha,use_cflux,
+!$OMP& ibnd,nbond,nangle,iang,
 !$OMP& use_bounds,f,off2,aewald,molcule,xaxis,yaxis,zaxis)
 !$OMP& firstprivate(mscale) shared (em,einter,dem,tem,vir,damppot)
 !$OMP DO reduction(+:em,einter,dem,tem,vir,damppot) schedule(guided)
@@ -3503,7 +3872,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -3539,7 +3907,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck+pchrgflux(k)
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -3648,10 +4015,10 @@ c
 c
 c     read in charge penetration damping parameters
 c
-               alphai = penalpha(type(ii))
-               alphak = penalpha(type(kk))
-               nuci = pencore(type(ii))
-               nuck = pencore(type(kk))
+               alphai = penalpha(ii)
+               alphak = penalpha(kk)
+               nuci = pencore(ii)
+               nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
@@ -3985,21 +4352,65 @@ c
 c
 c     charge flux force
 c
-      if (use_cflux .and. dobondcflux) then 
+      if (use_cflux .and. use_chgpen .and. dobondcflux) then 
           call cfbondem(damppot,decfbemx,decfbemy,decfbemz)
           do i = 1, npole 
-            dem(1,i) = dem(1,i) + decfbemx(i) 
-            dem(2,i) = dem(2,i) + decfbemy(i) 
-            dem(3,i) = dem(3,i) + decfbemz(i) 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfbemx(i)
+            frcy = decfbemy(i)
+            frcz = decfbemz(i)
+            dem(1,i) = dem(1,i) +  frcx
+            dem(2,i) = dem(2,i) +  frcy
+            dem(3,i) = dem(3,i) +  frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
           end do
       end if
 
-      if (use_cflux .and. doanglecflux) then
+      if (use_cflux .and. use_chgpen .and. doanglecflux) then
           call cfangleem(damppot,decfaemx,decfaemy,decfaemz)
           do i = 1, npole 
-            dem(1,i) = dem(1,i) + decfaemx(i) 
-            dem(2,i) = dem(2,i) + decfaemy(i) 
-            dem(3,i) = dem(3,i) + decfaemz(i) 
+            ii = ipole(i)
+            xi = x(ii)
+            yi = y(ii)
+            zi = z(ii)
+            frcx = decfaemx(i)
+            frcy = decfaemy(i)
+            frcz = decfaemz(i)
+            dem(1,i) = dem(1,i) + frcx 
+            dem(2,i) = dem(2,i) + frcy 
+            dem(3,i) = dem(3,i) + frcz
+            vxx = xi * frcx
+            vxy = yi * frcx
+            vxz = zi * frcx
+            vyy = yi * frcy
+            vyz = zi * frcy
+            vzz = zi * frcz
+            vir(1,1) = vir(1,1) + vxx
+            vir(2,1) = vir(2,1) + vxy
+            vir(3,1) = vir(3,1) + vxz
+            vir(1,2) = vir(1,2) + vxy
+            vir(2,2) = vir(2,2) + vyy
+            vir(3,2) = vir(3,2) + vyz
+            vir(1,3) = vir(1,3) + vxz
+            vir(2,3) = vir(2,3) + vyz
+            vir(3,3) = vir(3,3) + vzz
           end do
       end if
 c
@@ -4077,12 +4488,16 @@ c
       real*8 xiz,yiz,ziz
       real*8 vxx,vyy,vzz
       real*8 vxy,vxz,vyz
+      real*8 vxxcf,vyycf,vzzcf
+      real*8 vxycf,vxzcf,vyzcf
       real*8 volterm,denom
       real*8 hsq,expterm
       real*8 term,pterm
       real*8 vterm,struc2
       real*8 trq(3),fix(3)
       real*8 fiy(3),fiz(3)
+      real*8 frcx,frcy,frcz
+      real*8 xi,yi,zi
       real*8, allocatable :: cphi1d(:)
       real*8, allocatable :: decfbemx(:)
       real*8, allocatable :: decfbemy(:)
@@ -4147,7 +4562,7 @@ c
          decfbemx(i) = 0.0d0
          decfbemy(i) = 0.0d0
          decfbemz(i) = 0.0d0
-         cmp(1,i) = rpole(1,i)+ pchrgflux(i)
+         cmp(1,i) = rpole(1,i)
          cmp(2,i) = rpole(2,i)
          cmp(3,i) = rpole(3,i)
          cmp(4,i) = rpole(4,i)
@@ -4305,19 +4720,63 @@ c
 
       if (use_cflux .and. dobondcflux) then 
         call cfbondem(cphi1d,decfbemx,decfbemy,decfbemz)
-        do i = 1, npole 
-          dem(1,i) = dem(1,i) + decfbemx(i) 
-          dem(2,i) = dem(2,i) + decfbemy(i) 
-          dem(3,i) = dem(3,i) + decfbemz(i) 
+        do i = 1, npole
+          ii = ipole(i)
+          xi = x(ii)
+          yi = y(ii)
+          zi = z(ii)
+          frcx = decfbemx(i)
+          frcy = decfbemy(i)
+          frcz = decfbemz(i) 
+          dem(1,i) = dem(1,i) + frcx
+          dem(2,i) = dem(2,i) + frcy
+          dem(3,i) = dem(3,i) + frcz
+          vxxcf = xi * frcx
+          vxycf = yi * frcx
+          vxzcf = zi * frcx
+          vyycf = yi * frcy
+          vyzcf = zi * frcy
+          vzzcf = zi * frcz
+          vir(1,1) = vir(1,1) + vxxcf 
+          vir(2,1) = vir(2,1) + vxycf
+          vir(3,1) = vir(3,1) + vxzcf
+          vir(1,2) = vir(1,2) + vxycf
+          vir(2,2) = vir(2,2) + vyycf
+          vir(3,2) = vir(3,2) + vyzcf
+          vir(1,3) = vir(1,3) + vxzcf
+          vir(2,3) = vir(2,3) + vyzcf
+          vir(3,3) = vir(3,3) + vzzcf
         end do
       end if
 
       if (use_cflux .and. doanglecflux) then
         call cfangleem(cphi1d,decfaemx,decfaemy,decfaemz)
-        do i = 1, npole 
-          dem(1,i) = dem(1,i) + decfaemx(i) 
-          dem(2,i) = dem(2,i) + decfaemy(i) 
-          dem(3,i) = dem(3,i) + decfaemz(i) 
+        do i = 1, npole
+          ii = ipole(i) 
+          xi = x(ii)
+          yi = y(ii)
+          zi = z(ii)
+          frcx = decfaemx(i)
+          frcy = decfaemy(i)
+          frcz = decfaemz(i) 
+          dem(1,i) = dem(1,i) + frcx
+          dem(2,i) = dem(2,i) + frcy
+          dem(3,i) = dem(3,i) + frcz
+          vxxcf = xi * frcx
+          vxycf = yi * frcx
+          vxzcf = zi * frcx
+          vyycf = yi * frcy
+          vyzcf = zi * frcy
+          vzzcf = zi * frcz
+          vir(1,1) = vir(1,1) + vxxcf 
+          vir(2,1) = vir(2,1) + vxycf
+          vir(3,1) = vir(3,1) + vxzcf
+          vir(1,2) = vir(1,2) + vxycf
+          vir(2,2) = vir(2,2) + vyycf
+          vir(3,2) = vir(3,2) + vyzcf
+          vir(1,3) = vir(1,3) + vxzcf
+          vir(2,3) = vir(2,3) + vyzcf
+          vir(3,3) = vir(3,3) + vzzcf
         end do
       end if 
 c

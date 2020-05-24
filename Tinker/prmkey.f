@@ -130,6 +130,11 @@ c
          use_ct = .true.
          if (value .eq. 'NONE')  use_ct = .false.
 
+      else if (keyword(1:7) .eq. 'CPTERM ') then
+         call getword (record,value,next)
+         use_chgpen = .true.
+         if (value .eq. 'NONE')  use_chgpen = .false.
+
       else if (keyword(1:10) .eq. 'CFLUXTERM ') then
          call getword (record,value,next)
          if (value .eq. 'ONLY')  call potoff
@@ -426,6 +431,11 @@ c
       else if (keyword(1:16) .eq. 'MUTUAL-14-SCALE ') then
          read (string,*,err=10,end=10)  u4scale
          if (u4scale .gt. 1.0d0)  u4scale = 1.0d0 / u4scale
+
+c      else if (keyword(1:12) .eq. 'DIRDAMPRULE ') then
+c         call getword (record,dirdamprule,next)
+c      else if (keyword(1:12) .eq. 'MUTDAMPRULE ') then
+c         call getword (record,mutdamprule,next)
 c
 c     set control parameters for reaction field potentials
 c

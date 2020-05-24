@@ -43,6 +43,7 @@ c
       use_vdw = .true.
       use_cflux = .true.
       use_ct = .true.
+      use_chgpen = .true.
       use_charge = .true.
       use_chgdpl = .true.
       use_dipole = .true.

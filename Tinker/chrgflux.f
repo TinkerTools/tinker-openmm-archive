@@ -51,6 +51,7 @@ c
       use cflux
       use couple
       use group
+      use limits
       use potent
       use usage
       implicit none
@@ -71,14 +72,14 @@ c
          atoma = atomic(ia)
          atomb = atomic(ib)
          pjb = jb(i)
-         pb0 = b0(i)
+         pb0 = bl(i)
 c
 c     compute the value of the bond length deviation
 c
          xab = x(ia) - x(ib)
          yab = y(ia) - y(ib)
          zab = z(ia) - z(ib)
-         if (use_polymer)  call image (xab,yab,zab)
+         if (use_polymer .or. use_ewald)  call image (xab,yab,zab)
          rab = sqrt(xab*xab + yab*yab + zab*zab)
          dq = pjb*(rab-pb0)
 c
@@ -149,6 +150,7 @@ c
       use bound
       use energi
       use group
+      use limits
       use math
       use usage
       implicit none
@@ -176,9 +178,9 @@ c
 c
 c     assign the charge flux parameters  
 c
-         ptheta0 = theta0(i)
-         pb10 = bond1(i)
-         pb20 = bond2(i)
+         ptheta0 = anat(i)
+         pb10 = bp1(i)
+         pb20 = bp2(i)
          pjbp1 = jbp1(i)
          pjbp2 = jbp2(i)
          pjtheta1 = jtheta1(i) 
@@ -201,7 +203,7 @@ c
          xcb = xic - xib
          ycb = yic - yib
          zcb = zic - zib
-         if (use_polymer) then
+         if (use_polymer .or. use_ewald) then
             call image (xab,yab,zab)
             call image (xcb,ycb,zcb)
          end if
@@ -216,6 +218,7 @@ c
 c
 c     charge flux increment for ange ia-ib-ic
 c
+
          dq1 = pjbp1*(rcb-pb20)+pjtheta1*(angle-ptheta0)
          dq2 = pjbp2*(rab-pb10)+pjtheta2*(angle-ptheta0)
          pchrgflux(ia) = pchrgflux(ia) + dq1

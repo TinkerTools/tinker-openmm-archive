@@ -14,16 +14,13 @@ c
       module cflux
       use sizes
       implicit none
+      real*8, allocatable :: theta0(:)
+      real*8, allocatable :: bp1(:),bp2(:)
+      real*8, allocatable :: jbp1(:),jbp2(:)
+      real*8, allocatable :: jtheta1(:),jtheta2(:)
       real*8, allocatable :: jb(:)
       real*8, allocatable :: b0(:)
-      real*8, allocatable :: theta0(:)
-      real*8, allocatable :: bond1(:) 
-      real*8, allocatable :: bond2(:) 
-      real*8, allocatable :: jbp1(:)
-      real*8, allocatable :: jbp2(:)
-      real*8, allocatable :: jtheta1(:)
-      real*8, allocatable :: jtheta2(:)
-      real*8, allocatable :: pchrgflux(:) 
+      real*8, allocatable :: pchrgflux(:)
       logical dobondcflux,doanglecflux 
       save
       end

@@ -162,6 +162,7 @@ c
       use bndstr
       use cflux
       use charge
+      use chgpen
       use mpole
       use mutant
       use polar
@@ -201,12 +202,12 @@ c
 c
 c     set charge penetration pencore parameters 
 c
-      !if (use_chgpen) then
+      if (use_chgpen) then
          do i = 1, npole
             k = ipole(i)
             if (mut(k)) pencore(i) = pencore(i) * elambda
          end do
-      !end if 
+      end if 
 c
 c     set charge flux j parameter using cflux-bond 
 c

@@ -19,6 +19,8 @@ c
       subroutine rotpole
       use sizes
       use mpole
+      use potent
+      use cflux
       implicit none
       integer i
       real*8 a(3,3)
@@ -26,6 +28,8 @@ c
 c
 c     rotate the atomic multipoles at each site in turn
 c
+      if (use_cflux) call chrgflux
+ 
       do i = 1, npole
          call rotmat (i,a)
          call rotsite (i,a)
@@ -267,6 +271,8 @@ c
       use sizes
       use atoms
       use mpole
+      use cflux
+      use potent
       implicit none
       integer i,j,k,m
       integer isite
@@ -277,7 +283,14 @@ c
 c
 c     monopoles have the same value in any coordinate frame
 c
-      rpole(1,isite) = pole(1,isite)
+
+      if (use_cflux) then 
+        rpole(1,isite) = pole(1,isite) + pchrgflux(isite)
+      else
+        rpole(1,isite) = pole(1,isite)
+      end if
+
+        
 c
 c     rotate the dipoles to the global coordinate frame
 c

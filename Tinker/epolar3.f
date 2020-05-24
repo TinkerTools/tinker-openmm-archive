@@ -169,7 +169,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -211,7 +210,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -346,7 +344,6 @@ c
             yi = y(ii)
             zi = z(ii)
             ci = rpole(1,i)
-            ci = ci + pchrgflux(i)
             dix = rpole(2,i)
             diy = rpole(3,i)
             diz = rpole(4,i)
@@ -391,7 +388,6 @@ c
                   if (r2 .le. off2) then
                      r = sqrt(r2)
                      ck = rpole(1,k)
-                     ck = ck + pchrgflux(k) 
                      dkx = rpole(2,k)
                      dky = rpole(3,k)
                      dkz = rpole(4,k)
@@ -637,7 +633,7 @@ c
 !$OMP& shared(npole,ipole,pdamp,thole,x,y,z,rpole,uind,n12,i12,
 !$OMP& n13,i13,n14,i14,n15,i15,np11,ip11,p2scale,p3scale,p4scale,
 !$OMP& p5scale,p41scale,nelst,elst,use_bounds,off2,f,molcule,name,
-!$OMP& dirdamp,pchrgflux,
+!$OMP& dirdamp,
 !$OMP& verbose,debug,header,iout)
 !$OMP& firstprivate(pscale) shared (ep,einter,nep,aep)
 !$OMP DO reduction(+:ep,einter,nep,aep) schedule(guided)
@@ -653,7 +649,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -696,7 +691,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -1052,7 +1046,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -1094,7 +1087,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -1259,7 +1251,6 @@ c
             yi = y(ii)
             zi = z(ii)
             ci = rpole(1,i)
-            ci = ci + pchrgflux(i) 
             dix = rpole(2,i)
             diy = rpole(3,i)
             diz = rpole(4,i)
@@ -1304,7 +1295,6 @@ c
                   if (r2 .le. off2) then
                      r = sqrt(r2)
                      ck = rpole(1,k)
-                     ck = ck + pchrgflux(k) 
                      dkx = rpole(2,k)
                      dky = rpole(3,k)
                      dkz = rpole(4,k)
@@ -1685,7 +1675,7 @@ c
 !$OMP& shared(npole,ipole,pdamp,thole,x,y,z,rpole,uind,n12,i12,
 !$OMP& n13,i13,n14,i14,n15,i15,np11,ip11,p2scale,p3scale,p4scale,
 !$OMP& p5scale,p41scale,nelst,elst,use_bounds,off2,f,aewald,
-!$OMP& molcule,name,verbose,debug,header,iout,pchrgflux,
+!$OMP& molcule,name,verbose,debug,header,iout,
 !$OMP& dirdamp) 
 !$OMP& firstprivate(pscale) shared (ep,einter,nep,aep)
 !$OMP DO reduction(+:ep,einter,nep,aep) schedule(guided)
@@ -1701,7 +1691,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -1744,7 +1733,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck = ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)

@@ -29,6 +29,7 @@ c     use_tortor  logical flag governing use of torsion-torsion term
 c     use_vdw     logical flag governing use of vdw der Waals potential
 c     use_ct      logical flag governing use of charge transfer potential
 c     use_cflux   logical flag governing use of charge flux potential
+c     use_chgpen  logical flag governing use of charge penetration 
 c     use_charge  logical flag governing use of charge-charge potential
 c     use_chgdpl  logical flag governing use of charge-dipole potential
 c     use_dipole  logical flag governing use of dipole-dipole potential
@@ -59,6 +60,6 @@ c
       logical use_rxnfld,use_solv
       logical use_metal,use_geom
       logical use_extra,use_born
-      logical use_orbit
+      logical use_orbit,use_chgpen
       save
       end

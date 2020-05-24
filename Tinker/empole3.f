@@ -60,7 +60,7 @@ c
       use bound
       use cell
       use cflux
-      use polar 
+      use chgpen 
       use chgpot
       use couple
       use energi
@@ -170,7 +170,6 @@ c
       f = electric / dielec
       mode = 'MPOLE'
       call switch (mode)
-      if (use_cflux) call chrgflux
 c
 c     calculate the multipole interaction energy term
 c
@@ -183,7 +182,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci = ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -228,7 +226,6 @@ c
                if (r2 .le. off2) then
                   r = sqrt(r2)
                   ck = rpole(1,k)
-                  ck=ck+pchrgflux(k)
                   dkx = rpole(2,k)
                   dky = rpole(3,k)
                   dkz = rpole(4,k)
@@ -266,88 +263,101 @@ c
                   diqrk = dix*qrkx + diy*qrky + diz*qrkz
                   dkqri = dkx*qrix + dky*qriy + dkz*qriz
 c
-c     read in charge penetration damping parameters
+c     charge penetration correction is used
 c
-                  alphai = penalpha(type(ii))
-                  alphak = penalpha(type(kk))
-                  nuci = pencore(type(ii))
-                  nuck = pencore(type(kk))
+                  if (use_chgpen) then
+                     alphai = penalpha(ii)
+                     alphak = penalpha(kk)
+                     nuci = pencore(ii)
+                     nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
-                  dampi = alphai*r
-                  dampk = alphak*r
-                  expdampi = exp(-dampi)
-                  expdampk = exp(-dampk)
+                     dampi = alphai*r
+                     dampk = alphak*r
+                     expdampi = exp(-dampi)
+                     expdampk = exp(-dampk)
 c
 c     calculate one-site scale factors
 c
-                  scalei(1) = 1.0d0 - expdampi
-                  scalek(1) = 1.0d0 - expdampk
-                  scalei(3) = 1.0d0 - (1.0d0 + dampi)*expdampi
-                  scalek(3) = 1.0d0 - (1.0d0 +dampk)*expdampk
-                  scalei(5) = 1.0d0 - (1.0d0 + dampi + 
-     &                 (1.0d0/3.0d0)*dampi**2)*expdampi
-                  scalek(5) = 1.0d0-(1.0d0 +dampk +
-     &                 (1.0d0/3.0d0)*dampk**2)*expdampk
-                  scalei(7) = 1.0d0-(1.0d0 + dampi + 0.4d0*dampi**2 +
-     &                 (1.0d0/15.0d0)*dampi**3)*expdampi
-                  scalek(7) = 1.0d0-(1.0d0 + dampk + 0.4d0*dampk**2 +
-     &                 (1.0d0/15.0d0)*dampk**3)*expdampk
+                     scalei(1) = 1.0d0 - expdampi
+                     scalek(1) = 1.0d0 - expdampk
+                     scalei(3) = 1.0d0 - (1.0d0 + dampi)*expdampi
+                     scalek(3) = 1.0d0 - (1.0d0 +dampk)*expdampk
+                     scalei(5) = 1.0d0 - (1.0d0 + dampi + 
+     &                    (1.0d0/3.0d0)*dampi**2)*expdampi
+                     scalek(5) = 1.0d0-(1.0d0 +dampk +
+     &                    (1.0d0/3.0d0)*dampk**2)*expdampk
+                     scalei(7) = 1.0d0-(1.0d0 + dampi + 0.4d0*dampi**2 +
+     &                    (1.0d0/15.0d0)*dampi**3)*expdampi
+                     scalek(7) = 1.0d0-(1.0d0 + dampk + 0.4d0*dampk**2 +
+     &                    (1.0d0/15.0d0)*dampk**3)*expdampk
 c
 c     calculate two-site scale factors
 c
-                  if (alphai .ne. alphak) then
-                     termi = alphak**2/(alphak**2 - alphai**2)
-                     termk = alphai**2/(alphai**2 - alphak**2)
-                     scaleik(1) =1.0d0-termi*expdampi -termk*expdampk
-                     scaleik(3) =1.0d0-termi*(1.0d0 +dampi)*expdampi
-     &                           - termk*(1.0d0 + dampk)*expdampk
-                     scaleik(5) = 1.0d0 - termi*(1.0d0 + dampi +
-     &                    (1.0d0/3.0d0)*dampi**2)*expdampi -
-     &                    termk*(1.0d0 + dampk +
-     &                    (1.0d0/3.0d0)*dampk**2)*expdampk
-                     scaleik(7) = 1.0d0 - termi*(1.0d0 + dampi +
-     &                    0.4d0*dampi**2 + (1.0d0/15.0d0)*dampi**3)*
-     &                    expdampi -
-     &                    termk*(1.0d0 + dampk +
-     &                    0.4d0*dampk**2 + (1.0d0/15.0d0)*dampk**3)*
-     &                    expdampk
-                     scaleik(9) = 1.0d0 - termi*(1.0d0 + dampi +
-     &                    (3.0d0/7.0d0)*dampi**2 +
-     &                    (2.0d0/21.0d0)*dampi**3 +
-     &                    (1.0d0/105.0d0)*dampi**4)*expdampi -
-     &                    termk*(1.0d0 + dampk +
-     &                    (3.0d0/7.0d0)*dampk**2 +
-     &                    (2.0d0/21.0d0)*dampk**3 +
-     &                    (1.0d0/105.0d0)*dampk**4)*expdampk
-                  else
-                     scaleik(1) = 1.0d0 -(1.0d0+0.5d0*dampi)*expdampi
-                     scaleik(3) = 1.0d0 -(1.0d0+dampi+0.5d0*dampi**2)
-     &                    *expdampi
-                     scaleik(5) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
-     &                    + (1.0d0/6.0d0)*dampi**3)*expdampi
-                     scaleik(7) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
-     &                    + (1.0d0/6.0d0)*dampi**3
-     &                    + (1.0d0/30.0d0)*dampi**4)*expdampi
-                     scaleik(9) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
-     &                    + (1.0d0/6.0d0)*dampi**3
-     &                    + (4.0d0/105.0d0)*dampi**4
-     &                    + (1.0d0/210.0d0)*dampi**5)*expdampi
-                  end if
+                     if (alphai .ne. alphak) then
+                        termi = alphak**2/(alphak**2 - alphai**2)
+                        termk = alphai**2/(alphai**2 - alphak**2)
+                        scaleik(1) =1.0d0-termi*expdampi -termk*expdampk
+                        scaleik(3) =1.0d0-termi*(1.0d0 +dampi)*expdampi
+     &                              - termk*(1.0d0 + dampk)*expdampk
+                        scaleik(5) = 1.0d0 - termi*(1.0d0 + dampi +
+     &                       (1.0d0/3.0d0)*dampi**2)*expdampi -
+     &                       termk*(1.0d0 + dampk +
+     &                       (1.0d0/3.0d0)*dampk**2)*expdampk
+                        scaleik(7) = 1.0d0 - termi*(1.0d0 + dampi +
+     &                       0.4d0*dampi**2 + (1.0d0/15.0d0)*dampi**3)*
+     &                       expdampi -
+     &                       termk*(1.0d0 + dampk +
+     &                       0.4d0*dampk**2 + (1.0d0/15.0d0)*dampk**3)*
+     &                       expdampk
+                        scaleik(9) = 1.0d0 - termi*(1.0d0 + dampi +
+     &                       (3.0d0/7.0d0)*dampi**2 +
+     &                       (2.0d0/21.0d0)*dampi**3 +
+     &                       (1.0d0/105.0d0)*dampi**4)*expdampi -
+     &                       termk*(1.0d0 + dampk +
+     &                       (3.0d0/7.0d0)*dampk**2 +
+     &                       (2.0d0/21.0d0)*dampk**3 +
+     &                       (1.0d0/105.0d0)*dampk**4)*expdampk
+                     else
+                        scaleik(1) = 1.0d0 -(1.0d0+0.5d0*dampi)*expdampi
+                        scaleik(3) = 1.0d0 -(1.0d0+dampi+0.5d0*dampi**2)
+     &                       *expdampi
+                        scaleik(5) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
+     &                       + (1.0d0/6.0d0)*dampi**3)*expdampi
+                        scaleik(7) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
+     &                       + (1.0d0/6.0d0)*dampi**3
+     &                       + (1.0d0/30.0d0)*dampi**4)*expdampi
+                        scaleik(9) = 1.0d0 - (1.0d0+dampi+0.5d0*dampi**2
+     &                       + (1.0d0/6.0d0)*dampi**3
+     &                       + (4.0d0/105.0d0)*dampi**4
+     &                       + (1.0d0/210.0d0)*dampi**5)*expdampi
+                     end if
             
-                  qi = ci - nuci
-                  qk = ck - nuck
 
-                  term1 = nuci*nuck + nuci*qk*scalek(1) 
-     &                    + nuck*qi*scalei(1) + qi*qk*scaleik(1)
-                  term2 = nuck*dri*scalei(3) - nuci*drk*scalek(3)
-     &                    + (dik + qk*dri - qi*drk)*scaleik(3)
-                  term3 = nuci*qrrk*scalek(5) + nuck*qrri*scalei(5)+
-     &                    (-dri*drk + 2.0d0*(dkqri-diqrk+qik) + 
-     &                    qi*qrrk + qk*qrri)*scaleik(5) 
-                  term4 = (dri*qrrk-drk*qrri-4.0d0*qrrik)*scaleik(7)
-                  term5 = qrri*qrrk*scaleik(9)
+                     qi = ci - nuci
+                     qk = ck - nuck
+
+                     term1 = nuci*nuck + nuci*qk*scalek(1) 
+     &                       + nuck*qi*scalei(1) + qi*qk*scaleik(1)
+                     term2 = nuck*dri*scalei(3) - nuci*drk*scalek(3)
+     &                       + (dik + qk*dri - qi*drk)*scaleik(3)
+                     term3 = nuci*qrrk*scalek(5) + nuck*qrri*scalei(5)+
+     &                       (-dri*drk + 2.0d0*(dkqri-diqrk+qik) + 
+     &                       qi*qrrk + qk*qrri)*scaleik(5) 
+                     term4 = (dri*qrrk-drk*qrri-4.0d0*qrrik)*scaleik(7)
+                     term5 = qrri*qrrk*scaleik(9)
+c
+c     charge penetration is not used
+c
+                  else
+                     term1 = ci*ck
+                     term2 = ck*dri - ci*drk + dik
+                     term3 = ci*qrrk + ck*qrri - dri*drk
+     &                          + 2.0d0*(dkqri-diqrk+qik)
+                     term4 = dri*qrrk - drk*qrri - 4.0d0*qrrik
+                     term5 = qrri*qrrk
+                  end if
 c
 c     compute the energy contribution for this interaction
 c
@@ -419,7 +429,6 @@ c
             yi = y(ii)
             zi = z(ii)
             ci = rpole(1,i)
-            ci=ci+pchrgflux(i)
             dix = rpole(2,i)
             diy = rpole(3,i)
             diz = rpole(4,i)
@@ -466,7 +475,6 @@ c
                      if (r2 .le. off2) then
                         r = sqrt(r2)
                         ck = rpole(1,k)
-                        ck=ck+pchrgflux(k)
                         dkx = rpole(2,k)
                         dky = rpole(3,k)
                         dkz = rpole(4,k)
@@ -506,10 +514,10 @@ c
 c
 c     read in charge penetration damping parameters
 c
-                        alphai = penalpha(type(ii))
-                        alphak = penalpha(type(kk))
-                        nuci = pencore(type(ii))
-                        nuck = pencore(type(kk))
+                        alphai = penalpha(ii)
+                        alphak = penalpha(kk)
+                        nuci = pencore(ii)
+                        nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
@@ -678,7 +686,7 @@ c
       use atoms
       use bound
       use cflux
-      use polar 
+      use chgpen 
       use chgpot
       use couple
       use energi
@@ -747,6 +755,7 @@ c
 c     rotate the multipole components into the global frame
 c
       call rotpole
+
 c
 c     print header information if debug output was requested
 c
@@ -788,14 +797,13 @@ c
       f = electric / dielec
       mode = 'MPOLE'
       call switch (mode)
-      if (use_cflux) call chrgflux
 c
 c     OpenMP directives for the major loop structure
 c
 !$OMP PARALLEL default(private)
 !$OMP& shared(npole,ipole,x,y,z,xaxis,yaxis,zaxis,rpole,use,
 !$OMP& n12,i12,n13,i13,n14,i14,n15,i15,m2scale,m3scale,m4scale,
-!$OMP& pencore,penalpha,type,pchrgflux,use_cflux,
+!$OMP& pencore,penalpha,use_cflux,
 !$OMP& m5scale,nelst,elst,use_group,use_intra,use_bounds,off2,
 !$OMP& f,molcule,name,verbose,debug,header,iout)
 !$OMP& firstprivate(mscale) shared (em,einter,nem,aem)
@@ -812,7 +820,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci=ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -858,7 +865,6 @@ c
                if (r2 .le. off2) then
                   r = sqrt(r2)
                   ck = rpole(1,k)
-                  ck=ck+pchrgflux(k)
                   dkx = rpole(2,k)
                   dky = rpole(3,k)
                   dkz = rpole(4,k)
@@ -898,10 +904,10 @@ c
 c
 c     read in charge penetration damping parameters
 c
-                  alphai = penalpha(type(ii))
-                  alphak = penalpha(type(kk))
-                  nuci = pencore(type(ii))
-                  nuck = pencore(type(kk))
+                  alphai = penalpha(ii)
+                  alphak = penalpha(kk)
+                  nuci = pencore(ii)
+                  nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
@@ -966,6 +972,7 @@ c
      &                    + (1.0d0/210.0d0)*dampi**5)*expdampi
                   end if
             
+c
                   qi = ci - nuci
                   qk = ck - nuck
 
@@ -1093,10 +1100,6 @@ c
 c     set the energy unit conversion factor
 c
       f = electric / dielec
-c   
-c     call charge flux
-c
-      if (use_cflux) call chrgflux
 c
 c     check the sign of multipole components at chiral sites
 c
@@ -1120,7 +1123,6 @@ c
       fterm = -f * aewald / sqrtpi
       do i = 1, npole
          ci = rpole(1,i)
-         ci = ci + pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -1194,7 +1196,7 @@ c
       use bound
       use cell
       use cflux
-      use polar 
+      use chgpen 
       use chgpot
       use couple
       use energi
@@ -1235,7 +1237,6 @@ c
       real*8 term1,term2,term3
       real*8 term4,term5
       real*8 bn(0:4)
-!     charge penetration varables
       real*8 alphai,alphak
       real*8 dampi,dampk
       real*8 expdampi,expdampk
@@ -1243,7 +1244,6 @@ c
       real*8, allocatable ::  scalei(:),scalek(:)
       real*8, allocatable ::  scaleik(:)
       real*8 nuci,qi,nuck,qk
-!     end 
       real*8, allocatable :: mscale(:)
       logical header,huge
       character*6 mode
@@ -1290,8 +1290,6 @@ c
       f = electric / dielec
       mode = 'EWALD'
       call switch (mode)
-
-      if (use_cflux) call chrgflux
 c
 c     compute the real space portion of the Ewald summation
 c
@@ -1301,7 +1299,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci=ci + pchrgflux(i) 
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -1336,7 +1333,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck=ck + pchrgflux(k) 
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -1393,10 +1389,10 @@ c
 c
 c     read in charge penetration damping parameters
 c
-               alphai = penalpha(type(ii))
-               alphak = penalpha(type(kk))
-               nuci = pencore(type(ii))
-               nuck = pencore(type(kk))
+               alphai = penalpha(ii)
+               alphak = penalpha(kk)
+               nuci = pencore(ii)
+               nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
@@ -1461,6 +1457,8 @@ c
      &                 + (1.0d0/210.0d0)*dampi**5)*expdampi
                end if
             
+c
+     
                qi = ci - nuci
                qk = ck - nuck
 
@@ -1570,7 +1568,6 @@ c
             yi = y(ii)
             zi = z(ii)
             ci = rpole(1,i)
-            ci = ci + pchrgflux(i)
             dix = rpole(2,i)
             diy = rpole(3,i)
             diz = rpole(4,i)
@@ -1608,7 +1605,6 @@ c
                   if (r2 .le. off2) then
                      r = sqrt(r2)
                      ck = rpole(1,k)
-                     ck = ck + pchrgflux(k)
                      dkx = rpole(2,k)
                      dky = rpole(3,k)
                      dkz = rpole(4,k)
@@ -1666,10 +1662,10 @@ c
 c
 c     read in charge penetration damping parameters
 c
-                     alphai = penalpha(type(ii))
-                     alphak = penalpha(type(kk))
-                     nuci = pencore(type(ii))
-                     nuck = pencore(type(kk))
+                     alphai = penalpha(ii)
+                     alphak = penalpha(kk)
+                     nuci = pencore(ii)
+                     nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
@@ -1734,6 +1730,7 @@ c
      &                       + (1.0d0/210.0d0)*dampi**5)*expdampi
                      end if
             
+c
                      qi = ci - nuci
                      qk = ck - nuck
 
@@ -1777,7 +1774,7 @@ c
      &                   * mscale(kk))) 
      &                   - nuci*drk*(bn(1)-(1.0d0-scalek(3)*mscale(kk)))
      &                   + (dik + qk*dri - qi*drk)
-     &                     *(bn(1)-(1.0d0-scaleik(3)*mscale(kk)))
+     &                   * (bn(1)-(1.0d0-scaleik(3)*mscale(kk)))
                      term3 = nuci*qrrk*(bn(2)-(1.0d0-scalek(5)
      &                   * mscale(kk)))
      &                   + nuck*qrri*(bn(2)-(1.0d0-scalei(5)
@@ -1790,7 +1787,6 @@ c
 
                      term5=qrri*qrrk*(bn(4)-(1.0d0-scaleik(9)
      &                   * mscale(kk)))
-
 c
 c     compute the energy contribution for this interaction
 c
@@ -1892,10 +1888,6 @@ c
 c     set the energy unit conversion factor
 c
       f = electric / dielec
-c 
-c     call charge flux
-c
-      if (use_cflux) call chrgflux
 c
 c     check the sign of multipole components at chiral sites
 c
@@ -1919,7 +1911,6 @@ c
       fterm = -f * aewald / sqrtpi
       do i = 1, npole
          ci = rpole(1,i)
-         ci = ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -1992,7 +1983,7 @@ c
       use atoms
       use bound
       use cflux
-      use polar 
+      use chgpen 
       use chgpot
       use couple
       use energi
@@ -2033,7 +2024,6 @@ c
       real*8 term1,term2,term3
       real*8 term4,term5
       real*8 bn(0:4)
-!     charge penetration varables
       real*8 alphai,alphak
       real*8 dampi,dampk
       real*8 expdampi,expdampk
@@ -2041,7 +2031,6 @@ c
       real*8, allocatable ::  scalei(:),scalek(:)
       real*8, allocatable ::  scaleik(:)
       real*8 nuci,qi,nuck,qk
-!     end 
       real*8, allocatable :: mscale(:)
       logical header,huge
       character*6 mode
@@ -2089,14 +2078,13 @@ c
       f = electric / dielec
       mode = 'EWALD'
       call switch (mode)
-      if (use_cflux) call chrgflux
 c
 c     OpenMP directives for the major loop structure
 c
 !$OMP PARALLEL default(private)
 !$OMP& shared(npole,ipole,x,y,z,rpole,n12,i12,n13,i13,n14,i14,n15,
 !$OMP& i15,m2scale,m3scale,m4scale,m5scale,nelst,elst,use_bounds,
-!$OMP& pencore,penalpha,type,pchrgflux,use_cflux,
+!$OMP& pencore,penalpha,use_cflux,
 !$OMP& f,off2,aewald,molcule,name,verbose,debug,header,iout)
 !$OMP& firstprivate(mscale) shared (em,einter,nem,aem)
 !$OMP DO reduction(+:em,einter,nem,aem) schedule(guided)
@@ -2109,7 +2097,6 @@ c
          yi = y(ii)
          zi = z(ii)
          ci = rpole(1,i)
-         ci=ci+pchrgflux(i)
          dix = rpole(2,i)
          diy = rpole(3,i)
          diz = rpole(4,i)
@@ -2145,7 +2132,6 @@ c
             if (r2 .le. off2) then
                r = sqrt(r2)
                ck = rpole(1,k)
-               ck=ck+pchrgflux(k)
                dkx = rpole(2,k)
                dky = rpole(3,k)
                dkz = rpole(4,k)
@@ -2202,10 +2188,10 @@ c
 c
 c     read in charge penetration damping parameters
 c
-               alphai = penalpha(type(ii))
-               alphak = penalpha(type(kk))
-               nuci = pencore(type(ii))
-               nuck = pencore(type(kk))
+               alphai = penalpha(ii)
+               alphak = penalpha(kk)
+               nuci = pencore(ii)
+               nuck = pencore(kk)
 c
 c     compute common factors for damping
 c
@@ -2269,7 +2255,8 @@ c
      &                 + (4.0d0/105.0d0)*dampi**4
      &                 + (1.0d0/210.0d0)*dampi**5)*expdampi
                end if
-            
+
+c
                qi = ci - nuci
                qk = ck - nuck
 

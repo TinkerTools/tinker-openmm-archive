@@ -27,6 +27,7 @@ c
       use atmlst
       use bitor
       use bndstr
+      use chgpen
       use cell
       use charge
       use chunks
@@ -49,6 +50,7 @@ c
       use katoms
       use kchrge
       use kpolr
+      use kcps
       use kvdws
       use light
       use merck
@@ -412,6 +414,11 @@ c
       if (allocated(athl))  deallocate (athl)
       if (allocated(pgrp))  deallocate (pgrp)
 c
+c     deallocation of global arrays from module kcps
+c
+      if (allocated(apena))  deallocate (apena)
+      if (allocated(apenc))  deallocate (apenc)
+c
 c     deallocation of global arrays from module kvdws
 c
       if (allocated(rad))  deallocate (rad)
@@ -645,8 +652,8 @@ c
       if (allocated(b0))  deallocate (b0)
       if (allocated(jb))  deallocate (jb)
       if (allocated(theta0))  deallocate (theta0)
-      if (allocated(bond1))  deallocate (bond1)
-      if (allocated(bond2))  deallocate (bond2)
+      if (allocated(bp1))  deallocate (bp1)
+      if (allocated(bp2))  deallocate (bp2)
       if (allocated(jbp1))  deallocate (jbp1)
       if (allocated(jbp2))  deallocate (jbp2)
       if (allocated(jtheta1))  deallocate (jtheta1)

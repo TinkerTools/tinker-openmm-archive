@@ -48,6 +48,9 @@ c     ##################################################################
       use couple
       use energi
       use group
+      use mutant
+      use polgrp
+      use polpot
       use shunt
       use usage
       use virial
@@ -72,6 +75,7 @@ c     ##################################################################
       real*8 vyx,vzx,vzy
       real*8, allocatable :: ctscale(:)
       logical proceed,usei
+      logical muti, mutk
       character*6 mode
 c
 c
@@ -84,6 +88,11 @@ c
         dect(2,i) = 0.0d0
         dect(3,i) = 0.0d0
       end do
+c
+c     zero out local variables
+c
+      aprec = 0.0d0
+      bexpc = 0.0d0
 c
 c     perform dynamic allocation of some local arrays
 c
@@ -106,6 +115,7 @@ c
          i = ict(ii)
          it = jct(i)
          usei = use(i) 
+         muti = mut(i) 
 c
 c     set interaction scaling coefficients for connected atoms
 c
@@ -126,6 +136,7 @@ c     decide whether to compute the current interaction
 c
          do kk = ii+1, nct
             k = ict(kk)
+            mutk = mut(k)
             proceed = .true.
             if (use_group)  call groups (proceed,fgrp,i,k,0,0,0,0)
             if (proceed)  proceed = (usei .or. use(k))
@@ -163,6 +174,10 @@ c
                   end if
                end if
                aprec = aprec*ctscale(k)
+               if ((muti .and. .not.mutk) .or.
+     &            (mutk .and. .not.muti)) then
+                  aprec = aprec * elambda  
+               endif
                if (rik2 .le. off2) then
                   rik = sqrt(rik2)
                   e = -aprec*1000.0d0*exp(-bexpc*rik)
@@ -263,9 +278,10 @@ c
          i = ict(ii)
          it = jct(i)
          usei = use(i) 
-cc
-cc     set interaction scaling coefficients for connected atoms
-cc
+         muti = mut(i) 
+c
+c     set interaction scaling coefficients for connected atoms
+c
          do j = 1, n12(i)
             ctscale(i12(j,i)) = ct2scale
          end do
@@ -278,11 +294,12 @@ cc
          do j = 1, n15(i)
             ctscale(i15(j,i)) = ct5scale
          end do
-cc
-cc     decide whether to compute the current interaction
-cc
+c
+c     decide whether to compute the current interaction
+c
          do kk = ii, nct
             k = ict(kk)
+            mutk = mut(k)
             proceed = .true.
             if (use_group)  call groups (proceed,fgrp,i,k,0,0,0,0)
             if (proceed)  proceed = (usei .or. use(k))
@@ -322,6 +339,11 @@ c
                   end if
               
                   aprec = aprec*ctscale(k)
+                  if ((muti .and. .not.mutk) .or.
+     &               (mutk .and. .not.muti)) then
+                     aprec = aprec * elambda  
+                  endif
+
                   if (rik2 .le. off2) then
                      rik = sqrt(rik2)
                      e = -aprec*1000.0d0*exp(-bexpc*rik)
@@ -413,6 +435,8 @@ c
       deallocate (ctscale)
       return
       end
+c
+c
 c     ###############################################################
 c     ##                                                           ##
 c     ##  subroutine ect1b  --  Charge transfer energy via list    ##
@@ -430,15 +454,18 @@ c
       use atoms
       use bound
       use couple
+      use ctran
       use deriv
       use energi
       use group
       use inter
       use molcul
+      use mutant
       use neigh
+      use polgrp
+      use polpot
       use shunt
       use usage
-      use ctran
       use virial
       implicit none
       integer i,j,k
@@ -458,6 +485,7 @@ c
       real*8 vyx,vzx,vzy
       real*8, allocatable :: ctscale(:)
       logical proceed,usei
+      logical muti, mutk
       character*6 mode
 c
 c
@@ -469,6 +497,11 @@ c
          dect(2,i) = 0.0d0
          dect(3,i) = 0.0d0
       end do
+c
+c     zero out local variables
+c
+      aprec = 0.0d0
+      bexpc = 0.0d0
       if (nct .eq. 0)  return
 c
 c     perform dynamic allocation of some local arrays
@@ -491,17 +524,18 @@ c
 !$OMP PARALLEL default(private) shared(nct,ict,
 !$OMP& jct,use,x,y,z,nctlst,ctlst,n12,n13,n14,n15,
 !$OMP& i12,i13,i14,i15,ct2scale,ct3scale,ct4scale,ct5scale,
-!$OMP& use_group,off2,apre,bexp,aprerule,bexprule,
+!$OMP& use_group,off2,apre,bexp,aprerule,bexprule,mut,elambda,
 !$OMP& cut2,c0,c1,c2,c3,c4,c5,molcule) firstprivate(ctscale)
 !$OMP& shared(ect,dect,vir,einter)
 !$OMP DO reduction(+:ect,dect,vir,einter) schedule(guided)
 c
-c     find the van der Waals energy via neighbor list search
+c     find the charge transfer energy via neighbor list search
 c
       do ii = 1, nct
          i = ict(ii)
          it = jct(i)
          usei = use(i)
+         muti = mut(i)
 c
 c     set exclusion coefficients for connected atoms
 c
@@ -522,6 +556,7 @@ c     decide whether to compute the current interaction
 c
          do kk = 1, nctlst(ii)
             k = ict(ctlst(kk,ii))
+            mutk = mut(k)
             proceed = .true.
             if (use_group)  call groups (proceed,fgrp,i,k,0,0,0,0)
             if (proceed)  proceed = (usei .or. use(k))
@@ -559,6 +594,10 @@ c
                end if
 
                aprec = aprec*ctscale(k)
+               if ((muti .and. .not.mutk) .or.
+     &            (mutk .and. .not.muti)) then
+                  aprec = aprec * elambda  
+               endif
                if (rik2 .le. off2) then
                   rik = sqrt(rik2)
                   e = -aprec*1000.0d0*exp(-bexpc*rik)

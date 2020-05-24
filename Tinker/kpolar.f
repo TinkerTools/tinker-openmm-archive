@@ -42,7 +42,7 @@ c
       integer nlist,npg
       integer pg(maxval)
       integer, allocatable :: list(:)
-      real*8 pol,thl,dird,pena,penc
+      real*8 pol,thl,dird
       real*8 sixth
       logical header
       character*20 keyword
@@ -117,6 +117,19 @@ c
             read (string,*,err=20,end=20)  (copt(i),i=0,maxopt)
          end if
    20    continue
+
+c         if ((keyword(1:12)) .eq. 'DIRDAMPRULE ') then
+c            call getnumb (record,k,next)
+c            string = record(next:120) 
+c            read (string,*,err=24,end=24)dirdamprule 
+c   24       continue
+c         end if 
+c         if ((keyword(1:12)) .eq. 'MUTDAMPRULE ') then
+c            call getnumb (record,k,next)
+c            string = record(next:120) 
+c            read (string,*,err=26,end=26)mutdamprule 
+c   26       continue
+c         end if 
       end do
 c
 c     get maximum coefficient order for OPT induced dipoles
@@ -134,8 +147,6 @@ c
 c     perform dynamic allocation of some global arrays
 c
       if (allocated(polarity))  deallocate (polarity)
-      if (allocated(penalpha))  deallocate (penalpha)
-      if (allocated(pencore))  deallocate (pencore)
       if (allocated(thole))  deallocate (thole)
       if (allocated(dirdamp))  deallocate (dirdamp)
       if (allocated(pdamp))  deallocate (pdamp)
@@ -147,8 +158,6 @@ c
       allocate (polarity(n))
       allocate (thole(n))
       allocate (dirdamp(n))
-      allocate (penalpha(n))
-      allocate (pencore(n))
       allocate (pdamp(n))
       allocate (udir(3,n))
       allocate (udirp(3,n))
@@ -165,19 +174,6 @@ c
          allocate (fopt(0:coptmax,10,n))
          allocate (foptp(0:coptmax,10,n))
       end if
-c
-c     perform dynamic allocation of some global arrays
-c
-c      if (.not. use_cflux) then
-c         if (allocated(pchrgflux))  deallocate (pchrgflux)
-c         allocate (pchrgflux(n))
-c
-cc     if charge flux not used, zero out pchrgflux 
-c
-c        do i = 1, n
-c          pchrgflux(i) = 0.0d0
-c        end do
-c      end if
 c
 c     set the atoms allowed to have nonzero induced dipoles
 c
@@ -224,8 +220,6 @@ c
             pol = 0.0d0
             thl = -1.0d0
             dird = -1.0d0
-            pena = -1.0d0
-            penc = -1.0d0
             do j = 1, maxval
                pg(j) = 0
             end do
@@ -274,8 +268,6 @@ c
          polarity(i) = polr(type(i))
          thole(i) = athl(type(i))
          dirdamp(i) = adird(type(i))
-         penalpha(i) = apena(type(i))
-         pencore(i) = apenc(type(i))
       end do
 c
 c     process keywords containing atom specific polarizabilities
@@ -315,41 +307,6 @@ c
          end if
       end do
 c
-c     process keywords containing atom specific polarizabilities
-c
-      header = .true.
-      do i = 1, nkey
-         next = 1
-         record = keyline(i)
-         call gettext (record,keyword,next)
-         call upcase (keyword)
-         if (keyword(1:3) .eq. 'CP ') then
-            k = 0
-            pena = 0.0d0
-            penc = 0.0d0
-            call getnumb (record,k,next)
-            if (k.lt.0 .and. k.ge.-n) then
-               k = -k
-               string = record(next:240)
-               read (string,*,err=110,end=110)  pena,penc
-  110          continue
-               if (header) then
-                  header = .false.
-                  write (iout,120)
-  120             format (/,' Additional Charge Penetration',
-     &                       ' for Specific Atoms :',
-     &                    //,6x,'Atom',15x,'PenAlpha', 15x, "PenCore"/)
-               end if
-               if (.not. silent) then
-                  write (iout,130)  k,pena,penc
-  130             format (4x,i6,2f10.4)
-               end if
-               penalpha(k) = pena 
-               pencore(k) = penc 
-            end if
-         end if
-      end do
-c
 c     remove zero and undefined polarizable sites from the list
 c
       npolar = 0
@@ -371,8 +328,6 @@ c
                polarity(npole) = polarity(i)
                thole(npole) = thole(i)
                dirdamp(npole) = dirdamp(i)
-               penalpha(npole) = penalpha(i)
-               pencore(npole) = pencore(i)
             end if
          end do
       end if
