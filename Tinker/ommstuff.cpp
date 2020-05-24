@@ -225,8 +225,6 @@ struct {
 
 struct {
    double* jb;
-   double* b0;
-   double* theta0;
    double* bp1;
    double* bp2;
    double* jbp1;
@@ -1070,11 +1068,9 @@ void set_boxes_data_ (double* xbox, double* ybox, double* zbox,
 }
 
 
-void set_cflux_data_ (double* jb, double* b0, double* theta0, double* bp1,  double* bp2, double* jbp1,
-                      double* jbp2, double* jtheta1, double* jtheta2, int* dobondcflux, int* doanglecflux) {
+void set_cflux_data_ (double* jb, double* bp1,  double* bp2, double* jbp1, double* jbp2, 
+                      double* jtheta1, double* jtheta2, int* dobondcflux, int* doanglecflux) {
    cflux__.jb = jb;
-   cflux__.b0 = b0;
-   cflux__.theta0 = theta0;
    cflux__.bp1 = bp1;
    cflux__.bp2 = bp2;
    cflux__.jbp1 = jbp1;
@@ -3195,12 +3191,6 @@ static void setupAmoebaMultipoleForce (OpenMM_System* system, FILE* log) {
       atom1 = (*bondPtr)-1;
       atom2 = *(bondPtr+1)-1;
       cfDir = getCFluxDirection(atom1, atom2);
-      //printf("atom1, atom2, %i %i %f \n", atom1, atom2, cfDir);
-      // [atom1 atom2 b0 jb cfDir] for each bond
-      //OpenMM_AmoebaMultipoleForce_addCFluxBond (amoebaMultipoleForce, 
-      //          atom1, atom2, cflux__.b0[ii]*OpenMM_NmPerAngstrom,
-      //          jParameterConversion*cflux__.jb[ii], cfDir);
-
       OpenMM_AmoebaMultipoleForce_addCFluxBond (amoebaMultipoleForce, 
                 atom1, atom2, bndstr__.bl[ii]*OpenMM_NmPerAngstrom,
                 jParameterConversion*cflux__.jb[ii], cfDir);
@@ -3210,11 +3200,6 @@ static void setupAmoebaMultipoleForce (OpenMM_System* system, FILE* log) {
    angleIndexPtr = angbnd__.iang;
    // [atom1 atom2 atom3 theta0 jtheta1 jtheta2 bp1 jbp1 bp2 jbp2] for each angle
    for (ii = 0; ii < angbnd__.nangle; ii++) {
-      //OpenMM_AmoebaMultipoleForce_addCFluxAngle (amoebaMultipoleForce, (*angleIndexPtr)-1,
-      //          *(angleIndexPtr+1)-1, *(angleIndexPtr+2)-1, 
-      //          cflux__.theta0[ii], cflux__.jtheta1[ii], cflux__.jtheta2[ii],
-      //          cflux__.bp1[ii]*OpenMM_NmPerAngstrom, jParameterConversion*cflux__.jbp1[ii], 
-      //          cflux__.bp2[ii]*OpenMM_NmPerAngstrom, jParameterConversion*cflux__.jbp2[ii]);
       OpenMM_AmoebaMultipoleForce_addCFluxAngle (amoebaMultipoleForce, (*angleIndexPtr)-1,
                 *(angleIndexPtr+1)-1, *(angleIndexPtr+2)-1, 
                 angbnd__.anat[ii], cflux__.jtheta1[ii], cflux__.jtheta2[ii],
@@ -3222,8 +3207,7 @@ static void setupAmoebaMultipoleForce (OpenMM_System* system, FILE* log) {
                 cflux__.bp2[ii]*OpenMM_NmPerAngstrom, jParameterConversion*cflux__.jbp2[ii]);
       angleIndexPtr += 4;
    }
-   //
-   //
+
    dipoles = OpenMM_DoubleArray_create(3);
    quadrupoles = OpenMM_DoubleArray_create(9);
    errorReport = 0;

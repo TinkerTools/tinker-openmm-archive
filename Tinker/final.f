@@ -649,9 +649,7 @@ c
 c     deallocation of global arrays from module cflux
 c
       if (allocated(pchrgflux))  deallocate (pchrgflux)
-      if (allocated(b0))  deallocate (b0)
       if (allocated(jb))  deallocate (jb)
-      if (allocated(theta0))  deallocate (theta0)
       if (allocated(bp1))  deallocate (bp1)
       if (allocated(bp2))  deallocate (bp2)
       if (allocated(jbp1))  deallocate (jbp1)

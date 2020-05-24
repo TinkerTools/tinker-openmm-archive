@@ -487,7 +487,7 @@ c
      &                     octahedron,spacegrp)
       call set_cell_data (ncell,icell,xcell,ycell,zcell,
      &                    xcell2,ycell2,zcell2)
-      call set_cflux_data (jb, b0, theta0, bp1, bp2, jbp1, jbp2, 
+      call set_cflux_data (jb, bp1, bp2, jbp1, jbp2, 
      &                    jtheta1,jtheta2, dobondcflux, doanglecflux)
       call set_charge_data (nion,iion,jion,kion,pchg)
       call set_chgpot_data (electric,dielec,ebuffer,c2scale,c3scale,
