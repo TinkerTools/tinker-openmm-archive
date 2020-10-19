@@ -3,7 +3,7 @@
 
 # Tinker-OpenMM: An OpenMM Version Enabling Tinker on GPUs
 
-<H2><B>NOTE: This OpenMM version for use as part of Tinker-OpenMM is now deprecated. The current Tinker release on the TinkerTools Github site supports the current release of OpenMM available from https://github.com/openmm. The modified OpenMM located here should only be used and will only work correctly with earlier releases of Tinker.</B></H2>
+<H2><B><I>NOTE: This OpenMM version for use as part of Tinker-OpenMM is now deprecated. The current Tinker release on the TinkerTools Github site supports Tinker-OpenMM using the current release of OpenMM available from https://github.com/openmm. The modified OpenMM located here should only be used and will only work correctly with earlier releases of Tinker.</I></B></H2>
 
 <H2><B>Introduction</B></H2>
 
